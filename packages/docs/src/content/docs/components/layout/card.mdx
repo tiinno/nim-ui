@@ -1,0 +1,336 @@
+---
+title: Card
+description: Versatile content container with header, content, and footer sub-components
+---
+
+import { Card, CardHeader, CardContent, CardFooter } from '@tiinno-ui/components';
+import { Button } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Card component is a composite layout element that groups related content within a bordered, rounded container. It uses a compound component pattern with `CardHeader`, `CardContent`, and `CardFooter` sub-components for structured content areas.
+
+## Import
+
+```tsx
+import { Card, CardHeader, CardContent, CardFooter } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Card">
+  <Card client:load className="w-full max-w-sm">
+    <CardContent client:load>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">
+        This is a basic card with content only.
+      </p>
+    </CardContent>
+  </Card>
+
+  <Fragment slot="code">
+```tsx
+<Card>
+  <CardContent>
+    <p>This is a basic card with content only.</p>
+  </CardContent>
+</Card>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Full Card Structure
+
+Use all three sub-components for a complete card layout with header, content, and footer.
+
+<ComponentPreview title="Full Card with Header, Content, and Footer">
+  <Card client:load className="w-full max-w-sm">
+    <CardHeader client:load>
+      <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Card Title</h3>
+      <p className="text-sm text-neutral-500 dark:text-neutral-400">Card description goes here</p>
+    </CardHeader>
+    <CardContent client:load>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">
+        This is the main content area of the card. It can contain any type of content
+        including text, images, forms, or other components.
+      </p>
+    </CardContent>
+    <CardFooter client:load>
+      <Button client:load variant="primary" size="sm">Save</Button>
+      <Button client:load variant="outline" size="sm">Cancel</Button>
+    </CardFooter>
+  </Card>
+
+  <Fragment slot="code">
+```tsx
+<Card>
+  <CardHeader>
+    <h3 className="text-lg font-semibold">Card Title</h3>
+    <p className="text-sm text-neutral-500">Card description goes here</p>
+  </CardHeader>
+  <CardContent>
+    <p>This is the main content area of the card.</p>
+  </CardContent>
+  <CardFooter>
+    <Button variant="primary" size="sm">Save</Button>
+    <Button variant="outline" size="sm">Cancel</Button>
+  </CardFooter>
+</Card>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Header and Content Only
+
+<ComponentPreview title="Card Without Footer">
+  <Card client:load className="w-full max-w-sm">
+    <CardHeader client:load>
+      <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Notifications</h3>
+    </CardHeader>
+    <CardContent client:load>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">You have 3 unread notifications.</p>
+    </CardContent>
+  </Card>
+
+  <Fragment slot="code">
+```tsx
+<Card>
+  <CardHeader>
+    <h3 className="text-lg font-semibold">Notifications</h3>
+  </CardHeader>
+  <CardContent>
+    <p>You have 3 unread notifications.</p>
+  </CardContent>
+</Card>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Custom Styling
+
+Cards accept a `className` prop for custom styling including width constraints, shadows, and border customization.
+
+<ComponentPreview title="Custom Styled Cards">
+  <Card client:load className="w-full max-w-sm shadow-lg">
+    <CardContent client:load>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">Elevated card with shadow-lg</p>
+    </CardContent>
+  </Card>
+  <Card client:load className="w-full max-w-sm border-primary-500 border-2">
+    <CardContent client:load>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">Card with custom border color</p>
+    </CardContent>
+  </Card>
+  <Card client:load className="w-full max-w-sm bg-primary-50 dark:bg-primary-900/20">
+    <CardContent client:load>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">Card with custom background</p>
+    </CardContent>
+  </Card>
+
+  <Fragment slot="code">
+```tsx
+<Card className="shadow-lg">
+  <CardContent>Elevated card with shadow-lg</CardContent>
+</Card>
+
+<Card className="border-primary-500 border-2">
+  <CardContent>Card with custom border color</CardContent>
+</Card>
+
+<Card className="bg-primary-50 dark:bg-primary-900/20">
+  <CardContent>Card with custom background</CardContent>
+</Card>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+### Card
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for custom styling (width, shadow, border, etc.)',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Card content, typically CardHeader, CardContent, and/or CardFooter',
+    },
+  ]}
+/>
+
+### CardHeader
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the header area',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Header content (title, description, etc.)',
+    },
+  ]}
+/>
+
+### CardContent
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the content area',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Main card content',
+    },
+  ]}
+/>
+
+### CardFooter
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the footer area',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Footer content (actions, links, metadata)',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### User Profile Card
+
+```tsx
+function UserProfileCard({ user }) {
+  return (
+    <Card className="max-w-sm">
+      <CardHeader>
+        <Flex align="center" gap="md">
+          <Avatar src={user.avatar} initials={user.initials} />
+          <div>
+            <h3 className="font-semibold">{user.name}</h3>
+            <p className="text-sm text-neutral-500">{user.role}</p>
+          </div>
+        </Flex>
+      </CardHeader>
+      <CardContent>
+        <p className="text-sm">{user.bio}</p>
+      </CardContent>
+      <CardFooter>
+        <Button variant="primary" size="sm">Follow</Button>
+        <Button variant="outline" size="sm">Message</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+### Settings Card
+
+```tsx
+function SettingsCard() {
+  return (
+    <Card>
+      <CardHeader>
+        <h3 className="text-lg font-semibold">Account Settings</h3>
+        <p className="text-sm text-neutral-500">
+          Manage your account preferences
+        </p>
+      </CardHeader>
+      <CardContent>
+        <Stack spacing="md">
+          <Input label="Display Name" defaultValue="John Doe" />
+          <Input label="Email" type="email" defaultValue="john@example.com" />
+          <Textarea label="Bio" rows={3} />
+        </Stack>
+      </CardContent>
+      <CardFooter className="justify-end">
+        <Button variant="outline">Cancel</Button>
+        <Button variant="primary">Save Changes</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+### Card Grid
+
+```tsx
+function CardGrid({ items }) {
+  return (
+    <Grid cols={3} gap="lg">
+      {items.map((item) => (
+        <Card key={item.id}>
+          <CardHeader>
+            <h3 className="font-semibold">{item.title}</h3>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm">{item.description}</p>
+          </CardContent>
+          <CardFooter>
+            <Button variant="ghost" size="sm">Learn more</Button>
+          </CardFooter>
+        </Card>
+      ))}
+    </Grid>
+  );
+}
+```
+
+## Accessibility
+
+The Card component renders semantic `<div>` elements. For better accessibility:
+
+- Use heading elements (`h2`, `h3`, etc.) in CardHeader for proper document structure
+- When cards are interactive (clickable), add `role="button"` and `tabIndex={0}` with keyboard handlers
+- For card lists, consider wrapping in a `<section>` with a label
+
+```tsx
+{/* Interactive card */}
+<Card
+  role="button"
+  tabIndex={0}
+  onClick={handleClick}
+  onKeyDown={(e) => e.key === 'Enter' && handleClick()}
+  className="cursor-pointer hover:shadow-md transition-shadow"
+>
+  <CardContent>Click to view details</CardContent>
+</Card>
+
+{/* Card section with heading */}
+<section aria-labelledby="team-heading">
+  <h2 id="team-heading">Team Members</h2>
+  <Grid cols={3} gap="md">
+    <Card>...</Card>
+    <Card>...</Card>
+  </Grid>
+</section>
+```
+
+## Related Components
+
+- [Grid](/components/layout/grid/) - Arrange cards in responsive grid layouts
+- [Stack](/components/layout/stack/) - Stack cards vertically with spacing
+- [Flex](/components/layout/flex/) - Flex layout for card footer actions
+- [Modal](/components/layout/modal/) - Overlay dialog for detailed card interactions

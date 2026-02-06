@@ -1,0 +1,362 @@
+---
+title: Form
+description: Styled form wrapper component for consistent form layouts and structure
+---
+
+import { Form, Input, Textarea, Select, Checkbox, Button } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Form component is a lightweight wrapper around the native HTML `<form>` element. It provides consistent styling, spacing, and structure for building forms. It extends all standard form attributes, so you can attach `onSubmit`, `action`, `method`, and any other native form props.
+
+## Import
+
+```tsx
+import { Form } from '@tiinno-ui/components';
+```
+
+## Usage
+
+<ComponentPreview title="Basic Form">
+  <Form client:load onSubmit={(e) => { e.preventDefault(); alert('Form submitted!'); }}>
+    <Input client:load placeholder="Enter your name" />
+    <Input client:load type="email" placeholder="Enter your email" />
+    <Button client:load type="submit" variant="primary">
+      Submit
+    </Button>
+  </Form>
+
+  <Fragment slot="code">
+```tsx
+<Form onSubmit={handleSubmit}>
+  <Input placeholder="Enter your name" />
+  <Input type="email" placeholder="Enter your email" />
+  <Button type="submit" variant="primary">
+    Submit
+  </Button>
+</Form>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Form Layouts
+
+### Vertical Layout (Default)
+
+<ComponentPreview title="Vertical Form Layout">
+  <Form client:load>
+    <Input client:load placeholder="First name" />
+    <Input client:load placeholder="Last name" />
+    <Input client:load type="email" placeholder="Email address" />
+    <Textarea client:load placeholder="Your message" rows={4} />
+    <Button client:load type="submit" variant="primary">
+      Send Message
+    </Button>
+  </Form>
+
+  <Fragment slot="code">
+```tsx
+<Form onSubmit={handleSubmit}>
+  <Input placeholder="First name" />
+  <Input placeholder="Last name" />
+  <Input type="email" placeholder="Email address" />
+  <Textarea placeholder="Your message" rows={4} />
+  <Button type="submit" variant="primary">
+    Send Message
+  </Button>
+</Form>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Inline Fields
+
+<ComponentPreview title="Form with Inline Fields">
+  <Form client:load>
+    <div className="flex gap-4">
+      <Input client:load placeholder="First name" />
+      <Input client:load placeholder="Last name" />
+    </div>
+    <Input client:load type="email" placeholder="Email address" />
+    <Button client:load type="submit" variant="primary">
+      Create Account
+    </Button>
+  </Form>
+
+  <Fragment slot="code">
+```tsx
+<Form onSubmit={handleSubmit}>
+  <div className="flex gap-4">
+    <Input placeholder="First name" />
+    <Input placeholder="Last name" />
+  </div>
+  <Input type="email" placeholder="Email address" />
+  <Button type="submit" variant="primary">
+    Create Account
+  </Button>
+</Form>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Select and Checkbox
+
+<ComponentPreview title="Complete Form">
+  <Form client:load>
+    <Input client:load placeholder="Full name" />
+    <Input client:load type="email" placeholder="Email" />
+    <Select
+      client:load
+      options={[
+        { value: 'personal', label: 'Personal' },
+        { value: 'business', label: 'Business' },
+        { value: 'enterprise', label: 'Enterprise' },
+      ]}
+      placeholder="Select plan"
+    />
+    <Checkbox client:load label="I agree to the terms and conditions" />
+    <Button client:load type="submit" variant="primary" fullWidth>
+      Sign Up
+    </Button>
+  </Form>
+
+  <Fragment slot="code">
+```tsx
+<Form onSubmit={handleSubmit}>
+  <Input placeholder="Full name" />
+  <Input type="email" placeholder="Email" />
+  <Select
+    options={[
+      { value: 'personal', label: 'Personal' },
+      { value: 'business', label: 'Business' },
+      { value: 'enterprise', label: 'Enterprise' },
+    ]}
+    placeholder="Select plan"
+  />
+  <Checkbox label="I agree to the terms and conditions" />
+  <Button type="submit" variant="primary" fullWidth>
+    Sign Up
+  </Button>
+</Form>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Validation Errors
+
+<ComponentPreview title="Form with Errors">
+  <Form client:load>
+    <Input client:load placeholder="Email" type="email" error="Please enter a valid email address" />
+    <Input client:load placeholder="Password" type="password" error="Password must be at least 8 characters" />
+    <Button client:load type="submit" variant="primary" fullWidth>
+      Log In
+    </Button>
+  </Form>
+
+  <Fragment slot="code">
+```tsx
+<Form onSubmit={handleSubmit}>
+  <Input
+    placeholder="Email"
+    type="email"
+    error={errors.email}
+  />
+  <Input
+    placeholder="Password"
+    type="password"
+    error={errors.password}
+  />
+  <Button type="submit" variant="primary" fullWidth>
+    Log In
+  </Button>
+</Form>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+The Form component extends `React.FormHTMLAttributes<HTMLFormElement>`, so it accepts all standard HTML form attributes in addition to the following:
+
+<PropsTable
+  props={[
+    {
+      name: 'onSubmit',
+      type: '(event: React.FormEvent<HTMLFormElement>) => void',
+      description: 'Submit event handler. Call event.preventDefault() to handle submission in JavaScript.',
+    },
+    {
+      name: 'action',
+      type: 'string',
+      description: 'URL to submit the form to when using native form submission',
+    },
+    {
+      name: 'method',
+      type: "'get' | 'post'",
+      description: 'HTTP method for native form submission',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the form element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Form content including inputs, selects, buttons, and other form elements',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Login Form
+
+```tsx
+import { useState } from 'react';
+import { Form, Input, Button, Checkbox } from '@tiinno-ui/components';
+
+function LoginForm() {
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    try {
+      await login(email, password);
+    } catch (err) {
+      setErrors({ email: 'Invalid email or password' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Input
+        name="email"
+        type="email"
+        placeholder="Email"
+        error={errors.email}
+      />
+      <Input
+        name="password"
+        type="password"
+        placeholder="Password"
+        error={errors.password}
+      />
+      <Checkbox label="Remember me" name="remember" />
+      <Button type="submit" variant="primary" fullWidth loading={loading}>
+        Sign In
+      </Button>
+    </Form>
+  );
+}
+```
+
+### Contact Form
+
+```tsx
+import { Form, Input, Textarea, Select, Button } from '@tiinno-ui/components';
+
+function ContactForm() {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    await sendContactMessage(Object.fromEntries(formData));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <div className="flex gap-4">
+        <Input name="firstName" placeholder="First name" />
+        <Input name="lastName" placeholder="Last name" />
+      </div>
+      <Input name="email" type="email" placeholder="Email address" />
+      <Select
+        name="subject"
+        placeholder="What is this about?"
+        options={[
+          { value: 'general', label: 'General Inquiry' },
+          { value: 'support', label: 'Technical Support' },
+          { value: 'billing', label: 'Billing' },
+          { value: 'feedback', label: 'Feedback' },
+        ]}
+      />
+      <Textarea
+        name="message"
+        placeholder="Your message..."
+        rows={6}
+      />
+      <Button type="submit" variant="primary">
+        Send Message
+      </Button>
+    </Form>
+  );
+}
+```
+
+### Multi-step Form
+
+```tsx
+import { useState } from 'react';
+import { Form, Input, Button } from '@tiinno-ui/components';
+
+function MultiStepForm() {
+  const [step, setStep] = useState(1);
+
+  return (
+    <Form onSubmit={handleFinalSubmit}>
+      {step === 1 && (
+        <>
+          <Input name="name" placeholder="Full name" />
+          <Input name="email" type="email" placeholder="Email" />
+          <Button variant="primary" onClick={() => setStep(2)}>
+            Next
+          </Button>
+        </>
+      )}
+      {step === 2 && (
+        <>
+          <Input name="company" placeholder="Company" />
+          <Input name="role" placeholder="Your role" />
+          <div className="flex gap-4">
+            <Button variant="outline" onClick={() => setStep(1)}>
+              Back
+            </Button>
+            <Button type="submit" variant="primary">
+              Submit
+            </Button>
+          </div>
+        </>
+      )}
+    </Form>
+  );
+}
+```
+
+## Accessibility
+
+The Form component follows accessibility best practices:
+
+- Uses the semantic `<form>` HTML element
+- Supports native form validation attributes on child inputs
+- Works with screen readers by maintaining proper form landmark semantics
+- All child form elements should include associated labels (see [FormField](/components/forms/form-field/))
+- Error messages are announced to screen readers via `aria-live` regions
+
+## Related Components
+
+- [FormField](/components/forms/form-field/) - Labeled field wrapper with error and helper text
+- [Input](/components/primitives/input/) - Text input field
+- [Select](/components/primitives/select/) - Dropdown selection
+- [Textarea](/components/primitives/textarea/) - Multi-line text input
+- [Checkbox](/components/primitives/checkbox/) - Boolean checkbox input
+- [Button](/components/primitives/button/) - Form submit button

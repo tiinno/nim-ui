@@ -1,0 +1,205 @@
+---
+title: QuantitySelector
+description: Numeric stepper input for selecting product quantities with increment and decrement controls
+---
+
+import { QuantitySelector } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The QuantitySelector component provides a compact numeric input with increment and decrement buttons for selecting quantities. It enforces minimum and maximum bounds and supports direct keyboard input.
+
+## Import
+
+```tsx
+import { QuantitySelector } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic QuantitySelector">
+  <QuantitySelector client:load value={1} onChange={(qty) => console.log(qty)} />
+
+  <Fragment slot="code">
+```tsx
+<QuantitySelector value={1} onChange={(qty) => setQuantity(qty)} />
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Min and Max
+
+Set bounds on the allowed quantity range. Buttons are disabled at the limits.
+
+<ComponentPreview title="QuantitySelector with Bounds">
+  <QuantitySelector
+    client:load
+    value={5}
+    min={1}
+    max={10}
+    onChange={(qty) => console.log(qty)}
+  />
+
+  <Fragment slot="code">
+```tsx
+<QuantitySelector
+  value={5}
+  min={1}
+  max={10}
+  onChange={(qty) => setQuantity(qty)}
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Three size options match the sizing conventions of other form components.
+
+<ComponentPreview title="QuantitySelector Sizes">
+  <QuantitySelector client:load value={1} size="sm" onChange={(qty) => console.log(qty)} />
+  <QuantitySelector client:load value={1} size="md" onChange={(qty) => console.log(qty)} />
+  <QuantitySelector client:load value={1} size="lg" onChange={(qty) => console.log(qty)} />
+
+  <Fragment slot="code">
+```tsx
+<QuantitySelector value={1} size="sm" onChange={(qty) => setQuantity(qty)} />
+<QuantitySelector value={1} size="md" onChange={(qty) => setQuantity(qty)} />
+<QuantitySelector value={1} size="lg" onChange={(qty) => setQuantity(qty)} />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'number',
+      required: true,
+      description: 'Current quantity value',
+    },
+    {
+      name: 'min',
+      type: 'number',
+      default: '1',
+      description: 'Minimum allowed value',
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: '99',
+      description: 'Maximum allowed value',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size of the selector',
+    },
+    {
+      name: 'onChange',
+      type: '(value: number) => void',
+      description: 'Callback fired when the quantity changes',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Product Detail Page
+
+```tsx
+function ProductDetail({ product }: { product: Product }) {
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = () => {
+    addToCart(product.id, quantity);
+  };
+
+  return (
+    <div className="space-y-4">
+      <h1>{product.name}</h1>
+      <p>{product.price}</p>
+
+      <div className="flex items-center gap-4">
+        <QuantitySelector
+          value={quantity}
+          min={1}
+          max={product.stock}
+          onChange={setQuantity}
+        />
+        <Button onClick={handleAddToCart}>Add to Cart</Button>
+      </div>
+    </div>
+  );
+}
+```
+
+### Cart Line Item with Quantity
+
+```tsx
+function CartLineItem({ item, onUpdate, onRemove }: CartLineItemProps) {
+  return (
+    <div className="flex items-center gap-4 py-4 border-b">
+      <img
+        src={item.image}
+        alt={item.name}
+        className="h-16 w-16 rounded-md object-cover"
+      />
+      <div className="flex-1">
+        <p className="font-medium">{item.name}</p>
+        <p className="text-sm text-neutral-500">{item.price}</p>
+      </div>
+      <QuantitySelector
+        value={item.quantity}
+        min={1}
+        max={item.maxStock}
+        size="sm"
+        onChange={(qty) => onUpdate(item.id, qty)}
+      />
+      <button onClick={() => onRemove(item.id)} className="text-red-500">
+        Remove
+      </button>
+    </div>
+  );
+}
+```
+
+### Bulk Order Form
+
+```tsx
+function BulkOrderRow({ product }: { product: Product }) {
+  const [quantity, setQuantity] = useState(0);
+
+  return (
+    <div className="flex items-center justify-between py-2">
+      <span>{product.name}</span>
+      <div className="flex items-center gap-4">
+        <QuantitySelector
+          value={quantity}
+          min={0}
+          max={999}
+          size="sm"
+          onChange={setQuantity}
+        />
+        <span className="w-24 text-right font-medium">
+          ${(product.unitPrice * quantity).toFixed(2)}
+        </span>
+      </div>
+    </div>
+  );
+}
+```
+
+## Related Components
+
+- [CartItem](/components/commerce/cart-item/) - Shopping cart line item with built-in quantity display
+- [PriceTag](/components/commerce/price-tag/) - Price display with discounts
+- [ProductCard](/components/commerce/product-card/) - Product display card

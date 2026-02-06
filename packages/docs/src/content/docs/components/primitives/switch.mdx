@@ -1,0 +1,376 @@
+---
+title: Switch
+description: Toggle switch for binary on/off states built on Radix UI
+---
+
+import { Switch } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Switch component is a toggle control for binary on/off states, built on [Radix UI Switch](https://www.radix-ui.com/primitives/docs/components/switch). It provides an accessible, animated toggle that is ideal for settings and preferences where an immediate effect is expected.
+
+## Import
+
+```tsx
+import { Switch } from '@tiinno-ui/components';
+```
+
+## Variants
+
+### Default
+
+<ComponentPreview title="Default Switch">
+  <div className="flex items-center space-x-2">
+    <Switch client:load id="default-switch" />
+    <label htmlFor="default-switch" className="text-sm font-medium">Toggle me</label>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center space-x-2">
+  <Switch id="default-switch" />
+  <label htmlFor="default-switch">Toggle me</label>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+### With Label Pattern
+
+The recommended usage is to pair the Switch with a `<label>` element using matching `id` and `htmlFor` attributes.
+
+<ComponentPreview title="Switch with Labels">
+  <div className="flex items-center space-x-2">
+    <Switch client:load id="airplane-mode" />
+    <label htmlFor="airplane-mode" className="text-sm font-medium">Airplane Mode</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <Switch client:load id="dark-mode" />
+    <label htmlFor="dark-mode" className="text-sm font-medium">Dark Mode</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <Switch client:load id="notifications" />
+    <label htmlFor="notifications" className="text-sm font-medium">Notifications</label>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center space-x-2">
+  <Switch id="airplane-mode" />
+  <label htmlFor="airplane-mode">Airplane Mode</label>
+</div>
+<div className="flex items-center space-x-2">
+  <Switch id="dark-mode" />
+  <label htmlFor="dark-mode">Dark Mode</label>
+</div>
+<div className="flex items-center space-x-2">
+  <Switch id="notifications" />
+  <label htmlFor="notifications">Notifications</label>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Three size options are available: small, medium (default), and large.
+
+<ComponentPreview title="Switch Sizes">
+  <div className="flex items-center space-x-2">
+    <Switch client:load size="sm" id="switch-sm" />
+    <label htmlFor="switch-sm" className="text-sm font-medium">Small</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <Switch client:load size="md" id="switch-md" />
+    <label htmlFor="switch-md" className="text-sm font-medium">Medium</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <Switch client:load size="lg" id="switch-lg" />
+    <label htmlFor="switch-lg" className="text-sm font-medium">Large</label>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center space-x-2">
+  <Switch size="sm" id="switch-sm" />
+  <label htmlFor="switch-sm">Small</label>
+</div>
+<div className="flex items-center space-x-2">
+  <Switch size="md" id="switch-md" />
+  <label htmlFor="switch-md">Medium</label>
+</div>
+<div className="flex items-center space-x-2">
+  <Switch size="lg" id="switch-lg" />
+  <label htmlFor="switch-lg">Large</label>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## States
+
+### Disabled
+
+<ComponentPreview title="Disabled State">
+  <div className="flex items-center space-x-2">
+    <Switch client:load id="disabled-off" disabled />
+    <label htmlFor="disabled-off" className="text-sm font-medium text-gray-400">Disabled (off)</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <Switch client:load id="disabled-on" disabled checked={true} />
+    <label htmlFor="disabled-on" className="text-sm font-medium text-gray-400">Disabled (on)</label>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center space-x-2">
+  <Switch id="disabled-off" disabled />
+  <label htmlFor="disabled-off">Disabled (off)</label>
+</div>
+<div className="flex items-center space-x-2">
+  <Switch id="disabled-on" disabled checked />
+  <label htmlFor="disabled-on">Disabled (on)</label>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'checked',
+      type: 'boolean',
+      description: 'Controlled checked state of the switch',
+    },
+    {
+      name: 'onCheckedChange',
+      type: '(checked: boolean) => void',
+      description: 'Callback fired when the checked state changes',
+    },
+    {
+      name: 'defaultChecked',
+      type: 'boolean',
+      description: 'Initial checked state for uncontrolled usage',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the switch is disabled',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size of the switch',
+    },
+    {
+      name: 'id',
+      type: 'string',
+      description: 'HTML id attribute, used to associate with a label',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Settings Panel
+
+```tsx
+function SettingsPanel() {
+  const [settings, setSettings] = useState({
+    darkMode: false,
+    notifications: true,
+    analytics: false,
+    autoUpdate: true,
+  });
+
+  const toggle = (key: keyof typeof settings) => {
+    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  return (
+    <div className="space-y-6">
+      <h3 className="text-lg font-semibold">Preferences</h3>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <label htmlFor="dark-mode" className="text-sm font-medium">
+              Dark Mode
+            </label>
+            <p className="text-xs text-gray-500">Use dark theme throughout the app</p>
+          </div>
+          <Switch
+            id="dark-mode"
+            checked={settings.darkMode}
+            onCheckedChange={() => toggle('darkMode')}
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <label htmlFor="notifications" className="text-sm font-medium">
+              Notifications
+            </label>
+            <p className="text-xs text-gray-500">Receive push notifications</p>
+          </div>
+          <Switch
+            id="notifications"
+            checked={settings.notifications}
+            onCheckedChange={() => toggle('notifications')}
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <label htmlFor="analytics" className="text-sm font-medium">
+              Analytics
+            </label>
+            <p className="text-xs text-gray-500">Share anonymous usage data</p>
+          </div>
+          <Switch
+            id="analytics"
+            checked={settings.analytics}
+            onCheckedChange={() => toggle('analytics')}
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <label htmlFor="auto-update" className="text-sm font-medium">
+              Auto Update
+            </label>
+            <p className="text-xs text-gray-500">Automatically install updates</p>
+          </div>
+          <Switch
+            id="auto-update"
+            checked={settings.autoUpdate}
+            onCheckedChange={() => toggle('autoUpdate')}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+### Feature Toggle
+
+```tsx
+function FeatureToggle({ feature, enabled, onToggle }) {
+  return (
+    <div className="flex items-center justify-between p-4 border rounded-lg">
+      <div>
+        <h4 className="text-sm font-medium">{feature.name}</h4>
+        <p className="text-xs text-gray-500">{feature.description}</p>
+      </div>
+      <Switch
+        id={`feature-${feature.id}`}
+        checked={enabled}
+        onCheckedChange={onToggle}
+        size="sm"
+      />
+    </div>
+  );
+}
+```
+
+### Form Integration
+
+```tsx
+function EmailPreferences() {
+  const [prefs, setPrefs] = useState({
+    marketing: false,
+    product: true,
+    security: true,
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    savePreferences(prefs);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <h3 className="text-lg font-semibold">Email Preferences</h3>
+      <div className="flex items-center justify-between">
+        <label htmlFor="marketing-email" className="text-sm">
+          Marketing emails
+        </label>
+        <Switch
+          id="marketing-email"
+          checked={prefs.marketing}
+          onCheckedChange={(checked) =>
+            setPrefs((prev) => ({ ...prev, marketing: checked }))
+          }
+        />
+      </div>
+      <div className="flex items-center justify-between">
+        <label htmlFor="product-email" className="text-sm">
+          Product updates
+        </label>
+        <Switch
+          id="product-email"
+          checked={prefs.product}
+          onCheckedChange={(checked) =>
+            setPrefs((prev) => ({ ...prev, product: checked }))
+          }
+        />
+      </div>
+      <div className="flex items-center justify-between">
+        <label htmlFor="security-email" className="text-sm">
+          Security alerts
+        </label>
+        <Switch
+          id="security-email"
+          checked={prefs.security}
+          onCheckedChange={(checked) =>
+            setPrefs((prev) => ({ ...prev, security: checked }))
+          }
+          disabled
+        />
+      </div>
+      <p className="text-xs text-gray-500">Security alerts cannot be disabled.</p>
+      <Button type="submit">Save Preferences</Button>
+    </form>
+  );
+}
+```
+
+## Accessibility
+
+The Switch component is built on Radix UI and follows WAI-ARIA best practices:
+
+- Uses `role="switch"` with proper `aria-checked` state
+- Supports `aria-label` and `aria-labelledby` for screen reader announcements
+- Full keyboard navigation support
+- Focus visible states for keyboard users
+- Disabled state properly communicated to assistive technology
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Space | Toggles the switch on/off |
+| Enter | Toggles the switch on/off |
+| Tab | Moves focus to the next focusable element |
+| Shift + Tab | Moves focus to the previous focusable element |
+
+### Best Practices
+
+- Always pair switches with visible labels using `id` and `htmlFor`
+- Use Switch for settings that take immediate effect (no submit required)
+- Use Checkbox instead for form fields that require explicit submission
+- Provide descriptive labels that clearly indicate what is being toggled
+- Include supplementary text when the toggle effect is not obvious
+
+## Related Components
+
+- [Checkbox](/components/primitives/checkbox/) - Boolean selection for forms
+- [Radio](/components/primitives/radio/) - Single selection from a group
+- [Select](/components/primitives/select/) - Dropdown selection
+- [Button](/components/primitives/button/) - Interactive button for actions

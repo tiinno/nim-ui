@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "tiinno-ui": {
+      "command": "node",
+      "args": [
+        "/Users/YOUR_USERNAME/Project/HOBBY/utils/tiinno-ui/packages/mcp-server/dist/index.js"
+      ]
+    }
+  }
+}

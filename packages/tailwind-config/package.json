@@ -1,0 +1,14 @@
+{
+  "name": "@tiinno-ui/tailwind-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js",
+    "./tokens": "./src/tokens.js"
+  },
+  "files": ["src"],
+  "dependencies": {
+    "tailwindcss": "^4.1.0"
+  }
+}

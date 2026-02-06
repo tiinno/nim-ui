@@ -1,0 +1,210 @@
+---
+title: Container
+description: Responsive container with max-width constraints and optional horizontal padding
+---
+
+import { Container } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Container component provides a responsive wrapper that constrains content to a maximum width and centers it horizontally. It is the foundational building block for page-level layouts, ensuring consistent margins and padding across breakpoints.
+
+## Import
+
+```tsx
+import { Container } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Default Container">
+  <Container client:load>
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">
+      Default container (max-width: xl) with padding
+    </div>
+  </Container>
+
+  <Fragment slot="code">
+```tsx
+<Container>
+  <p>Content constrained to max-width xl with horizontal padding.</p>
+</Container>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Max Width
+
+The `maxWidth` prop controls the maximum width of the container. It maps directly to Tailwind's `max-w-screen-*` utilities.
+
+<ComponentPreview title="Max Width Variants">
+  <Container client:load maxWidth="sm">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">sm</div>
+  </Container>
+  <Container client:load maxWidth="md">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">md</div>
+  </Container>
+  <Container client:load maxWidth="lg">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">lg</div>
+  </Container>
+  <Container client:load maxWidth="xl">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">xl (default)</div>
+  </Container>
+  <Container client:load maxWidth="2xl">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">2xl</div>
+  </Container>
+  <Container client:load maxWidth="full">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">full</div>
+  </Container>
+
+  <Fragment slot="code">
+```tsx
+<Container maxWidth="sm">Small container</Container>
+<Container maxWidth="md">Medium container</Container>
+<Container maxWidth="lg">Large container</Container>
+<Container maxWidth="xl">Extra large container (default)</Container>
+<Container maxWidth="2xl">2XL container</Container>
+<Container maxWidth="full">Full width container</Container>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Padding
+
+The `padding` prop controls whether horizontal padding is applied. Padding is responsive: `px-4` on mobile, `px-6` on small screens, and `px-8` on large screens.
+
+<ComponentPreview title="With and Without Padding">
+  <Container client:load padding={true}>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">
+      With padding (default)
+    </div>
+  </Container>
+  <Container client:load padding={false}>
+    <div className="bg-amber-100 dark:bg-amber-900 p-3 rounded text-center text-xs">
+      Without padding
+    </div>
+  </Container>
+
+  <Fragment slot="code">
+```tsx
+<Container padding={true}>
+  With responsive horizontal padding (default)
+</Container>
+
+<Container padding={false}>
+  No horizontal padding - content reaches the edges
+</Container>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'maxWidth',
+      type: "'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'",
+      default: "'xl'",
+      description: 'Maximum width constraint for the container',
+    },
+    {
+      name: 'padding',
+      type: 'boolean',
+      default: 'true',
+      description: 'Apply responsive horizontal padding (px-4 sm:px-6 lg:px-8)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Content to render inside the container',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Page Layout
+
+```tsx
+function PageLayout({ children }) {
+  return (
+    <Container maxWidth="xl">
+      <header className="py-6">
+        <nav>Navigation</nav>
+      </header>
+      <main>{children}</main>
+      <footer className="py-8">Footer content</footer>
+    </Container>
+  );
+}
+```
+
+### Nested Containers
+
+```tsx
+function LandingPage() {
+  return (
+    <>
+      {/* Full-width hero background */}
+      <div className="bg-primary-500">
+        <Container maxWidth="lg">
+          <h1>Welcome to our platform</h1>
+        </Container>
+      </div>
+
+      {/* Narrower content section */}
+      <Container maxWidth="md">
+        <article>
+          <p>This content is constrained to a narrower width for readability.</p>
+        </article>
+      </Container>
+    </>
+  );
+}
+```
+
+### Full-Width Section Inside Container
+
+```tsx
+function Dashboard() {
+  return (
+    <Container maxWidth="2xl">
+      <h1>Dashboard</h1>
+      <Container maxWidth="full" padding={false}>
+        <div className="overflow-x-auto">
+          <table>{/* Wide table content */}</table>
+        </div>
+      </Container>
+    </Container>
+  );
+}
+```
+
+## Accessibility
+
+The Container component renders a semantic `<div>` element. It does not add any ARIA attributes by default. For landmark regions, wrap the Container in an appropriate semantic element or add a `role` attribute:
+
+```tsx
+<main>
+  <Container>
+    <h1>Main Content</h1>
+  </Container>
+</main>
+
+<Container role="region" aria-label="Featured content">
+  <p>Featured section</p>
+</Container>
+```
+
+## Related Components
+
+- [Grid](/components/layout/grid/) - CSS Grid layout for multi-column content
+- [Stack](/components/layout/stack/) - Vertical or horizontal stacking with spacing
+- [Flex](/components/layout/flex/) - Flexbox layout utility

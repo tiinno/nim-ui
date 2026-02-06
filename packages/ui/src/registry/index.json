@@ -1,0 +1,592 @@
+{
+  "version": "0.0.0",
+  "components": [
+    {
+      "name": "Button",
+      "category": "primitives",
+      "description": "A versatile button component with multiple variants and sizes for different use cases",
+      "keywords": ["button", "click", "action", "cta", "interactive"],
+      "file": "components/button.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "secondary", "outline", "ghost", "destructive"]
+        },
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg", "xl"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Default Button",
+          "code": "<Button>Click me</Button>"
+        },
+        {
+          "title": "Button with Variant and Size",
+          "code": "<Button variant=\"outline\" size=\"lg\">Large Outline</Button>"
+        }
+      ]
+    },
+    {
+      "name": "Input",
+      "category": "primitives",
+      "description": "A flexible input field component with validation states and multiple sizes",
+      "keywords": ["input", "text", "field", "form", "textbox"],
+      "file": "components/input.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "error", "success"]
+        },
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Input",
+          "code": "<Input placeholder=\"Enter text...\" />"
+        },
+        {
+          "title": "Input with Error State",
+          "code": "<Input variant=\"error\" placeholder=\"Invalid email\" />"
+        }
+      ]
+    },
+    {
+      "name": "Badge",
+      "category": "primitives",
+      "description": "A small badge component for displaying status, counts, or labels",
+      "keywords": ["badge", "label", "tag", "status", "pill"],
+      "file": "components/badge.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "secondary", "outline", "destructive"]
+        },
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Simple Badge",
+          "code": "<Badge>New</Badge>"
+        },
+        {
+          "title": "Destructive Badge",
+          "code": "<Badge variant=\"destructive\" size=\"lg\">Error</Badge>"
+        }
+      ]
+    },
+    {
+      "name": "Avatar",
+      "category": "primitives",
+      "description": "A user avatar component with image fallback and initials support, built with Radix UI",
+      "keywords": ["avatar", "profile", "image", "user", "picture"],
+      "file": "components/avatar.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg", "xl"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Avatar with Image",
+          "code": "<Avatar src=\"/user.jpg\" alt=\"John Doe\" />"
+        },
+        {
+          "title": "Avatar with Fallback",
+          "code": "<Avatar fallback=\"JD\" size=\"lg\" />"
+        }
+      ]
+    },
+    {
+      "name": "Card",
+      "category": "layout",
+      "description": "A container component for grouping related content with header, body, and footer sections",
+      "keywords": ["card", "container", "panel", "box", "section"],
+      "file": "components/card.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "outline"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Card",
+          "code": "<Card><CardHeader><CardTitle>Title</CardTitle></CardHeader><CardContent>Content here</CardContent></Card>"
+        },
+        {
+          "title": "Card with Footer",
+          "code": "<Card variant=\"outline\"><CardHeader><CardTitle>Title</CardTitle></CardHeader><CardContent>Content</CardContent><CardFooter>Footer</CardFooter></Card>"
+        }
+      ]
+    },
+    {
+      "name": "Modal",
+      "category": "layout",
+      "description": "A dialog/modal component for displaying content in an overlay, built with Radix UI",
+      "keywords": ["modal", "dialog", "overlay", "popup", "lightbox"],
+      "file": "components/modal.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "center", "fullscreen"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Modal",
+          "code": "<Modal><ModalTrigger><Button>Open</Button></ModalTrigger><ModalContent><ModalHeader><ModalTitle>Title</ModalTitle></ModalHeader>Content here</ModalContent></Modal>"
+        },
+        {
+          "title": "Centered Modal",
+          "code": "<Modal><ModalTrigger><Button>Open</Button></ModalTrigger><ModalContent variant=\"center\"><ModalHeader><ModalTitle>Centered</ModalTitle></ModalHeader>Centered content</ModalContent></Modal>"
+        }
+      ]
+    },
+    {
+      "name": "Drawer",
+      "category": "layout",
+      "description": "A slide-out panel component for side navigation or additional content, built with Radix UI",
+      "keywords": ["drawer", "sidebar", "panel", "sheet", "slide"],
+      "file": "components/drawer.tsx",
+      "variants": [
+        {
+          "name": "side",
+          "values": ["left", "right"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Left Drawer",
+          "code": "<Drawer><DrawerTrigger><Button>Open</Button></DrawerTrigger><DrawerContent side=\"left\"><DrawerHeader><DrawerTitle>Menu</DrawerTitle></DrawerHeader>Content</DrawerContent></Drawer>"
+        },
+        {
+          "title": "Right Drawer",
+          "code": "<Drawer><DrawerTrigger><Button>Settings</Button></DrawerTrigger><DrawerContent side=\"right\">Settings panel</DrawerContent></Drawer>"
+        }
+      ]
+    },
+    {
+      "name": "Tabs",
+      "category": "layout",
+      "description": "A tabbed interface component for organizing content into separate views, built with Radix UI",
+      "keywords": ["tabs", "tablist", "navigation", "switcher", "panels"],
+      "file": "components/tabs.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "pills"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Tabs",
+          "code": "<Tabs defaultValue=\"tab1\"><TabsList><TabsTrigger value=\"tab1\">Tab 1</TabsTrigger><TabsTrigger value=\"tab2\">Tab 2</TabsTrigger></TabsList><TabsContent value=\"tab1\">Content 1</TabsContent><TabsContent value=\"tab2\">Content 2</TabsContent></Tabs>"
+        },
+        {
+          "title": "Pills Variant",
+          "code": "<Tabs defaultValue=\"tab1\" variant=\"pills\"><TabsList><TabsTrigger value=\"tab1\">Tab 1</TabsTrigger><TabsTrigger value=\"tab2\">Tab 2</TabsTrigger></TabsList><TabsContent value=\"tab1\">Content 1</TabsContent></Tabs>"
+        }
+      ]
+    },
+    {
+      "name": "DataCard",
+      "category": "data-display",
+      "description": "A specialized card for displaying data with labels, values, and optional trends",
+      "keywords": ["data", "card", "metric", "display", "information"],
+      "file": "components/data-card.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "outline"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Data Card with Label",
+          "code": "<DataCard><DataCardLabel>Total Revenue</DataCardLabel><DataCardValue>$12,345</DataCardValue></DataCard>"
+        },
+        {
+          "title": "Data Card with Description",
+          "code": "<DataCard variant=\"outline\"><DataCardLabel>Users</DataCardLabel><DataCardValue>1,234</DataCardValue><DataCardDescription>Active this month</DataCardDescription></DataCard>"
+        }
+      ]
+    },
+    {
+      "name": "DataTable",
+      "category": "data-display",
+      "description": "A table component for displaying structured data with sorting and styling options",
+      "keywords": ["table", "data", "grid", "list", "rows"],
+      "file": "components/data-table.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "striped"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Table",
+          "code": "<DataTable><DataTableHeader><DataTableRow><DataTableHead>Name</DataTableHead><DataTableHead>Email</DataTableHead></DataTableRow></DataTableHeader><DataTableBody><DataTableRow><DataTableCell>John</DataTableCell><DataTableCell>john@example.com</DataTableCell></DataTableRow></DataTableBody></DataTable>"
+        },
+        {
+          "title": "Striped Table",
+          "code": "<DataTable variant=\"striped\"><DataTableHeader><DataTableRow><DataTableHead>Product</DataTableHead><DataTableHead>Price</DataTableHead></DataTableRow></DataTableHeader><DataTableBody><DataTableRow><DataTableCell>Item 1</DataTableCell><DataTableCell>$10</DataTableCell></DataTableRow></DataTableBody></DataTable>"
+        }
+      ]
+    },
+    {
+      "name": "Stat",
+      "category": "data-display",
+      "description": "A component for displaying statistics with labels, values, and optional trend indicators",
+      "keywords": ["stat", "statistic", "metric", "number", "kpi"],
+      "file": "components/stat.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "card"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Simple Stat",
+          "code": "<Stat><StatLabel>Total Sales</StatLabel><StatValue>$45,231</StatValue></Stat>"
+        },
+        {
+          "title": "Stat with Helper Text",
+          "code": "<Stat variant=\"card\"><StatLabel>Growth</StatLabel><StatValue>23.5%</StatValue><StatHelper>+2.5% from last month</StatHelper></Stat>"
+        }
+      ]
+    },
+    {
+      "name": "ProductCard",
+      "category": "commerce",
+      "description": "A card component optimized for displaying product information including images, titles, and prices",
+      "keywords": ["product", "card", "ecommerce", "shop", "item"],
+      "file": "components/product-card.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "compact"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Product Card",
+          "code": "<ProductCard><ProductCardImage src=\"/product.jpg\" alt=\"Product\" /><ProductCardTitle>Product Name</ProductCardTitle><ProductCardPrice>$99.99</ProductCardPrice></ProductCard>"
+        },
+        {
+          "title": "Compact Product Card",
+          "code": "<ProductCard variant=\"compact\"><ProductCardImage src=\"/product.jpg\" alt=\"Product\" /><ProductCardTitle>Product</ProductCardTitle><ProductCardPrice>$49.99</ProductCardPrice><ProductCardButton>Add to Cart</ProductCardButton></ProductCard>"
+        }
+      ]
+    },
+    {
+      "name": "CartItem",
+      "category": "commerce",
+      "description": "A component for displaying shopping cart items with quantity controls and removal options",
+      "keywords": ["cart", "item", "shopping", "checkout", "product"],
+      "file": "components/cart-item.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "compact"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Cart Item",
+          "code": "<CartItem><CartItemImage src=\"/product.jpg\" alt=\"Product\" /><CartItemDetails><CartItemTitle>Product Name</CartItemTitle><CartItemPrice>$99.99</CartItemPrice></CartItemDetails><CartItemQuantity quantity={2} /><CartItemRemove /></CartItem>"
+        },
+        {
+          "title": "Compact Cart Item",
+          "code": "<CartItem variant=\"compact\"><CartItemImage src=\"/product.jpg\" alt=\"Product\" /><CartItemDetails><CartItemTitle>Product</CartItemTitle><CartItemPrice>$49.99</CartItemPrice></CartItemDetails></CartItem>"
+        }
+      ]
+    },
+    {
+      "name": "PriceTag",
+      "category": "commerce",
+      "description": "A component for displaying prices with optional original price and discount information",
+      "keywords": ["price", "tag", "cost", "discount", "sale"],
+      "file": "components/price-tag.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "large"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Simple Price",
+          "code": "<PriceTag price={99.99} />"
+        },
+        {
+          "title": "Price with Discount",
+          "code": "<PriceTag price={79.99} originalPrice={99.99} variant=\"large\" />"
+        }
+      ]
+    },
+    {
+      "name": "QuantitySelector",
+      "category": "commerce",
+      "description": "A component for selecting quantities with increment and decrement buttons",
+      "keywords": ["quantity", "selector", "counter", "stepper", "amount"],
+      "file": "components/quantity-selector.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Quantity Selector",
+          "code": "<QuantitySelector value={1} onChange={(val) => console.log(val)} />"
+        },
+        {
+          "title": "Quantity Selector with Limits",
+          "code": "<QuantitySelector value={5} min={1} max={10} size=\"lg\" onChange={(val) => console.log(val)} />"
+        }
+      ]
+    },
+    {
+      "name": "Hero",
+      "category": "landing",
+      "description": "A hero section component for landing pages with headline, description, and call-to-action",
+      "keywords": ["hero", "banner", "header", "landing", "section"],
+      "file": "components/hero.tsx",
+      "variants": [
+        {
+          "name": "alignment",
+          "values": ["left", "center"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Centered Hero",
+          "code": "<Hero alignment=\"center\"><HeroHeadline>Welcome to Our Product</HeroHeadline><HeroDescription>The best solution for your needs</HeroDescription><HeroActions><Button>Get Started</Button></HeroActions></Hero>"
+        },
+        {
+          "title": "Left-Aligned Hero",
+          "code": "<Hero alignment=\"left\"><HeroHeadline>Build Faster</HeroHeadline><HeroDescription>Ship products quickly</HeroDescription><HeroActions><Button>Learn More</Button></HeroActions></Hero>"
+        }
+      ]
+    },
+    {
+      "name": "FeatureGrid",
+      "category": "landing",
+      "description": "A grid layout component for displaying features with icons, titles, and descriptions",
+      "keywords": ["features", "grid", "layout", "benefits", "highlights"],
+      "file": "components/feature-grid.tsx",
+      "variants": [
+        {
+          "name": "columns",
+          "values": ["2", "3", "4"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Three Column Feature Grid",
+          "code": "<FeatureGrid columns=\"3\"><FeatureGridItem><FeatureGridIcon>⚡</FeatureGridIcon><FeatureGridTitle>Fast</FeatureGridTitle><FeatureGridDescription>Lightning quick performance</FeatureGridDescription></FeatureGridItem></FeatureGrid>"
+        },
+        {
+          "title": "Two Column Feature Grid",
+          "code": "<FeatureGrid columns=\"2\"><FeatureGridItem><FeatureGridTitle>Secure</FeatureGridTitle><FeatureGridDescription>Enterprise-grade security</FeatureGridDescription></FeatureGridItem></FeatureGrid>"
+        }
+      ]
+    },
+    {
+      "name": "CTA",
+      "category": "landing",
+      "description": "A call-to-action component for encouraging user actions with headlines and buttons",
+      "keywords": ["cta", "call-to-action", "banner", "conversion", "action"],
+      "file": "components/cta.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "card"]
+        },
+        {
+          "name": "alignment",
+          "values": ["left", "center"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Centered CTA",
+          "code": "<CTA alignment=\"center\"><CTAHeadline>Ready to get started?</CTAHeadline><CTADescription>Join thousands of satisfied customers</CTADescription><CTAActions><Button>Sign Up Now</Button></CTAActions></CTA>"
+        },
+        {
+          "title": "Card Style CTA",
+          "code": "<CTA variant=\"card\" alignment=\"left\"><CTAHeadline>Boost Your Productivity</CTAHeadline><CTADescription>Try it free for 14 days</CTADescription><CTAActions><Button>Start Free Trial</Button></CTAActions></CTA>"
+        }
+      ]
+    },
+    {
+      "name": "Testimonial",
+      "category": "landing",
+      "description": "A component for displaying customer testimonials with quotes, names, and avatars",
+      "keywords": ["testimonial", "review", "quote", "feedback", "social-proof"],
+      "file": "components/testimonial.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "card"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Simple Testimonial",
+          "code": "<Testimonial><TestimonialQuote>This product changed our business!</TestimonialQuote><TestimonialAuthor name=\"John Doe\" role=\"CEO\" /></Testimonial>"
+        },
+        {
+          "title": "Card Testimonial with Avatar",
+          "code": "<Testimonial variant=\"card\"><TestimonialQuote>Amazing experience from start to finish</TestimonialQuote><TestimonialAuthor name=\"Jane Smith\" role=\"Designer\" avatar=\"/avatar.jpg\" /></Testimonial>"
+        }
+      ]
+    },
+    {
+      "name": "Form",
+      "category": "forms",
+      "description": "A form wrapper component with built-in validation and submission handling",
+      "keywords": ["form", "submit", "validation", "input", "fields"],
+      "file": "components/form.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Form",
+          "code": "<Form onSubmit={(data) => console.log(data)}><FormField name=\"email\" label=\"Email\" /><Button type=\"submit\">Submit</Button></Form>"
+        },
+        {
+          "title": "Form with Multiple Fields",
+          "code": "<Form onSubmit={(data) => console.log(data)}><FormField name=\"name\" label=\"Name\" /><FormField name=\"email\" label=\"Email\" type=\"email\" /><Button type=\"submit\">Register</Button></Form>"
+        }
+      ]
+    },
+    {
+      "name": "FormField",
+      "category": "forms",
+      "description": "A form field component with label, input, error message, and helper text support",
+      "keywords": ["form-field", "input", "label", "validation", "error"],
+      "file": "components/form-field.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "inline"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Form Field with Label",
+          "code": "<FormField name=\"email\" label=\"Email Address\" placeholder=\"Enter your email\" />"
+        },
+        {
+          "title": "Inline Form Field",
+          "code": "<FormField name=\"search\" label=\"Search\" variant=\"inline\" placeholder=\"Search...\" />"
+        }
+      ]
+    },
+    {
+      "name": "Select",
+      "category": "forms",
+      "description": "A dropdown select component with search and multi-select capabilities, built with Radix UI",
+      "keywords": ["select", "dropdown", "picker", "menu", "options"],
+      "file": "components/select.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Select",
+          "code": "<Select><SelectTrigger><SelectValue placeholder=\"Select option\" /></SelectTrigger><SelectContent><SelectItem value=\"1\">Option 1</SelectItem><SelectItem value=\"2\">Option 2</SelectItem></SelectContent></Select>"
+        },
+        {
+          "title": "Large Select",
+          "code": "<Select size=\"lg\"><SelectTrigger><SelectValue placeholder=\"Choose\" /></SelectTrigger><SelectContent><SelectItem value=\"a\">Choice A</SelectItem><SelectItem value=\"b\">Choice B</SelectItem></SelectContent></Select>"
+        }
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "category": "forms",
+      "description": "A checkbox input component with label and indeterminate state support, built with Radix UI",
+      "keywords": ["checkbox", "check", "toggle", "input", "boolean"],
+      "file": "components/checkbox.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Simple Checkbox",
+          "code": "<Checkbox id=\"terms\" label=\"Accept terms and conditions\" />"
+        },
+        {
+          "title": "Large Checkbox",
+          "code": "<Checkbox id=\"newsletter\" label=\"Subscribe to newsletter\" size=\"lg\" />"
+        }
+      ]
+    },
+    {
+      "name": "Radio",
+      "category": "forms",
+      "description": "A radio button component for selecting a single option from a group, built with Radix UI",
+      "keywords": ["radio", "option", "choice", "select", "input"],
+      "file": "components/radio.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Radio Group",
+          "code": "<RadioGroup><Radio value=\"1\" label=\"Option 1\" /><Radio value=\"2\" label=\"Option 2\" /></RadioGroup>"
+        },
+        {
+          "title": "Large Radio Buttons",
+          "code": "<RadioGroup><Radio value=\"a\" label=\"Choice A\" size=\"lg\" /><Radio value=\"b\" label=\"Choice B\" size=\"lg\" /></RadioGroup>"
+        }
+      ]
+    }
+  ]
+}

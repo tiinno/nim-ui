@@ -1,0 +1,151 @@
+---
+title: Badge
+description: Small label component for status indicators, categories, and counts
+---
+
+import { Badge } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Badge component renders small, inline labels for status indicators, categories, tags, and counts. It supports multiple visual variants and sizes to fit different contexts.
+
+## Import
+
+```tsx
+import { Badge } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Default Badge">
+  <Badge client:load>Badge</Badge>
+
+  <Fragment slot="code">
+```tsx
+<Badge>Badge</Badge>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Variants
+
+Four variants are available to communicate different levels of emphasis and meaning.
+
+<ComponentPreview title="Badge Variants">
+  <Badge client:load variant="default">Default</Badge>
+  <Badge client:load variant="secondary">Secondary</Badge>
+  <Badge client:load variant="outline">Outline</Badge>
+  <Badge client:load variant="destructive">Destructive</Badge>
+
+  <Fragment slot="code">
+```tsx
+<Badge variant="default">Default</Badge>
+<Badge variant="secondary">Secondary</Badge>
+<Badge variant="outline">Outline</Badge>
+<Badge variant="destructive">Destructive</Badge>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Three size options are available: small, medium (default), and large.
+
+<ComponentPreview title="Badge Sizes">
+  <Badge client:load size="sm">Small</Badge>
+  <Badge client:load size="md">Medium</Badge>
+  <Badge client:load size="lg">Large</Badge>
+
+  <Fragment slot="code">
+```tsx
+<Badge size="sm">Small</Badge>
+<Badge size="md">Medium</Badge>
+<Badge size="lg">Large</Badge>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: "'default' | 'secondary' | 'outline' | 'destructive'",
+      default: "'default'",
+      description: 'Visual style variant of the badge',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size of the badge',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Badge content',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Status Indicators
+
+```tsx
+function OrderStatus({ status }: { status: string }) {
+  const variantMap: Record<string, 'default' | 'secondary' | 'destructive'> = {
+    active: 'default',
+    pending: 'secondary',
+    cancelled: 'destructive',
+  };
+
+  return <Badge variant={variantMap[status]}>{status}</Badge>;
+}
+```
+
+### Tags List
+
+```tsx
+function TagList({ tags }: { tags: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <Badge key={tag} variant="outline" size="sm">
+          {tag}
+        </Badge>
+      ))}
+    </div>
+  );
+}
+```
+
+### Notification Count
+
+```tsx
+function NotificationBadge({ count }: { count: number }) {
+  return (
+    <div className="relative inline-flex">
+      <button>Notifications</button>
+      {count > 0 && (
+        <Badge variant="destructive" size="sm" className="absolute -top-2 -right-2">
+          {count}
+        </Badge>
+      )}
+    </div>
+  );
+}
+```
+
+## Related Components
+
+- [Avatar](/components/data-display/avatar/) - User profile image with fallback
+- [DataCard](/components/data-display/data-card/) - Metric display card
+- [PriceTag](/components/commerce/price-tag/) - Price display with discounts

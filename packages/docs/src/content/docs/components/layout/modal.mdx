@@ -1,0 +1,395 @@
+---
+title: Modal
+description: Dialog overlay for focused interactions, built on Radix UI Dialog
+---
+
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Modal component provides an accessible dialog overlay for focused user interactions. Built on top of [Radix UI Dialog](https://www.radix-ui.com/primitives/docs/components/dialog), it handles focus trapping, keyboard navigation, overlay click-to-close, and screen reader announcements out of the box. It uses a compound component pattern with multiple sub-components for flexible composition.
+
+## Import
+
+```tsx
+import {
+  Modal,
+  ModalTrigger,
+  ModalContent,
+  ModalOverlay,
+  ModalHeader,
+  ModalBody,
+  ModalTitle,
+  ModalDescription,
+  ModalClose,
+  ModalPortal,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+The simplest modal pattern uses `Modal`, `ModalTrigger`, `ModalContent`, `ModalHeader`, `ModalTitle`, and `ModalBody`.
+
+```tsx
+<Modal>
+  <ModalTrigger asChild>
+    <Button>Open Modal</Button>
+  </ModalTrigger>
+  <ModalContent>
+    <ModalHeader>
+      <ModalTitle>Modal Title</ModalTitle>
+    </ModalHeader>
+    <ModalBody>
+      <p>This is the modal content.</p>
+    </ModalBody>
+  </ModalContent>
+</Modal>
+```
+
+## With Description
+
+Add `ModalDescription` to provide additional context for screen readers and visual users.
+
+```tsx
+<Modal>
+  <ModalTrigger asChild>
+    <Button>Delete Item</Button>
+  </ModalTrigger>
+  <ModalContent>
+    <ModalHeader>
+      <ModalTitle>Confirm Deletion</ModalTitle>
+      <ModalDescription>
+        This action cannot be undone. This will permanently delete the item
+        and all associated data.
+      </ModalDescription>
+    </ModalHeader>
+    <ModalBody>
+      <p>Are you sure you want to proceed?</p>
+      <div className="flex gap-3 mt-4 justify-end">
+        <ModalClose asChild>
+          <Button variant="outline">Cancel</Button>
+        </ModalClose>
+        <Button variant="danger">Delete</Button>
+      </div>
+    </ModalBody>
+  </ModalContent>
+</Modal>
+```
+
+## Controlled Modal
+
+You can control the modal open state externally using React state.
+
+```tsx
+function ControlledModal() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Modal open={open} onOpenChange={setOpen}>
+      <ModalTrigger asChild>
+        <Button>Open Controlled Modal</Button>
+      </ModalTrigger>
+      <ModalContent>
+        <ModalHeader>
+          <ModalTitle>Controlled Modal</ModalTitle>
+        </ModalHeader>
+        <ModalBody>
+          <p>This modal is controlled via React state.</p>
+          <Button onClick={() => setOpen(false)} className="mt-4">
+            Close Programmatically
+          </Button>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+}
+```
+
+## With Form Content
+
+```tsx
+function FormModal() {
+  const [open, setOpen] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission
+    setOpen(false);
+  };
+
+  return (
+    <Modal open={open} onOpenChange={setOpen}>
+      <ModalTrigger asChild>
+        <Button>Create New Item</Button>
+      </ModalTrigger>
+      <ModalContent>
+        <ModalHeader>
+          <ModalTitle>Create Item</ModalTitle>
+          <ModalDescription>
+            Fill out the form below to create a new item.
+          </ModalDescription>
+        </ModalHeader>
+        <ModalBody>
+          <form onSubmit={handleSubmit}>
+            <Stack spacing="md">
+              <Input label="Name" placeholder="Enter item name" required />
+              <Textarea label="Description" placeholder="Describe the item" />
+              <Flex justify="end" gap="sm">
+                <ModalClose asChild>
+                  <Button variant="outline" type="button">Cancel</Button>
+                </ModalClose>
+                <Button variant="primary" type="submit">Create</Button>
+              </Flex>
+            </Stack>
+          </form>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+}
+```
+
+## With Close Button
+
+Use `ModalClose` to add a close button in the header area.
+
+```tsx
+<Modal>
+  <ModalTrigger asChild>
+    <Button>Open</Button>
+  </ModalTrigger>
+  <ModalContent>
+    <ModalHeader>
+      <Flex justify="between" align="center">
+        <ModalTitle>Settings</ModalTitle>
+        <ModalClose asChild>
+          <button
+            className="rounded-sm opacity-70 hover:opacity-100 transition-opacity"
+            aria-label="Close"
+          >
+            X
+          </button>
+        </ModalClose>
+      </Flex>
+    </ModalHeader>
+    <ModalBody>
+      <p>Settings content here.</p>
+    </ModalBody>
+  </ModalContent>
+</Modal>
+```
+
+## Component Architecture
+
+The Modal is composed of several sub-components, each with a specific role:
+
+| Component | Description |
+|-----------|-------------|
+| `Modal` | Root component that manages open/close state (Radix Dialog.Root) |
+| `ModalTrigger` | Element that opens the modal when clicked (Radix Dialog.Trigger) |
+| `ModalPortal` | Portals content to document body (Radix Dialog.Portal) |
+| `ModalOverlay` | Semi-transparent backdrop behind the modal |
+| `ModalContent` | The modal panel itself (includes Portal and Overlay automatically) |
+| `ModalHeader` | Header area for title and description |
+| `ModalBody` | Main content area |
+| `ModalTitle` | Accessible title text (Radix Dialog.Title) |
+| `ModalDescription` | Accessible description text (Radix Dialog.Description) |
+| `ModalClose` | Element that closes the modal when clicked (Radix Dialog.Close) |
+
+## Props
+
+### Modal (Root)
+
+<PropsTable
+  props={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state of the modal',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open: boolean) => void',
+      description: 'Callback when the open state changes',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage',
+    },
+    {
+      name: 'modal',
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to render as a modal (with inert background)',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Modal sub-components (Trigger, Content, etc.)',
+    },
+  ]}
+/>
+
+### ModalContent
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for custom sizing, positioning, etc.',
+    },
+    {
+      name: 'onEscapeKeyDown',
+      type: '(event: KeyboardEvent) => void',
+      description: 'Handler called when Escape key is pressed',
+    },
+    {
+      name: 'onPointerDownOutside',
+      type: '(event: PointerDownOutsideEvent) => void',
+      description: 'Handler called when clicking outside the modal',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Modal content (Header, Body, etc.)',
+    },
+  ]}
+/>
+
+### ModalTitle
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the title',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Title text content',
+    },
+  ]}
+/>
+
+### ModalDescription
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the description',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Description text content',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Confirmation Dialog
+
+```tsx
+function ConfirmDialog({ onConfirm, title, message }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Modal open={open} onOpenChange={setOpen}>
+      <ModalTrigger asChild>
+        <Button variant="danger">Delete</Button>
+      </ModalTrigger>
+      <ModalContent>
+        <ModalHeader>
+          <ModalTitle>{title}</ModalTitle>
+          <ModalDescription>{message}</ModalDescription>
+        </ModalHeader>
+        <ModalBody>
+          <Flex justify="end" gap="sm" className="mt-4">
+            <ModalClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </ModalClose>
+            <Button
+              variant="danger"
+              onClick={() => {
+                onConfirm();
+                setOpen(false);
+              }}
+            >
+              Confirm
+            </Button>
+          </Flex>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+}
+```
+
+### Image Preview Modal
+
+```tsx
+function ImagePreview({ src, alt }) {
+  return (
+    <Modal>
+      <ModalTrigger asChild>
+        <img
+          src={src}
+          alt={alt}
+          className="cursor-pointer rounded-lg hover:opacity-80 transition-opacity"
+        />
+      </ModalTrigger>
+      <ModalContent className="max-w-3xl">
+        <ModalHeader>
+          <ModalTitle>{alt}</ModalTitle>
+        </ModalHeader>
+        <ModalBody>
+          <img src={src} alt={alt} className="w-full rounded" />
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+}
+```
+
+## Accessibility
+
+The Modal component is built on Radix UI Dialog and provides comprehensive accessibility features:
+
+- **Focus trapping**: Focus is trapped within the modal while open
+- **Focus restoration**: Focus returns to the trigger element when the modal closes
+- **Escape key**: Pressing Escape closes the modal
+- **Background inert**: Background content is made inert (non-interactive) while the modal is open
+- **ARIA attributes**: Automatically sets `role="dialog"`, `aria-modal="true"`, `aria-labelledby`, and `aria-describedby`
+- **Screen reader announcements**: ModalTitle and ModalDescription are announced to screen readers
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Escape | Closes the modal |
+| Tab | Moves focus to next focusable element within modal |
+| Shift + Tab | Moves focus to previous focusable element within modal |
+
+### Best Practices
+
+- Always include a `ModalTitle` for screen reader accessibility
+- Use `ModalDescription` when additional context is helpful
+- Provide a visible close mechanism (close button or cancel action)
+- Avoid nesting modals when possible
+
+## Related Components
+
+- [Drawer](/components/layout/drawer/) - Side panel overlay for navigation or forms
+- [Card](/components/layout/card/) - Non-overlay content container
+- [Tabs](/components/layout/tabs/) - Organize content without overlays

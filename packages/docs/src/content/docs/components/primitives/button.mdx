@@ -1,0 +1,368 @@
+---
+title: Button
+description: Interactive button component for user actions
+---
+
+import { Button } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Button component is the primary interactive element for triggering actions in your application. It supports multiple variants, sizes, and states.
+
+## Import
+
+```tsx
+import { Button } from '@tiinno-ui/components';
+```
+
+## Variants
+
+Buttons come in five different variants to suit various use cases.
+
+<ComponentPreview title="Button Variants">
+  <Button client:load variant="primary">
+    Primary
+  </Button>
+  <Button client:load variant="secondary">
+    Secondary
+  </Button>
+  <Button client:load variant="outline">
+    Outline
+  </Button>
+  <Button client:load variant="ghost">
+    Ghost
+  </Button>
+  <Button client:load variant="danger">
+    Danger
+  </Button>
+
+  <Fragment slot="code">
+```tsx
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="outline">Outline</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="danger">Danger</Button>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Three size options are available: small, medium (default), and large.
+
+<ComponentPreview title="Button Sizes">
+  <Button client:load size="sm">
+    Small
+  </Button>
+  <Button client:load size="md">
+    Medium
+  </Button>
+  <Button client:load size="lg">
+    Large
+  </Button>
+
+  <Fragment slot="code">
+```tsx
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
+```
+  </Fragment>
+</ComponentPreview>
+
+## States
+
+### Disabled
+
+<ComponentPreview title="Disabled State">
+  <Button client:load disabled>
+    Disabled Button
+  </Button>
+  <Button client:load variant="outline" disabled>
+    Disabled Outline
+  </Button>
+
+  <Fragment slot="code">
+```tsx
+<Button disabled>Disabled Button</Button>
+<Button variant="outline" disabled>Disabled Outline</Button>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Loading
+
+<ComponentPreview title="Loading State">
+  <Button client:load loading>
+    Loading...
+  </Button>
+  <Button client:load variant="outline" loading>
+    Please wait
+  </Button>
+
+  <Fragment slot="code">
+```tsx
+<Button loading>Loading...</Button>
+<Button variant="outline" loading>Please wait</Button>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Full Width
+
+<ComponentPreview title="Full Width Button">
+  <div className="w-full">
+    <Button client:load fullWidth>
+      Full Width Button
+    </Button>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<Button fullWidth>Full Width Button</Button>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Icons
+
+Combine buttons with icons for enhanced visual communication.
+
+<ComponentPreview title="Buttons with Icons">
+  <Button client:load variant="primary">
+    <span className="mr-2">→</span>
+    Next
+  </Button>
+  <Button client:load variant="outline">
+    <span className="mr-2">←</span>
+    Back
+  </Button>
+  <Button client:load variant="ghost">
+    <span className="mr-2">↻</span>
+    Refresh
+  </Button>
+
+  <Fragment slot="code">
+```tsx
+<Button variant="primary">
+  <ArrowRightIcon className="mr-2" />
+  Next
+</Button>
+<Button variant="outline">
+  <ArrowLeftIcon className="mr-2" />
+  Back
+</Button>
+<Button variant="ghost">
+  <RefreshIcon className="mr-2" />
+  Refresh
+</Button>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: "'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'",
+      default: "'primary'",
+      description: 'Visual style variant of the button',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size of the button',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the button is disabled',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: 'false',
+      description: 'Show loading state and disable interaction',
+    },
+    {
+      name: 'fullWidth',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the button should take full width of container',
+    },
+    {
+      name: 'type',
+      type: "'button' | 'submit' | 'reset'",
+      default: "'button'",
+      description: 'HTML button type attribute',
+    },
+    {
+      name: 'onClick',
+      type: '(event: MouseEvent) => void',
+      description: 'Click event handler',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Button content',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Form Submit Button
+
+```tsx
+function LoginForm() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await loginUser();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form fields */}
+      <Button type="submit" loading={loading} fullWidth>
+        Sign In
+      </Button>
+    </form>
+  );
+}
+```
+
+### Confirmation Dialog
+
+```tsx
+function DeleteConfirmation({ onConfirm, onCancel }) {
+  return (
+    <div className="flex gap-3">
+      <Button variant="danger" onClick={onConfirm}>
+        Delete
+      </Button>
+      <Button variant="outline" onClick={onCancel}>
+        Cancel
+      </Button>
+    </div>
+  );
+}
+```
+
+### Navigation
+
+```tsx
+function Navigation() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="flex gap-2">
+      <Button variant="ghost" onClick={() => navigate('/')}>
+        Home
+      </Button>
+      <Button variant="ghost" onClick={() => navigate('/about')}>
+        About
+      </Button>
+      <Button variant="primary" onClick={() => navigate('/signup')}>
+        Sign Up
+      </Button>
+    </div>
+  );
+}
+```
+
+## Accessibility
+
+The Button component follows WAI-ARIA best practices:
+
+- Uses semantic `<button>` element
+- Supports keyboard navigation (Enter, Space)
+- Properly handles `disabled` and `aria-disabled` states
+- Announces loading state to screen readers
+- Focus visible states for keyboard users
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Enter | Activates the button |
+| Space | Activates the button |
+| Tab | Moves focus to next focusable element |
+| Shift + Tab | Moves focus to previous focusable element |
+
+## Best Practices
+
+### Do
+
+- Use `primary` variant for main actions
+- Use `danger` variant for destructive actions
+- Add loading states for async operations
+- Include descriptive labels
+- Use icons to enhance clarity
+
+### Don't
+
+- Use multiple primary buttons in the same context
+- Make buttons too small for touch targets (minimum 44x44px)
+- Use buttons for navigation (use links instead)
+- Rely on color alone to convey meaning
+- Create overly long button labels
+
+## Customization
+
+### Custom Colors
+
+```tsx
+<Button className="bg-purple-600 hover:bg-purple-700 text-white">
+  Custom Color
+</Button>
+```
+
+### Custom Rounded Corners
+
+```tsx
+<Button className="rounded-full">
+  Rounded Button
+</Button>
+```
+
+### Custom Shadow
+
+```tsx
+<Button className="shadow-lg hover:shadow-xl">
+  Elevated Button
+</Button>
+```
+
+## Related Components
+
+- [Input](/components/primitives/input/) - Text input field
+- [Checkbox](/components/primitives/checkbox/) - Boolean checkbox input
+- [Select](/components/primitives/select/) - Dropdown selection
+
+## Changelog
+
+### v0.0.0
+
+- Initial release with 5 variants
+- Added loading state
+- Added size variants
+- Full TypeScript support

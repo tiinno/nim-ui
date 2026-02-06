@@ -1,0 +1,489 @@
+---
+title: Tabs
+description: Tabbed interface for organizing content into switchable panels
+---
+
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Tabs component organizes content into switchable panels, allowing users to view one section at a time. Built on [Radix UI Tabs](https://www.radix-ui.com/primitives/docs/components/tabs), it provides full keyboard navigation and ARIA support. It uses a compound component pattern with `TabsList`, `TabsTrigger`, and `TabsContent` sub-components.
+
+## Import
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Tabs">
+  <Tabs client:load defaultValue="tab1" className="w-full">
+    <TabsList client:load>
+      <TabsTrigger client:load value="tab1">Tab 1</TabsTrigger>
+      <TabsTrigger client:load value="tab2">Tab 2</TabsTrigger>
+      <TabsTrigger client:load value="tab3">Tab 3</TabsTrigger>
+    </TabsList>
+    <TabsContent client:load value="tab1">
+      <p className="text-sm text-neutral-700 dark:text-neutral-300 p-4">Content for Tab 1. This is the first panel.</p>
+    </TabsContent>
+    <TabsContent client:load value="tab2">
+      <p className="text-sm text-neutral-700 dark:text-neutral-300 p-4">Content for Tab 2. This is the second panel.</p>
+    </TabsContent>
+    <TabsContent client:load value="tab3">
+      <p className="text-sm text-neutral-700 dark:text-neutral-300 p-4">Content for Tab 3. This is the third panel.</p>
+    </TabsContent>
+  </Tabs>
+
+  <Fragment slot="code">
+```tsx
+<Tabs defaultValue="tab1">
+  <TabsList>
+    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+    <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">
+    <p>Content for Tab 1.</p>
+  </TabsContent>
+  <TabsContent value="tab2">
+    <p>Content for Tab 2.</p>
+  </TabsContent>
+  <TabsContent value="tab3">
+    <p>Content for Tab 3.</p>
+  </TabsContent>
+</Tabs>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Rich Content
+
+<ComponentPreview title="Tabs with Rich Content">
+  <Tabs client:load defaultValue="overview" className="w-full">
+    <TabsList client:load>
+      <TabsTrigger client:load value="overview">Overview</TabsTrigger>
+      <TabsTrigger client:load value="features">Features</TabsTrigger>
+      <TabsTrigger client:load value="pricing">Pricing</TabsTrigger>
+    </TabsList>
+    <TabsContent client:load value="overview">
+      <div className="p-4 space-y-2">
+        <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">Product Overview</h3>
+        <p className="text-sm text-neutral-700 dark:text-neutral-300">
+          A comprehensive solution for modern web development. Built with performance and developer experience in mind.
+        </p>
+      </div>
+    </TabsContent>
+    <TabsContent client:load value="features">
+      <div className="p-4 space-y-2">
+        <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">Key Features</h3>
+        <ul className="list-disc list-inside text-sm text-neutral-700 dark:text-neutral-300 space-y-1">
+          <li>TypeScript support</li>
+          <li>Accessible by default</li>
+          <li>Dark mode built-in</li>
+          <li>Responsive design</li>
+        </ul>
+      </div>
+    </TabsContent>
+    <TabsContent client:load value="pricing">
+      <div className="p-4 space-y-2">
+        <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">Pricing Plans</h3>
+        <p className="text-sm text-neutral-700 dark:text-neutral-300">
+          Free for open source projects. Enterprise plans available for teams.
+        </p>
+      </div>
+    </TabsContent>
+  </Tabs>
+
+  <Fragment slot="code">
+```tsx
+<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="features">Features</TabsTrigger>
+    <TabsTrigger value="pricing">Pricing</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">
+    <h3>Product Overview</h3>
+    <p>A comprehensive solution for modern web development.</p>
+  </TabsContent>
+  <TabsContent value="features">
+    <h3>Key Features</h3>
+    <ul>
+      <li>TypeScript support</li>
+      <li>Accessible by default</li>
+      <li>Dark mode built-in</li>
+      <li>Responsive design</li>
+    </ul>
+  </TabsContent>
+  <TabsContent value="pricing">
+    <h3>Pricing Plans</h3>
+    <p>Free for open source. Enterprise plans available.</p>
+  </TabsContent>
+</Tabs>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Disabled Tab
+
+Individual tabs can be disabled to prevent selection.
+
+<ComponentPreview title="Disabled Tab">
+  <Tabs client:load defaultValue="active" className="w-full">
+    <TabsList client:load>
+      <TabsTrigger client:load value="active">Active</TabsTrigger>
+      <TabsTrigger client:load value="disabled" disabled>Disabled</TabsTrigger>
+      <TabsTrigger client:load value="another">Another</TabsTrigger>
+    </TabsList>
+    <TabsContent client:load value="active">
+      <p className="text-sm text-neutral-700 dark:text-neutral-300 p-4">This tab is active.</p>
+    </TabsContent>
+    <TabsContent client:load value="another">
+      <p className="text-sm text-neutral-700 dark:text-neutral-300 p-4">This tab is also available.</p>
+    </TabsContent>
+  </Tabs>
+
+  <Fragment slot="code">
+```tsx
+<Tabs defaultValue="active">
+  <TabsList>
+    <TabsTrigger value="active">Active</TabsTrigger>
+    <TabsTrigger value="disabled" disabled>Disabled</TabsTrigger>
+    <TabsTrigger value="another">Another</TabsTrigger>
+  </TabsList>
+  <TabsContent value="active">This tab is active.</TabsContent>
+  <TabsContent value="another">This tab is also available.</TabsContent>
+</Tabs>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Controlled Tabs
+
+Control the active tab externally using React state.
+
+```tsx
+function ControlledTabs() {
+  const [activeTab, setActiveTab] = useState('tab1');
+
+  return (
+    <div>
+      <p>Current tab: {activeTab}</p>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList>
+          <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+          <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+          <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tab1">Content 1</TabsContent>
+        <TabsContent value="tab2">Content 2</TabsContent>
+        <TabsContent value="tab3">Content 3</TabsContent>
+      </Tabs>
+      <Button onClick={() => setActiveTab('tab2')}>
+        Go to Tab 2
+      </Button>
+    </div>
+  );
+}
+```
+
+## Component Architecture
+
+| Component | Description |
+|-----------|-------------|
+| `Tabs` | Root component that manages active tab state (Radix Tabs.Root) |
+| `TabsList` | Container for tab triggers, styled as a pill bar |
+| `TabsTrigger` | Clickable tab button that activates a panel (Radix Tabs.Trigger) |
+| `TabsContent` | Panel content shown when its corresponding trigger is active (Radix Tabs.Content) |
+
+## Props
+
+### Tabs (Root)
+
+<PropsTable
+  props={[
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'The value of the tab to select by default (uncontrolled)',
+    },
+    {
+      name: 'value',
+      type: 'string',
+      description: 'The controlled active tab value',
+    },
+    {
+      name: 'onValueChange',
+      type: '(value: string) => void',
+      description: 'Callback when the active tab changes',
+    },
+    {
+      name: 'orientation',
+      type: "'horizontal' | 'vertical'",
+      default: "'horizontal'",
+      description: 'Orientation of the tab list for keyboard navigation',
+    },
+    {
+      name: 'dir',
+      type: "'ltr' | 'rtl'",
+      description: 'Reading direction for keyboard navigation',
+    },
+    {
+      name: 'activationMode',
+      type: "'automatic' | 'manual'",
+      default: "'automatic'",
+      description: 'Whether tabs activate on focus (automatic) or on click (manual)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the root',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'TabsList and TabsContent components',
+    },
+  ]}
+/>
+
+### TabsList
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the tab list container',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'TabsTrigger components',
+    },
+  ]}
+/>
+
+### TabsTrigger
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      required: true,
+      description: 'Unique value that links this trigger to its corresponding TabsContent',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the tab trigger is disabled',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Tab label content',
+    },
+  ]}
+/>
+
+### TabsContent
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      required: true,
+      description: 'Value that links this content panel to its corresponding TabsTrigger',
+    },
+    {
+      name: 'forceMount',
+      type: 'boolean',
+      description: 'Force the content to mount even when inactive (useful for animations)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Tab panel content',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Settings Page
+
+```tsx
+function SettingsPage() {
+  return (
+    <Container maxWidth="lg">
+      <h1 className="text-2xl font-bold mb-6">Settings</h1>
+      <Tabs defaultValue="profile">
+        <TabsList>
+          <TabsTrigger value="profile">Profile</TabsTrigger>
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="notifications">Notifications</TabsTrigger>
+          <TabsTrigger value="billing">Billing</TabsTrigger>
+        </TabsList>
+        <TabsContent value="profile">
+          <Card>
+            <CardHeader>
+              <h2 className="text-lg font-semibold">Profile Settings</h2>
+            </CardHeader>
+            <CardContent>
+              <Stack spacing="md">
+                <Input label="Display Name" />
+                <Textarea label="Bio" rows={3} />
+                <Button variant="primary">Save Profile</Button>
+              </Stack>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="account">
+          <Card>
+            <CardContent>Account settings content</CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="notifications">
+          <Card>
+            <CardContent>Notification preferences</CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="billing">
+          <Card>
+            <CardContent>Billing information</CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </Container>
+  );
+}
+```
+
+### Product Details
+
+```tsx
+function ProductDetails({ product }) {
+  return (
+    <Tabs defaultValue="description">
+      <TabsList>
+        <TabsTrigger value="description">Description</TabsTrigger>
+        <TabsTrigger value="specs">Specifications</TabsTrigger>
+        <TabsTrigger value="reviews">
+          Reviews ({product.reviewCount})
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="description">
+        <div className="prose">
+          <p>{product.description}</p>
+        </div>
+      </TabsContent>
+      <TabsContent value="specs">
+        <Table
+          data={product.specs}
+          columns={[
+            { key: 'name', label: 'Specification' },
+            { key: 'value', label: 'Value' },
+          ]}
+        />
+      </TabsContent>
+      <TabsContent value="reviews">
+        <Stack spacing="md">
+          {product.reviews.map((review) => (
+            <Card key={review.id}>
+              <CardContent>
+                <p className="font-semibold">{review.author}</p>
+                <p>{review.text}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </Stack>
+      </TabsContent>
+    </Tabs>
+  );
+}
+```
+
+### Dashboard with Tabs
+
+```tsx
+function DashboardTabs() {
+  return (
+    <Tabs defaultValue="analytics">
+      <Flex justify="between" align="center">
+        <TabsList>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="reports">Reports</TabsTrigger>
+          <TabsTrigger value="logs">Logs</TabsTrigger>
+        </TabsList>
+        <Button variant="outline" size="sm">Export</Button>
+      </Flex>
+      <TabsContent value="analytics">
+        <Grid cols={3} gap="md">
+          <Card><CardContent>Chart 1</CardContent></Card>
+          <Card><CardContent>Chart 2</CardContent></Card>
+          <Card><CardContent>Chart 3</CardContent></Card>
+        </Grid>
+      </TabsContent>
+      <TabsContent value="reports">
+        <p>Reports content here</p>
+      </TabsContent>
+      <TabsContent value="logs">
+        <p>System logs here</p>
+      </TabsContent>
+    </Tabs>
+  );
+}
+```
+
+## Accessibility
+
+The Tabs component is built on Radix UI Tabs and follows the [WAI-ARIA Tabs Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/):
+
+- **ARIA roles**: Automatically applies `role="tablist"`, `role="tab"`, and `role="tabpanel"`
+- **ARIA attributes**: Sets `aria-selected`, `aria-controls`, and `aria-labelledby` on the appropriate elements
+- **Focus management**: Focus moves between tabs using arrow keys within the tab list
+- **Activation modes**: Supports both automatic (activate on focus) and manual (activate on Enter/Space) modes
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Arrow Right | Move focus to next tab (horizontal orientation) |
+| Arrow Left | Move focus to previous tab (horizontal orientation) |
+| Arrow Down | Move focus to next tab (vertical orientation) |
+| Arrow Up | Move focus to previous tab (vertical orientation) |
+| Home | Move focus to first tab |
+| End | Move focus to last tab |
+| Enter / Space | Activate the focused tab (manual activation mode) |
+| Tab | Move focus into the active tab panel |
+
+### Best Practices
+
+- Use descriptive tab labels that clearly indicate the panel content
+- Keep the number of tabs reasonable (typically 2-7 tabs)
+- Ensure tab content is logically grouped
+- Consider `activationMode="manual"` when tab switching triggers expensive operations
+
+## Related Components
+
+- [Card](/components/layout/card/) - Content container commonly used within tab panels
+- [Modal](/components/layout/modal/) - Dialog overlay for focused interactions
+- [Container](/components/layout/container/) - Responsive layout wrapper

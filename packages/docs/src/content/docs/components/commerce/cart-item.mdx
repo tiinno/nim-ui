@@ -1,0 +1,225 @@
+---
+title: CartItem
+description: Shopping cart line item with image, quantity controls, and remove action
+---
+
+import { CartItem } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The CartItem component displays a product within a shopping cart, showing the product image, title, price, quantity, and optional variant details. It supports inline quantity adjustment and removal.
+
+## Import
+
+```tsx
+import { CartItem } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic CartItem">
+  <CartItem
+    client:load
+    image="https://picsum.photos/seed/cart1/200/200"
+    title="Premium Headphones"
+    price="$199.99"
+    quantity={1}
+  />
+
+  <Fragment slot="code">
+```tsx
+<CartItem
+  image="/products/headphones.jpg"
+  title="Premium Headphones"
+  price="$199.99"
+  quantity={1}
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Quantity Controls
+
+Provide `onQuantityChange` to enable inline increment and decrement buttons.
+
+<ComponentPreview title="CartItem with Quantity Controls">
+  <CartItem
+    client:load
+    image="https://picsum.photos/seed/cart2/200/200"
+    title="MacBook Pro"
+    price="$1,999"
+    quantity={2}
+    onQuantityChange={(qty) => console.log('New quantity:', qty)}
+    onRemove={() => console.log('Remove item')}
+  />
+
+  <Fragment slot="code">
+```tsx
+<CartItem
+  image="/products/laptop.jpg"
+  title="MacBook Pro"
+  price="$1,999"
+  quantity={2}
+  onQuantityChange={(qty) => updateQuantity(qty)}
+  onRemove={() => removeItem()}
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Variant Details
+
+Display product variant information such as size or color.
+
+<ComponentPreview title="CartItem with Variant">
+  <CartItem
+    client:load
+    image="https://picsum.photos/seed/cart3/200/200"
+    title="Cotton T-Shirt"
+    price="$29.99"
+    quantity={3}
+    variant="Size: L, Color: Blue"
+    onRemove={() => console.log('Remove item')}
+  />
+
+  <Fragment slot="code">
+```tsx
+<CartItem
+  image="/products/shirt.jpg"
+  title="Cotton T-Shirt"
+  price="$29.99"
+  quantity={3}
+  variant="Size: L, Color: Blue"
+  onRemove={() => removeItem()}
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'image',
+      type: 'string',
+      required: true,
+      description: 'URL of the product thumbnail image',
+    },
+    {
+      name: 'title',
+      type: 'string',
+      required: true,
+      description: 'Product name',
+    },
+    {
+      name: 'price',
+      type: 'string | number',
+      required: true,
+      description: 'Formatted price to display',
+    },
+    {
+      name: 'quantity',
+      type: 'number',
+      required: true,
+      description: 'Current quantity of the item',
+    },
+    {
+      name: 'variant',
+      type: 'string',
+      description: 'Product variant details, e.g. "Size: M, Color: Red"',
+    },
+    {
+      name: 'imageAlt',
+      type: 'string',
+      description: 'Alt text for the image. Defaults to the title if not provided',
+    },
+    {
+      name: 'onRemove',
+      type: '() => void',
+      description: 'Callback when the remove button is clicked',
+    },
+    {
+      name: 'onQuantityChange',
+      type: '(quantity: number) => void',
+      description: 'Callback when quantity is changed via increment/decrement buttons',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Shopping Cart Page
+
+```tsx
+function ShoppingCart() {
+  const [items, setItems] = useState<CartItemData[]>(initialItems);
+
+  const updateQuantity = (id: string, quantity: number) => {
+    setItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
+  };
+
+  const removeItem = (id: string) => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  return (
+    <div className="divide-y">
+      {items.map((item) => (
+        <CartItem
+          key={item.id}
+          image={item.image}
+          title={item.title}
+          price={`$${(item.price * item.quantity).toFixed(2)}`}
+          quantity={item.quantity}
+          variant={item.variant}
+          onQuantityChange={(qty) => updateQuantity(item.id, qty)}
+          onRemove={() => removeItem(item.id)}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+### Mini Cart Dropdown
+
+```tsx
+function MiniCart({ items }: { items: CartItemData[] }) {
+  return (
+    <div className="w-80 rounded-lg border shadow-lg">
+      <div className="p-4 border-b font-semibold">
+        Cart ({items.length} items)
+      </div>
+      <div className="max-h-64 overflow-y-auto">
+        {items.map((item) => (
+          <CartItem
+            key={item.id}
+            image={item.image}
+            title={item.title}
+            price={item.formattedPrice}
+            quantity={item.quantity}
+            onRemove={() => removeFromCart(item.id)}
+          />
+        ))}
+      </div>
+      <div className="p-4 border-t">
+        <Button fullWidth>Checkout</Button>
+      </div>
+    </div>
+  );
+}
+```
+
+## Related Components
+
+- [ProductCard](/components/commerce/product-card/) - Product display card
+- [PriceTag](/components/commerce/price-tag/) - Price display with discounts
+- [QuantitySelector](/components/commerce/quantity-selector/) - Standalone quantity control

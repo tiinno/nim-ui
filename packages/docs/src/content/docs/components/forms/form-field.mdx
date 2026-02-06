@@ -1,0 +1,398 @@
+---
+title: FormField
+description: Labeled form field wrapper with error messages, helper text, and required indicator
+---
+
+import { FormField, Input, Select, Textarea, Checkbox } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The FormField component wraps individual form controls with a label, optional helper text, error messages, and a required indicator. It handles the association between the label and its input via `htmlFor`, ensuring proper accessibility.
+
+## Import
+
+```tsx
+import { FormField } from '@tiinno-ui/components';
+```
+
+## Usage
+
+<ComponentPreview title="Basic FormField">
+  <FormField client:load label="Email address" name="email">
+    <Input client:load type="email" placeholder="you@example.com" />
+  </FormField>
+
+  <Fragment slot="code">
+```tsx
+<FormField label="Email address" name="email">
+  <Input type="email" placeholder="you@example.com" />
+</FormField>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Required Field
+
+<ComponentPreview title="Required FormField">
+  <FormField client:load label="Full name" name="fullName" required>
+    <Input client:load placeholder="Enter your full name" />
+  </FormField>
+
+  <Fragment slot="code">
+```tsx
+<FormField label="Full name" name="fullName" required>
+  <Input placeholder="Enter your full name" />
+</FormField>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Helper Text
+
+<ComponentPreview title="FormField with Helper Text">
+  <FormField
+    client:load
+    label="Password"
+    name="password"
+    helperText="Must be at least 8 characters with one uppercase letter and one number."
+  >
+    <Input client:load type="password" placeholder="Enter password" />
+  </FormField>
+
+  <Fragment slot="code">
+```tsx
+<FormField
+  label="Password"
+  name="password"
+  helperText="Must be at least 8 characters with one uppercase letter and one number."
+>
+  <Input type="password" placeholder="Enter password" />
+</FormField>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Error Message
+
+<ComponentPreview title="FormField with Error">
+  <FormField
+    client:load
+    label="Email"
+    name="email"
+    error="Please enter a valid email address."
+    required
+  >
+    <Input client:load type="email" placeholder="you@example.com" />
+  </FormField>
+
+  <Fragment slot="code">
+```tsx
+<FormField
+  label="Email"
+  name="email"
+  error="Please enter a valid email address."
+  required
+>
+  <Input type="email" placeholder="you@example.com" />
+</FormField>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Select
+
+<ComponentPreview title="FormField with Select">
+  <FormField client:load label="Country" name="country" required>
+    <Select
+      client:load
+      options={[
+        { value: 'us', label: 'United States' },
+        { value: 'uk', label: 'United Kingdom' },
+        { value: 'ca', label: 'Canada' },
+        { value: 'au', label: 'Australia' },
+      ]}
+      placeholder="Select your country"
+    />
+  </FormField>
+
+  <Fragment slot="code">
+```tsx
+<FormField label="Country" name="country" required>
+  <Select
+    options={[
+      { value: 'us', label: 'United States' },
+      { value: 'uk', label: 'United Kingdom' },
+      { value: 'ca', label: 'Canada' },
+      { value: 'au', label: 'Australia' },
+    ]}
+    placeholder="Select your country"
+  />
+</FormField>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Textarea
+
+<ComponentPreview title="FormField with Textarea">
+  <FormField
+    client:load
+    label="Bio"
+    name="bio"
+    helperText="Write a short description about yourself. Maximum 500 characters."
+  >
+    <Textarea client:load placeholder="Tell us about yourself..." rows={4} />
+  </FormField>
+
+  <Fragment slot="code">
+```tsx
+<FormField
+  label="Bio"
+  name="bio"
+  helperText="Write a short description about yourself. Maximum 500 characters."
+>
+  <Textarea placeholder="Tell us about yourself..." rows={4} />
+</FormField>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Complete Form Example
+
+<ComponentPreview title="Form with Multiple FormFields">
+  <form className="flex flex-col gap-4 w-full max-w-md">
+    <FormField client:load label="First name" name="firstName" required>
+      <Input client:load placeholder="Jane" />
+    </FormField>
+    <FormField client:load label="Last name" name="lastName" required>
+      <Input client:load placeholder="Doe" />
+    </FormField>
+    <FormField client:load label="Email" name="email" required helperText="We will never share your email.">
+      <Input client:load type="email" placeholder="jane@example.com" />
+    </FormField>
+    <FormField client:load label="Role" name="role">
+      <Select
+        client:load
+        options={[
+          { value: 'dev', label: 'Developer' },
+          { value: 'designer', label: 'Designer' },
+          { value: 'pm', label: 'Product Manager' },
+        ]}
+        placeholder="Select your role"
+      />
+    </FormField>
+    <FormField client:load label="Message" name="message">
+      <Textarea client:load placeholder="Anything else you'd like to share?" rows={3} />
+    </FormField>
+  </form>
+
+  <Fragment slot="code">
+```tsx
+<Form onSubmit={handleSubmit}>
+  <FormField label="First name" name="firstName" required>
+    <Input placeholder="Jane" />
+  </FormField>
+  <FormField label="Last name" name="lastName" required>
+    <Input placeholder="Doe" />
+  </FormField>
+  <FormField label="Email" name="email" required helperText="We will never share your email.">
+    <Input type="email" placeholder="jane@example.com" />
+  </FormField>
+  <FormField label="Role" name="role">
+    <Select
+      options={[
+        { value: 'dev', label: 'Developer' },
+        { value: 'designer', label: 'Designer' },
+        { value: 'pm', label: 'Product Manager' },
+      ]}
+      placeholder="Select your role"
+    />
+  </FormField>
+  <FormField label="Message" name="message">
+    <Textarea placeholder="Anything else you'd like to share?" rows={3} />
+  </FormField>
+  <Button type="submit" variant="primary">Submit</Button>
+</Form>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'label',
+      type: 'string',
+      required: true,
+      description: 'Label text displayed above the form control',
+    },
+    {
+      name: 'name',
+      type: 'string',
+      required: true,
+      description: 'Used for the htmlFor attribute to associate the label with its form control',
+    },
+    {
+      name: 'error',
+      type: 'string',
+      description: 'Error message displayed in red below the form control',
+    },
+    {
+      name: 'helperText',
+      type: 'string',
+      description: 'Helper text displayed in gray below the form control. Hidden when an error is present.',
+    },
+    {
+      name: 'required',
+      type: 'boolean',
+      default: 'false',
+      description: 'When true, displays a red asterisk (*) next to the label',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'The form control element (Input, Select, Textarea, etc.)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the wrapper element',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Registration Form
+
+```tsx
+import { useState } from 'react';
+import { Form, FormField, Input, Select, Checkbox, Button } from '@tiinno-ui/components';
+
+function RegistrationForm() {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const validationErrors = validateRegistration(formData);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    createAccount(formData);
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <div className="flex gap-4">
+        <FormField label="First name" name="firstName" required error={errors.firstName}>
+          <Input name="firstName" placeholder="Jane" />
+        </FormField>
+        <FormField label="Last name" name="lastName" required error={errors.lastName}>
+          <Input name="lastName" placeholder="Doe" />
+        </FormField>
+      </div>
+
+      <FormField
+        label="Email"
+        name="email"
+        required
+        error={errors.email}
+      >
+        <Input name="email" type="email" placeholder="jane@example.com" />
+      </FormField>
+
+      <FormField
+        label="Password"
+        name="password"
+        required
+        error={errors.password}
+        helperText="At least 8 characters with a mix of letters and numbers."
+      >
+        <Input name="password" type="password" placeholder="Create a password" />
+      </FormField>
+
+      <FormField label="Company" name="company">
+        <Input name="company" placeholder="Your company (optional)" />
+      </FormField>
+
+      <FormField label="Role" name="role" required error={errors.role}>
+        <Select
+          name="role"
+          placeholder="Select your role"
+          options={[
+            { value: 'developer', label: 'Developer' },
+            { value: 'designer', label: 'Designer' },
+            { value: 'manager', label: 'Product Manager' },
+            { value: 'other', label: 'Other' },
+          ]}
+        />
+      </FormField>
+
+      <Checkbox label="I agree to the terms of service" name="terms" />
+
+      <Button type="submit" variant="primary" fullWidth>
+        Create Account
+      </Button>
+    </Form>
+  );
+}
+```
+
+### Settings Form
+
+```tsx
+function ProfileSettings() {
+  return (
+    <Form onSubmit={handleSave}>
+      <FormField label="Display name" name="displayName" required>
+        <Input name="displayName" defaultValue="Jane Doe" />
+      </FormField>
+
+      <FormField
+        label="Bio"
+        name="bio"
+        helperText="Brief description for your profile. Maximum 200 characters."
+      >
+        <Textarea
+          name="bio"
+          defaultValue="Frontend developer & design enthusiast"
+          rows={3}
+        />
+      </FormField>
+
+      <FormField label="Website" name="website" helperText="Include the full URL with https://">
+        <Input name="website" type="url" placeholder="https://yoursite.com" />
+      </FormField>
+
+      <Button type="submit" variant="primary">
+        Save Changes
+      </Button>
+    </Form>
+  );
+}
+```
+
+## Accessibility
+
+The FormField component ensures proper accessibility for form controls:
+
+- The `label` is rendered as an HTML `<label>` element associated with the input via `htmlFor` matching the `name` prop
+- Required fields include `aria-required="true"` in addition to the visual asterisk
+- Error messages are connected to the input via `aria-describedby` so screen readers announce them
+- Helper text is also connected via `aria-describedby` for screen reader users
+- When both error and helper text are provided, the error takes precedence to avoid confusion
+- The red asterisk on required fields includes `aria-hidden="true"` since the requirement is communicated programmatically
+
+## Related Components
+
+- [Form](/components/forms/form/) - Form wrapper component
+- [Input](/components/primitives/input/) - Text input field
+- [Select](/components/primitives/select/) - Dropdown selection
+- [Textarea](/components/primitives/textarea/) - Multi-line text input
+- [Checkbox](/components/primitives/checkbox/) - Boolean checkbox input

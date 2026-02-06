@@ -1,0 +1,326 @@
+---
+title: Colors
+description: Color palette and design tokens for Tiinno UI
+---
+
+import ColorSwatch from '../../../components/ColorSwatch.astro';
+
+Tiinno UI uses a carefully crafted color system built on semantic color scales. All colors are designed to work in both light and dark modes with proper contrast ratios.
+
+## Primary Colors
+
+The primary color palette is used for primary actions, links, and brand elements.
+
+<ColorSwatch
+  name="Primary"
+  colors={[
+    { shade: '50', value: '#f0f9ff' },
+    { shade: '100', value: '#e0f2fe' },
+    { shade: '200', value: '#bae6fd' },
+    { shade: '300', value: '#7dd3fc' },
+    { shade: '400', value: '#38bdf8' },
+    { shade: '500', value: '#0ea5e9' },
+    { shade: '600', value: '#0284c7' },
+    { shade: '700', value: '#0369a1' },
+    { shade: '800', value: '#075985' },
+    { shade: '900', value: '#0c4a6e' },
+  ]}
+/>
+
+### Usage
+
+```tsx
+// In Tailwind classes
+<div className="bg-primary-500 text-white">Primary</div>
+<button className="hover:bg-primary-600">Hover</button>
+
+// In components
+<Button variant="primary">Primary Button</Button>
+```
+
+## Neutral Colors
+
+Neutral colors (grays) are used for text, backgrounds, borders, and other UI elements.
+
+<ColorSwatch
+  name="Neutral"
+  colors={[
+    { shade: '50', value: '#f9fafb' },
+    { shade: '100', value: '#f3f4f6' },
+    { shade: '200', value: '#e5e7eb' },
+    { shade: '300', value: '#d1d5db' },
+    { shade: '400', value: '#9ca3af' },
+    { shade: '500', value: '#6b7280' },
+    { shade: '600', value: '#4b5563' },
+    { shade: '700', value: '#374151' },
+    { shade: '800', value: '#1f2937' },
+    { shade: '900', value: '#111827' },
+  ]}
+/>
+
+### Usage
+
+```tsx
+// Text colors
+<p className="text-neutral-900 dark:text-neutral-100">Primary text</p>
+<p className="text-neutral-600 dark:text-neutral-400">Secondary text</p>
+
+// Backgrounds
+<div className="bg-neutral-50 dark:bg-neutral-900">Background</div>
+
+// Borders
+<div className="border border-neutral-200 dark:border-neutral-800">Card</div>
+```
+
+## Semantic Colors
+
+Semantic colors provide meaning and context to UI elements.
+
+### Success
+
+Used for positive actions, confirmations, and success states.
+
+<ColorSwatch
+  name="Success"
+  colors={[
+    { shade: '50', value: '#f0fdf4' },
+    { shade: '100', value: '#dcfce7' },
+    { shade: '200', value: '#bbf7d0' },
+    { shade: '300', value: '#86efac' },
+    { shade: '400', value: '#4ade80' },
+    { shade: '500', value: '#22c55e' },
+    { shade: '600', value: '#16a34a' },
+    { shade: '700', value: '#15803d' },
+    { shade: '800', value: '#166534' },
+    { shade: '900', value: '#14532d' },
+  ]}
+/>
+
+```tsx
+<Alert variant="success">Operation successful!</Alert>
+<Badge variant="success">Active</Badge>
+```
+
+### Warning
+
+Used for warnings, cautions, and items requiring attention.
+
+<ColorSwatch
+  name="Warning"
+  colors={[
+    { shade: '50', value: '#fffbeb' },
+    { shade: '100', value: '#fef3c7' },
+    { shade: '200', value: '#fde68a' },
+    { shade: '300', value: '#fcd34d' },
+    { shade: '400', value: '#fbbf24' },
+    { shade: '500', value: '#f59e0b' },
+    { shade: '600', value: '#d97706' },
+    { shade: '700', value: '#b45309' },
+    { shade: '800', value: '#92400e' },
+    { shade: '900', value: '#78350f' },
+  ]}
+/>
+
+```tsx
+<Alert variant="warning">Please review your changes</Alert>
+<Badge variant="warning">Pending</Badge>
+```
+
+### Danger
+
+Used for errors, destructive actions, and critical states.
+
+<ColorSwatch
+  name="Danger"
+  colors={[
+    { shade: '50', value: '#fef2f2' },
+    { shade: '100', value: '#fee2e2' },
+    { shade: '200', value: '#fecaca' },
+    { shade: '300', value: '#fca5a5' },
+    { shade: '400', value: '#f87171' },
+    { shade: '500', value: '#ef4444' },
+    { shade: '600', value: '#dc2626' },
+    { shade: '700', value: '#b91c1c' },
+    { shade: '800', value: '#991b1b' },
+    { shade: '900', value: '#7f1d1d' },
+  ]}
+/>
+
+```tsx
+<Alert variant="danger">An error occurred</Alert>
+<Button variant="danger">Delete</Button>
+```
+
+### Info
+
+Used for informational messages and neutral notifications.
+
+<ColorSwatch
+  name="Info"
+  colors={[
+    { shade: '50', value: '#eff6ff' },
+    { shade: '100', value: '#dbeafe' },
+    { shade: '200', value: '#bfdbfe' },
+    { shade: '300', value: '#93c5fd' },
+    { shade: '400', value: '#60a5fa' },
+    { shade: '500', value: '#3b82f6' },
+    { shade: '600', value: '#2563eb' },
+    { shade: '700', value: '#1d4ed8' },
+    { shade: '800', value: '#1e40af' },
+    { shade: '900', value: '#1e3a8a' },
+  ]}
+/>
+
+```tsx
+<Alert variant="info">Did you know...</Alert>
+<Badge variant="info">New</Badge>
+```
+
+## Color Usage Guidelines
+
+### Contrast Ratios
+
+All color combinations meet WCAG 2.1 AA standards:
+
+- **Text on backgrounds**: Minimum 4.5:1 contrast ratio
+- **Large text (18px+)**: Minimum 3:1 contrast ratio
+- **Interactive elements**: Minimum 3:1 contrast ratio
+
+### Recommended Pairings
+
+```tsx
+// ✅ Good contrast
+<div className="bg-primary-500 text-white">High contrast</div>
+<div className="bg-neutral-100 text-neutral-900">Good readability</div>
+
+// ❌ Poor contrast
+<div className="bg-primary-300 text-white">Low contrast</div>
+<div className="bg-neutral-200 text-neutral-400">Hard to read</div>
+```
+
+### Dark Mode
+
+Colors automatically adjust for dark mode:
+
+```tsx
+// Automatically adapts to dark mode
+<div className="bg-white dark:bg-neutral-900">
+  <p className="text-neutral-900 dark:text-neutral-100">
+    Text color changes with theme
+  </p>
+</div>
+```
+
+## Customizing Colors
+
+### Override Default Colors
+
+Customize the color palette in your Tailwind config:
+
+```js title="tailwind.config.js"
+export default {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          // Your custom primary color scale
+          50: '#fff1f2',
+          100: '#ffe4e6',
+          // ... rest of the scale
+          500: '#f43f5e', // Base color
+          // ... rest of the scale
+          900: '#881337',
+        },
+      },
+    },
+  },
+};
+```
+
+### Add Brand Colors
+
+Add your brand colors alongside the defaults:
+
+```js title="tailwind.config.js"
+export default {
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          purple: '#8b5cf6',
+          pink: '#ec4899',
+          orange: '#f97316',
+        },
+      },
+    },
+  },
+};
+```
+
+Use in components:
+
+```tsx
+<Button className="bg-brand-purple text-white">
+  Brand Button
+</Button>
+```
+
+### CSS Variables
+
+Use CSS variables for dynamic theming:
+
+```css title="src/styles/theme.css"
+:root {
+  --color-primary: 14 165 233; /* RGB values for #0ea5e9 */
+  --color-success: 34 197 94;
+  --color-danger: 239 68 68;
+}
+
+.dark {
+  --color-primary: 56 189 248; /* Lighter for dark mode */
+}
+```
+
+Use with Tailwind:
+
+```tsx
+<div className="bg-[rgb(var(--color-primary))]">
+  Dynamic color
+</div>
+```
+
+## Color Accessibility
+
+### Testing Tools
+
+Use these tools to verify color contrast:
+
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- [Adobe Color](https://color.adobe.com/create/color-accessibility)
+- Chrome DevTools (Lighthouse audit)
+
+### Best Practices
+
+1. **Use semantic colors appropriately**
+   - Success: green tones
+   - Warning: yellow/orange tones
+   - Danger: red tones
+   - Info: blue tones
+
+2. **Don't rely on color alone**
+   - Add icons or labels
+   - Use patterns or textures
+   - Provide text alternatives
+
+3. **Test in different modes**
+   - Light mode
+   - Dark mode
+   - High contrast mode
+   - Color blind simulation
+
+## What's Next?
+
+- [Typography](/design-system/typography/) - Fonts, sizes, and text styles
+- [Spacing](/design-system/spacing/) - Spacing scale and layout
+- [Dark Mode](/design-system/dark-mode/) - Implementing dark mode
+- [Customization](/guides/customization/) - Advanced theming techniques

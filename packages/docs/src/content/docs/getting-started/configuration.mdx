@@ -1,0 +1,446 @@
+---
+title: Configuration
+description: Configure and customize Tiinno UI for your project
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Tailwind Configuration
+
+Tiinno UI is built on Tailwind CSS v4. You can customize the theme by extending the Tailwind configuration.
+
+### Basic Setup
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@tiinno-ui/components/dist/**/*.js',
+  ],
+  theme: {
+    extend: {
+      // Your customizations here
+    },
+  },
+  plugins: [],
+};
+```
+
+### Using the Preset
+
+For a quick start, use the Tiinno UI Tailwind preset:
+
+```js title="tailwind.config.js"
+import tiinnoPreset from '@tiinno-ui/tailwind-config';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  presets: [tiinnoPreset],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@tiinno-ui/components/dist/**/*.js',
+  ],
+};
+```
+
+## Theme Customization
+
+### Colors
+
+Customize the color palette to match your brand:
+
+```js title="tailwind.config.js"
+export default {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9', // Base primary color
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
+          950: '#082f49',
+        },
+        // Add your brand colors
+        brand: {
+          // Your color scale
+        },
+      },
+    },
+  },
+};
+```
+
+### Typography
+
+Customize fonts and typography:
+
+```js title="tailwind.config.js"
+export default {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Fira Code', 'monospace'],
+      },
+      fontSize: {
+        xs: ['0.75rem', { lineHeight: '1rem' }],
+        sm: ['0.875rem', { lineHeight: '1.25rem' }],
+        base: ['1rem', { lineHeight: '1.5rem' }],
+        lg: ['1.125rem', { lineHeight: '1.75rem' }],
+        xl: ['1.25rem', { lineHeight: '1.75rem' }],
+      },
+    },
+  },
+};
+```
+
+### Spacing
+
+Adjust spacing scale:
+
+```js title="tailwind.config.js"
+export default {
+  theme: {
+    extend: {
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
+    },
+  },
+};
+```
+
+### Border Radius
+
+Customize border radius:
+
+```js title="tailwind.config.js"
+export default {
+  theme: {
+    extend: {
+      borderRadius: {
+        '4xl': '2rem',
+      },
+    },
+  },
+};
+```
+
+## Dark Mode Configuration
+
+Enable dark mode with class-based strategy:
+
+```js title="tailwind.config.js"
+export default {
+  darkMode: 'class', // or 'media' for system preference
+  // ... rest of config
+};
+```
+
+### Dark Mode Toggle
+
+Implement a dark mode toggle:
+
+```tsx title="src/components/DarkModeToggle.tsx"
+import { useEffect, useState } from 'react';
+import { Button } from '@tiinno-ui/components';
+
+export default function DarkModeToggle() {
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check local storage or system preference
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('darkMode');
+      if (stored !== null) return stored === 'true';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    // Apply dark mode class to html element
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('darkMode', 'true');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('darkMode', 'false');
+    }
+  }, [darkMode]);
+
+  return (
+    <Button
+      variant="ghost"
+      onClick={() => setDarkMode(!darkMode)}
+      aria-label="Toggle dark mode"
+    >
+      {darkMode ? '🌙' : '☀️'}
+    </Button>
+  );
+}
+```
+
+## CSS Customization
+
+### Custom Component Styles
+
+Override component styles using CSS layers:
+
+```css title="src/styles/custom.css"
+@layer components {
+  /* Override button styles */
+  .tiinno-button {
+    @apply rounded-full;
+  }
+
+  /* Custom card styles */
+  .custom-card {
+    @apply bg-gradient-to-br from-blue-500 to-purple-600;
+  }
+}
+```
+
+### CSS Variables
+
+Define custom CSS variables for dynamic theming:
+
+```css title="src/styles/theme.css"
+:root {
+  /* Light mode */
+  --color-primary: #0ea5e9;
+  --color-background: #ffffff;
+  --color-text: #111827;
+}
+
+.dark {
+  /* Dark mode */
+  --color-primary: #38bdf8;
+  --color-background: #111827;
+  --color-text: #f9fafb;
+}
+
+/* Use in components */
+.custom-element {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+```
+
+## Build Configuration
+
+### Vite
+
+Optimize build for production:
+
+```ts title="vite.config.ts"
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    // Optimize chunk splitting
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'tiinno-ui': ['@tiinno-ui/components'],
+        },
+      },
+    },
+  },
+  optimizeDeps: {
+    include: ['@tiinno-ui/components'],
+  },
+});
+```
+
+### Next.js
+
+Configure Next.js for optimal performance:
+
+```js title="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  transpilePackages: ['@tiinno-ui/components'],
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  experimental: {
+    optimizePackageImports: ['@tiinno-ui/components'],
+  },
+};
+
+export default nextConfig;
+```
+
+### Webpack
+
+For custom Webpack setups:
+
+```js title="webpack.config.js"
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
+};
+```
+
+## Environment Variables
+
+Configure environment-specific settings:
+
+```bash title=".env"
+# API endpoints
+VITE_API_URL=https://api.example.com
+
+# Feature flags
+VITE_ENABLE_DARK_MODE=true
+VITE_ENABLE_ANALYTICS=false
+```
+
+Access in your code:
+
+```tsx
+const apiUrl = import.meta.env.VITE_API_URL;
+const darkModeEnabled = import.meta.env.VITE_ENABLE_DARK_MODE === 'true';
+```
+
+## TypeScript Configuration
+
+### Strict Type Checking
+
+Enable strict mode for better type safety:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
+```
+
+### Path Aliases
+
+Set up path aliases for cleaner imports:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@ui/*": ["./node_modules/@tiinno-ui/components/*"]
+    }
+  }
+}
+```
+
+Then use:
+
+```tsx
+import { Button } from '@ui';
+import Header from '@components/Header';
+```
+
+## Performance Optimization
+
+### Tree Shaking
+
+Ensure tree shaking works correctly:
+
+```tsx
+// ✅ Good - imports only Button
+import { Button } from '@tiinno-ui/components';
+
+// ❌ Bad - imports everything
+import * as TiinnoUI from '@tiinno-ui/components';
+```
+
+### Code Splitting
+
+Split components into separate chunks:
+
+```tsx
+import { lazy, Suspense } from 'react';
+
+// Lazy load heavy components
+const HeavyComponent = lazy(() => import('./HeavyComponent'));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  );
+}
+```
+
+### Bundle Analysis
+
+Analyze your bundle size:
+
+<Tabs>
+  <TabItem label="Vite">
+```bash
+pnpm add -D rollup-plugin-visualizer
+```
+
+```ts title="vite.config.ts"
+import { visualizer } from 'rollup-plugin-visualizer';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    visualizer({ open: true }),
+  ],
+});
+```
+  </TabItem>
+
+  <TabItem label="Next.js">
+```bash
+pnpm add -D @next/bundle-analyzer
+```
+
+```js title="next.config.js"
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+module.exports = withBundleAnalyzer({
+  // Your Next.js config
+});
+```
+
+Run with: `ANALYZE=true pnpm build`
+  </TabItem>
+</Tabs>
+
+## What's Next?
+
+- [Quick Start](/getting-started/quick-start/) - Build your first component
+- [Customization Guide](/guides/customization/) - Advanced customization techniques
+- [Theming Guide](/guides/theming/) - Create custom themes
+- [Best Practices](/guides/best-practices/) - Performance and accessibility tips

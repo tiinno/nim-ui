@@ -1,0 +1,144 @@
+---
+title: Tiinno UI
+description: Modern, accessible, production-ready React component library
+template: splash
+hero:
+  title: Build faster with Tiinno UI
+  tagline: A comprehensive React component library built with TypeScript and Tailwind CSS v4. Production-ready, accessible, and beautiful by default.
+  image:
+    file: ../../assets/hero.svg
+  actions:
+    - text: Get Started
+      link: /getting-started/installation/
+      icon: right-arrow
+      variant: primary
+    - text: View Components
+      link: /components/primitives/button/
+      icon: external
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Button } from '@tiinno-ui/components';
+import ComponentPreview from '../../components/ComponentPreview.astro';
+
+## Features
+
+<CardGrid>
+  <Card title="24 Components" icon="puzzle">
+    Comprehensive set of components organized into 6 categories: Primitives, Layout, Data Display, Commerce, Landing, and Forms.
+  </Card>
+  <Card title="Fully Typed" icon="typescript">
+    Built with TypeScript 5.9+ in strict mode. Complete type safety and IntelliSense support.
+  </Card>
+  <Card title="Accessible" icon="approve-check">
+    WCAG 2.1 AA compliant with proper ARIA attributes, keyboard navigation, and screen reader support.
+  </Card>
+  <Card title="Tailwind CSS v4" icon="seti:css">
+    Styled with the latest Tailwind CSS v4, fully customizable with your theme.
+  </Card>
+  <Card title="Dark Mode" icon="moon">
+    Built-in dark mode support with smooth transitions and proper color contrast.
+  </Card>
+  <Card title="Tree-Shakeable" icon="rocket">
+    Import only what you need. Optimized bundle sizes with ESM exports.
+  </Card>
+</CardGrid>
+
+## Quick Example
+
+<ComponentPreview title="Get started in seconds">
+  <Button client:load variant="primary" size="md">
+    Primary Button
+  </Button>
+  <Button client:load variant="secondary" size="md">
+    Secondary
+  </Button>
+  <Button client:load variant="outline" size="md">
+    Outline
+  </Button>
+
+  <Fragment slot="code">
+```tsx
+import { Button } from '@tiinno-ui/components';
+
+export default function App() {
+  return (
+    <>
+      <Button variant="primary">Primary Button</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+    </>
+  );
+}
+```
+  </Fragment>
+</ComponentPreview>
+
+## Why Tiinno UI?
+
+### Production Ready
+
+Every component is battle-tested and production-ready. Use them directly in your projects without worrying about edge cases or accessibility issues.
+
+### Developer Experience
+
+- **TypeScript-first**: Full type safety and autocomplete
+- **Well documented**: Every prop is documented with examples
+- **Storybook**: Interactive component playground
+- **Copy & paste friendly**: Use our CLI or copy components directly
+
+### Modern Stack
+
+Built with the latest tools and best practices:
+
+- React 19.2+
+- TypeScript 5.9+
+- Tailwind CSS v4
+- Radix UI primitives
+- Class Variance Authority
+
+## Component Categories
+
+### Primitives
+Essential form controls: Button, Input, Textarea, Checkbox, Radio, Select, Switch
+
+### Layout
+Flexible layout components: Container, Grid, Stack, Flex, Spacer
+
+### Data Display
+Present information beautifully: Card, Badge, Avatar, Table
+
+### Commerce
+E-commerce specific components: Product Card, Cart Item, Price Display
+
+### Landing
+Build landing pages fast: Hero, Feature, Testimonial, CTA Section
+
+### Forms
+Complete form system: Form Group, Form Label, Form Message
+
+## Next Steps
+
+<CardGrid>
+  <Card title="Installation" icon="rocket">
+    Install Tiinno UI in your project and start building.
+
+    [Get Started →](/getting-started/installation/)
+  </Card>
+  <Card title="Browse Components" icon="puzzle">
+    Explore all 24 components with live examples and code.
+
+    [View Components →](/components/primitives/button/)
+  </Card>
+  <Card title="Design System" icon="paint-brush">
+    Learn about colors, typography, and design tokens.
+
+    [Design System →](/design-system/colors/)
+  </Card>
+  <Card title="Best Practices" icon="approve-check">
+    Tips for building accessible, performant applications.
+
+    [Read Guide →](/guides/best-practices/)
+  </Card>
+</CardGrid>

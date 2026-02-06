@@ -1,0 +1,447 @@
+---
+title: Accessibility
+description: WCAG compliance, ARIA patterns, keyboard navigation, and screen reader support in Tiinno UI
+---
+
+Tiinno UI is built with accessibility as a core requirement, not an afterthought. All components target WCAG 2.1 Level AA compliance and follow WAI-ARIA authoring practices. This guide covers the accessibility features built into the library and how to maintain accessibility in your applications.
+
+## WCAG 2.1 AA Compliance
+
+Tiinno UI components are designed to meet the four WCAG principles:
+
+### Perceivable
+
+- All text meets minimum contrast ratios (4.5:1 for normal text, 3:1 for large text)
+- Non-text content has text alternatives
+- Content can be presented in different ways without losing meaning
+- Components work without color as the sole indicator of state
+
+### Operable
+
+- All functionality is available from the keyboard
+- Users have enough time to interact with content (configurable timeouts on Toast)
+- No content causes seizures or physical reactions
+- Navigation mechanisms are consistent and predictable
+
+### Understandable
+
+- Text is readable and understandable
+- Components behave in predictable ways
+- Error messages are clear and actionable
+- Labels and instructions are provided for user input
+
+### Robust
+
+- Content is compatible with assistive technologies
+- Valid ARIA attributes are used correctly
+- Components maintain accessibility across browsers and screen readers
+
+## ARIA Attributes by Component
+
+Tiinno UI components include the appropriate ARIA attributes out of the box.
+
+### Button
+
+```tsx
+// Standard button - no extra ARIA needed
+<Button variant="primary">Save Changes</Button>
+// Renders: <button type="button">Save Changes</button>
+
+// Loading button - disables interaction and announces state
+<Button loading>Saving...</Button>
+// Renders: <button disabled aria-busy="true">Saving...</button>
+
+// Icon-only button - requires aria-label
+<Button variant="ghost" aria-label="Close dialog">
+  <XIcon />
+</Button>
+```
+
+### Modal
+
+```tsx
+<Modal isOpen={isOpen} onClose={handleClose} title="Confirm Action">
+  <p>Are you sure you want to proceed?</p>
+</Modal>
+
+// Renders with:
+// - role="dialog"
+// - aria-modal="true"
+// - aria-labelledby pointing to the title
+// - Focus trap keeping focus within the modal
+// - Focus restored to trigger element on close
+```
+
+### Alert
+
+```tsx
+<Alert variant="danger" title="Error">
+  Your session has expired. Please log in again.
+</Alert>
+
+// Renders with:
+// - role="alert"
+// - aria-live="assertive" (for danger/warning)
+// - aria-live="polite" (for info/success)
+```
+
+### Toast
+
+```tsx
+showToast({
+  message: 'Changes saved successfully',
+  variant: 'success',
+});
+
+// Renders with:
+// - role="status"
+// - aria-live="polite"
+// - Auto-dismissal respects prefers-reduced-motion
+```
+
+### Tabs
+
+```tsx
+<Tabs
+  tabs={[
+    { id: 'profile', label: 'Profile', content: <ProfileTab /> },
+    { id: 'settings', label: 'Settings', content: <SettingsTab /> },
+  ]}
+/>
+
+// Renders with:
+// - role="tablist" on the tab container
+// - role="tab" on each tab button
+// - role="tabpanel" on each content panel
+// - aria-selected on the active tab
+// - aria-controls linking tabs to panels
+// - Arrow key navigation between tabs
+```
+
+### Tooltip
+
+```tsx
+<Tooltip content="Edit this item">
+  <Button variant="ghost" aria-label="Edit">
+    <EditIcon />
+  </Button>
+</Tooltip>
+
+// Renders with:
+// - role="tooltip" on the tooltip content
+// - aria-describedby linking the trigger to the tooltip
+// - Shows on focus and hover
+// - Dismisses on Escape
+```
+
+### Form Inputs
+
+```tsx
+<Input
+  aria-label="Email address"
+  aria-invalid={!!errors.email}
+  aria-describedby="email-error"
+/>
+{errors.email && (
+  <span id="email-error" role="alert">
+    {errors.email}
+  </span>
+)}
+```
+
+## Keyboard Navigation
+
+All interactive Tiinno UI components support keyboard navigation. Below is a reference for the keyboard patterns used.
+
+### Global Patterns
+
+| Key | Action |
+|-----|--------|
+| Tab | Move focus to next interactive element |
+| Shift + Tab | Move focus to previous interactive element |
+| Enter | Activate focused button or link |
+| Space | Activate focused button, toggle checkbox |
+| Escape | Close modal, popover, tooltip, or dropdown |
+
+### Button
+
+| Key | Action |
+|-----|--------|
+| Enter | Activate the button |
+| Space | Activate the button |
+
+### Modal
+
+| Key | Action |
+|-----|--------|
+| Escape | Close the modal |
+| Tab | Cycle focus within the modal (focus trap) |
+| Shift + Tab | Cycle focus backwards within the modal |
+
+### Tabs
+
+| Key | Action |
+|-----|--------|
+| Arrow Left | Move to previous tab |
+| Arrow Right | Move to next tab |
+| Home | Move to first tab |
+| End | Move to last tab |
+| Enter / Space | Activate the focused tab |
+
+### Select / Dropdown
+
+| Key | Action |
+|-----|--------|
+| Enter / Space | Open dropdown |
+| Arrow Down | Highlight next option |
+| Arrow Up | Highlight previous option |
+| Enter | Select highlighted option |
+| Escape | Close dropdown |
+
+### Popover
+
+| Key | Action |
+|-----|--------|
+| Enter / Space | Toggle popover (click trigger) |
+| Escape | Close popover |
+| Tab | Move focus within popover content |
+
+## Screen Reader Support
+
+Tiinno UI components are tested with popular screen readers including VoiceOver (macOS), NVDA (Windows), and JAWS (Windows).
+
+### Announcements
+
+Components announce meaningful state changes to screen readers:
+
+```tsx
+// Loading states
+<Button loading>Submitting...</Button>
+// Screen reader: "Submitting..., button, busy"
+
+// Error states
+<Input error="Email is required" />
+// Screen reader: "Email, invalid entry, Email is required"
+
+// Progress
+<Progress value={75} showLabel />
+// Screen reader: "Progress, 75 percent"
+
+// Alerts
+<Alert variant="success">File uploaded successfully</Alert>
+// Screen reader announces: "File uploaded successfully"
+```
+
+### Live Regions
+
+Dynamic content updates are announced through ARIA live regions:
+
+```tsx
+// Polite announcements (non-urgent)
+<div aria-live="polite">
+  {searchResults.length} results found
+</div>
+
+// Assertive announcements (urgent)
+<div role="alert" aria-live="assertive">
+  {errorMessage}
+</div>
+```
+
+### Hidden Decorative Elements
+
+Icons and decorative elements that do not convey information are hidden from screen readers:
+
+```tsx
+// Decorative icon - hidden from AT
+<span aria-hidden="true">★</span>
+
+// Informative icon - accessible label provided
+<span role="img" aria-label="Warning">⚠️</span>
+```
+
+## Focus Management
+
+Proper focus management is critical for keyboard and screen reader users.
+
+### Focus Visible Styles
+
+All Tiinno UI components include visible focus indicators for keyboard navigation. These styles only appear when navigating with the keyboard, not when clicking with a mouse.
+
+```css
+/* Applied to all interactive components */
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+```
+
+### Focus Trapping
+
+Modal and Popover components trap focus within their content area to prevent users from accidentally interacting with background content:
+
+```tsx
+// Focus is automatically trapped when the modal opens
+<Modal isOpen={isOpen} onClose={handleClose}>
+  <Input placeholder="First field (receives focus)" />
+  <Input placeholder="Second field" />
+  <Button onClick={handleClose}>Close</Button>
+  {/* Tab cycles between these elements only */}
+</Modal>
+```
+
+### Focus Restoration
+
+When a modal or popover closes, focus is returned to the element that triggered it:
+
+```tsx
+function EditDialog() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      {/* Focus returns here when the modal closes */}
+      <Button onClick={() => setIsOpen(true)}>
+        Edit
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <p>Edit content...</p>
+        <Button onClick={() => setIsOpen(false)}>Done</Button>
+      </Modal>
+    </>
+  );
+}
+```
+
+## Color Contrast Guidelines
+
+All Tiinno UI color combinations meet WCAG AA contrast requirements.
+
+### Minimum Contrast Ratios
+
+| Content Type | Minimum Ratio | Standard |
+|-------------|--------------|----------|
+| Normal text (< 18px) | 4.5:1 | WCAG AA |
+| Large text (>= 18px or 14px bold) | 3:1 | WCAG AA |
+| Interactive elements (borders, icons) | 3:1 | WCAG AA |
+| Decorative elements | No requirement | - |
+
+### Testing Contrast
+
+Use these tools to verify contrast ratios in your custom themes:
+
+- **Chrome DevTools** -- Inspect element, view contrast ratio in the color picker
+- **WebAIM Contrast Checker** -- [webaim.org/resources/contrastchecker](https://webaim.org/resources/contrastchecker/)
+- **Stark** -- Browser extension and Figma plugin for accessibility checking
+- **axe DevTools** -- Automated accessibility testing in the browser
+
+### Do Not Rely on Color Alone
+
+Always pair color with another visual indicator:
+
+```tsx
+// Good - icon + color + text
+<Alert variant="danger">
+  <AlertIcon /> {/* Visual icon indicator */}
+  Error: File upload failed {/* Descriptive text */}
+</Alert>
+
+// Good - badge with text label
+<Badge variant="success">Active</Badge>
+
+// Bad - color is the only indicator
+<span className="text-red-500">●</span> {/* No text alternative */}
+```
+
+## Reduced Motion
+
+Tiinno UI respects the `prefers-reduced-motion` media query. When enabled, animations and transitions are minimized or removed:
+
+```css
+/* Applied internally by Tiinno UI */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+In your custom components, respect this preference:
+
+```tsx
+import { useEffect, useState } from 'react';
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  return prefersReducedMotion;
+}
+```
+
+## Accessibility Checklist
+
+Use this checklist when building with Tiinno UI:
+
+### Structure
+
+- [ ] Pages have a logical heading hierarchy (h1 > h2 > h3)
+- [ ] Landmark regions are used (main, nav, aside, footer)
+- [ ] Page title is descriptive and unique
+
+### Interactive Elements
+
+- [ ] All buttons have visible text or `aria-label`
+- [ ] All form inputs have associated labels
+- [ ] Error messages are programmatically connected to inputs
+- [ ] Custom interactive elements are keyboard accessible
+
+### Visual
+
+- [ ] Text contrast meets 4.5:1 (normal) or 3:1 (large)
+- [ ] Focus indicators are visible on all interactive elements
+- [ ] Content does not rely on color alone to convey meaning
+- [ ] Layout works at 200% zoom
+
+### Dynamic Content
+
+- [ ] Modals trap focus and restore it on close
+- [ ] Toast and alert content is announced via live regions
+- [ ] Loading states are communicated to screen readers
+- [ ] Route changes are announced in single-page applications
+
+### Testing
+
+- [ ] Tested with keyboard only (no mouse)
+- [ ] Tested with VoiceOver or NVDA
+- [ ] Tested with axe DevTools or Lighthouse
+- [ ] Tested with `prefers-reduced-motion` enabled
+
+## Resources
+
+- [WAI-ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/) -- Component patterns and best practices
+- [WebAIM](https://webaim.org/) -- Web accessibility evaluation tools and training
+- [The A11Y Project](https://www.a11yproject.com/) -- Community-driven accessibility resource
+- [Inclusive Components](https://inclusive-components.design/) -- Accessible component design patterns
+- [axe DevTools](https://www.deque.com/axe/devtools/) -- Automated accessibility testing
+
+## What's Next?
+
+- [Best Practices](/guides/best-practices/) -- General tips for building with Tiinno UI
+- [Customization](/guides/customization/) -- Customizing component styles
+- [Colors](/design-system/colors/) -- Color palette with contrast guidelines

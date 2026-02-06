@@ -1,0 +1,259 @@
+---
+title: Stack
+description: Vertical or horizontal stacking with consistent spacing between items
+---
+
+import { Stack } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Stack component arranges child elements vertically or horizontally with consistent spacing between them. It is a simplified flexbox wrapper optimized for the most common layout pattern: placing items in a single direction with uniform gaps.
+
+## Import
+
+```tsx
+import { Stack } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Default Stack (Vertical)">
+  <Stack client:load spacing="md">
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 1</div>
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 2</div>
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 3</div>
+  </Stack>
+
+  <Fragment slot="code">
+```tsx
+<Stack spacing="md">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</Stack>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Direction
+
+The `direction` prop controls whether items are stacked vertically or horizontally.
+
+<ComponentPreview title="Stack Directions">
+  <Stack client:load direction="vertical" spacing="sm">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">Vertical 1</div>
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">Vertical 2</div>
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">Vertical 3</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="sm">
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">Horizontal 1</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">Horizontal 2</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">Horizontal 3</div>
+  </Stack>
+
+  <Fragment slot="code">
+```tsx
+<Stack direction="vertical" spacing="sm">
+  <div>Vertical 1</div>
+  <div>Vertical 2</div>
+  <div>Vertical 3</div>
+</Stack>
+
+<Stack direction="horizontal" spacing="sm">
+  <div>Horizontal 1</div>
+  <div>Horizontal 2</div>
+  <div>Horizontal 3</div>
+</Stack>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Spacing
+
+The `spacing` prop sets the gap between items.
+
+<ComponentPreview title="Spacing Variants">
+  <Stack client:load direction="horizontal" spacing="none">
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">none</div>
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">none</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="xs">
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xs</div>
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xs</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="sm">
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">sm</div>
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">sm</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="md">
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">md</div>
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">md</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="lg">
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">lg</div>
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">lg</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="xl">
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xl</div>
+    <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xl</div>
+  </Stack>
+
+  <Fragment slot="code">
+```tsx
+<Stack direction="horizontal" spacing="none">No gap</Stack>
+<Stack direction="horizontal" spacing="xs">Extra small (0.25rem)</Stack>
+<Stack direction="horizontal" spacing="sm">Small (0.5rem)</Stack>
+<Stack direction="horizontal" spacing="md">Medium (1rem) - default</Stack>
+<Stack direction="horizontal" spacing="lg">Large (1.5rem)</Stack>
+<Stack direction="horizontal" spacing="xl">Extra large (2rem)</Stack>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Alignment
+
+The `align` prop controls cross-axis alignment of items.
+
+<ComponentPreview title="Alignment Variants">
+  <Stack client:load direction="horizontal" spacing="sm" align="start">
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Short</div>
+    <div className="bg-purple-100 dark:bg-purple-900 p-6 rounded text-xs">Tall</div>
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">start</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="sm" align="center">
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Short</div>
+    <div className="bg-purple-100 dark:bg-purple-900 p-6 rounded text-xs">Tall</div>
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">center</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="sm" align="end">
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Short</div>
+    <div className="bg-purple-100 dark:bg-purple-900 p-6 rounded text-xs">Tall</div>
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">end</div>
+  </Stack>
+  <Stack client:load direction="horizontal" spacing="sm" align="stretch">
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Short</div>
+    <div className="bg-purple-100 dark:bg-purple-900 p-6 rounded text-xs">Tall</div>
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">stretch</div>
+  </Stack>
+
+  <Fragment slot="code">
+```tsx
+<Stack direction="horizontal" align="start">Aligned to start</Stack>
+<Stack direction="horizontal" align="center">Aligned to center</Stack>
+<Stack direction="horizontal" align="end">Aligned to end</Stack>
+<Stack direction="horizontal" align="stretch">Stretched (default)</Stack>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'direction',
+      type: "'vertical' | 'horizontal'",
+      default: "'vertical'",
+      description: 'Stack direction - vertical (column) or horizontal (row)',
+    },
+    {
+      name: 'spacing',
+      type: "'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+      default: "'md'",
+      description: 'Gap between stacked items',
+    },
+    {
+      name: 'align',
+      type: "'start' | 'center' | 'end' | 'stretch'",
+      default: "'stretch'",
+      description: 'Cross-axis alignment of items',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Items to stack',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Form Layout
+
+```tsx
+function ContactForm() {
+  return (
+    <form>
+      <Stack spacing="lg">
+        <Input label="Name" placeholder="Your name" />
+        <Input label="Email" type="email" placeholder="you@example.com" />
+        <Textarea label="Message" rows={4} placeholder="Your message" />
+        <Button type="submit" fullWidth>
+          Send Message
+        </Button>
+      </Stack>
+    </form>
+  );
+}
+```
+
+### Action Bar
+
+```tsx
+function ActionBar() {
+  return (
+    <Stack direction="horizontal" spacing="sm" align="center">
+      <Button variant="primary">Save</Button>
+      <Button variant="outline">Cancel</Button>
+      <Button variant="ghost">Reset</Button>
+    </Stack>
+  );
+}
+```
+
+### Sidebar Navigation
+
+```tsx
+function Sidebar() {
+  return (
+    <nav>
+      <Stack spacing="xs">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/settings">Settings</a>
+        <a href="/profile">Profile</a>
+        <a href="/help">Help</a>
+      </Stack>
+    </nav>
+  );
+}
+```
+
+## Accessibility
+
+The Stack component renders a `<div>` with flexbox layout. It does not add ARIA attributes by default. When using Stack for navigation or lists, add appropriate roles:
+
+```tsx
+{/* Navigation list */}
+<Stack spacing="sm" role="navigation" aria-label="Main navigation">
+  <a href="/home">Home</a>
+  <a href="/about">About</a>
+</Stack>
+
+{/* Item list */}
+<Stack spacing="md" role="list">
+  <div role="listitem">First item</div>
+  <div role="listitem">Second item</div>
+</Stack>
+```
+
+## Related Components
+
+- [Flex](/components/layout/flex/) - Full flexbox control with justify, wrap, and gap
+- [Grid](/components/layout/grid/) - CSS Grid for multi-column layouts
+- [Spacer](/components/layout/spacer/) - Add flexible or fixed spacing

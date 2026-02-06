@@ -1,0 +1,247 @@
+---
+title: Grid
+description: Responsive CSS Grid layout system with built-in breakpoint handling
+---
+
+import { Grid } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Grid component provides a responsive CSS Grid layout system. Columns automatically collapse on smaller screens, making it easy to build layouts that adapt from mobile to desktop without writing custom media queries.
+
+## Import
+
+```tsx
+import { Grid } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Default Grid">
+  <Grid client:load cols={3} gap="md">
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">1</div>
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">2</div>
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">3</div>
+  </Grid>
+
+  <Fragment slot="code">
+```tsx
+<Grid cols={3} gap="md">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</Grid>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Columns
+
+The `cols` prop sets the number of columns. All column values include responsive breakpoints that collapse to fewer columns on smaller screens.
+
+<ComponentPreview title="Column Variants">
+  <Grid client:load cols={1} gap="sm">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">1 col</div>
+  </Grid>
+  <Grid client:load cols={2} gap="sm">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">1</div>
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">2</div>
+  </Grid>
+  <Grid client:load cols={3} gap="sm">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">1</div>
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">2</div>
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">3</div>
+  </Grid>
+  <Grid client:load cols={4} gap="sm">
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">1</div>
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">2</div>
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">3</div>
+    <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">4</div>
+  </Grid>
+
+  <Fragment slot="code">
+```tsx
+<Grid cols={1}>Single column</Grid>
+<Grid cols={2}>Two columns (1 on mobile)</Grid>
+<Grid cols={3}>Three columns (2 on sm, 1 on mobile)</Grid>
+<Grid cols={4}>Four columns (2 on sm, 1 on mobile)</Grid>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Responsive Breakpoints
+
+Each column count includes automatic responsive behavior:
+
+| cols | Mobile | sm (640px) | md (768px) | lg (1024px) |
+|------|--------|------------|------------|-------------|
+| 1    | 1      | 1          | 1          | 1           |
+| 2    | 1      | 2          | 2          | 2           |
+| 3    | 1      | 2          | 2          | 3           |
+| 4    | 1      | 2          | 2          | 4           |
+| 5    | 1      | 2          | 2          | 5           |
+| 6    | 1      | 2          | 3          | 6           |
+| 12   | 1      | 2          | 4          | 12          |
+
+## Gap
+
+The `gap` prop controls spacing between grid items.
+
+<ComponentPreview title="Gap Variants">
+  <Grid client:load cols={3} gap="none">
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">none</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">none</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">none</div>
+  </Grid>
+  <Grid client:load cols={3} gap="sm">
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">sm</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">sm</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">sm</div>
+  </Grid>
+  <Grid client:load cols={3} gap="md">
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">md</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">md</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">md</div>
+  </Grid>
+  <Grid client:load cols={3} gap="lg">
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">lg</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">lg</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">lg</div>
+  </Grid>
+  <Grid client:load cols={3} gap="xl">
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">xl</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">xl</div>
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">xl</div>
+  </Grid>
+
+  <Fragment slot="code">
+```tsx
+<Grid cols={3} gap="none">No gap</Grid>
+<Grid cols={3} gap="sm">Small gap (0.5rem)</Grid>
+<Grid cols={3} gap="md">Medium gap (1rem) - default</Grid>
+<Grid cols={3} gap="lg">Large gap (1.5rem)</Grid>
+<Grid cols={3} gap="xl">Extra large gap (2rem)</Grid>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'cols',
+      type: '1 | 2 | 3 | 4 | 5 | 6 | 12',
+      default: '1',
+      description: 'Number of grid columns with built-in responsive breakpoints',
+    },
+    {
+      name: 'gap',
+      type: "'none' | 'sm' | 'md' | 'lg' | 'xl'",
+      default: "'md'",
+      description: 'Gap between grid items',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Grid items to render',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Feature Cards
+
+```tsx
+function FeaturesSection() {
+  return (
+    <Grid cols={3} gap="lg">
+      <Card>
+        <CardHeader>Fast</CardHeader>
+        <CardContent>Optimized for performance</CardContent>
+      </Card>
+      <Card>
+        <CardHeader>Secure</CardHeader>
+        <CardContent>Enterprise-grade security</CardContent>
+      </Card>
+      <Card>
+        <CardHeader>Scalable</CardHeader>
+        <CardContent>Grows with your needs</CardContent>
+      </Card>
+    </Grid>
+  );
+}
+```
+
+### Dashboard Layout
+
+```tsx
+function Dashboard() {
+  return (
+    <Container>
+      {/* Stats row */}
+      <Grid cols={4} gap="md">
+        <StatCard label="Users" value="1,234" />
+        <StatCard label="Revenue" value="$5,678" />
+        <StatCard label="Orders" value="890" />
+        <StatCard label="Growth" value="+12%" />
+      </Grid>
+
+      {/* Content area */}
+      <Grid cols={2} gap="lg">
+        <Card>Chart goes here</Card>
+        <Card>Recent activity</Card>
+      </Grid>
+    </Container>
+  );
+}
+```
+
+### Photo Gallery
+
+```tsx
+function Gallery({ photos }) {
+  return (
+    <Grid cols={4} gap="sm">
+      {photos.map((photo) => (
+        <img
+          key={photo.id}
+          src={photo.url}
+          alt={photo.alt}
+          className="rounded-lg object-cover aspect-square"
+        />
+      ))}
+    </Grid>
+  );
+}
+```
+
+## Accessibility
+
+The Grid component renders a `<div>` with CSS Grid layout. For accessible grid patterns:
+
+- Use semantic elements within grid items for proper content structure
+- Grid ordering should match the visual order to avoid confusion for screen reader users
+- Consider adding `role="list"` and `role="listitem"` when the grid represents a collection of similar items
+
+```tsx
+<Grid cols={3} role="list">
+  <div role="listitem">Item 1</div>
+  <div role="listitem">Item 2</div>
+  <div role="listitem">Item 3</div>
+</Grid>
+```
+
+## Related Components
+
+- [Container](/components/layout/container/) - Responsive max-width wrapper
+- [Stack](/components/layout/stack/) - Vertical or horizontal stacking
+- [Flex](/components/layout/flex/) - Flexbox layout utility
+- [Card](/components/layout/card/) - Content container, commonly used as grid items

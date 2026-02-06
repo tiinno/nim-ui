@@ -1,0 +1,264 @@
+---
+title: Testimonial
+description: Display customer testimonials and quotes with author attribution
+---
+
+import { Testimonial } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Testimonial component displays a customer quote with author attribution, including optional role, company, and avatar image. It is designed for landing pages, marketing sections, and social proof areas.
+
+## Import
+
+```tsx
+import { Testimonial } from '@tiinno-ui/components';
+```
+
+## Usage
+
+<ComponentPreview title="Default Testimonial">
+  <Testimonial
+    client:load
+    quote="Tiinno UI has transformed the way our team builds interfaces. We ship features twice as fast now."
+    author="Sarah Chen"
+    role="Engineering Lead"
+    company="Acme Corp"
+  />
+
+  <Fragment slot="code">
+```tsx
+<Testimonial
+  quote="Tiinno UI has transformed the way our team builds interfaces. We ship features twice as fast now."
+  author="Sarah Chen"
+  role="Engineering Lead"
+  company="Acme Corp"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Avatar
+
+<ComponentPreview title="Testimonial with Avatar">
+  <Testimonial
+    client:load
+    quote="The accessibility features alone make this library worth it. Every component works beautifully with screen readers and keyboard navigation."
+    author="Marcus Johnson"
+    role="Senior Developer"
+    company="TechStart"
+    avatar="https://i.pravatar.cc/80?img=12"
+  />
+
+  <Fragment slot="code">
+```tsx
+<Testimonial
+  quote="The accessibility features alone make this library worth it. Every component works beautifully with screen readers and keyboard navigation."
+  author="Marcus Johnson"
+  role="Senior Developer"
+  company="TechStart"
+  avatar="/images/marcus.jpg"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Minimal Testimonial
+
+<ComponentPreview title="Quote and Author Only">
+  <Testimonial
+    client:load
+    quote="Simple, elegant, and incredibly well-documented. Exactly what I needed."
+    author="Alex Rivera"
+  />
+
+  <Fragment slot="code">
+```tsx
+<Testimonial
+  quote="Simple, elegant, and incredibly well-documented. Exactly what I needed."
+  author="Alex Rivera"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Role Only
+
+<ComponentPreview title="Testimonial with Role">
+  <Testimonial
+    client:load
+    quote="We migrated our entire design system to Tiinno UI in a weekend. The TypeScript support is phenomenal."
+    author="Priya Patel"
+    role="CTO"
+  />
+
+  <Fragment slot="code">
+```tsx
+<Testimonial
+  quote="We migrated our entire design system to Tiinno UI in a weekend. The TypeScript support is phenomenal."
+  author="Priya Patel"
+  role="CTO"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Multiple Testimonials
+
+<ComponentPreview title="Testimonials in a Grid">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+    <Testimonial
+      client:load
+      quote="Best component library I've used. Period."
+      author="Jamie Lee"
+      role="Frontend Developer"
+      company="DevStudio"
+    />
+    <Testimonial
+      client:load
+      quote="Dark mode support out of the box saved us weeks of work."
+      author="David Kim"
+      role="UI Engineer"
+      company="NightOwl"
+    />
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <Testimonial
+    quote="Best component library I've used. Period."
+    author="Jamie Lee"
+    role="Frontend Developer"
+    company="DevStudio"
+  />
+  <Testimonial
+    quote="Dark mode support out of the box saved us weeks of work."
+    author="David Kim"
+    role="UI Engineer"
+    company="NightOwl"
+  />
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'quote',
+      type: 'string',
+      required: true,
+      description: 'The testimonial quote text',
+    },
+    {
+      name: 'author',
+      type: 'string',
+      required: true,
+      description: 'Name of the person providing the testimonial',
+    },
+    {
+      name: 'role',
+      type: 'string',
+      description: 'Job title or role of the author',
+    },
+    {
+      name: 'company',
+      type: 'string',
+      description: 'Company or organization the author belongs to',
+    },
+    {
+      name: 'avatar',
+      type: 'string',
+      description: 'URL to the author avatar image',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the root element',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Social Proof Section
+
+```tsx
+import { Testimonial } from '@tiinno-ui/components';
+
+const testimonials = [
+  {
+    quote: "Tiinno UI reduced our development time by 60%.",
+    author: "Sarah Chen",
+    role: "Engineering Lead",
+    company: "Acme Corp",
+    avatar: "/avatars/sarah.jpg",
+  },
+  {
+    quote: "The best React component library we've ever used.",
+    author: "Marcus Johnson",
+    role: "Senior Developer",
+    company: "TechStart",
+    avatar: "/avatars/marcus.jpg",
+  },
+  {
+    quote: "Accessibility-first approach sets this apart from everything else.",
+    author: "Priya Patel",
+    role: "CTO",
+    company: "A11y Labs",
+    avatar: "/avatars/priya.jpg",
+  },
+];
+
+function TestimonialsSection() {
+  return (
+    <section className="py-16 bg-neutral-50 dark:bg-neutral-900">
+      <h2 className="text-3xl font-bold text-center mb-12">
+        Loved by developers
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+        {testimonials.map((t) => (
+          <Testimonial key={t.author} {...t} />
+        ))}
+      </div>
+    </section>
+  );
+}
+```
+
+### Featured Testimonial
+
+```tsx
+function FeaturedTestimonial() {
+  return (
+    <div className="max-w-2xl mx-auto py-12">
+      <Testimonial
+        quote="Moving to Tiinno UI was the best decision we made this year. Our designers love the consistency, our developers love the DX, and our users love the performance."
+        author="Elena Rodriguez"
+        role="VP of Engineering"
+        company="ScaleUp Inc."
+        avatar="/avatars/elena.jpg"
+      />
+    </div>
+  );
+}
+```
+
+## Accessibility
+
+The Testimonial component includes proper semantic markup:
+
+- Uses `<blockquote>` for the quote text
+- Uses `<cite>` for the author attribution
+- Avatar images include proper `alt` text with the author name
+- When no avatar is present, the layout adjusts without leaving empty decorative space
+- Text maintains sufficient contrast ratios in both light and dark modes
+
+## Related Components
+
+- [Avatar](/components/primitives/avatar/) - User profile image display
+- [Card](/components/primitives/card/) - Generic content container
+- [Hero](/components/landing/hero/) - Landing page hero section

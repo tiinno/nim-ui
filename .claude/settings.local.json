@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install:*)",
+      "Bash(pnpm --filter @tiinno-ui/components build:*)",
+      "Bash(pnpm --filter @tiinno-ui/components add -D @tailwindcss/postcss)",
+      "Bash(pnpm run type-check:*)",
+      "Bash(pnpm run build:*)",
+      "Bash(tree:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm create next-app:*)",
+      "Bash(chmod:*)",
+      "Bash(pnpm exec tsup:*)",
+      "Bash(pnpm exec tsc:*)",
+      "Bash(pnpm --filter @tiinno-ui/components add:*)",
+      "Bash(pnpm test:coverage:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm test:run:*)"
+    ]
+  }
+}

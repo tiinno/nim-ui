@@ -1,0 +1,226 @@
+---
+title: Hero
+description: Full-width hero section for landing pages with title, subtitle, and call-to-action buttons
+---
+
+import { Hero } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Hero component provides a prominent, full-width section typically placed at the top of a landing page. It supports a title, subtitle, primary and secondary call-to-action buttons, and an optional background image.
+
+## Import
+
+```tsx
+import { Hero } from '@tiinno-ui/components';
+```
+
+## Usage
+
+<ComponentPreview title="Default Hero">
+  <Hero
+    client:load
+    title="Build beautiful interfaces"
+    subtitle="A modern React component library for building production-ready applications with speed and confidence."
+    primaryCta={{ label: "Get Started", href: "/getting-started/installation/" }}
+    secondaryCta={{ label: "View Components", href: "/components/primitives/button/" }}
+  />
+
+  <Fragment slot="code">
+```tsx
+<Hero
+  title="Build beautiful interfaces"
+  subtitle="A modern React component library for building production-ready applications with speed and confidence."
+  primaryCta={{ label: "Get Started", href: "/getting-started/installation/" }}
+  secondaryCta={{ label: "View Components", href: "/components/primitives/button/" }}
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Title Only
+
+<ComponentPreview title="Hero with Title Only">
+  <Hero
+    client:load
+    title="Welcome to Tiinno UI"
+  />
+
+  <Fragment slot="code">
+```tsx
+<Hero title="Welcome to Tiinno UI" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Background Image
+
+<ComponentPreview title="Hero with Background Image">
+  <Hero
+    client:load
+    title="Ship faster with confidence"
+    subtitle="Production-ready components built with accessibility and performance in mind."
+    primaryCta={{ label: "Start Building" }}
+    backgroundImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80"
+  />
+
+  <Fragment slot="code">
+```tsx
+<Hero
+  title="Ship faster with confidence"
+  subtitle="Production-ready components built with accessibility and performance in mind."
+  primaryCta={{ label: "Start Building" }}
+  backgroundImage="/images/hero-bg.jpg"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Click Handlers
+
+<ComponentPreview title="Hero with Click Handlers">
+  <Hero
+    client:load
+    title="Ready to get started?"
+    subtitle="Join thousands of developers building with Tiinno UI."
+    primaryCta={{ label: "Sign Up Free", onClick: () => alert('Sign up clicked') }}
+    secondaryCta={{ label: "Learn More", onClick: () => alert('Learn more clicked') }}
+  />
+
+  <Fragment slot="code">
+```tsx
+<Hero
+  title="Ready to get started?"
+  subtitle="Join thousands of developers building with Tiinno UI."
+  primaryCta={{
+    label: "Sign Up Free",
+    onClick: () => navigate('/signup'),
+  }}
+  secondaryCta={{
+    label: "Learn More",
+    onClick: () => scrollToSection('features'),
+  }}
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'title',
+      type: 'string',
+      required: true,
+      description: 'Main heading text displayed prominently in the hero section',
+    },
+    {
+      name: 'subtitle',
+      type: 'string',
+      description: 'Supporting text displayed below the title',
+    },
+    {
+      name: 'primaryCta',
+      type: '{ label: string; onClick?: () => void; href?: string }',
+      description: 'Primary call-to-action button configuration',
+    },
+    {
+      name: 'secondaryCta',
+      type: '{ label: string; onClick?: () => void; href?: string }',
+      description: 'Secondary call-to-action button configuration',
+    },
+    {
+      name: 'backgroundImage',
+      type: 'string',
+      description: 'URL for an optional background image behind the hero content',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the root element',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Landing Page Header
+
+```tsx
+function LandingPage() {
+  return (
+    <main>
+      <Hero
+        title="The React Component Library You've Been Waiting For"
+        subtitle="24 production-ready components. Fully accessible. Dark mode built-in. TypeScript first."
+        primaryCta={{
+          label: "Get Started",
+          href: "/docs/installation",
+        }}
+        secondaryCta={{
+          label: "GitHub",
+          href: "https://github.com/tiinno-ui",
+        }}
+      />
+      {/* Rest of landing page */}
+    </main>
+  );
+}
+```
+
+### Product Launch
+
+```tsx
+function ProductLaunch() {
+  const handleSignup = () => {
+    // Open signup modal
+    setShowSignup(true);
+  };
+
+  return (
+    <Hero
+      title="Introducing Tiinno Pro"
+      subtitle="Advanced components, premium themes, and priority support for teams."
+      primaryCta={{
+        label: "Start Free Trial",
+        onClick: handleSignup,
+      }}
+      secondaryCta={{
+        label: "View Pricing",
+        href: "/pricing",
+      }}
+      backgroundImage="/images/gradient-bg.webp"
+    />
+  );
+}
+```
+
+### Minimal Hero
+
+```tsx
+function MinimalHero() {
+  return (
+    <Hero
+      title="Simple. Fast. Accessible."
+      subtitle="Build better user interfaces with less code."
+    />
+  );
+}
+```
+
+## Accessibility
+
+The Hero component follows accessibility best practices:
+
+- Uses semantic heading elements (`<h1>`) for the title
+- CTA buttons use proper `<a>` or `<button>` elements depending on whether `href` or `onClick` is provided
+- Background images are decorative and do not convey content, so they use `aria-hidden`
+- Text maintains sufficient contrast ratios against background images through overlay techniques
+- Supports keyboard navigation for all interactive elements
+
+## Related Components
+
+- [CTA](/components/landing/cta-section/) - Standalone call-to-action section
+- [Button](/components/primitives/button/) - Interactive button component
+- [Container](/components/primitives/container/) - Responsive container layout

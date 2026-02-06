@@ -1,0 +1,234 @@
+---
+title: Installation
+description: Install Tiinno UI in your React project
+---
+
+import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
+
+## Prerequisites
+
+Before installing Tiinno UI, make sure you have:
+
+- **Node.js** 18.0 or later
+- **React** 19.2.0 or later
+- **TypeScript** 5.9.0 or later (recommended)
+
+## Install the Package
+
+Install Tiinno UI and its peer dependencies using your preferred package manager:
+
+<Tabs>
+  <TabItem label="pnpm">
+```bash
+pnpm add @tiinno-ui/components
+pnpm add -D tailwindcss @tailwindcss/postcss
+```
+  </TabItem>
+
+  <TabItem label="npm">
+```bash
+npm install @tiinno-ui/components
+npm install -D tailwindcss @tailwindcss/postcss
+```
+  </TabItem>
+
+  <TabItem label="yarn">
+```bash
+yarn add @tiinno-ui/components
+yarn add -D tailwindcss @tailwindcss/postcss
+```
+  </TabItem>
+
+  <TabItem label="bun">
+```bash
+bun add @tiinno-ui/components
+bun add -D tailwindcss @tailwindcss/postcss
+```
+  </TabItem>
+</Tabs>
+
+## Configure Tailwind CSS
+
+Tiinno UI uses Tailwind CSS v4 for styling. Set up Tailwind in your project:
+
+### 1. Create Tailwind Config
+
+Create a `tailwind.config.js` file in your project root:
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@tiinno-ui/components/dist/**/*.js',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+### 2. Add Tailwind to PostCSS
+
+Create a `postcss.config.js` file:
+
+```js
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+};
+```
+
+### 3. Import Styles
+
+Import Tiinno UI styles in your main CSS file:
+
+```css title="src/index.css"
+@import '@tiinno-ui/components/styles';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Then import this CSS file in your app entry point:
+
+```tsx title="src/main.tsx" {2}
+import React from 'react';
+import './index.css';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+## TypeScript Configuration
+
+For optimal TypeScript support, add these settings to your `tsconfig.json`:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src"]
+}
+```
+
+## Vite Configuration
+
+If you're using Vite, ensure your `vite.config.ts` includes React plugin:
+
+```ts title="vite.config.ts"
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+});
+```
+
+## Verify Installation
+
+Create a simple component to verify everything is working:
+
+```tsx title="src/App.tsx"
+import { Button } from '@tiinno-ui/components';
+
+export default function App() {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">Tiinno UI Test</h1>
+      <Button variant="primary" onClick={() => alert('It works!')}>
+        Click me
+      </Button>
+    </div>
+  );
+}
+```
+
+If you see a styled button, congratulations! Tiinno UI is successfully installed.
+
+## What's Next?
+
+- [Quick Start Guide](/getting-started/quick-start/) - Build your first component
+- [Configuration](/getting-started/configuration/) - Customize the theme
+- [Browse Components](/components/primitives/button/) - Explore all components
+
+## Framework-Specific Guides
+
+### Next.js
+
+For Next.js projects, additional configuration is needed:
+
+```js title="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  transpilePackages: ['@tiinno-ui/components'],
+};
+
+export default nextConfig;
+```
+
+### Remix
+
+For Remix, add to your `remix.config.js`:
+
+```js title="remix.config.js"
+/** @type {import('@remix-run/dev').AppConfig} */
+export default {
+  serverDependenciesToBundle: ['@tiinno-ui/components'],
+};
+```
+
+## Troubleshooting
+
+### Styles Not Loading
+
+If styles aren't appearing:
+
+1. Verify Tailwind content paths include Tiinno UI:
+   ```js
+   content: ['./node_modules/@tiinno-ui/components/dist/**/*.js']
+   ```
+
+2. Ensure you imported the component styles:
+   ```css
+   @import '@tiinno-ui/components/styles';
+   ```
+
+3. Check that PostCSS is configured correctly
+
+### TypeScript Errors
+
+If you get TypeScript errors:
+
+1. Ensure TypeScript version is 5.9.0 or later
+2. Enable `skipLibCheck: true` in tsconfig.json
+3. Restart your TypeScript server
+
+### Build Errors
+
+If you encounter build errors:
+
+1. Clear your build cache and `node_modules`
+2. Reinstall dependencies
+3. Ensure all peer dependencies are installed
+
+For more help, check our [GitHub Issues](https://github.com/tiinno-ui/tiinno-ui/issues).

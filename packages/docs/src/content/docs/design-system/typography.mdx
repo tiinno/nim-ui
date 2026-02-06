@@ -1,0 +1,259 @@
+---
+title: Typography
+description: Font families, sizes, weights, and line heights for consistent text styling
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+Tiinno UI uses a carefully selected typography system built on the Inter font family for body text and Fira Code for monospaced content. All typographic values are available as Tailwind CSS utility classes and CSS custom properties.
+
+## Font Families
+
+### Sans-serif (Inter)
+
+Inter is the primary font family used for all body text, headings, labels, and UI elements. It offers excellent readability at all sizes and strong support for multiple languages.
+
+```css
+--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+```
+
+<ComponentPreview title="Sans-serif Font">
+  <div className="space-y-2 w-full">
+    <p className="font-sans text-lg">The quick brown fox jumps over the lazy dog.</p>
+    <p className="font-sans text-lg font-medium">The quick brown fox jumps over the lazy dog. (Medium)</p>
+    <p className="font-sans text-lg font-bold">The quick brown fox jumps over the lazy dog. (Bold)</p>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<p className="font-sans text-lg">Regular text</p>
+<p className="font-sans text-lg font-medium">Medium weight</p>
+<p className="font-sans text-lg font-bold">Bold weight</p>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Monospace (Fira Code)
+
+Fira Code is used for code snippets, technical values, and data that benefits from fixed-width characters. It includes programming ligatures for improved code readability.
+
+```css
+--font-mono: 'Fira Code', 'Courier New', monospace;
+```
+
+<ComponentPreview title="Monospace Font">
+  <div className="space-y-2 w-full">
+    <p className="font-mono text-sm">const greeting = "Hello, World!";</p>
+    <p className="font-mono text-sm">function add(a: number, b: number): number</p>
+    <p className="font-mono text-sm">npm install @tiinno-ui/components</p>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<p className="font-mono text-sm">const greeting = "Hello, World!";</p>
+<code className="font-mono">npm install @tiinno-ui/components</code>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Font Sizes
+
+The type scale ranges from `xs` (12px) to `4xl` (36px), providing enough variety for all common UI needs.
+
+| Token | Size | Pixels | Tailwind Class |
+|-------|------|--------|---------------|
+| `--text-xs` | 0.75rem | 12px | `text-xs` |
+| `--text-sm` | 0.875rem | 14px | `text-sm` |
+| `--text-base` | 1rem | 16px | `text-base` |
+| `--text-lg` | 1.125rem | 18px | `text-lg` |
+| `--text-xl` | 1.25rem | 20px | `text-xl` |
+| `--text-2xl` | 1.5rem | 24px | `text-2xl` |
+| `--text-3xl` | 1.875rem | 30px | `text-3xl` |
+| `--text-4xl` | 2.25rem | 36px | `text-4xl` |
+
+<ComponentPreview title="Font Size Scale">
+  <div className="space-y-3 w-full">
+    <p className="text-xs text-neutral-700 dark:text-neutral-300">text-xs (12px) - Caption and fine print</p>
+    <p className="text-sm text-neutral-700 dark:text-neutral-300">text-sm (14px) - Secondary text and labels</p>
+    <p className="text-base text-neutral-700 dark:text-neutral-300">text-base (16px) - Body text default</p>
+    <p className="text-lg text-neutral-700 dark:text-neutral-300">text-lg (18px) - Emphasized body text</p>
+    <p className="text-xl text-neutral-700 dark:text-neutral-300">text-xl (20px) - Small headings</p>
+    <p className="text-2xl text-neutral-700 dark:text-neutral-300">text-2xl (24px) - Section headings</p>
+    <p className="text-3xl text-neutral-700 dark:text-neutral-300">text-3xl (30px) - Page headings</p>
+    <p className="text-4xl text-neutral-700 dark:text-neutral-300">text-4xl (36px) - Display headings</p>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<p className="text-xs">Caption text (12px)</p>
+<p className="text-sm">Secondary text (14px)</p>
+<p className="text-base">Body text (16px)</p>
+<p className="text-lg">Emphasized text (18px)</p>
+<p className="text-xl">Small heading (20px)</p>
+<p className="text-2xl">Section heading (24px)</p>
+<p className="text-3xl">Page heading (30px)</p>
+<p className="text-4xl">Display heading (36px)</p>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Font Weights
+
+Four font weights are available to establish visual hierarchy and emphasis.
+
+| Token | Value | Tailwind Class | Usage |
+|-------|-------|---------------|-------|
+| `--font-normal` | 400 | `font-normal` | Body text, paragraphs |
+| `--font-medium` | 500 | `font-medium` | Labels, subtitles, emphasis |
+| `--font-semibold` | 600 | `font-semibold` | Section headings, card titles |
+| `--font-bold` | 700 | `font-bold` | Page headings, strong emphasis |
+
+<ComponentPreview title="Font Weights">
+  <div className="space-y-3 w-full">
+    <p className="text-lg font-normal text-neutral-800 dark:text-neutral-200">font-normal (400) - Regular body text</p>
+    <p className="text-lg font-medium text-neutral-800 dark:text-neutral-200">font-medium (500) - Labels and emphasis</p>
+    <p className="text-lg font-semibold text-neutral-800 dark:text-neutral-200">font-semibold (600) - Section headings</p>
+    <p className="text-lg font-bold text-neutral-800 dark:text-neutral-200">font-bold (700) - Page headings</p>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<p className="font-normal">Regular body text</p>
+<p className="font-medium">Labels and emphasis</p>
+<p className="font-semibold">Section headings</p>
+<p className="font-bold">Page headings</p>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Line Heights
+
+Three line height options control the vertical spacing within text blocks.
+
+| Token | Value | Tailwind Class | Usage |
+|-------|-------|---------------|-------|
+| `--leading-tight` | 1.25 | `leading-tight` | Headings, compact UI text |
+| `--leading-normal` | 1.5 | `leading-normal` | Body text, general content |
+| `--leading-relaxed` | 1.75 | `leading-relaxed` | Long-form content, articles |
+
+<ComponentPreview title="Line Heights">
+  <div className="space-y-6 w-full">
+    <div>
+      <p className="text-xs font-medium text-neutral-500 mb-1">leading-tight (1.25)</p>
+      <p className="text-base leading-tight text-neutral-800 dark:text-neutral-200 max-w-lg">
+        Tiinno UI provides a comprehensive set of components for building modern web applications. Each component is designed with accessibility and performance in mind.
+      </p>
+    </div>
+    <div>
+      <p className="text-xs font-medium text-neutral-500 mb-1">leading-normal (1.5)</p>
+      <p className="text-base leading-normal text-neutral-800 dark:text-neutral-200 max-w-lg">
+        Tiinno UI provides a comprehensive set of components for building modern web applications. Each component is designed with accessibility and performance in mind.
+      </p>
+    </div>
+    <div>
+      <p className="text-xs font-medium text-neutral-500 mb-1">leading-relaxed (1.75)</p>
+      <p className="text-base leading-relaxed text-neutral-800 dark:text-neutral-200 max-w-lg">
+        Tiinno UI provides a comprehensive set of components for building modern web applications. Each component is designed with accessibility and performance in mind.
+      </p>
+    </div>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<p className="leading-tight">Compact text for headings</p>
+<p className="leading-normal">Standard body text spacing</p>
+<p className="leading-relaxed">Comfortable reading for articles</p>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Heading Patterns
+
+Recommended heading styles for consistent page hierarchy.
+
+<ComponentPreview title="Heading Hierarchy">
+  <div className="space-y-4 w-full">
+    <h1 className="text-4xl font-bold leading-tight text-neutral-900 dark:text-neutral-100">Page Title (h1)</h1>
+    <h2 className="text-3xl font-semibold leading-tight text-neutral-900 dark:text-neutral-100">Section Title (h2)</h2>
+    <h3 className="text-2xl font-semibold leading-tight text-neutral-900 dark:text-neutral-100">Subsection Title (h3)</h3>
+    <h4 className="text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-200">Card Title (h4)</h4>
+    <h5 className="text-lg font-medium leading-tight text-neutral-800 dark:text-neutral-200">Small Title (h5)</h5>
+    <h6 className="text-base font-medium leading-tight text-neutral-700 dark:text-neutral-300">Label (h6)</h6>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<h1 className="text-4xl font-bold leading-tight">Page Title</h1>
+<h2 className="text-3xl font-semibold leading-tight">Section Title</h2>
+<h3 className="text-2xl font-semibold leading-tight">Subsection Title</h3>
+<h4 className="text-xl font-medium leading-tight">Card Title</h4>
+<h5 className="text-lg font-medium leading-tight">Small Title</h5>
+<h6 className="text-base font-medium leading-tight">Label</h6>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Loading Fonts
+
+### From Google Fonts
+
+Add the following to your HTML `<head>` to load the recommended fonts:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+```
+
+### Self-hosted with @fontsource
+
+```bash
+pnpm add @fontsource/inter @fontsource/fira-code
+```
+
+```tsx title="src/main.tsx"
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/fira-code/400.css';
+```
+
+## Customizing Typography
+
+Override the default typography settings in your Tailwind configuration:
+
+```js title="tailwind.config.js"
+export default {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['YourFont', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      fontSize: {
+        // Add custom sizes
+        'hero': ['4.5rem', { lineHeight: '1.1' }],
+        'tiny': ['0.625rem', { lineHeight: '1.4' }],
+      },
+    },
+  },
+};
+```
+
+## Best Practices
+
+1. **Use `text-base` (16px) as the minimum body text size** for comfortable reading on all devices.
+2. **Limit heading levels to 3-4 per page** to maintain a clear hierarchy without overwhelming the reader.
+3. **Pair font sizes with appropriate line heights** -- use `leading-tight` for headings and `leading-normal` or `leading-relaxed` for body text.
+4. **Use `font-medium` or `font-semibold` for emphasis** rather than relying on color or size alone.
+5. **Maintain a consistent type scale** throughout your application by using the provided tokens rather than arbitrary values.
+
+## What's Next?
+
+- [Colors](/design-system/colors/) - Color palette and design tokens
+- [Spacing](/design-system/spacing/) - Spacing scale and layout
+- [Dark Mode](/design-system/dark-mode/) - Implementing dark mode

@@ -1,0 +1,329 @@
+# Tiinno UI - Quick Reference for AI
+
+> Modern React component library with TypeScript, Tailwind v4, and accessibility-first design
+
+## Stack
+
+- React 19.2+, TypeScript 5.9+, Tailwind CSS v4
+- Build: Vite, Turborepo, pnpm 9+
+- Test: Vitest, React Testing Library
+- Docs: Storybook
+
+## Project Structure
+
+```
+tiinno-ui/
+├── packages/
+│   ├── ui/              # Component library
+│   │   └── src/
+│   │       ├── components/  # All components
+│   │       ├── hooks/       # React hooks
+│   │       ├── utils/       # Utilities
+│   │       └── index.ts     # Public exports
+│   └── mcp-server/      # MCP server (5 tools)
+├── apps/
+│   ├── docs/            # Storybook
+│   └── playground/      # Dev sandbox
+└── turbo.json
+```
+
+## 24 Components (6 Categories)
+
+### Layout (5)
+- Container: Responsive container with max-width
+- Grid: CSS Grid with responsive columns
+- Stack: Vertical/horizontal spacing
+- Flex: Flexbox layouts
+- Spacer: Flexible spacing
+
+### Forms (6)
+- Button: variants (primary, secondary, outline, ghost, danger), sizes (sm, md, lg)
+- Input: Text input with error states
+- Textarea: Multi-line input
+- Select: Dropdown selection
+- Checkbox: Boolean toggle
+- Radio: Single selection
+
+### Data Display (5)
+- Card: Content container (default, outlined, elevated)
+- Badge: Status indicators (success, warning, danger, info)
+- Avatar: Profile images/initials
+- Table: Tabular data (striped, hoverable)
+- Spinner: Loading indicator
+
+### Feedback (3)
+- Alert: Contextual messages (dismissible)
+- Toast: Temporary notifications
+- Progress: Progress bar
+
+### Overlay (3)
+- Modal: Dialog overlay (sm, md, lg, xl)
+- Popover: Contextual popup
+- Tooltip: Hover hints
+
+### Navigation (2)
+- Tabs: Tabbed interface (line, enclosed, pills)
+- Breadcrumb: Navigation hierarchy
+
+## Commands
+
+```bash
+# Development
+pnpm install              # Install deps
+pnpm dev                  # Start dev server
+pnpm build                # Build all packages
+pnpm test                 # Run tests
+pnpm lint                 # Lint code
+pnpm typecheck            # Type check
+
+# Package-specific
+pnpm dev --filter ui      # UI package only
+pnpm test:watch           # Watch mode
+pnpm test:coverage        # Coverage report
+
+# Storybook
+pnpm storybook            # Start docs
+pnpm build:storybook      # Build docs
+```
+
+## Component Pattern (CVA)
+
+```tsx
+import { forwardRef } from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/utils/cn';
+
+// 1. Define variants
+const buttonVariants = cva(
+  'base-classes',
+  {
+    variants: {
+      variant: { primary: 'classes', secondary: 'classes' },
+      size: { sm: 'classes', md: 'classes', lg: 'classes' },
+    },
+    defaultVariants: { variant: 'primary', size: 'md' },
+  }
+);
+
+// 2. TypeScript types
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  loading?: boolean;
+}
+
+// 3. JSDoc + Component
+/**
+ * Button component
+ * @example <Button variant="primary">Click</Button>
+ */
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, loading, children, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className={cn(buttonVariants({ variant, size }), className)}
+        disabled={loading || props.disabled}
+        {...props}
+      >
+        {loading ? 'Loading...' : children}
+      </button>
+    );
+  }
+);
+
+Button.displayName = 'Button';
+```
+
+## Design Tokens
+
+### Colors
+```
+Primary: bg-primary-{50-900}, text-primary-500
+Neutral: bg-neutral-{50-900}, text-neutral-500
+Semantic: success, warning, danger, info
+Dark mode: dark:bg-*, dark:text-*
+```
+
+### Spacing
+```
+xs: 4px, sm: 8px, md: 16px, lg: 24px, xl: 32px, 2xl: 48px
+Use: gap-md, p-lg, m-sm
+```
+
+### Border Radius
+```
+sm: 4px, md: 6px, lg: 8px, xl: 12px, 2xl: 16px, full: 9999px
+```
+
+### Typography
+```
+Sizes: text-{xs,sm,base,lg,xl,2xl}
+Weights: font-{normal,medium,semibold,bold}
+Line heights: leading-{tight,normal,relaxed}
+```
+
+## Accessibility Checklist
+
+- ARIA attributes (aria-label, aria-describedby, role)
+- Keyboard navigation (Enter, Space, Escape, Arrows)
+- Focus management (focus-visible:ring-2)
+- Screen reader support (aria-live, role="alert")
+- Semantic HTML (button, input, nav, etc.)
+
+## Testing Pattern
+
+```tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Component } from './Component';
+
+describe('Component', () => {
+  it('renders correctly', () => {
+    render(<Component>Test</Component>);
+    expect(screen.getByText('Test')).toBeInTheDocument();
+  });
+
+  it('handles interactions', async () => {
+    const onClick = vi.fn();
+    render(<Component onClick={onClick}>Click</Component>);
+    fireEvent.click(screen.getByText('Click'));
+    expect(onClick).toHaveBeenCalled();
+  });
+
+  it('supports variants', () => {
+    const { container } = render(<Component variant="primary" />);
+    expect(container.firstChild).toHaveClass('bg-primary-500');
+  });
+});
+```
+
+## MCP Server (5 Tools)
+
+Located: `/packages/mcp-server/`
+
+### Tools
+1. **list-components**: Get all components by category
+2. **get-component-info**: Detailed info for specific component
+3. **search-components**: Find components by query/category
+4. **get-design-tokens**: Get design system tokens
+5. **generate-component-code**: Generate usage code
+
+### Configuration
+```json
+{
+  "mcpServers": {
+    "tiinno-ui": {
+      "command": "node",
+      "args": ["path/to/mcp-server/dist/index.js"]
+    }
+  }
+}
+```
+
+## Key Rules
+
+1. ALWAYS use CVA for variants
+2. ALWAYS use forwardRef for DOM elements
+3. ALWAYS include TypeScript types
+4. NEVER use inline styles (Tailwind only)
+5. ALWAYS support dark mode (dark:*)
+6. ALWAYS add ARIA attributes
+7. ALWAYS write tests (>80% coverage)
+8. ALWAYS export from src/index.ts
+
+## Common Imports
+
+```tsx
+import { Button, Input, Card, Modal } from '@tiinno/ui';
+import { cn } from '@tiinno/ui/utils';
+import { useToast } from '@tiinno/ui/hooks';
+```
+
+## File Paths
+
+```
+UI Package: /packages/ui/
+Components: /packages/ui/src/components/{Category}/{Component}.tsx
+Tests: /packages/ui/src/components/{Category}/{Component}.test.tsx
+Exports: /packages/ui/src/index.ts
+Utils: /packages/ui/src/utils/
+Hooks: /packages/ui/src/hooks/
+```
+
+## Quality Gates
+
+Before commit:
+```bash
+pnpm lint && pnpm typecheck && pnpm test && pnpm build
+```
+
+All must pass.
+
+## Example Usage
+
+```tsx
+// Layout
+<Container maxWidth="lg">
+  <Grid cols={3} gap="lg">
+    <Card variant="elevated">Content</Card>
+  </Grid>
+</Container>
+
+// Forms
+<form>
+  <Input placeholder="Email" type="email" error={errors.email} />
+  <Textarea rows={4} placeholder="Message" />
+  <Flex justify="end">
+    <Button variant="primary" loading={isSubmitting}>
+      Submit
+    </Button>
+  </Flex>
+</form>
+
+// Feedback
+<Alert variant="success" dismissible>
+  Operation successful!
+</Alert>
+
+// Overlay
+<Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Confirm">
+  <p>Are you sure?</p>
+  <Flex justify="end" gap="md">
+    <Button variant="ghost" onClick={() => setIsOpen(false)}>Cancel</Button>
+    <Button variant="danger" onClick={handleDelete}>Delete</Button>
+  </Flex>
+</Modal>
+```
+
+## Anti-Patterns (Never Do)
+
+```tsx
+// ❌ Inline styles
+<div style={{ color: 'red' }}>Bad</div>
+
+// ❌ Type 'any'
+const handleClick = (data: any) => {}
+
+// ❌ No ARIA
+<div onClick={onClick}>Click</div>
+
+// ❌ Hardcoded values
+<div className="w-[237px]">Bad</div>
+
+// ✅ Correct
+<div className="w-60 text-red-500" role="button" aria-label="Click me">
+  Good
+</div>
+```
+
+## Resources
+
+- Full docs: `.claude/CLAUDE.md`
+- Conventions: `.kiro/steering/ui-conventions.md`
+- Tailwind: https://tailwindcss.com/docs
+- React: https://react.dev
+- CVA: https://cva.style/docs
+
+---
+
+**Version**: 1.0.0 | **Updated**: 2026-02-05 | **Tech**: React 19 + TS 5.9 + Tailwind v4

@@ -1,0 +1,187 @@
+/**
+ * Custom styles for Tiinno UI documentation
+ *
+ * This file imports Tiinno UI component styles and adds
+ * custom documentation-specific styles.
+ */
+
+/* Tailwind CSS v4 */
+@import 'tailwindcss';
+
+/* Import Tiinno UI component styles */
+@import '@tiinno-ui/components/styles';
+
+/* Custom documentation styles */
+@layer base {
+  :root {
+    /* Custom color overrides for Starlight */
+    --sl-color-accent-low: #e0f2fe;
+    --sl-color-accent: #0ea5e9;
+    --sl-color-accent-high: #0369a1;
+    --sl-color-white: #ffffff;
+    --sl-color-gray-1: #f9fafb;
+    --sl-color-gray-2: #f3f4f6;
+    --sl-color-gray-3: #e5e7eb;
+    --sl-color-gray-4: #d1d5db;
+    --sl-color-gray-5: #6b7280;
+    --sl-color-gray-6: #374151;
+    --sl-color-black: #111827;
+  }
+
+  :root[data-theme='dark'] {
+    --sl-color-accent-low: #0c4a6e;
+    --sl-color-accent: #38bdf8;
+    --sl-color-accent-high: #7dd3fc;
+    --sl-color-white: #111827;
+    --sl-color-gray-1: #1f2937;
+    --sl-color-gray-2: #374151;
+    --sl-color-gray-3: #4b5563;
+    --sl-color-gray-4: #6b7280;
+    --sl-color-gray-5: #9ca3af;
+    --sl-color-gray-6: #e5e7eb;
+    --sl-color-black: #f9fafb;
+  }
+}
+
+@layer components {
+  /* Component preview container */
+  .component-preview {
+    @apply rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden my-6;
+  }
+
+  .component-preview-content {
+    @apply p-8 bg-white dark:bg-neutral-950;
+  }
+
+  .component-preview-code {
+    @apply bg-neutral-900 dark:bg-black;
+  }
+
+  /* Props table styles */
+  .props-table {
+    @apply min-w-full divide-y divide-neutral-200 dark:divide-neutral-800;
+  }
+
+  .props-table th {
+    @apply px-6 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider bg-neutral-50 dark:bg-neutral-900;
+  }
+
+  .props-table td {
+    @apply px-6 py-4 text-sm;
+  }
+
+  .props-table tbody tr {
+    @apply hover:bg-neutral-50 dark:hover:bg-neutral-900;
+  }
+
+  /* Code blocks */
+  .expressive-code {
+    @apply my-6 rounded-lg;
+  }
+
+  /* Links */
+  .sl-markdown-content a {
+    @apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 no-underline hover:underline;
+  }
+
+  /* Callouts */
+  .starlight-aside {
+    @apply rounded-lg border-l-4 p-4 my-4;
+  }
+
+  .starlight-aside--note {
+    @apply border-blue-500 bg-blue-50 dark:bg-blue-950;
+  }
+
+  .starlight-aside--tip {
+    @apply border-green-500 bg-green-50 dark:bg-green-950;
+  }
+
+  .starlight-aside--caution {
+    @apply border-yellow-500 bg-yellow-50 dark:bg-yellow-950;
+  }
+
+  .starlight-aside--danger {
+    @apply border-red-500 bg-red-50 dark:bg-red-950;
+  }
+}
+
+@layer utilities {
+  /* Utility for not-content (prevent Starlight content styles) */
+  .not-content {
+    all: revert;
+  }
+
+  /* Smooth transitions */
+  .transition-theme {
+    @apply transition-colors duration-200;
+  }
+
+  /* Focus visible styles */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2;
+  }
+}
+
+/* Pagefind search UI customization */
+[data-pagefind-ui] {
+  --pagefind-ui-primary: theme('colors.primary.500');
+  --pagefind-ui-text: theme('colors.neutral.900');
+  --pagefind-ui-background: theme('colors.white');
+  --pagefind-ui-border: theme('colors.neutral.200');
+  --pagefind-ui-border-width: 1px;
+}
+
+:root[data-theme='dark'] [data-pagefind-ui] {
+  --pagefind-ui-primary: theme('colors.primary.400');
+  --pagefind-ui-text: theme('colors.neutral.100');
+  --pagefind-ui-background: theme('colors.neutral.900');
+  --pagefind-ui-border: theme('colors.neutral.800');
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100 dark:bg-neutral-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-300 dark:bg-neutral-700 rounded-lg hover:bg-neutral-400 dark:hover:bg-neutral-600;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .component-preview-code {
+    display: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --sl-color-accent: #0369a1;
+  }
+
+  :root[data-theme='dark'] {
+    --sl-color-accent: #7dd3fc;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,257 @@
+---
+title: Spacing
+description: Consistent spacing scale for padding, margins, and gaps throughout your application
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+Tiinno UI uses a harmonious spacing scale based on a 4px base unit. This scale provides consistent spacing for padding, margins, gaps, and layout dimensions. All values are available as Tailwind CSS utility classes and CSS custom properties.
+
+## Spacing Scale
+
+The spacing system uses a set of named tokens that map to specific pixel values. Each step roughly doubles in size, creating a natural visual rhythm.
+
+| Token | Value | Pixels | Tailwind Class |
+|-------|-------|--------|---------------|
+| `--spacing-xs` | 0.25rem | 4px | `p-1` / `m-1` / `gap-1` |
+| `--spacing-sm` | 0.5rem | 8px | `p-2` / `m-2` / `gap-2` |
+| `--spacing-md` | 1rem | 16px | `p-4` / `m-4` / `gap-4` |
+| `--spacing-lg` | 1.5rem | 24px | `p-6` / `m-6` / `gap-6` |
+| `--spacing-xl` | 2rem | 32px | `p-8` / `m-8` / `gap-8` |
+| `--spacing-2xl` | 3rem | 48px | `p-12` / `m-12` / `gap-12` |
+| `--spacing-3xl` | 4rem | 64px | `p-16` / `m-16` / `gap-16` |
+
+## Visual Reference
+
+<ComponentPreview title="Spacing Scale Visualization">
+  <div className="space-y-4 w-full">
+    <div className="flex items-center gap-4">
+      <span className="text-sm font-mono text-neutral-500 w-16 shrink-0">xs (4px)</span>
+      <div className="bg-primary-500 h-4 rounded" style={{ width: '4px' }}></div>
+    </div>
+    <div className="flex items-center gap-4">
+      <span className="text-sm font-mono text-neutral-500 w-16 shrink-0">sm (8px)</span>
+      <div className="bg-primary-500 h-4 rounded" style={{ width: '8px' }}></div>
+    </div>
+    <div className="flex items-center gap-4">
+      <span className="text-sm font-mono text-neutral-500 w-16 shrink-0">md (16px)</span>
+      <div className="bg-primary-500 h-4 rounded" style={{ width: '16px' }}></div>
+    </div>
+    <div className="flex items-center gap-4">
+      <span className="text-sm font-mono text-neutral-500 w-16 shrink-0">lg (24px)</span>
+      <div className="bg-primary-500 h-4 rounded" style={{ width: '24px' }}></div>
+    </div>
+    <div className="flex items-center gap-4">
+      <span className="text-sm font-mono text-neutral-500 w-16 shrink-0">xl (32px)</span>
+      <div className="bg-primary-500 h-4 rounded" style={{ width: '32px' }}></div>
+    </div>
+    <div className="flex items-center gap-4">
+      <span className="text-sm font-mono text-neutral-500 w-16 shrink-0">2xl (48px)</span>
+      <div className="bg-primary-500 h-4 rounded" style={{ width: '48px' }}></div>
+    </div>
+    <div className="flex items-center gap-4">
+      <span className="text-sm font-mono text-neutral-500 w-16 shrink-0">3xl (64px)</span>
+      <div className="bg-primary-500 h-4 rounded" style={{ width: '64px' }}></div>
+    </div>
+  </div>
+
+  <Fragment slot="code">
+```css
+--spacing-xs:  0.25rem; /* 4px  */
+--spacing-sm:  0.5rem;  /* 8px  */
+--spacing-md:  1rem;    /* 16px */
+--spacing-lg:  1.5rem;  /* 24px */
+--spacing-xl:  2rem;    /* 32px */
+--spacing-2xl: 3rem;    /* 48px */
+--spacing-3xl: 4rem;    /* 64px */
+```
+  </Fragment>
+</ComponentPreview>
+
+## Padding
+
+Use padding utilities to add internal spacing within elements.
+
+<ComponentPreview title="Padding Examples">
+  <div className="space-y-4 w-full">
+    <div className="p-1 bg-primary-100 dark:bg-primary-900 border border-primary-300 dark:border-primary-700 rounded">
+      <div className="bg-white dark:bg-neutral-800 rounded p-2 text-sm">p-1 (4px)</div>
+    </div>
+    <div className="p-2 bg-primary-100 dark:bg-primary-900 border border-primary-300 dark:border-primary-700 rounded">
+      <div className="bg-white dark:bg-neutral-800 rounded p-2 text-sm">p-2 (8px)</div>
+    </div>
+    <div className="p-4 bg-primary-100 dark:bg-primary-900 border border-primary-300 dark:border-primary-700 rounded">
+      <div className="bg-white dark:bg-neutral-800 rounded p-2 text-sm">p-4 (16px)</div>
+    </div>
+    <div className="p-6 bg-primary-100 dark:bg-primary-900 border border-primary-300 dark:border-primary-700 rounded">
+      <div className="bg-white dark:bg-neutral-800 rounded p-2 text-sm">p-6 (24px)</div>
+    </div>
+    <div className="p-8 bg-primary-100 dark:bg-primary-900 border border-primary-300 dark:border-primary-700 rounded">
+      <div className="bg-white dark:bg-neutral-800 rounded p-2 text-sm">p-8 (32px)</div>
+    </div>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="p-1">4px padding</div>
+<div className="p-2">8px padding</div>
+<div className="p-4">16px padding</div>
+<div className="p-6">24px padding</div>
+<div className="p-8">32px padding</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Margins
+
+Use margin utilities to add external spacing between elements.
+
+```tsx
+// Vertical spacing between elements
+<div className="mb-4">First section</div>
+<div className="mb-4">Second section</div>
+
+// Horizontal spacing
+<div className="mr-2">Left item</div>
+<div className="ml-2">Right item</div>
+
+// Directional margin utilities
+<div className="mt-8">Top margin only</div>
+<div className="mx-4">Horizontal margins</div>
+<div className="my-6">Vertical margins</div>
+```
+
+## Gap (Flexbox & Grid)
+
+The `gap` utility is the preferred method for spacing items within flex and grid containers. It applies consistent spacing without adding margin to individual children.
+
+<ComponentPreview title="Gap Examples">
+  <div className="space-y-6 w-full">
+    <div>
+      <p className="text-xs font-medium text-neutral-500 mb-2">gap-1 (4px)</p>
+      <div className="flex gap-1">
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">1</div>
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">2</div>
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">3</div>
+      </div>
+    </div>
+    <div>
+      <p className="text-xs font-medium text-neutral-500 mb-2">gap-4 (16px)</p>
+      <div className="flex gap-4">
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">1</div>
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">2</div>
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">3</div>
+      </div>
+    </div>
+    <div>
+      <p className="text-xs font-medium text-neutral-500 mb-2">gap-8 (32px)</p>
+      <div className="flex gap-8">
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">1</div>
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">2</div>
+        <div className="w-12 h-12 bg-primary-200 dark:bg-primary-800 rounded flex items-center justify-center text-xs">3</div>
+      </div>
+    </div>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex gap-1">  {/* 4px gap */}
+  <Item /><Item /><Item />
+</div>
+
+<div className="flex gap-4">  {/* 16px gap */}
+  <Item /><Item /><Item />
+</div>
+
+<div className="flex gap-8">  {/* 32px gap */}
+  <Item /><Item /><Item />
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Component Spacing
+
+Tiinno UI components use the spacing tokens internally. Here is how the scale maps to common component patterns:
+
+| Pattern | Spacing Token | Tailwind | Usage |
+|---------|--------------|----------|-------|
+| Icon spacing | `xs` (4px) | `gap-1` | Space between icon and label |
+| Input padding | `sm` (8px) | `px-2 py-2` | Internal padding in form controls |
+| Card padding | `md` (16px) | `p-4` | Default card content padding |
+| Section gap | `lg` (24px) | `gap-6` | Space between form fields |
+| Section padding | `xl` (32px) | `py-8` | Vertical padding for page sections |
+| Page sections | `2xl` (48px) | `py-12` | Major section separation |
+| Hero sections | `3xl` (64px) | `py-16` | Large decorative sections |
+
+## Tailwind Spacing Reference
+
+The full Tailwind spacing scale includes additional values beyond the named tokens. Here are the most commonly used values:
+
+```
+p-0    → 0px        m-0    → 0px
+p-0.5  → 2px        m-0.5  → 2px
+p-1    → 4px  (xs)  m-1    → 4px
+p-1.5  → 6px        m-1.5  → 6px
+p-2    → 8px  (sm)  m-2    → 8px
+p-3    → 12px       m-3    → 12px
+p-4    → 16px (md)  m-4    → 16px
+p-5    → 20px       m-5    → 20px
+p-6    → 24px (lg)  m-6    → 24px
+p-8    → 32px (xl)  m-8    → 32px
+p-10   → 40px       m-10   → 40px
+p-12   → 48px (2xl) m-12   → 48px
+p-16   → 64px (3xl) m-16   → 64px
+```
+
+## Customizing Spacing
+
+Override or extend the spacing scale in your Tailwind configuration:
+
+```js title="tailwind.config.js"
+export default {
+  theme: {
+    extend: {
+      spacing: {
+        '18': '4.5rem',  // 72px
+        '88': '22rem',   // 352px
+        '128': '32rem',  // 512px
+      },
+    },
+  },
+};
+```
+
+Use CSS custom properties for dynamic spacing:
+
+```css title="src/styles/spacing.css"
+:root {
+  --section-padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-padding: 4rem;
+  }
+}
+```
+
+```tsx
+<section style={{ padding: 'var(--section-padding)' }}>
+  Content with responsive padding
+</section>
+```
+
+## Best Practices
+
+1. **Use the spacing scale consistently.** Avoid arbitrary pixel values. Stick to the defined tokens so all spacing is harmonious.
+2. **Prefer `gap` over margins for layout spacing.** The `gap` property on flex and grid containers produces cleaner markup and avoids issues with collapsing margins.
+3. **Use spacing tokens from components.** When using Tiinno UI layout components like `Stack`, `Grid`, and `Flex`, use the built-in spacing props rather than adding manual padding or margin.
+4. **Increase spacing for larger screens.** Use responsive Tailwind utilities like `md:p-8 lg:p-12` to scale spacing up on wider viewports.
+5. **Keep vertical rhythm consistent.** Use the same spacing value between sibling elements (e.g., all form fields spaced with `gap-4`).
+
+## What's Next?
+
+- [Colors](/design-system/colors/) - Color palette and design tokens
+- [Typography](/design-system/typography/) - Fonts, sizes, and text styles
+- [Dark Mode](/design-system/dark-mode/) - Implementing dark mode

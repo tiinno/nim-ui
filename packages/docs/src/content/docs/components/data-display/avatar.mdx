@@ -1,0 +1,222 @@
+---
+title: Avatar
+description: User profile image component with automatic fallback to initials
+---
+
+import { Avatar, AvatarImage, AvatarFallback } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Avatar component displays a user's profile image with graceful fallback to initials or placeholder content. Built on top of Radix UI Avatar for robust image loading and fallback behavior.
+
+## Import
+
+```tsx
+import { Avatar, AvatarImage, AvatarFallback } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Avatar with Image and Fallback">
+  <Avatar client:load>
+    <AvatarImage client:load src="https://i.pravatar.cc/150?u=1" alt="John Doe" />
+    <AvatarFallback client:load>JD</AvatarFallback>
+  </Avatar>
+
+  <Fragment slot="code">
+```tsx
+<Avatar>
+  <AvatarImage src="/avatar.jpg" alt="John Doe" />
+  <AvatarFallback>JD</AvatarFallback>
+</Avatar>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Four size options are available to suit different layout contexts.
+
+<ComponentPreview title="Avatar Sizes">
+  <Avatar client:load size="sm">
+    <AvatarFallback client:load>SM</AvatarFallback>
+  </Avatar>
+  <Avatar client:load size="md">
+    <AvatarFallback client:load>MD</AvatarFallback>
+  </Avatar>
+  <Avatar client:load size="lg">
+    <AvatarFallback client:load>LG</AvatarFallback>
+  </Avatar>
+  <Avatar client:load size="xl">
+    <AvatarFallback client:load>XL</AvatarFallback>
+  </Avatar>
+
+  <Fragment slot="code">
+```tsx
+<Avatar size="sm">
+  <AvatarFallback>SM</AvatarFallback>
+</Avatar>
+<Avatar size="md">
+  <AvatarFallback>MD</AvatarFallback>
+</Avatar>
+<Avatar size="lg">
+  <AvatarFallback>LG</AvatarFallback>
+</Avatar>
+<Avatar size="xl">
+  <AvatarFallback>XL</AvatarFallback>
+</Avatar>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Fallback
+
+When the image fails to load or no `src` is provided, the AvatarFallback content is displayed automatically.
+
+<ComponentPreview title="Fallback Avatars">
+  <Avatar client:load>
+    <AvatarImage client:load src="/broken-image.jpg" alt="User" />
+    <AvatarFallback client:load>AB</AvatarFallback>
+  </Avatar>
+  <Avatar client:load size="lg">
+    <AvatarFallback client:load>CD</AvatarFallback>
+  </Avatar>
+
+  <Fragment slot="code">
+```tsx
+{/* Image fails to load, fallback is shown */}
+<Avatar>
+  <AvatarImage src="/broken-image.jpg" alt="User" />
+  <AvatarFallback>AB</AvatarFallback>
+</Avatar>
+
+{/* No image, fallback only */}
+<Avatar size="lg">
+  <AvatarFallback>CD</AvatarFallback>
+</Avatar>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+### Avatar
+
+<PropsTable
+  props={[
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg' | 'xl'",
+      default: "'md'",
+      description: 'Size of the avatar',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'AvatarImage and AvatarFallback components',
+    },
+  ]}
+/>
+
+### AvatarImage
+
+<PropsTable
+  props={[
+    {
+      name: 'src',
+      type: 'string',
+      required: true,
+      description: 'URL of the avatar image',
+    },
+    {
+      name: 'alt',
+      type: 'string',
+      required: true,
+      description: 'Alt text for the image',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+### AvatarFallback
+
+<PropsTable
+  props={[
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Fallback content, typically 1-2 character initials',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### User Profile Header
+
+```tsx
+function UserProfile({ user }: { user: User }) {
+  const initials = user.name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase();
+
+  return (
+    <div className="flex items-center gap-3">
+      <Avatar size="lg">
+        <AvatarImage src={user.avatarUrl} alt={user.name} />
+        <AvatarFallback>{initials}</AvatarFallback>
+      </Avatar>
+      <div>
+        <p className="font-semibold">{user.name}</p>
+        <p className="text-sm text-neutral-500">{user.email}</p>
+      </div>
+    </div>
+  );
+}
+```
+
+### Avatar Group
+
+```tsx
+function AvatarGroup({ users }: { users: User[] }) {
+  return (
+    <div className="flex -space-x-2">
+      {users.slice(0, 4).map((user) => (
+        <Avatar key={user.id} size="sm" className="ring-2 ring-white">
+          <AvatarImage src={user.avatarUrl} alt={user.name} />
+          <AvatarFallback>{user.initials}</AvatarFallback>
+        </Avatar>
+      ))}
+      {users.length > 4 && (
+        <Avatar size="sm" className="ring-2 ring-white">
+          <AvatarFallback>+{users.length - 4}</AvatarFallback>
+        </Avatar>
+      )}
+    </div>
+  );
+}
+```
+
+## Related Components
+
+- [Badge](/components/data-display/badge/) - Status indicator labels
+- [DataCard](/components/data-display/data-card/) - Metric display card
+- [ProductCard](/components/commerce/product-card/) - Product display card

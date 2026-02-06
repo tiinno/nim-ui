@@ -1,0 +1,31 @@
+<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hero illustration for documentation -->
+  <rect width="800" height="400" fill="url(#gradient)" />
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="800" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+
+  <!-- Component grid illustration -->
+  <g opacity="0.6">
+    <!-- Buttons -->
+    <rect x="100" y="100" width="120" height="40" rx="8" fill="#0ea5e9" />
+    <rect x="240" y="100" width="120" height="40" rx="8" fill="#38bdf8" />
+
+    <!-- Cards -->
+    <rect x="100" y="160" width="180" height="120" rx="12" fill="#bae6fd" stroke="#0ea5e9" stroke-width="2" />
+    <rect x="300" y="160" width="180" height="120" rx="12" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2" />
+
+    <!-- Input -->
+    <rect x="500" y="100" width="200" height="40" rx="6" fill="white" stroke="#0ea5e9" stroke-width="2" />
+
+    <!-- Grid dots -->
+    <circle cx="520" cy="200" r="4" fill="#0ea5e9" />
+    <circle cx="560" cy="200" r="4" fill="#0ea5e9" />
+    <circle cx="600" cy="200" r="4" fill="#0ea5e9" />
+    <circle cx="640" cy="200" r="4" fill="#0ea5e9" />
+    <circle cx="680" cy="200" r="4" fill="#0ea5e9" />
+  </g>
+</svg>

@@ -1,0 +1,87 @@
+---
+/**
+ * ComponentPreview - Display component examples with code toggle
+ *
+ * @example
+ * <ComponentPreview title="Button Variants">
+ *   <Button client:load>Default</Button>
+ *   <Fragment slot="code">
+ *     ```tsx
+ *     <Button>Default</Button>
+ *     ```
+ *   </Fragment>
+ * </ComponentPreview>
+ */
+interface Props {
+  title?: string;
+  description?: string;
+  className?: string;
+}
+
+const { title, description, className = '' } = Astro.props;
+---
+
+<div class="not-content my-8">
+  {title && (
+    <div class="mb-4">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        {title}
+      </h3>
+      {description && (
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          {description}
+        </p>
+      )}
+    </div>
+  )}
+
+  <div class="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+    <!-- Preview Area -->
+    <div class={`p-8 bg-white dark:bg-gray-950 ${className}`}>
+      <div class="flex flex-wrap items-center gap-4">
+        <slot />
+      </div>
+    </div>
+
+    <!-- Code Area (collapsible) -->
+    <details class="group">
+      <summary class="cursor-pointer px-4 py-2 bg-gray-50 dark:bg-gray-900 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-t border-gray-200 dark:border-gray-800">
+        <span class="inline-flex items-center gap-2">
+          <svg
+            class="w-4 h-4 transition-transform group-open:rotate-90"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            ></path>
+          </svg>
+          View Code
+        </span>
+      </summary>
+      <div class="p-4 bg-gray-900 dark:bg-black">
+        <slot name="code" />
+      </div>
+    </details>
+  </div>
+</div>
+
+<style>
+  /* Ensure code blocks inside preview don't get double styled */
+  .not-content :global(pre) {
+    margin: 0;
+  }
+
+  /* Hide summary marker */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::marker {
+    display: none;
+  }
+</style>

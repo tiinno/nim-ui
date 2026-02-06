@@ -1,0 +1,307 @@
+---
+title: Quick Start
+description: Build your first component with Tiinno UI
+---
+
+import { Button, Input, Card } from '@tiinno-ui/components';
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+This guide will walk you through creating your first functional component using Tiinno UI.
+
+## Your First Component
+
+Let's build a simple login form using Tiinno UI components.
+
+<ComponentPreview title="Login Form Example">
+  <Card client:load className="w-full max-w-md p-6">
+    <h2 className="text-xl font-bold mb-4">Welcome Back</h2>
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-1">Email</label>
+        <Input client:load type="email" placeholder="you@example.com" />
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Password</label>
+        <Input client:load type="password" placeholder="••••••••" />
+      </div>
+      <Button client:load variant="primary" className="w-full">
+        Sign In
+      </Button>
+    </div>
+  </Card>
+
+  <Fragment slot="code">
+```tsx
+import { Button, Input, Card } from '@tiinno-ui/components';
+
+export default function LoginForm() {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle login
+  };
+
+  return (
+    <Card className="w-full max-w-md p-6">
+      <h2 className="text-xl font-bold mb-4">Welcome Back</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Email</label>
+          <Input type="email" placeholder="you@example.com" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Password</label>
+          <Input type="password" placeholder="••••••••" />
+        </div>
+        <Button variant="primary" className="w-full">
+          Sign In
+        </Button>
+      </form>
+    </Card>
+  );
+}
+```
+  </Fragment>
+</ComponentPreview>
+
+## Basic Usage Pattern
+
+All Tiinno UI components follow a consistent pattern:
+
+### 1. Import the Component
+
+```tsx
+import { Button } from '@tiinno-ui/components';
+```
+
+### 2. Use with Props
+
+```tsx
+<Button variant="primary" size="md">
+  Click me
+</Button>
+```
+
+### 3. Handle Events
+
+```tsx
+<Button onClick={() => console.log('Clicked!')}>
+  Click me
+</Button>
+```
+
+## Common Patterns
+
+### Combining Components
+
+Components work seamlessly together:
+
+<ComponentPreview title="Combined Components">
+  <div className="flex items-center gap-3">
+    <Input client:load placeholder="Search..." className="flex-1" />
+    <Button client:load variant="primary">Search</Button>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center gap-3">
+  <Input placeholder="Search..." className="flex-1" />
+  <Button variant="primary">Search</Button>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+### State Management
+
+Use React state naturally:
+
+```tsx
+import { useState } from 'react';
+import { Input, Button } from '@tiinno-ui/components';
+
+export default function SearchBox() {
+  const [query, setQuery] = useState('');
+
+  const handleSearch = () => {
+    console.log('Searching for:', query);
+  };
+
+  return (
+    <div className="flex gap-2">
+      <Input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+      />
+      <Button onClick={handleSearch}>Search</Button>
+    </div>
+  );
+}
+```
+
+### Customizing with Tailwind
+
+Extend component styles with Tailwind classes:
+
+<ComponentPreview title="Custom Styling">
+  <Button client:load variant="primary" className="rounded-full px-8 shadow-lg">
+    Custom Button
+  </Button>
+
+  <Fragment slot="code">
+```tsx
+<Button
+  variant="primary"
+  className="rounded-full px-8 shadow-lg"
+>
+  Custom Button
+</Button>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Working with Forms
+
+Build complete forms with proper validation:
+
+```tsx
+import { useState } from 'react';
+import { Input, Button, Card } from '@tiinno-ui/components';
+
+export default function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Simple validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.name) newErrors.name = 'Name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    if (!formData.message) newErrors.message = 'Message is required';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Submit form
+    console.log('Form submitted:', formData);
+  };
+
+  return (
+    <Card className="max-w-md p-6">
+      <h2 className="text-xl font-bold mb-4">Contact Us</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Name</label>
+          <Input
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            placeholder="John Doe"
+          />
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Email</label>
+          <Input
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="john@example.com"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Message</label>
+          <Input
+            value={formData.message}
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            placeholder="Your message..."
+          />
+          {errors.message && (
+            <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+          )}
+        </div>
+
+        <Button type="submit" variant="primary" className="w-full">
+          Send Message
+        </Button>
+      </form>
+    </Card>
+  );
+}
+```
+
+## Responsive Design
+
+All components are responsive by default. Use Tailwind breakpoints for custom responsive behavior:
+
+```tsx
+<Button
+  className="w-full md:w-auto"
+  variant="primary"
+>
+  Responsive Button
+</Button>
+```
+
+## Dark Mode Support
+
+Components automatically adapt to dark mode. Enable dark mode in your app:
+
+```tsx title="src/App.tsx"
+import { useEffect, useState } from 'react';
+
+export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      <button onClick={() => setDarkMode(!darkMode)}>
+        Toggle Dark Mode
+      </button>
+      {/* Your app content */}
+    </div>
+  );
+}
+```
+
+## What's Next?
+
+Now that you've built your first component, explore:
+
+- [All Components](/components/primitives/button/) - Browse the complete component library
+- [Design System](/design-system/colors/) - Learn about design tokens
+- [Customization](/guides/customization/) - Customize components to match your brand
+- [Best Practices](/guides/best-practices/) - Tips for building great apps
+
+## Examples
+
+Check out these example projects:
+
+- **E-commerce Store** - Full product catalog with cart
+- **Dashboard** - Admin dashboard with data tables
+- **Landing Page** - Marketing site with hero and features
+- **Authentication** - Login, signup, and password reset forms
+
+All examples are available in our [GitHub repository](https://github.com/tiinno-ui/tiinno-ui/tree/main/examples).

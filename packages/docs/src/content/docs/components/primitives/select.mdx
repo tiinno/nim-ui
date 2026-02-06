@@ -1,0 +1,521 @@
+---
+title: Select
+description: Dropdown selection component built on Radix UI
+---
+
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Select component is a composite dropdown selection control built on [Radix UI Select](https://www.radix-ui.com/primitives/docs/components/select). It provides accessible, keyboard-navigable dropdowns with support for grouped options, custom triggers, and CVA-based styling variants.
+
+## Import
+
+```tsx
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from '@tiinno-ui/components';
+```
+
+## Variants
+
+### Default
+
+<ComponentPreview title="Default Select">
+  <Select client:load>
+    <SelectTrigger client:load className="w-[200px]">
+      <SelectValue client:load placeholder="Select a fruit" />
+    </SelectTrigger>
+    <SelectContent client:load>
+      <SelectItem client:load value="apple">Apple</SelectItem>
+      <SelectItem client:load value="banana">Banana</SelectItem>
+      <SelectItem client:load value="cherry">Cherry</SelectItem>
+      <SelectItem client:load value="grape">Grape</SelectItem>
+      <SelectItem client:load value="orange">Orange</SelectItem>
+    </SelectContent>
+  </Select>
+
+  <Fragment slot="code">
+```tsx
+<Select>
+  <SelectTrigger className="w-[200px]">
+    <SelectValue placeholder="Select a fruit" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="apple">Apple</SelectItem>
+    <SelectItem value="banana">Banana</SelectItem>
+    <SelectItem value="cherry">Cherry</SelectItem>
+    <SelectItem value="grape">Grape</SelectItem>
+    <SelectItem value="orange">Orange</SelectItem>
+  </SelectContent>
+</Select>
+```
+  </Fragment>
+</ComponentPreview>
+
+### With Groups
+
+<ComponentPreview title="Grouped Select">
+  <Select client:load>
+    <SelectTrigger client:load className="w-[240px]">
+      <SelectValue client:load placeholder="Select a timezone" />
+    </SelectTrigger>
+    <SelectContent client:load>
+      <SelectGroup client:load>
+        <SelectLabel client:load>North America</SelectLabel>
+        <SelectItem client:load value="est">Eastern (EST)</SelectItem>
+        <SelectItem client:load value="cst">Central (CST)</SelectItem>
+        <SelectItem client:load value="pst">Pacific (PST)</SelectItem>
+      </SelectGroup>
+      <SelectGroup client:load>
+        <SelectLabel client:load>Europe</SelectLabel>
+        <SelectItem client:load value="gmt">Greenwich (GMT)</SelectItem>
+        <SelectItem client:load value="cet">Central European (CET)</SelectItem>
+        <SelectItem client:load value="eet">Eastern European (EET)</SelectItem>
+      </SelectGroup>
+    </SelectContent>
+  </Select>
+
+  <Fragment slot="code">
+```tsx
+<Select>
+  <SelectTrigger className="w-[240px]">
+    <SelectValue placeholder="Select a timezone" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>North America</SelectLabel>
+      <SelectItem value="est">Eastern (EST)</SelectItem>
+      <SelectItem value="cst">Central (CST)</SelectItem>
+      <SelectItem value="pst">Pacific (PST)</SelectItem>
+    </SelectGroup>
+    <SelectGroup>
+      <SelectLabel>Europe</SelectLabel>
+      <SelectItem value="gmt">Greenwich (GMT)</SelectItem>
+      <SelectItem value="cet">Central European (CET)</SelectItem>
+      <SelectItem value="eet">Eastern European (EET)</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+The SelectTrigger supports size variants through CVA styling.
+
+<ComponentPreview title="Select Sizes">
+  <Select client:load>
+    <SelectTrigger client:load className="w-[180px] h-8 text-sm">
+      <SelectValue client:load placeholder="Small" />
+    </SelectTrigger>
+    <SelectContent client:load>
+      <SelectItem client:load value="a">Option A</SelectItem>
+      <SelectItem client:load value="b">Option B</SelectItem>
+    </SelectContent>
+  </Select>
+  <Select client:load>
+    <SelectTrigger client:load className="w-[180px]">
+      <SelectValue client:load placeholder="Medium (default)" />
+    </SelectTrigger>
+    <SelectContent client:load>
+      <SelectItem client:load value="a">Option A</SelectItem>
+      <SelectItem client:load value="b">Option B</SelectItem>
+    </SelectContent>
+  </Select>
+  <Select client:load>
+    <SelectTrigger client:load className="w-[180px] h-12 text-lg">
+      <SelectValue client:load placeholder="Large" />
+    </SelectTrigger>
+    <SelectContent client:load>
+      <SelectItem client:load value="a">Option A</SelectItem>
+      <SelectItem client:load value="b">Option B</SelectItem>
+    </SelectContent>
+  </Select>
+
+  <Fragment slot="code">
+```tsx
+{/* Small */}
+<Select>
+  <SelectTrigger className="w-[180px] h-8 text-sm">
+    <SelectValue placeholder="Small" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="a">Option A</SelectItem>
+    <SelectItem value="b">Option B</SelectItem>
+  </SelectContent>
+</Select>
+
+{/* Medium (default) */}
+<Select>
+  <SelectTrigger className="w-[180px]">
+    <SelectValue placeholder="Medium (default)" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="a">Option A</SelectItem>
+    <SelectItem value="b">Option B</SelectItem>
+  </SelectContent>
+</Select>
+
+{/* Large */}
+<Select>
+  <SelectTrigger className="w-[180px] h-12 text-lg">
+    <SelectValue placeholder="Large" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="a">Option A</SelectItem>
+    <SelectItem value="b">Option B</SelectItem>
+  </SelectContent>
+</Select>
+```
+  </Fragment>
+</ComponentPreview>
+
+## States
+
+### Disabled
+
+<ComponentPreview title="Disabled State">
+  <Select client:load disabled>
+    <SelectTrigger client:load className="w-[200px]">
+      <SelectValue client:load placeholder="Disabled select" />
+    </SelectTrigger>
+    <SelectContent client:load>
+      <SelectItem client:load value="a">Option A</SelectItem>
+    </SelectContent>
+  </Select>
+
+  <Fragment slot="code">
+```tsx
+<Select disabled>
+  <SelectTrigger className="w-[200px]">
+    <SelectValue placeholder="Disabled select" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="a">Option A</SelectItem>
+  </SelectContent>
+</Select>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Disabled Items
+
+<ComponentPreview title="Disabled Individual Items">
+  <Select client:load>
+    <SelectTrigger client:load className="w-[200px]">
+      <SelectValue client:load placeholder="Pick an option" />
+    </SelectTrigger>
+    <SelectContent client:load>
+      <SelectItem client:load value="available">Available</SelectItem>
+      <SelectItem client:load value="sold-out" disabled>Sold Out</SelectItem>
+      <SelectItem client:load value="coming-soon" disabled>Coming Soon</SelectItem>
+      <SelectItem client:load value="in-stock">In Stock</SelectItem>
+    </SelectContent>
+  </Select>
+
+  <Fragment slot="code">
+```tsx
+<Select>
+  <SelectTrigger className="w-[200px]">
+    <SelectValue placeholder="Pick an option" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="available">Available</SelectItem>
+    <SelectItem value="sold-out" disabled>Sold Out</SelectItem>
+    <SelectItem value="coming-soon" disabled>Coming Soon</SelectItem>
+    <SelectItem value="in-stock">In Stock</SelectItem>
+  </SelectContent>
+</Select>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+### Select
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      description: 'Controlled value of the selected item',
+    },
+    {
+      name: 'onValueChange',
+      type: '(value: string) => void',
+      description: 'Callback fired when the selected value changes',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string',
+      description: 'Initial selected value for uncontrolled usage',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the select is disabled',
+    },
+  ]}
+/>
+
+### SelectTrigger
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for styling the trigger button',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Trigger content, typically a SelectValue component',
+    },
+  ]}
+/>
+
+### SelectValue
+
+<PropsTable
+  props={[
+    {
+      name: 'placeholder',
+      type: 'string',
+      description: 'Text to display when no value is selected',
+    },
+  ]}
+/>
+
+### SelectContent
+
+<PropsTable
+  props={[
+    {
+      name: 'position',
+      type: "'popper' | 'item-aligned'",
+      default: "'popper'",
+      description: 'Positioning mode for the dropdown content',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the dropdown container',
+    },
+  ]}
+/>
+
+### SelectItem
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      required: true,
+      description: 'Unique value for this option',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether this item is disabled',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Display text for this option',
+    },
+  ]}
+/>
+
+### SelectGroup
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the group container',
+    },
+  ]}
+/>
+
+### SelectLabel
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the group label',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Label text for the group',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Country Selector
+
+```tsx
+function CountrySelector() {
+  const [country, setCountry] = useState('');
+
+  return (
+    <div className="space-y-2">
+      <label className="block text-sm font-medium">Country</label>
+      <Select value={country} onValueChange={setCountry}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="Select your country" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Americas</SelectLabel>
+            <SelectItem value="us">United States</SelectItem>
+            <SelectItem value="ca">Canada</SelectItem>
+            <SelectItem value="mx">Mexico</SelectItem>
+            <SelectItem value="br">Brazil</SelectItem>
+          </SelectGroup>
+          <SelectGroup>
+            <SelectLabel>Europe</SelectLabel>
+            <SelectItem value="uk">United Kingdom</SelectItem>
+            <SelectItem value="de">Germany</SelectItem>
+            <SelectItem value="fr">France</SelectItem>
+            <SelectItem value="es">Spain</SelectItem>
+          </SelectGroup>
+          <SelectGroup>
+            <SelectLabel>Asia</SelectLabel>
+            <SelectItem value="jp">Japan</SelectItem>
+            <SelectItem value="kr">South Korea</SelectItem>
+            <SelectItem value="sg">Singapore</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+  );
+}
+```
+
+### Form with Select
+
+```tsx
+function ProfileForm() {
+  const [role, setRole] = useState('');
+  const [department, setDepartment] = useState('');
+
+  return (
+    <form className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-1">Role</label>
+        <Select value={role} onValueChange={setRole}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select role" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="admin">Administrator</SelectItem>
+            <SelectItem value="editor">Editor</SelectItem>
+            <SelectItem value="viewer">Viewer</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">Department</label>
+        <Select value={department} onValueChange={setDepartment}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select department" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="engineering">Engineering</SelectItem>
+            <SelectItem value="design">Design</SelectItem>
+            <SelectItem value="marketing">Marketing</SelectItem>
+            <SelectItem value="sales">Sales</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <Button type="submit">Save Profile</Button>
+    </form>
+  );
+}
+```
+
+### Dynamic Options
+
+```tsx
+function DynamicSelect({ options, loading }) {
+  return (
+    <Select disabled={loading}>
+      <SelectTrigger className="w-[240px]">
+        <SelectValue placeholder={loading ? 'Loading...' : 'Select an option'} />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+```
+
+## Accessibility
+
+The Select component is built on Radix UI and follows WAI-ARIA best practices:
+
+- Uses `role="combobox"` on the trigger with `aria-expanded` state
+- Dropdown uses `role="listbox"` with `role="option"` on each item
+- Supports `aria-label` and `aria-labelledby` for screen reader announcements
+- Full keyboard navigation with type-ahead support
+- Focus is managed automatically when opening and closing
+- Disabled state properly communicated to assistive technology
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Space / Enter | Opens the select dropdown or selects focused item |
+| Arrow Down | Opens dropdown or moves focus to next item |
+| Arrow Up | Moves focus to previous item |
+| Home | Moves focus to first item |
+| End | Moves focus to last item |
+| Escape | Closes the dropdown |
+| Type-ahead | Focuses matching item by typing characters |
+
+### Best Practices
+
+- Always provide a descriptive placeholder via SelectValue
+- Pair Select with a visible label for form context
+- Use SelectGroup and SelectLabel for long lists of options
+- Disable individual items rather than hiding them to maintain context
+- Provide clear, concise option labels
+
+## Related Components
+
+- [Radio](/components/primitives/radio/) - Radio group for visible single selection
+- [Input](/components/primitives/input/) - Text input for free-form entry
+- [Checkbox](/components/primitives/checkbox/) - Multiple selection control
+- [Button](/components/primitives/button/) - Interactive button for actions

@@ -1,0 +1,283 @@
+---
+title: Checkbox
+description: Boolean selection control built on Radix UI
+---
+
+import { Checkbox } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Checkbox component is a boolean selection control built on [Radix UI Checkbox](https://www.radix-ui.com/primitives/docs/components/checkbox). It provides accessible, keyboard-navigable checkboxes that work seamlessly with form patterns.
+
+## Import
+
+```tsx
+import { Checkbox } from '@tiinno-ui/components';
+```
+
+## Variants
+
+### Default
+
+<ComponentPreview title="Default Checkbox">
+  <div className="flex items-center space-x-2">
+    <Checkbox client:load id="default-check" />
+    <label htmlFor="default-check" className="text-sm font-medium">Default checkbox</label>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center space-x-2">
+  <Checkbox id="default-check" />
+  <label htmlFor="default-check">Default checkbox</label>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+### With Label Pattern
+
+The recommended usage is to pair the Checkbox with a `<label>` element using matching `id` and `htmlFor` attributes.
+
+<ComponentPreview title="Checkbox with Labels">
+  <div className="flex items-center space-x-2">
+    <Checkbox client:load id="terms" />
+    <label htmlFor="terms" className="text-sm font-medium">Accept terms and conditions</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <Checkbox client:load id="newsletter" />
+    <label htmlFor="newsletter" className="text-sm font-medium">Subscribe to newsletter</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <Checkbox client:load id="notifications" />
+    <label htmlFor="notifications" className="text-sm font-medium">Enable notifications</label>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center space-x-2">
+  <Checkbox id="terms" />
+  <label htmlFor="terms">Accept terms and conditions</label>
+</div>
+<div className="flex items-center space-x-2">
+  <Checkbox id="newsletter" />
+  <label htmlFor="newsletter">Subscribe to newsletter</label>
+</div>
+<div className="flex items-center space-x-2">
+  <Checkbox id="notifications" />
+  <label htmlFor="notifications">Enable notifications</label>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+The Checkbox does not have built-in size variants. Sizing is controlled through className.
+
+## States
+
+### Disabled
+
+<ComponentPreview title="Disabled State">
+  <div className="flex items-center space-x-2">
+    <Checkbox client:load id="disabled-unchecked" disabled />
+    <label htmlFor="disabled-unchecked" className="text-sm font-medium text-gray-400">Disabled unchecked</label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <Checkbox client:load id="disabled-checked" disabled checked={true} />
+    <label htmlFor="disabled-checked" className="text-sm font-medium text-gray-400">Disabled checked</label>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center space-x-2">
+  <Checkbox id="disabled-unchecked" disabled />
+  <label htmlFor="disabled-unchecked">Disabled unchecked</label>
+</div>
+<div className="flex items-center space-x-2">
+  <Checkbox id="disabled-checked" disabled checked />
+  <label htmlFor="disabled-checked">Disabled checked</label>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'checked',
+      type: 'boolean | "indeterminate"',
+      description: 'Controlled checked state of the checkbox',
+    },
+    {
+      name: 'onCheckedChange',
+      type: '(checked: boolean | "indeterminate") => void',
+      description: 'Callback fired when the checked state changes',
+    },
+    {
+      name: 'defaultChecked',
+      type: 'boolean',
+      description: 'Initial checked state for uncontrolled usage',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the checkbox is disabled',
+    },
+    {
+      name: 'id',
+      type: 'string',
+      description: 'HTML id attribute, used to associate with a label',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Terms Agreement
+
+```tsx
+function TermsAgreement() {
+  const [agreed, setAgreed] = useState(false);
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="terms"
+          checked={agreed}
+          onCheckedChange={(checked) => setAgreed(checked === true)}
+        />
+        <label htmlFor="terms" className="text-sm">
+          I agree to the{' '}
+          <a href="/terms" className="text-blue-500 underline">
+            Terms of Service
+          </a>{' '}
+          and{' '}
+          <a href="/privacy" className="text-blue-500 underline">
+            Privacy Policy
+          </a>
+        </label>
+      </div>
+      <Button disabled={!agreed}>Continue</Button>
+    </div>
+  );
+}
+```
+
+### Settings Panel
+
+```tsx
+function NotificationSettings() {
+  const [settings, setSettings] = useState({
+    email: true,
+    push: false,
+    sms: false,
+  });
+
+  const toggle = (key: keyof typeof settings) => {
+    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  return (
+    <div className="space-y-3">
+      <h3 className="text-lg font-semibold">Notifications</h3>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="email-notif"
+          checked={settings.email}
+          onCheckedChange={() => toggle('email')}
+        />
+        <label htmlFor="email-notif">Email notifications</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="push-notif"
+          checked={settings.push}
+          onCheckedChange={() => toggle('push')}
+        />
+        <label htmlFor="push-notif">Push notifications</label>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="sms-notif"
+          checked={settings.sms}
+          onCheckedChange={() => toggle('sms')}
+        />
+        <label htmlFor="sms-notif">SMS notifications</label>
+      </div>
+    </div>
+  );
+}
+```
+
+### Filter List
+
+```tsx
+function CategoryFilter({ categories, selected, onChange }) {
+  return (
+    <div className="space-y-2">
+      <h4 className="text-sm font-medium text-gray-700">Categories</h4>
+      {categories.map((category) => (
+        <div key={category.id} className="flex items-center space-x-2">
+          <Checkbox
+            id={`cat-${category.id}`}
+            checked={selected.includes(category.id)}
+            onCheckedChange={(checked) => {
+              if (checked) {
+                onChange([...selected, category.id]);
+              } else {
+                onChange(selected.filter((id) => id !== category.id));
+              }
+            }}
+          />
+          <label htmlFor={`cat-${category.id}`} className="text-sm">
+            {category.name}
+          </label>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Accessibility
+
+The Checkbox component is built on Radix UI and follows WAI-ARIA best practices:
+
+- Uses `role="checkbox"` with proper `aria-checked` state
+- Supports `aria-label` and `aria-labelledby` for screen reader announcements
+- Full keyboard navigation support
+- Focus visible states for keyboard users
+- Disabled state properly communicated to assistive technology
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Space | Toggles the checkbox |
+| Tab | Moves focus to the next focusable element |
+| Shift + Tab | Moves focus to the previous focusable element |
+
+### Best Practices
+
+- Always pair checkboxes with visible labels using `id` and `htmlFor`
+- Use `aria-describedby` to link additional descriptive text
+- Group related checkboxes with a heading or `fieldset`/`legend`
+- Avoid using checkboxes for actions; use a Switch for on/off toggles
+
+## Related Components
+
+- [Switch](/components/primitives/switch/) - Toggle switch for on/off states
+- [Radio](/components/primitives/radio/) - Single selection from a group
+- [Button](/components/primitives/button/) - Interactive button for actions
+- [Select](/components/primitives/select/) - Dropdown selection input

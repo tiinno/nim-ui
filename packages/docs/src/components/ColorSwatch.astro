@@ -1,0 +1,53 @@
+---
+/**
+ * ColorSwatch - Display color palette swatches
+ *
+ * @example
+ * <ColorSwatch
+ *   name="Primary"
+ *   colors={[
+ *     { shade: '50', value: '#f0f9ff' },
+ *     { shade: '500', value: '#0ea5e9' }
+ *   ]}
+ * />
+ */
+
+interface Color {
+  shade: string;
+  value: string;
+  name?: string;
+}
+
+interface Props {
+  name: string;
+  colors: Color[];
+}
+
+const { name, colors } = Astro.props;
+---
+
+<div class="not-content my-6">
+  <h4 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
+    {name}
+  </h4>
+  <div class="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-10 gap-3">
+    {
+      colors.map((color) => (
+        <div class="flex flex-col">
+          <div
+            class="h-16 rounded-lg shadow-sm border border-gray-200 dark:border-gray-800"
+            style={`background-color: ${color.value}`}
+          />
+          <div class="mt-2 text-center">
+            <div class="text-xs font-medium text-gray-900 dark:text-gray-100">
+              {color.shade}
+            </div>
+            <div class="text-xs font-mono text-gray-500 dark:text-gray-400 mt-0.5">
+              {color.value}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>

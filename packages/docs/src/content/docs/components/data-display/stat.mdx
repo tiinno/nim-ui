@@ -1,0 +1,139 @@
+---
+title: Stat
+description: Lightweight statistic display for KPIs and key metrics
+---
+
+import { Stat } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Stat component provides a minimal, composable way to display a numeric value with a descriptive label. It is ideal for profile pages, summary sections, and anywhere a simple value-label pair is needed without the card wrapper of DataCard.
+
+## Import
+
+```tsx
+import { Stat } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Stat">
+  <Stat client:load value="1,234" label="Total Users" />
+
+  <Fragment slot="code">
+```tsx
+<Stat value="1,234" label="Total Users" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Multiple Stats
+
+Group several stats together in a grid or flex layout for side-by-side comparison.
+
+<ComponentPreview title="Stat Group">
+  <Stat client:load value="1.2K" label="Followers" />
+  <Stat client:load value="456" label="Following" />
+  <Stat client:load value="89" label="Posts" />
+
+  <Fragment slot="code">
+```tsx
+<div className="grid grid-cols-3 gap-4">
+  <Stat value="1.2K" label="Followers" />
+  <Stat value="456" label="Following" />
+  <Stat value="89" label="Posts" />
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Custom Styling
+
+Apply additional Tailwind classes to customize the appearance.
+
+<ComponentPreview title="Styled Stats">
+  <Stat client:load value="98%" label="Success Rate" className="text-green-600" />
+  <Stat client:load value="2.3s" label="Avg Response" className="text-blue-600" />
+
+  <Fragment slot="code">
+```tsx
+<Stat value="98%" label="Success Rate" className="text-green-600" />
+<Stat value="2.3s" label="Avg Response" className="text-blue-600" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string | number',
+      required: true,
+      description: 'The statistic value to display',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      required: true,
+      description: 'Descriptive label for the statistic',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### User Profile Stats
+
+```tsx
+function ProfileStats({ user }: { user: UserProfile }) {
+  return (
+    <div className="flex gap-8 border-t pt-4">
+      <Stat value={user.followers.toLocaleString()} label="Followers" />
+      <Stat value={user.following.toLocaleString()} label="Following" />
+      <Stat value={user.posts.toLocaleString()} label="Posts" />
+    </div>
+  );
+}
+```
+
+### Server Health Summary
+
+```tsx
+function ServerHealth() {
+  return (
+    <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+      <Stat value="99.99%" label="Uptime" />
+      <Stat value="45ms" label="Latency" />
+      <Stat value="1.2K" label="Requests/sec" />
+      <Stat value="3.2GB" label="Memory Used" />
+    </div>
+  );
+}
+```
+
+### Inline Stat Display
+
+```tsx
+function OrderConfirmation({ order }: { order: Order }) {
+  return (
+    <div className="flex justify-between p-6 rounded-lg border">
+      <Stat value={`#${order.id}`} label="Order Number" />
+      <Stat value={order.total} label="Total" />
+      <Stat value={order.items.length} label="Items" />
+    </div>
+  );
+}
+```
+
+## Related Components
+
+- [DataCard](/components/data-display/data-card/) - Metric card with trend indicators and description
+- [Badge](/components/data-display/badge/) - Status indicator labels
+- [PriceTag](/components/commerce/price-tag/) - Price display with discounts

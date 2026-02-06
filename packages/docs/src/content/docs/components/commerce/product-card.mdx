@@ -1,0 +1,191 @@
+---
+title: ProductCard
+description: Product display card with image, title, price, and optional action
+---
+
+import { ProductCard } from '@tiinno-ui/components';
+import { Button } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The ProductCard component presents a product with its image, title, price, and optional description and action button. It features a hover shadow effect and image zoom transition for an engaging shopping experience.
+
+## Import
+
+```tsx
+import { ProductCard } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic ProductCard">
+  <ProductCard
+    client:load
+    image="https://picsum.photos/seed/product1/400/400"
+    title="Premium Headphones"
+    price="$199.99"
+  />
+
+  <Fragment slot="code">
+```tsx
+<ProductCard
+  image="/products/headphones.jpg"
+  title="Premium Headphones"
+  price="$199.99"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Description
+
+Add a short description to provide more context about the product.
+
+<ComponentPreview title="ProductCard with Description">
+  <ProductCard
+    client:load
+    image="https://picsum.photos/seed/product2/400/400"
+    title="MacBook Pro"
+    price="$1,999"
+    description="Powerful laptop with M2 chip and stunning Retina display"
+  />
+
+  <Fragment slot="code">
+```tsx
+<ProductCard
+  image="/products/laptop.jpg"
+  title="MacBook Pro"
+  price="$1,999"
+  description="Powerful laptop with M2 chip and stunning Retina display"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Action Button
+
+Pass a custom action element such as a Button to the `action` prop.
+
+<ComponentPreview title="ProductCard with Action">
+  <ProductCard
+    client:load
+    image="https://picsum.photos/seed/product3/400/400"
+    title="Cotton T-Shirt"
+    price="$29.99"
+    description="Comfortable everyday wear"
+    action={<Button client:load size="sm">Add to Cart</Button>}
+  />
+
+  <Fragment slot="code">
+```tsx
+<ProductCard
+  image="/products/shirt.jpg"
+  title="Cotton T-Shirt"
+  price="$29.99"
+  description="Comfortable everyday wear"
+  action={<Button size="sm">Add to Cart</Button>}
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'image',
+      type: 'string',
+      required: true,
+      description: 'URL of the product image',
+    },
+    {
+      name: 'title',
+      type: 'string',
+      required: true,
+      description: 'Product name or title',
+    },
+    {
+      name: 'price',
+      type: 'string | number',
+      required: true,
+      description: 'Formatted price to display',
+    },
+    {
+      name: 'description',
+      type: 'string',
+      description: 'Short description of the product (2-line clamp)',
+    },
+    {
+      name: 'action',
+      type: 'ReactNode',
+      description: 'Custom action element, typically a Button',
+    },
+    {
+      name: 'imageAlt',
+      type: 'string',
+      description: 'Alt text for the image. Defaults to the title if not provided',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Product Grid
+
+```tsx
+function ProductGrid({ products }: { products: Product[] }) {
+  return (
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {products.map((product) => (
+        <ProductCard
+          key={product.id}
+          image={product.imageUrl}
+          title={product.name}
+          price={`$${product.price.toFixed(2)}`}
+          description={product.shortDescription}
+          action={
+            <Button size="sm" onClick={() => addToCart(product.id)}>
+              Add to Cart
+            </Button>
+          }
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+### Featured Product
+
+```tsx
+function FeaturedProduct({ product }: { product: Product }) {
+  return (
+    <div className="max-w-sm mx-auto">
+      <ProductCard
+        image={product.imageUrl}
+        title={product.name}
+        price={`$${product.price}`}
+        description={product.description}
+        imageAlt={`${product.name} - Featured`}
+        action={
+          <Button variant="primary" size="md">
+            Buy Now
+          </Button>
+        }
+      />
+    </div>
+  );
+}
+```
+
+## Related Components
+
+- [CartItem](/components/commerce/cart-item/) - Shopping cart line item
+- [PriceTag](/components/commerce/price-tag/) - Price display with discounts
+- [DataCard](/components/data-display/data-card/) - Metric display card

@@ -1,0 +1,469 @@
+---
+title: Drawer
+description: Slide-in side panel overlay for navigation, forms, and supplementary content
+---
+
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Drawer component provides a slide-in panel from the left or right side of the screen. Built on [Radix UI Dialog](https://www.radix-ui.com/primitives/docs/components/dialog), it shares the same accessibility foundation as the Modal component -- including focus trapping, keyboard navigation, and screen reader support -- but uses a side-panel layout instead of a centered dialog.
+
+## Import
+
+```tsx
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerOverlay,
+  DrawerHeader,
+  DrawerBody,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerClose,
+  DrawerPortal,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+The simplest drawer uses `Drawer`, `DrawerTrigger`, `DrawerContent`, `DrawerHeader`, `DrawerTitle`, and `DrawerBody`.
+
+```tsx
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button>Open Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Drawer Title</DrawerTitle>
+    </DrawerHeader>
+    <DrawerBody>
+      <p>This is the drawer content.</p>
+    </DrawerBody>
+  </DrawerContent>
+</Drawer>
+```
+
+## Side Variants
+
+The `side` prop on `DrawerContent` controls which edge the drawer slides in from. It defaults to `'right'`.
+
+### Right Drawer (Default)
+
+```tsx
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button>Open Right Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent side="right">
+    <DrawerHeader>
+      <DrawerTitle>Right Drawer</DrawerTitle>
+      <DrawerDescription>
+        This drawer slides in from the right side.
+      </DrawerDescription>
+    </DrawerHeader>
+    <DrawerBody>
+      <p>Right drawer content here.</p>
+    </DrawerBody>
+  </DrawerContent>
+</Drawer>
+```
+
+### Left Drawer
+
+```tsx
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button variant="outline">Open Left Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent side="left">
+    <DrawerHeader>
+      <DrawerTitle>Navigation</DrawerTitle>
+    </DrawerHeader>
+    <DrawerBody>
+      <nav>
+        <Stack spacing="sm">
+          <a href="/dashboard">Dashboard</a>
+          <a href="/settings">Settings</a>
+          <a href="/profile">Profile</a>
+        </Stack>
+      </nav>
+    </DrawerBody>
+  </DrawerContent>
+</Drawer>
+```
+
+## Controlled Drawer
+
+Control the drawer open state externally using React state.
+
+```tsx
+function ControlledDrawer() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button>Open Controlled Drawer</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Controlled Drawer</DrawerTitle>
+        </DrawerHeader>
+        <DrawerBody>
+          <p>This drawer is controlled via React state.</p>
+          <Button onClick={() => setOpen(false)} className="mt-4">
+            Close Programmatically
+          </Button>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
+
+## With Close Button
+
+Use `DrawerClose` to add a visible close button.
+
+```tsx
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button>Open</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <Flex justify="between" align="center">
+        <DrawerTitle>Settings</DrawerTitle>
+        <DrawerClose asChild>
+          <button
+            className="rounded-sm opacity-70 hover:opacity-100 transition-opacity"
+            aria-label="Close"
+          >
+            X
+          </button>
+        </DrawerClose>
+      </Flex>
+    </DrawerHeader>
+    <DrawerBody>
+      <p>Settings content here.</p>
+    </DrawerBody>
+  </DrawerContent>
+</Drawer>
+```
+
+## With Form Content
+
+```tsx
+function FilterDrawer() {
+  const [open, setOpen] = useState(false);
+
+  const handleApply = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Apply filters
+    setOpen(false);
+  };
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button variant="outline">Filters</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Filter Results</DrawerTitle>
+          <DrawerDescription>
+            Narrow down results using the filters below.
+          </DrawerDescription>
+        </DrawerHeader>
+        <DrawerBody>
+          <form onSubmit={handleApply}>
+            <Stack spacing="md">
+              <Select
+                options={[
+                  { value: 'all', label: 'All Categories' },
+                  { value: 'electronics', label: 'Electronics' },
+                  { value: 'clothing', label: 'Clothing' },
+                ]}
+                placeholder="Category"
+              />
+              <Input label="Min Price" type="number" />
+              <Input label="Max Price" type="number" />
+              <Checkbox label="In Stock Only" />
+              <Flex justify="end" gap="sm">
+                <DrawerClose asChild>
+                  <Button variant="outline" type="button">Cancel</Button>
+                </DrawerClose>
+                <Button variant="primary" type="submit">Apply</Button>
+              </Flex>
+            </Stack>
+          </form>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
+
+## Component Architecture
+
+The Drawer is composed of several sub-components, each with a specific role:
+
+| Component | Description |
+|-----------|-------------|
+| `Drawer` | Root component that manages open/close state (Radix Dialog.Root) |
+| `DrawerTrigger` | Element that opens the drawer when clicked (Radix Dialog.Trigger) |
+| `DrawerPortal` | Portals content to document body (Radix Dialog.Portal) |
+| `DrawerOverlay` | Semi-transparent backdrop behind the drawer |
+| `DrawerContent` | The drawer panel itself (includes Portal and Overlay automatically) |
+| `DrawerHeader` | Header area for title and description |
+| `DrawerBody` | Main content area |
+| `DrawerTitle` | Accessible title text (Radix Dialog.Title) |
+| `DrawerDescription` | Accessible description text (Radix Dialog.Description) |
+| `DrawerClose` | Element that closes the drawer when clicked (Radix Dialog.Close) |
+
+## Props
+
+### Drawer (Root)
+
+<PropsTable
+  props={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state of the drawer',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open: boolean) => void',
+      description: 'Callback when the open state changes',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage',
+    },
+    {
+      name: 'modal',
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether to render as a modal (with inert background)',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Drawer sub-components (Trigger, Content, etc.)',
+    },
+  ]}
+/>
+
+### DrawerContent
+
+<PropsTable
+  props={[
+    {
+      name: 'side',
+      type: "'left' | 'right'",
+      default: "'right'",
+      description: 'Which side of the screen the drawer slides in from',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for custom styling',
+    },
+    {
+      name: 'onEscapeKeyDown',
+      type: '(event: KeyboardEvent) => void',
+      description: 'Handler called when Escape key is pressed',
+    },
+    {
+      name: 'onPointerDownOutside',
+      type: '(event: PointerDownOutsideEvent) => void',
+      description: 'Handler called when clicking outside the drawer',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Drawer content (Header, Body, etc.)',
+    },
+  ]}
+/>
+
+### DrawerTitle
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the title',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Title text content',
+    },
+  ]}
+/>
+
+### DrawerDescription
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the description',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Description text content',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Mobile Navigation
+
+```tsx
+function MobileNav() {
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <button aria-label="Open menu" className="lg:hidden">
+          <MenuIcon />
+        </button>
+      </DrawerTrigger>
+      <DrawerContent side="left">
+        <DrawerHeader>
+          <DrawerTitle>Menu</DrawerTitle>
+        </DrawerHeader>
+        <DrawerBody>
+          <nav>
+            <Stack spacing="xs">
+              <a href="/" className="p-3 rounded hover:bg-neutral-100">Home</a>
+              <a href="/products" className="p-3 rounded hover:bg-neutral-100">Products</a>
+              <a href="/about" className="p-3 rounded hover:bg-neutral-100">About</a>
+              <a href="/contact" className="p-3 rounded hover:bg-neutral-100">Contact</a>
+            </Stack>
+          </nav>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
+
+### Shopping Cart Drawer
+
+```tsx
+function CartDrawer({ items, total }) {
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button variant="ghost">
+          Cart ({items.length})
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent side="right">
+        <DrawerHeader>
+          <DrawerTitle>Shopping Cart</DrawerTitle>
+          <DrawerDescription>{items.length} items</DrawerDescription>
+        </DrawerHeader>
+        <DrawerBody>
+          <Stack spacing="md">
+            {items.map((item) => (
+              <Flex key={item.id} justify="between" align="center">
+                <div>
+                  <p className="font-medium">{item.name}</p>
+                  <p className="text-sm text-neutral-500">Qty: {item.qty}</p>
+                </div>
+                <p className="font-semibold">${item.price}</p>
+              </Flex>
+            ))}
+            <hr />
+            <Flex justify="between">
+              <span className="font-semibold">Total</span>
+              <span className="font-bold">${total}</span>
+            </Flex>
+            <Button variant="primary" fullWidth>
+              Checkout
+            </Button>
+          </Stack>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
+
+### Detail Panel
+
+```tsx
+function DetailPanel({ selectedItem }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (selectedItem) setOpen(true);
+  }, [selectedItem]);
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>{selectedItem?.title}</DrawerTitle>
+        </DrawerHeader>
+        <DrawerBody>
+          <Stack spacing="md">
+            <p>{selectedItem?.description}</p>
+            <Badge variant={selectedItem?.status === 'active' ? 'success' : 'default'}>
+              {selectedItem?.status}
+            </Badge>
+          </Stack>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
+
+## Accessibility
+
+The Drawer component inherits all accessibility features from Radix UI Dialog:
+
+- **Focus trapping**: Focus is contained within the drawer while open
+- **Focus restoration**: Focus returns to the trigger element when the drawer closes
+- **Escape key**: Pressing Escape closes the drawer
+- **Background inert**: Background content is made non-interactive while the drawer is open
+- **ARIA attributes**: Automatically sets `role="dialog"`, `aria-modal="true"`, `aria-labelledby`, and `aria-describedby`
+- **Slide animations**: Open and close animations using CSS data-state selectors
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Escape | Closes the drawer |
+| Tab | Moves focus to next focusable element within drawer |
+| Shift + Tab | Moves focus to previous focusable element within drawer |
+
+### Best Practices
+
+- Always include a `DrawerTitle` for screen reader accessibility
+- Provide a visible close mechanism (close button, cancel action, or overlay click)
+- Use `side="left"` for navigation menus and `side="right"` for detail panels and forms
+- Consider using `DrawerDescription` for additional context
+
+## Related Components
+
+- [Modal](/components/layout/modal/) - Centered dialog overlay for focused interactions
+- [Card](/components/layout/card/) - Non-overlay content container
+- [Tabs](/components/layout/tabs/) - Organize content without overlays

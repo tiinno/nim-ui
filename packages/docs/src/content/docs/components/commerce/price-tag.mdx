@@ -1,0 +1,170 @@
+---
+title: PriceTag
+description: Price display component with support for original price and discount percentage
+---
+
+import { PriceTag } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The PriceTag component displays a formatted price with optional strikethrough original price and discount percentage. It supports multiple sizes for use in product cards, cart items, and checkout summaries.
+
+## Import
+
+```tsx
+import { PriceTag } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic PriceTag">
+  <PriceTag client:load price="$99.99" />
+
+  <Fragment slot="code">
+```tsx
+<PriceTag price="$99.99" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Original Price
+
+Show the original price with a strikethrough to indicate a discount.
+
+<ComponentPreview title="PriceTag with Discount">
+  <PriceTag client:load price="$79.99" originalPrice="$99.99" />
+
+  <Fragment slot="code">
+```tsx
+<PriceTag price="$79.99" originalPrice="$99.99" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Discount Percentage
+
+Display the savings percentage alongside the prices.
+
+<ComponentPreview title="PriceTag with Discount Percentage">
+  <PriceTag
+    client:load
+    price="$799"
+    originalPrice="$999"
+    discountPercent="20%"
+  />
+
+  <Fragment slot="code">
+```tsx
+<PriceTag
+  price="$799"
+  originalPrice="$999"
+  discountPercent="20%"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Three size options are available for different display contexts.
+
+<ComponentPreview title="PriceTag Sizes">
+  <PriceTag client:load price="$49.99" originalPrice="$69.99" size="sm" />
+  <PriceTag client:load price="$49.99" originalPrice="$69.99" size="md" />
+  <PriceTag client:load price="$49.99" originalPrice="$69.99" size="lg" />
+
+  <Fragment slot="code">
+```tsx
+<PriceTag price="$49.99" originalPrice="$69.99" size="sm" />
+<PriceTag price="$49.99" originalPrice="$69.99" size="md" />
+<PriceTag price="$49.99" originalPrice="$69.99" size="lg" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'price',
+      type: 'string | number',
+      required: true,
+      description: 'The current price to display',
+    },
+    {
+      name: 'originalPrice',
+      type: 'string | number',
+      description: 'Original price shown with strikethrough when discounted',
+    },
+    {
+      name: 'discountPercent',
+      type: 'string',
+      description: 'Discount percentage text, e.g. "20%"',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size of the price text',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Product Listing
+
+```tsx
+function ProductPrice({ product }: { product: Product }) {
+  const hasDiscount = product.salePrice < product.price;
+
+  return (
+    <PriceTag
+      price={`$${product.salePrice.toFixed(2)}`}
+      originalPrice={hasDiscount ? `$${product.price.toFixed(2)}` : undefined}
+      discountPercent={
+        hasDiscount
+          ? `${Math.round((1 - product.salePrice / product.price) * 100)}%`
+          : undefined
+      }
+    />
+  );
+}
+```
+
+### Checkout Summary
+
+```tsx
+function CheckoutTotal({ subtotal, discount, total }: CheckoutProps) {
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between">
+        <span>Subtotal</span>
+        <PriceTag price={subtotal} size="sm" />
+      </div>
+      {discount > 0 && (
+        <div className="flex justify-between text-green-600">
+          <span>Discount</span>
+          <PriceTag price={`-$${discount.toFixed(2)}`} size="sm" />
+        </div>
+      )}
+      <div className="flex justify-between border-t pt-2 font-semibold">
+        <span>Total</span>
+        <PriceTag price={`$${total.toFixed(2)}`} size="lg" />
+      </div>
+    </div>
+  );
+}
+```
+
+## Related Components
+
+- [ProductCard](/components/commerce/product-card/) - Product display card
+- [CartItem](/components/commerce/cart-item/) - Shopping cart line item
+- [Badge](/components/data-display/badge/) - Status indicator for sale tags

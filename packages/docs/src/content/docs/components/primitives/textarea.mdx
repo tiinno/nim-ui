@@ -1,0 +1,260 @@
+---
+title: Textarea
+description: Multi-line text input for longer form content
+---
+
+import { Textarea } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Textarea component is a multi-line text input for capturing longer form content such as comments, descriptions, and messages. It supports validation variants, multiple sizes, and optional resize behavior.
+
+## Import
+
+```tsx
+import { Textarea } from '@tiinno-ui/components';
+```
+
+## Variants
+
+Textarea comes in three variants to communicate validation state.
+
+<ComponentPreview title="Textarea Variants">
+  <Textarea client:load variant="default" placeholder="Default textarea" />
+  <Textarea client:load variant="error" placeholder="Error textarea" />
+  <Textarea client:load variant="success" placeholder="Success textarea" />
+
+  <Fragment slot="code">
+```tsx
+<Textarea variant="default" placeholder="Default textarea" />
+<Textarea variant="error" placeholder="Error textarea" />
+<Textarea variant="success" placeholder="Success textarea" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Three size options are available: small, medium (default), and large.
+
+<ComponentPreview title="Textarea Sizes">
+  <Textarea client:load size="sm" placeholder="Small textarea" />
+  <Textarea client:load size="md" placeholder="Medium textarea" />
+  <Textarea client:load size="lg" placeholder="Large textarea" />
+
+  <Fragment slot="code">
+```tsx
+<Textarea size="sm" placeholder="Small textarea" />
+<Textarea size="md" placeholder="Medium textarea" />
+<Textarea size="lg" placeholder="Large textarea" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## States
+
+### Disabled
+
+<ComponentPreview title="Disabled State">
+  <Textarea client:load disabled placeholder="Disabled textarea" />
+
+  <Fragment slot="code">
+```tsx
+<Textarea disabled placeholder="Disabled textarea" />
+```
+  </Fragment>
+</ComponentPreview>
+
+### Non-Resizable
+
+<ComponentPreview title="Non-Resizable Textarea">
+  <Textarea client:load resize={false} placeholder="This textarea cannot be resized" />
+
+  <Fragment slot="code">
+```tsx
+<Textarea resize={false} placeholder="This textarea cannot be resized" />
+```
+  </Fragment>
+</ComponentPreview>
+
+### Custom Rows
+
+<ComponentPreview title="Custom Row Count">
+  <Textarea client:load rows={2} placeholder="2 rows" />
+  <Textarea client:load rows={6} placeholder="6 rows" />
+  <Textarea client:load rows={10} placeholder="10 rows" />
+
+  <Fragment slot="code">
+```tsx
+<Textarea rows={2} placeholder="2 rows" />
+<Textarea rows={6} placeholder="6 rows" />
+<Textarea rows={10} placeholder="10 rows" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: "'default' | 'error' | 'success'",
+      default: "'default'",
+      description: 'Visual style variant indicating validation state',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size of the textarea (affects padding and font size)',
+    },
+    {
+      name: 'resize',
+      type: 'boolean',
+      default: 'true',
+      description: 'Whether the textarea can be resized by the user',
+    },
+    {
+      name: 'rows',
+      type: 'number',
+      default: '4',
+      description: 'Number of visible text rows',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      description: 'Placeholder text displayed when the textarea is empty',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the textarea is disabled',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+The Textarea component also accepts all standard HTML textarea attributes (excluding the native `size` attribute, which is replaced by the component's `size` prop).
+
+## Usage Examples
+
+### Comment Form
+
+```tsx
+function CommentForm() {
+  const [comment, setComment] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitComment(comment);
+    setComment('');
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="comment" className="block text-sm font-medium mb-1">
+          Your Comment
+        </label>
+        <Textarea
+          id="comment"
+          rows={4}
+          placeholder="Write your comment..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+      </div>
+      <Button type="submit">Post Comment</Button>
+    </form>
+  );
+}
+```
+
+### With Character Count
+
+```tsx
+function DescriptionField() {
+  const [value, setValue] = useState('');
+  const maxLength = 500;
+
+  return (
+    <div>
+      <label htmlFor="description" className="block text-sm font-medium mb-1">
+        Description
+      </label>
+      <Textarea
+        id="description"
+        rows={6}
+        placeholder="Describe your project..."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        variant={value.length > maxLength ? 'error' : 'default'}
+      />
+      <p className={`mt-1 text-sm ${value.length > maxLength ? 'text-red-500' : 'text-gray-500'}`}>
+        {value.length}/{maxLength} characters
+      </p>
+    </div>
+  );
+}
+```
+
+### Feedback Form
+
+```tsx
+function FeedbackForm() {
+  const [feedback, setFeedback] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <Textarea
+        placeholder="Tell us what you think..."
+        rows={5}
+        resize={false}
+        value={feedback}
+        onChange={(e) => setFeedback(e.target.value)}
+        variant={submitted ? 'success' : 'default'}
+      />
+      <Button type="submit" disabled={!feedback.trim()}>
+        Send Feedback
+      </Button>
+    </form>
+  );
+}
+```
+
+## Accessibility
+
+The Textarea component follows WAI-ARIA best practices:
+
+- Uses semantic `<textarea>` element
+- Supports all native textarea attributes including `aria-label` and `aria-describedby`
+- Visual variants communicate state but should be paired with text for screen readers
+- Focus visible states for keyboard users
+- Disabled state properly disables interaction and announces to assistive technology
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Tab | Moves focus to the textarea |
+| Shift + Tab | Moves focus to previous focusable element |
+
+### Best Practices
+
+- Always pair textareas with visible `<label>` elements or `aria-label`
+- Use appropriate `rows` values to hint at expected content length
+- Provide character count when there is a maximum length
+- Use the `error` variant alongside visible error messages
+
+## Related Components
+
+- [Input](/components/primitives/input/) - Single-line text input
+- [Button](/components/primitives/button/) - Interactive button for form submission
+- [Select](/components/primitives/select/) - Dropdown selection input

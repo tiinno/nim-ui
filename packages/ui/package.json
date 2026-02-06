@@ -1,0 +1,70 @@
+{
+  "name": "@tiinno-ui/components",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./registry": "./src/registry/index.json",
+    "./styles": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "src/registry"
+  ],
+  "scripts": {
+    "build": "tsup && postcss ./src/styles.css -o ./dist/styles.css",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "clean": "rm -rf dist",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage",
+    "test:run": "vitest run"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.2",
+    "@radix-ui/react-checkbox": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-radio-group": "^1.2.2",
+    "@radix-ui/react-select": "^2.1.5",
+    "@radix-ui/react-switch": "^1.2.6",
+    "@radix-ui/react-tabs": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@tiinno-ui/tailwind-config": "workspace:*",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.2",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/coverage-v8": "^2.1.9",
+    "@vitest/ui": "^2.1.9",
+    "autoprefixer": "^10.4.20",
+    "happy-dom": "^20.5.0",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.1.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.9"
+  }
+}

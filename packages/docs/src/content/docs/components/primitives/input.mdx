@@ -1,0 +1,254 @@
+---
+title: Input
+description: Text input field for capturing user data
+---
+
+import { Input } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Input component is a styled text input field for capturing user data. It supports multiple variants for validation states, three sizes, and extends all native HTML input attributes.
+
+## Import
+
+```tsx
+import { Input } from '@tiinno-ui/components';
+```
+
+## Variants
+
+Input comes in three variants to communicate validation state.
+
+<ComponentPreview title="Input Variants">
+  <Input client:load variant="default" placeholder="Default input" />
+  <Input client:load variant="error" placeholder="Error input" />
+  <Input client:load variant="success" placeholder="Success input" />
+
+  <Fragment slot="code">
+```tsx
+<Input variant="default" placeholder="Default input" />
+<Input variant="error" placeholder="Error input" />
+<Input variant="success" placeholder="Success input" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Three size options are available: small, medium (default), and large.
+
+<ComponentPreview title="Input Sizes">
+  <Input client:load size="sm" placeholder="Small input" />
+  <Input client:load size="md" placeholder="Medium input" />
+  <Input client:load size="lg" placeholder="Large input" />
+
+  <Fragment slot="code">
+```tsx
+<Input size="sm" placeholder="Small input" />
+<Input size="md" placeholder="Medium input" />
+<Input size="lg" placeholder="Large input" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## States
+
+### Disabled
+
+<ComponentPreview title="Disabled State">
+  <Input client:load disabled placeholder="Disabled input" />
+
+  <Fragment slot="code">
+```tsx
+<Input disabled placeholder="Disabled input" />
+```
+  </Fragment>
+</ComponentPreview>
+
+### Input Types
+
+<ComponentPreview title="Input Types">
+  <Input client:load type="text" placeholder="Text input" />
+  <Input client:load type="email" placeholder="Email input" />
+  <Input client:load type="password" placeholder="Password input" />
+  <Input client:load type="number" placeholder="Number input" />
+
+  <Fragment slot="code">
+```tsx
+<Input type="text" placeholder="Text input" />
+<Input type="email" placeholder="Email input" />
+<Input type="password" placeholder="Password input" />
+<Input type="number" placeholder="Number input" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: "'default' | 'error' | 'success'",
+      default: "'default'",
+      description: 'Visual style variant indicating validation state',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size of the input field',
+    },
+    {
+      name: 'type',
+      type: 'string',
+      default: "'text'",
+      description: 'HTML input type attribute (text, email, password, number, etc.)',
+    },
+    {
+      name: 'placeholder',
+      type: 'string',
+      description: 'Placeholder text displayed when the input is empty',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Whether the input is disabled',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+The Input component also accepts all standard HTML input attributes (excluding the native `size` attribute, which is replaced by the component's `size` prop).
+
+## Usage Examples
+
+### Login Form
+
+```tsx
+function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="space-y-4">
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium mb-1">
+            Email
+          </label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="password" className="block text-sm font-medium mb-1">
+            Password
+          </label>
+          <Input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <Button type="submit" fullWidth>
+          Sign In
+        </Button>
+      </div>
+    </form>
+  );
+}
+```
+
+### With Validation
+
+```tsx
+function ValidatedInput() {
+  const [value, setValue] = useState('');
+  const [error, setError] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setValue(val);
+
+    if (!val.includes('@')) {
+      setError('Please enter a valid email');
+    } else {
+      setError('');
+    }
+  };
+
+  return (
+    <div>
+      <Input
+        type="email"
+        placeholder="Enter email"
+        value={value}
+        onChange={handleChange}
+        variant={error ? 'error' : value ? 'success' : 'default'}
+      />
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+    </div>
+  );
+}
+```
+
+### Search Input
+
+```tsx
+function SearchBar() {
+  return (
+    <div className="relative">
+      <Input
+        type="search"
+        placeholder="Search..."
+        size="lg"
+        className="pl-10"
+      />
+      <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+    </div>
+  );
+}
+```
+
+## Accessibility
+
+The Input component follows WAI-ARIA best practices:
+
+- Uses semantic `<input>` element
+- Supports all native input attributes including `aria-label` and `aria-describedby`
+- Visual variants communicate state but should be paired with text for screen readers
+- Focus visible states for keyboard users
+- Disabled state properly disables interaction and announces to assistive technology
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Tab | Moves focus to the input |
+| Shift + Tab | Moves focus to previous focusable element |
+
+### Best Practices
+
+- Always pair inputs with visible `<label>` elements or `aria-label`
+- Use the `error` variant alongside visible error messages
+- Use the `success` variant to confirm valid input
+- Provide clear placeholder text that hints at expected format
+
+## Related Components
+
+- [Button](/components/primitives/button/) - Interactive button for actions
+- [Textarea](/components/primitives/textarea/) - Multi-line text input
+- [Select](/components/primitives/select/) - Dropdown selection input
+- [Checkbox](/components/primitives/checkbox/) - Boolean checkbox input

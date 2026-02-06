@@ -1,0 +1,182 @@
+---
+title: DataCard
+description: Metric card component for displaying KPIs with optional trend indicators
+---
+
+import { DataCard } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The DataCard component displays a single metric or KPI with a label, value, optional description, and trend indicator. It is designed for dashboards and analytics views where key numbers need to stand out.
+
+## Import
+
+```tsx
+import { DataCard } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic DataCard">
+  <DataCard client:load value="1,234" label="Total Users" />
+
+  <Fragment slot="code">
+```tsx
+<DataCard value="1,234" label="Total Users" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Trend Indicator
+
+Display a trend alongside the value to show direction of change. The `trendDirection` prop controls the color of the trend text.
+
+<ComponentPreview title="DataCard with Trends">
+  <DataCard client:load value="$45,231" label="Revenue" trend="+12.5%" trendDirection="up" />
+  <DataCard client:load value="23" label="Open Issues" trend="-8.2%" trendDirection="down" />
+  <DataCard client:load value="99.9%" label="Uptime" trend="0%" trendDirection="neutral" />
+
+  <Fragment slot="code">
+```tsx
+<DataCard value="$45,231" label="Revenue" trend="+12.5%" trendDirection="up" />
+<DataCard value="23" label="Open Issues" trend="-8.2%" trendDirection="down" />
+<DataCard value="99.9%" label="Uptime" trend="0%" trendDirection="neutral" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Description
+
+Add supplementary context below the value with the `description` prop.
+
+<ComponentPreview title="DataCard with Description">
+  <DataCard
+    client:load
+    value="98.5%"
+    label="Uptime"
+    description="Last 30 days"
+    trend="+2.3%"
+    trendDirection="up"
+  />
+
+  <Fragment slot="code">
+```tsx
+<DataCard
+  value="98.5%"
+  label="Uptime"
+  description="Last 30 days"
+  trend="+2.3%"
+  trendDirection="up"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string | number',
+      required: true,
+      description: 'The primary metric value to display',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      required: true,
+      description: 'Label describing the metric',
+    },
+    {
+      name: 'description',
+      type: 'string',
+      description: 'Additional context shown below the value',
+    },
+    {
+      name: 'trend',
+      type: 'string',
+      description: 'Trend value text, e.g. "+12.5%"',
+    },
+    {
+      name: 'trendDirection',
+      type: "'up' | 'down' | 'neutral'",
+      description: 'Direction of the trend, controls the trend text color',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Dashboard Metrics Row
+
+```tsx
+function DashboardMetrics() {
+  return (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <DataCard
+        value="$45,231"
+        label="Total Revenue"
+        trend="+12.5%"
+        trendDirection="up"
+        description="vs. last month"
+      />
+      <DataCard
+        value="1,234"
+        label="Active Users"
+        trend="+8.1%"
+        trendDirection="up"
+        description="vs. last month"
+      />
+      <DataCard
+        value="23"
+        label="Open Tickets"
+        trend="-15%"
+        trendDirection="down"
+        description="vs. last week"
+      />
+      <DataCard
+        value="4.8"
+        label="Avg Rating"
+        trend="0%"
+        trendDirection="neutral"
+        description="No change"
+      />
+    </div>
+  );
+}
+```
+
+### Dynamic Data Fetching
+
+```tsx
+function RevenueCard() {
+  const { data, isLoading } = useQuery({
+    queryKey: ['revenue'],
+    queryFn: fetchRevenue,
+  });
+
+  if (isLoading) return <div className="animate-pulse h-32 rounded-lg bg-neutral-200" />;
+
+  return (
+    <DataCard
+      value={data.formatted}
+      label="Monthly Revenue"
+      trend={data.trendPercent}
+      trendDirection={data.trendUp ? 'up' : 'down'}
+      description={`vs. ${data.comparisonPeriod}`}
+    />
+  );
+}
+```
+
+## Related Components
+
+- [Stat](/components/data-display/stat/) - Lightweight stat display without card styling
+- [Badge](/components/data-display/badge/) - Status indicator labels
+- [DataTable](/components/data-display/data-table/) - Tabular data display

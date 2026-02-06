@@ -1,0 +1,328 @@
+---
+title: CTA Section
+description: Call-to-action section with title, description, and action button for driving conversions
+---
+
+import { CTA, Button } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The CTA (Call-to-Action) component creates a prominent section designed to encourage users to take a specific action. It supports multiple visual variants, primary and secondary actions, and flexible content layout.
+
+## Import
+
+```tsx
+import { CTA } from '@tiinno-ui/components';
+```
+
+## Usage
+
+<ComponentPreview title="Default CTA">
+  <CTA
+    client:load
+    title="Ready to get started?"
+    description="Start building beautiful interfaces with Tiinno UI today."
+    buttonText="Get Started"
+    buttonHref="/getting-started/installation/"
+  />
+
+  <Fragment slot="code">
+```tsx
+<CTA
+  title="Ready to get started?"
+  description="Start building beautiful interfaces with Tiinno UI today."
+  buttonText="Get Started"
+  buttonHref="/getting-started/installation/"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Variants
+
+### Default
+
+<ComponentPreview title="Default Variant">
+  <CTA
+    client:load
+    variant="default"
+    title="Join our community"
+    description="Connect with thousands of developers using Tiinno UI."
+    buttonText="Join Now"
+  />
+
+  <Fragment slot="code">
+```tsx
+<CTA
+  variant="default"
+  title="Join our community"
+  description="Connect with thousands of developers using Tiinno UI."
+  buttonText="Join Now"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Primary
+
+<ComponentPreview title="Primary Variant">
+  <CTA
+    client:load
+    variant="primary"
+    title="Upgrade to Pro"
+    description="Unlock premium components, advanced themes, and priority support."
+    buttonText="Start Free Trial"
+  />
+
+  <Fragment slot="code">
+```tsx
+<CTA
+  variant="primary"
+  title="Upgrade to Pro"
+  description="Unlock premium components, advanced themes, and priority support."
+  buttonText="Start Free Trial"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Gradient
+
+<ComponentPreview title="Gradient Variant">
+  <CTA
+    client:load
+    variant="gradient"
+    title="Build something amazing"
+    description="From idea to production in record time. The only component library you need."
+    buttonText="Get Started Free"
+  />
+
+  <Fragment slot="code">
+```tsx
+<CTA
+  variant="gradient"
+  title="Build something amazing"
+  description="From idea to production in record time. The only component library you need."
+  buttonText="Get Started Free"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Click Handler
+
+<ComponentPreview title="CTA with onClick">
+  <CTA
+    client:load
+    title="Subscribe to updates"
+    description="Get notified when we release new components and features."
+    buttonText="Subscribe"
+    onButtonClick={() => alert('Subscribed!')}
+  />
+
+  <Fragment slot="code">
+```tsx
+<CTA
+  title="Subscribe to updates"
+  description="Get notified when we release new components and features."
+  buttonText="Subscribe"
+  onButtonClick={() => setShowSubscribeModal(true)}
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Secondary Action
+
+<ComponentPreview title="CTA with Secondary Action">
+  <CTA
+    client:load
+    variant="primary"
+    title="Start your free trial"
+    description="No credit card required. Cancel anytime."
+    buttonText="Start Trial"
+    secondaryAction={
+      <a href="/pricing" className="text-sm underline opacity-80 hover:opacity-100">
+        View pricing plans
+      </a>
+    }
+  />
+
+  <Fragment slot="code">
+```tsx
+<CTA
+  variant="primary"
+  title="Start your free trial"
+  description="No credit card required. Cancel anytime."
+  buttonText="Start Trial"
+  secondaryAction={
+    <a href="/pricing" className="text-sm underline opacity-80 hover:opacity-100">
+      View pricing plans
+    </a>
+  }
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Title Only
+
+<ComponentPreview title="Minimal CTA">
+  <CTA
+    client:load
+    title="Ready to build?"
+    buttonText="Get Started"
+    buttonHref="/getting-started/installation/"
+  />
+
+  <Fragment slot="code">
+```tsx
+<CTA
+  title="Ready to build?"
+  buttonText="Get Started"
+  buttonHref="/getting-started/installation/"
+/>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'title',
+      type: 'string',
+      required: true,
+      description: 'Main heading text of the CTA section',
+    },
+    {
+      name: 'description',
+      type: 'string',
+      description: 'Supporting text displayed below the title',
+    },
+    {
+      name: 'buttonText',
+      type: 'string',
+      required: true,
+      description: 'Label for the primary action button',
+    },
+    {
+      name: 'buttonHref',
+      type: 'string',
+      description: 'URL the button links to. Renders the button as an anchor element when provided.',
+    },
+    {
+      name: 'onButtonClick',
+      type: '() => void',
+      description: 'Click handler for the primary button. Used when buttonHref is not provided.',
+    },
+    {
+      name: 'secondaryAction',
+      type: 'ReactNode',
+      description: 'Optional secondary action element displayed below or beside the primary button',
+    },
+    {
+      name: 'variant',
+      type: "'default' | 'primary' | 'gradient'",
+      default: "'default'",
+      description: 'Visual style variant of the CTA section background',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the root element',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Landing Page Footer CTA
+
+```tsx
+function LandingFooterCTA() {
+  return (
+    <CTA
+      variant="gradient"
+      title="Ship your next project faster"
+      description="Join 10,000+ developers already building with Tiinno UI. Free and open source."
+      buttonText="Get Started"
+      buttonHref="/getting-started/installation/"
+      secondaryAction={
+        <a
+          href="https://github.com/tiinno-ui"
+          className="text-sm underline opacity-80 hover:opacity-100"
+        >
+          Star us on GitHub
+        </a>
+      }
+    />
+  );
+}
+```
+
+### Newsletter Signup
+
+```tsx
+function NewsletterCTA() {
+  const [showModal, setShowModal] = useState(false);
+
+  return (
+    <>
+      <CTA
+        variant="primary"
+        title="Stay in the loop"
+        description="Get weekly updates on new components, guides, and tips delivered to your inbox."
+        buttonText="Subscribe"
+        onButtonClick={() => setShowModal(true)}
+      />
+      {showModal && (
+        <Modal isOpen onClose={() => setShowModal(false)} title="Subscribe">
+          <Input placeholder="you@example.com" type="email" />
+          <Button variant="primary" fullWidth>
+            Subscribe
+          </Button>
+        </Modal>
+      )}
+    </>
+  );
+}
+```
+
+### Upgrade Prompt
+
+```tsx
+function UpgradePrompt() {
+  return (
+    <CTA
+      variant="primary"
+      title="Unlock all components"
+      description="Upgrade to Tiinno Pro for premium components, custom themes, and dedicated support."
+      buttonText="Upgrade Now"
+      buttonHref="/pricing"
+      secondaryAction={
+        <span className="text-sm opacity-70">
+          Starting at $9/month
+        </span>
+      }
+    />
+  );
+}
+```
+
+## Accessibility
+
+The CTA component follows accessibility best practices:
+
+- Uses semantic section and heading elements for proper document structure
+- The primary button uses `<a>` when `buttonHref` is provided and `<button>` when using `onButtonClick`
+- All interactive elements are keyboard accessible
+- Color contrast ratios meet WCAG AA standards across all variants, including the gradient variant
+- The section can be identified by assistive technologies through its heading
+
+## Related Components
+
+- [Hero](/components/landing/hero/) - Full-width hero section for page headers
+- [Button](/components/primitives/button/) - Interactive button component
+- [FeatureGrid](/components/landing/feature/) - Feature display grid

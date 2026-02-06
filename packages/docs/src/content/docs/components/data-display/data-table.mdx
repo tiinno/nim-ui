@@ -1,0 +1,357 @@
+---
+title: DataTable
+description: Semantic HTML table components for displaying structured tabular data
+---
+
+import { DataTable, DataTableHeader, DataTableBody, DataTableFooter, DataTableRow, DataTableHead, DataTableCell } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The DataTable component provides a set of composable, semantic HTML table primitives for displaying structured data. Each sub-component maps to a native table element with consistent styling, hover states, and dark mode support.
+
+## Import
+
+```tsx
+import {
+  DataTable,
+  DataTableHeader,
+  DataTableBody,
+  DataTableFooter,
+  DataTableRow,
+  DataTableHead,
+  DataTableCell,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Table">
+  <DataTable client:load>
+    <DataTableHeader client:load>
+      <DataTableRow client:load>
+        <DataTableHead client:load>Name</DataTableHead>
+        <DataTableHead client:load>Email</DataTableHead>
+        <DataTableHead client:load>Role</DataTableHead>
+      </DataTableRow>
+    </DataTableHeader>
+    <DataTableBody client:load>
+      <DataTableRow client:load>
+        <DataTableCell client:load>Alice Johnson</DataTableCell>
+        <DataTableCell client:load>alice@example.com</DataTableCell>
+        <DataTableCell client:load>Admin</DataTableCell>
+      </DataTableRow>
+      <DataTableRow client:load>
+        <DataTableCell client:load>Bob Smith</DataTableCell>
+        <DataTableCell client:load>bob@example.com</DataTableCell>
+        <DataTableCell client:load>Editor</DataTableCell>
+      </DataTableRow>
+      <DataTableRow client:load>
+        <DataTableCell client:load>Carol Davis</DataTableCell>
+        <DataTableCell client:load>carol@example.com</DataTableCell>
+        <DataTableCell client:load>Viewer</DataTableCell>
+      </DataTableRow>
+    </DataTableBody>
+  </DataTable>
+
+  <Fragment slot="code">
+```tsx
+<DataTable>
+  <DataTableHeader>
+    <DataTableRow>
+      <DataTableHead>Name</DataTableHead>
+      <DataTableHead>Email</DataTableHead>
+      <DataTableHead>Role</DataTableHead>
+    </DataTableRow>
+  </DataTableHeader>
+  <DataTableBody>
+    <DataTableRow>
+      <DataTableCell>Alice Johnson</DataTableCell>
+      <DataTableCell>alice@example.com</DataTableCell>
+      <DataTableCell>Admin</DataTableCell>
+    </DataTableRow>
+    <DataTableRow>
+      <DataTableCell>Bob Smith</DataTableCell>
+      <DataTableCell>bob@example.com</DataTableCell>
+      <DataTableCell>Editor</DataTableCell>
+    </DataTableRow>
+    <DataTableRow>
+      <DataTableCell>Carol Davis</DataTableCell>
+      <DataTableCell>carol@example.com</DataTableCell>
+      <DataTableCell>Viewer</DataTableCell>
+    </DataTableRow>
+  </DataTableBody>
+</DataTable>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Footer
+
+Use `DataTableFooter` to add summary rows such as totals or aggregates.
+
+<ComponentPreview title="Table with Footer">
+  <DataTable client:load>
+    <DataTableHeader client:load>
+      <DataTableRow client:load>
+        <DataTableHead client:load>Product</DataTableHead>
+        <DataTableHead client:load>Qty</DataTableHead>
+        <DataTableHead client:load>Price</DataTableHead>
+      </DataTableRow>
+    </DataTableHeader>
+    <DataTableBody client:load>
+      <DataTableRow client:load>
+        <DataTableCell client:load>Widget A</DataTableCell>
+        <DataTableCell client:load>3</DataTableCell>
+        <DataTableCell client:load>$30.00</DataTableCell>
+      </DataTableRow>
+      <DataTableRow client:load>
+        <DataTableCell client:load>Widget B</DataTableCell>
+        <DataTableCell client:load>1</DataTableCell>
+        <DataTableCell client:load>$45.00</DataTableCell>
+      </DataTableRow>
+    </DataTableBody>
+    <DataTableFooter client:load>
+      <DataTableRow client:load>
+        <DataTableCell client:load>Total</DataTableCell>
+        <DataTableCell client:load>4</DataTableCell>
+        <DataTableCell client:load>$75.00</DataTableCell>
+      </DataTableRow>
+    </DataTableFooter>
+  </DataTable>
+
+  <Fragment slot="code">
+```tsx
+<DataTable>
+  <DataTableHeader>
+    <DataTableRow>
+      <DataTableHead>Product</DataTableHead>
+      <DataTableHead>Qty</DataTableHead>
+      <DataTableHead>Price</DataTableHead>
+    </DataTableRow>
+  </DataTableHeader>
+  <DataTableBody>
+    <DataTableRow>
+      <DataTableCell>Widget A</DataTableCell>
+      <DataTableCell>3</DataTableCell>
+      <DataTableCell>$30.00</DataTableCell>
+    </DataTableRow>
+    <DataTableRow>
+      <DataTableCell>Widget B</DataTableCell>
+      <DataTableCell>1</DataTableCell>
+      <DataTableCell>$45.00</DataTableCell>
+    </DataTableRow>
+  </DataTableBody>
+  <DataTableFooter>
+    <DataTableRow>
+      <DataTableCell>Total</DataTableCell>
+      <DataTableCell>4</DataTableCell>
+      <DataTableCell>$75.00</DataTableCell>
+    </DataTableRow>
+  </DataTableFooter>
+</DataTable>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+### DataTable
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the table element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'DataTableHeader, DataTableBody, and DataTableFooter components',
+    },
+  ]}
+/>
+
+### DataTableHeader
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the thead element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'DataTableRow components containing DataTableHead cells',
+    },
+  ]}
+/>
+
+### DataTableBody
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the tbody element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'DataTableRow components containing DataTableCell cells',
+    },
+  ]}
+/>
+
+### DataTableFooter
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the tfoot element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'DataTableRow components for footer content',
+    },
+  ]}
+/>
+
+### DataTableRow
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the tr element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'DataTableHead or DataTableCell components',
+    },
+  ]}
+/>
+
+### DataTableHead
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the th element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Header cell content',
+    },
+  ]}
+/>
+
+### DataTableCell
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the td element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Cell content',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Dynamic Data Rendering
+
+```tsx
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+function UsersTable({ users }: { users: User[] }) {
+  return (
+    <DataTable>
+      <DataTableHeader>
+        <DataTableRow>
+          <DataTableHead>Name</DataTableHead>
+          <DataTableHead>Email</DataTableHead>
+          <DataTableHead>Role</DataTableHead>
+        </DataTableRow>
+      </DataTableHeader>
+      <DataTableBody>
+        {users.map((user) => (
+          <DataTableRow key={user.id}>
+            <DataTableCell>{user.name}</DataTableCell>
+            <DataTableCell>{user.email}</DataTableCell>
+            <DataTableCell>{user.role}</DataTableCell>
+          </DataTableRow>
+        ))}
+      </DataTableBody>
+    </DataTable>
+  );
+}
+```
+
+### Order Summary Table
+
+```tsx
+function OrderSummary({ items, total }: { items: OrderItem[]; total: string }) {
+  return (
+    <DataTable>
+      <DataTableHeader>
+        <DataTableRow>
+          <DataTableHead>Item</DataTableHead>
+          <DataTableHead>Qty</DataTableHead>
+          <DataTableHead>Price</DataTableHead>
+        </DataTableRow>
+      </DataTableHeader>
+      <DataTableBody>
+        {items.map((item) => (
+          <DataTableRow key={item.id}>
+            <DataTableCell>{item.name}</DataTableCell>
+            <DataTableCell>{item.quantity}</DataTableCell>
+            <DataTableCell>{item.price}</DataTableCell>
+          </DataTableRow>
+        ))}
+      </DataTableBody>
+      <DataTableFooter>
+        <DataTableRow>
+          <DataTableCell colSpan={2}>Total</DataTableCell>
+          <DataTableCell>{total}</DataTableCell>
+        </DataTableRow>
+      </DataTableFooter>
+    </DataTable>
+  );
+}
+```
+
+## Related Components
+
+- [DataCard](/components/data-display/data-card/) - Metric display card for KPIs
+- [Badge](/components/data-display/badge/) - Status indicators for table cells
+- [CartItem](/components/commerce/cart-item/) - Shopping cart line items

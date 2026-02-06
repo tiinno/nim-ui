@@ -1,0 +1,221 @@
+---
+title: Spacer
+description: Flexible spacing element for creating fixed or dynamic gaps between components
+---
+
+import { Spacer, Flex, Stack } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Spacer component creates visual separation between elements using either fixed sizes or flexible (flex: 1) spacing. It is particularly useful inside Flex or Stack containers to push items apart without relying on margin or justify-content. The component includes `aria-hidden="true"` by default since it is a purely decorative element.
+
+## Import
+
+```tsx
+import { Spacer } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Fixed Size Spacer">
+  <Stack client:load direction="vertical" spacing="none">
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Content above</div>
+    <Spacer client:load size="lg" />
+    <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Content below (lg spacer)</div>
+  </Stack>
+
+  <Fragment slot="code">
+```tsx
+<Stack direction="vertical" spacing="none">
+  <div>Content above</div>
+  <Spacer size="lg" />
+  <div>Content below</div>
+</Stack>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Fixed Sizes
+
+The `size` prop sets a fixed width and height for the spacer.
+
+<ComponentPreview title="Size Variants">
+  <Flex client:load gap="none" align="center">
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
+    <Spacer client:load size="xs" className="bg-red-200 dark:bg-red-800" />
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">xs</div>
+  </Flex>
+  <Flex client:load gap="none" align="center">
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
+    <Spacer client:load size="sm" className="bg-red-200 dark:bg-red-800" />
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">sm</div>
+  </Flex>
+  <Flex client:load gap="none" align="center">
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
+    <Spacer client:load size="md" className="bg-red-200 dark:bg-red-800" />
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">md</div>
+  </Flex>
+  <Flex client:load gap="none" align="center">
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
+    <Spacer client:load size="lg" className="bg-red-200 dark:bg-red-800" />
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">lg</div>
+  </Flex>
+  <Flex client:load gap="none" align="center">
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
+    <Spacer client:load size="xl" className="bg-red-200 dark:bg-red-800" />
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">xl</div>
+  </Flex>
+  <Flex client:load gap="none" align="center">
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
+    <Spacer client:load size="2xl" className="bg-red-200 dark:bg-red-800" />
+    <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">2xl</div>
+  </Flex>
+
+  <Fragment slot="code">
+```tsx
+<Spacer size="xs" />   {/* 0.25rem (4px) */}
+<Spacer size="sm" />   {/* 0.5rem (8px) */}
+<Spacer size="md" />   {/* 1rem (16px) */}
+<Spacer size="lg" />   {/* 1.5rem (24px) */}
+<Spacer size="xl" />   {/* 2rem (32px) */}
+<Spacer size="2xl" />  {/* 3rem (48px) */}
+```
+  </Fragment>
+</ComponentPreview>
+
+## Flexible Spacer
+
+The `flex` prop applies `flex: 1` to the spacer, causing it to expand and fill all available space. This is useful for pushing items to opposite ends of a flex container.
+
+<ComponentPreview title="Flex Spacer">
+  <Flex client:load className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-xs">Left</div>
+    <Spacer client:load flex />
+    <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-xs">Right</div>
+  </Flex>
+
+  <Fragment slot="code">
+```tsx
+<Flex>
+  <div>Left</div>
+  <Spacer flex />
+  <div>Right</div>
+</Flex>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Multiple Flex Spacers
+
+When multiple flex spacers are used, they share the available space equally.
+
+<ComponentPreview title="Multiple Flex Spacers">
+  <Flex client:load className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Left</div>
+    <Spacer client:load flex />
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Center</div>
+    <Spacer client:load flex />
+    <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Right</div>
+  </Flex>
+
+  <Fragment slot="code">
+```tsx
+<Flex>
+  <div>Left</div>
+  <Spacer flex />
+  <div>Center</div>
+  <Spacer flex />
+  <div>Right</div>
+</Flex>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'size',
+      type: "'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'",
+      description: 'Fixed spacer size (sets both width and height)',
+    },
+    {
+      name: 'flex',
+      type: 'boolean',
+      default: 'false',
+      description: 'Use flex: 1 to fill available space in a flex container',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Header with Spacer
+
+```tsx
+function Header() {
+  return (
+    <Flex align="center">
+      <img src="/logo.svg" alt="Logo" />
+      <Spacer flex />
+      <nav>
+        <Flex gap="md">
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+        </Flex>
+      </nav>
+      <Spacer size="md" />
+      <Button variant="primary">Sign In</Button>
+    </Flex>
+  );
+}
+```
+
+### Section Separator
+
+```tsx
+function PageContent() {
+  return (
+    <Stack spacing="none">
+      <section>First section content</section>
+      <Spacer size="2xl" />
+      <section>Second section content</section>
+      <Spacer size="xl" />
+      <section>Third section content</section>
+    </Stack>
+  );
+}
+```
+
+### Card Footer Actions
+
+```tsx
+function CardWithActions() {
+  return (
+    <Card>
+      <CardContent>Card content here</CardContent>
+      <CardFooter>
+        <Button variant="ghost">Cancel</Button>
+        <Spacer flex />
+        <Button variant="primary">Save</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+## Accessibility
+
+The Spacer component is a purely decorative element and includes `aria-hidden="true"` by default, ensuring it is invisible to screen readers and assistive technologies. No additional accessibility considerations are needed.
+
+## Related Components
+
+- [Flex](/components/layout/flex/) - Flexbox layout container, often used with Spacer
+- [Stack](/components/layout/stack/) - Stacking with built-in spacing
+- [Container](/components/layout/container/) - Responsive max-width wrapper

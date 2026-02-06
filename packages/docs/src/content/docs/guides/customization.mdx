@@ -1,0 +1,340 @@
+---
+title: Customization
+description: Override component styles, extend CVA variants, and use the cn() utility for custom styling
+---
+
+Tiinno UI components are designed to be customized without fighting the framework. Every component accepts a `className` prop for style overrides, uses class-variance-authority (CVA) for variant management, and provides the `cn()` utility for merging Tailwind classes safely.
+
+## Override Styles with className
+
+The simplest way to customize any component is through the `className` prop. Additional classes are merged with the component's default styles.
+
+```tsx
+import { Button } from '@tiinno-ui/components';
+
+// Add rounded corners
+<Button className="rounded-full">
+  Rounded Button
+</Button>
+
+// Add shadow
+<Button className="shadow-lg hover:shadow-xl">
+  Elevated Button
+</Button>
+
+// Custom colors
+<Button className="bg-purple-600 hover:bg-purple-700 text-white">
+  Purple Button
+</Button>
+```
+
+### Customizing Cards
+
+```tsx
+import { Card } from '@tiinno-ui/components';
+
+// Card with custom border
+<Card className="border-2 border-primary-500">
+  Highlighted card
+</Card>
+
+// Card with gradient background
+<Card className="bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-950 dark:to-primary-900">
+  Gradient card
+</Card>
+
+// Card with no rounding
+<Card className="rounded-none">
+  Sharp corners
+</Card>
+```
+
+### Customizing Inputs
+
+```tsx
+import { Input } from '@tiinno-ui/components';
+
+// Input with custom focus ring
+<Input className="focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
+
+// Larger input
+<Input className="h-14 text-lg px-6" />
+
+// Input with rounded style
+<Input className="rounded-full px-6" />
+```
+
+## The cn() Utility
+
+Tiinno UI uses the `cn()` utility internally for class merging. It combines `clsx` for conditional classes with `tailwind-merge` for resolving Tailwind class conflicts.
+
+### How It Works
+
+```tsx
+import { cn } from '@tiinno-ui/components';
+
+// Basic merging
+cn('p-4 text-red-500', 'p-8')
+// Result: 'p-8 text-red-500'
+// tailwind-merge resolves p-4 vs p-8 → keeps p-8
+
+// Conditional classes
+cn('base-class', isActive && 'bg-primary-500', isDisabled && 'opacity-50')
+
+// Combining arrays and objects
+cn(
+  'flex items-center',
+  { 'bg-red-500': hasError, 'bg-green-500': isSuccess },
+  className // prop from parent
+)
+```
+
+### Using cn() in Custom Components
+
+When building your own components that wrap Tiinno UI, use `cn()` to merge default and custom classes safely:
+
+```tsx
+import { cn } from '@tiinno-ui/components';
+import { Button, type ButtonProps } from '@tiinno-ui/components';
+
+interface IconButtonProps extends ButtonProps {
+  icon: React.ReactNode;
+}
+
+function IconButton({ icon, children, className, ...props }: IconButtonProps) {
+  return (
+    <Button
+      className={cn('inline-flex items-center gap-2', className)}
+      {...props}
+    >
+      {icon}
+      {children}
+    </Button>
+  );
+}
+```
+
+## Extending CVA Variants
+
+Tiinno UI uses class-variance-authority (CVA) for managing component variants. You can extend the variant system to add your own custom variants.
+
+### Understanding CVA
+
+CVA generates className strings based on variant props:
+
+```tsx
+import { cva, type VariantProps } from 'class-variance-authority';
+
+const buttonVariants = cva(
+  // Base styles (always applied)
+  'inline-flex items-center justify-center rounded-md font-medium transition-colors',
+  {
+    variants: {
+      variant: {
+        primary: 'bg-primary-500 text-white hover:bg-primary-600',
+        secondary: 'bg-neutral-200 text-neutral-900 hover:bg-neutral-300',
+      },
+      size: {
+        sm: 'h-9 px-3 text-sm',
+        md: 'h-10 px-4 text-base',
+        lg: 'h-11 px-6 text-lg',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'md',
+    },
+  }
+);
+```
+
+### Creating Extended Components
+
+Wrap a Tiinno UI component and add custom variants:
+
+```tsx
+import { forwardRef } from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@tiinno-ui/components';
+import { Button as BaseButton, type ButtonProps as BaseButtonProps } from '@tiinno-ui/components';
+
+const extendedButtonVariants = cva('', {
+  variants: {
+    rounded: {
+      none: 'rounded-none',
+      sm: 'rounded-sm',
+      md: 'rounded-md',
+      full: 'rounded-full',
+    },
+    glow: {
+      true: 'shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    rounded: 'md',
+    glow: false,
+  },
+});
+
+interface ExtendedButtonProps
+  extends BaseButtonProps,
+    VariantProps<typeof extendedButtonVariants> {}
+
+export const Button = forwardRef<HTMLButtonElement, ExtendedButtonProps>(
+  ({ className, rounded, glow, ...props }, ref) => {
+    return (
+      <BaseButton
+        ref={ref}
+        className={cn(extendedButtonVariants({ rounded, glow }), className)}
+        {...props}
+      />
+    );
+  }
+);
+
+Button.displayName = 'Button';
+```
+
+Usage:
+
+```tsx
+<Button variant="primary" rounded="full" glow>
+  Glowing Rounded Button
+</Button>
+```
+
+### Adding a Brand Variant
+
+```tsx
+import { cva } from 'class-variance-authority';
+import { cn } from '@tiinno-ui/components';
+import { Button as BaseButton } from '@tiinno-ui/components';
+
+const brandVariants = cva('', {
+  variants: {
+    brand: {
+      github: 'bg-gray-900 text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100',
+      twitter: 'bg-sky-500 text-white hover:bg-sky-600',
+      discord: 'bg-indigo-600 text-white hover:bg-indigo-700',
+    },
+  },
+});
+
+interface BrandButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  brand: 'github' | 'twitter' | 'discord';
+}
+
+export function BrandButton({ brand, className, ...props }: BrandButtonProps) {
+  return (
+    <BaseButton
+      className={cn(brandVariants({ brand }), className)}
+      {...props}
+    />
+  );
+}
+```
+
+## Composing Custom Components
+
+Build higher-level components by composing Tiinno UI primitives:
+
+### Stat Card
+
+```tsx
+import { Card, Badge } from '@tiinno-ui/components';
+import { cn } from '@tiinno-ui/components';
+
+interface StatCardProps {
+  label: string;
+  value: string | number;
+  change?: number;
+  className?: string;
+}
+
+function StatCard({ label, value, change, className }: StatCardProps) {
+  return (
+    <Card className={cn('p-6', className)}>
+      <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
+        {label}
+      </p>
+      <p className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mt-1">
+        {value}
+      </p>
+      {change !== undefined && (
+        <Badge
+          variant={change >= 0 ? 'success' : 'danger'}
+          className="mt-2"
+        >
+          {change >= 0 ? '+' : ''}{change}%
+        </Badge>
+      )}
+    </Card>
+  );
+}
+```
+
+### Navigation Item
+
+```tsx
+import { Button } from '@tiinno-ui/components';
+import { cn } from '@tiinno-ui/components';
+
+interface NavItemProps {
+  href: string;
+  label: string;
+  active?: boolean;
+}
+
+function NavItem({ href, label, active }: NavItemProps) {
+  return (
+    <a href={href}>
+      <Button
+        variant="ghost"
+        className={cn(
+          'justify-start w-full',
+          active && 'bg-primary-50 text-primary-700 dark:bg-primary-950 dark:text-primary-300'
+        )}
+      >
+        {label}
+      </Button>
+    </a>
+  );
+}
+```
+
+## CSS Custom Properties
+
+For values that need to change dynamically (e.g., based on user settings), use CSS custom properties:
+
+```css title="src/styles/custom.css"
+:root {
+  --brand-hue: 210;
+  --brand-color: hsl(var(--brand-hue), 80%, 55%);
+  --card-radius: 0.5rem;
+}
+```
+
+```tsx
+<Card style={{ borderRadius: 'var(--card-radius)' }}>
+  Custom radius from CSS variable
+</Card>
+
+<Button style={{ backgroundColor: 'var(--brand-color)' }}>
+  Dynamic brand color
+</Button>
+```
+
+## Tips
+
+1. **Start with `className` overrides.** This is the simplest and most maintainable approach for one-off customizations.
+2. **Use CVA extensions for repeated patterns.** If you find yourself applying the same `className` overrides in multiple places, create an extended variant.
+3. **Always use `cn()` for class merging.** Plain string concatenation can lead to conflicting Tailwind classes. The `cn()` utility resolves these conflicts correctly.
+4. **Keep customizations minimal.** If you find yourself heavily overriding a component, consider whether a wrapper component or a feature request would be more appropriate.
+5. **Respect dark mode.** When adding custom colors, always include the corresponding `dark:` variant.
+
+## What's Next?
+
+- [Theming](/guides/theming/) - Design tokens and theme configuration
+- [Dark Mode](/design-system/dark-mode/) - Implementing dark mode
+- [Best Practices](/guides/best-practices/) - Tips for building with Tiinno UI
