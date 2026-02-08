@@ -3,7 +3,7 @@ title: Select
 description: Dropdown selection component built on Radix UI
 ---
 
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from '@tiinno-ui/components';
+import { SelectDefault, SelectGrouped, SelectSizes, SelectDisabled, SelectDisabledItems } from '../../../../components/SelectDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -28,18 +28,7 @@ import {
 ### Default
 
 <ComponentPreview title="Default Select">
-  <Select client:load>
-    <SelectTrigger client:load className="w-[200px]">
-      <SelectValue client:load placeholder="Select a fruit" />
-    </SelectTrigger>
-    <SelectContent client:load>
-      <SelectItem client:load value="apple">Apple</SelectItem>
-      <SelectItem client:load value="banana">Banana</SelectItem>
-      <SelectItem client:load value="cherry">Cherry</SelectItem>
-      <SelectItem client:load value="grape">Grape</SelectItem>
-      <SelectItem client:load value="orange">Orange</SelectItem>
-    </SelectContent>
-  </Select>
+  <SelectDefault client:only="react" />
 
   <Fragment slot="code">
 ```tsx
@@ -62,25 +51,7 @@ import {
 ### With Groups
 
 <ComponentPreview title="Grouped Select">
-  <Select client:load>
-    <SelectTrigger client:load className="w-[240px]">
-      <SelectValue client:load placeholder="Select a timezone" />
-    </SelectTrigger>
-    <SelectContent client:load>
-      <SelectGroup client:load>
-        <SelectLabel client:load>North America</SelectLabel>
-        <SelectItem client:load value="est">Eastern (EST)</SelectItem>
-        <SelectItem client:load value="cst">Central (CST)</SelectItem>
-        <SelectItem client:load value="pst">Pacific (PST)</SelectItem>
-      </SelectGroup>
-      <SelectGroup client:load>
-        <SelectLabel client:load>Europe</SelectLabel>
-        <SelectItem client:load value="gmt">Greenwich (GMT)</SelectItem>
-        <SelectItem client:load value="cet">Central European (CET)</SelectItem>
-        <SelectItem client:load value="eet">Eastern European (EET)</SelectItem>
-      </SelectGroup>
-    </SelectContent>
-  </Select>
+  <SelectGrouped client:only="react" />
 
   <Fragment slot="code">
 ```tsx
@@ -112,33 +83,7 @@ import {
 The SelectTrigger supports size variants through CVA styling.
 
 <ComponentPreview title="Select Sizes">
-  <Select client:load>
-    <SelectTrigger client:load className="w-[180px] h-8 text-sm">
-      <SelectValue client:load placeholder="Small" />
-    </SelectTrigger>
-    <SelectContent client:load>
-      <SelectItem client:load value="a">Option A</SelectItem>
-      <SelectItem client:load value="b">Option B</SelectItem>
-    </SelectContent>
-  </Select>
-  <Select client:load>
-    <SelectTrigger client:load className="w-[180px]">
-      <SelectValue client:load placeholder="Medium (default)" />
-    </SelectTrigger>
-    <SelectContent client:load>
-      <SelectItem client:load value="a">Option A</SelectItem>
-      <SelectItem client:load value="b">Option B</SelectItem>
-    </SelectContent>
-  </Select>
-  <Select client:load>
-    <SelectTrigger client:load className="w-[180px] h-12 text-lg">
-      <SelectValue client:load placeholder="Large" />
-    </SelectTrigger>
-    <SelectContent client:load>
-      <SelectItem client:load value="a">Option A</SelectItem>
-      <SelectItem client:load value="b">Option B</SelectItem>
-    </SelectContent>
-  </Select>
+  <SelectSizes client:only="react" />
 
   <Fragment slot="code">
 ```tsx
@@ -183,14 +128,7 @@ The SelectTrigger supports size variants through CVA styling.
 ### Disabled
 
 <ComponentPreview title="Disabled State">
-  <Select client:load disabled>
-    <SelectTrigger client:load className="w-[200px]">
-      <SelectValue client:load placeholder="Disabled select" />
-    </SelectTrigger>
-    <SelectContent client:load>
-      <SelectItem client:load value="a">Option A</SelectItem>
-    </SelectContent>
-  </Select>
+  <SelectDisabled client:only="react" />
 
   <Fragment slot="code">
 ```tsx
@@ -209,17 +147,7 @@ The SelectTrigger supports size variants through CVA styling.
 ### Disabled Items
 
 <ComponentPreview title="Disabled Individual Items">
-  <Select client:load>
-    <SelectTrigger client:load className="w-[200px]">
-      <SelectValue client:load placeholder="Pick an option" />
-    </SelectTrigger>
-    <SelectContent client:load>
-      <SelectItem client:load value="available">Available</SelectItem>
-      <SelectItem client:load value="sold-out" disabled>Sold Out</SelectItem>
-      <SelectItem client:load value="coming-soon" disabled>Coming Soon</SelectItem>
-      <SelectItem client:load value="in-stock">In Stock</SelectItem>
-    </SelectContent>
-  </Select>
+  <SelectDisabledItems client:only="react" />
 
   <Fragment slot="code">
 ```tsx

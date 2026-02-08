@@ -1,77 +1,77 @@
 @import "tailwindcss";
 
 @theme {
-  /* Primary colors */
-  --color-primary-50: #f0f9ff;
-  --color-primary-100: #e0f2fe;
-  --color-primary-200: #bae6fd;
-  --color-primary-300: #7dd3fc;
-  --color-primary-400: #38bdf8;
-  --color-primary-500: #0ea5e9;
-  --color-primary-600: #0284c7;
-  --color-primary-700: #0369a1;
-  --color-primary-800: #075985;
-  --color-primary-900: #0c4a6e;
-  --color-primary-950: #082f49;
+  /* Primary colors (OKLCH) */
+  --color-primary-50: oklch(0.976 0.014 236.6);
+  --color-primary-100: oklch(0.950 0.026 236.8);
+  --color-primary-200: oklch(0.901 0.058 230.9);
+  --color-primary-300: oklch(0.828 0.111 230.3);
+  --color-primary-400: oklch(0.746 0.160 232.7);
+  --color-primary-500: oklch(0.685 0.169 237.3);
+  --color-primary-600: oklch(0.588 0.158 241.0);
+  --color-primary-700: oklch(0.500 0.134 242.7);
+  --color-primary-800: oklch(0.433 0.109 240.1);
+  --color-primary-900: oklch(0.380 0.090 237.6);
+  --color-primary-950: oklch(0.293 0.066 237.9);
 
-  /* Neutral colors */
-  --color-neutral-50: #fafafa;
-  --color-neutral-100: #f5f5f5;
-  --color-neutral-200: #e5e5e5;
-  --color-neutral-300: #d4d4d4;
-  --color-neutral-400: #a3a3a3;
-  --color-neutral-500: #737373;
-  --color-neutral-600: #525252;
-  --color-neutral-700: #404040;
-  --color-neutral-800: #262626;
-  --color-neutral-900: #171717;
-  --color-neutral-950: #0a0a0a;
+  /* Neutral colors (OKLCH) */
+  --color-neutral-50: oklch(0.985 0.000 0);
+  --color-neutral-100: oklch(0.970 0.000 0);
+  --color-neutral-200: oklch(0.922 0.000 0);
+  --color-neutral-300: oklch(0.869 0.000 0);
+  --color-neutral-400: oklch(0.708 0.000 0);
+  --color-neutral-500: oklch(0.551 0.000 0);
+  --color-neutral-600: oklch(0.432 0.000 0);
+  --color-neutral-700: oklch(0.371 0.000 0);
+  --color-neutral-800: oklch(0.278 0.000 0);
+  --color-neutral-900: oklch(0.214 0.000 0);
+  --color-neutral-950: oklch(0.145 0.000 0);
 
-  /* Success colors */
-  --color-success-50: #f0fdf4;
-  --color-success-500: #22c55e;
-  --color-success-700: #15803d;
+  /* Success colors (OKLCH) */
+  --color-success-50: oklch(0.982 0.018 155.8);
+  --color-success-500: oklch(0.723 0.191 149.6);
+  --color-success-700: oklch(0.527 0.154 150.1);
 
-  /* Error colors */
-  --color-error-50: #fef2f2;
-  --color-error-500: #ef4444;
-  --color-error-700: #b91c1c;
+  /* Error colors (OKLCH) */
+  --color-error-50: oklch(0.971 0.013 17.4);
+  --color-error-500: oklch(0.637 0.237 25.3);
+  --color-error-700: oklch(0.505 0.213 27.3);
 
-  /* Warning colors */
-  --color-warning-50: #fffbeb;
-  --color-warning-500: #f59e0b;
-  --color-warning-700: #b45309;
+  /* Warning colors (OKLCH) */
+  --color-warning-50: oklch(0.987 0.022 95.3);
+  --color-warning-500: oklch(0.769 0.188 70.1);
+  --color-warning-700: oklch(0.555 0.163 58.7);
 }
 
 @layer base {
   :root {
-    /* Light mode semantic colors */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --border: 0 0% 89.8%;
+    /* Light mode semantic colors (OKLCH) */
+    --background: oklch(1.000 0.000 0);
+    --foreground: oklch(0.145 0.000 0);
+    --primary: oklch(0.685 0.169 237.3);
+    --primary-foreground: oklch(0.985 0.000 0);
+    --secondary: oklch(0.970 0.000 0);
+    --secondary-foreground: oklch(0.214 0.000 0);
+    --muted: oklch(0.970 0.000 0);
+    --muted-foreground: oklch(0.551 0.000 0);
+    --accent: oklch(0.970 0.000 0);
+    --accent-foreground: oklch(0.214 0.000 0);
+    --border: oklch(0.922 0.000 0);
     --radius: 0.5rem;
   }
 
   .dark {
-    /* Dark mode semantic colors */
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
+    /* Dark mode semantic colors (OKLCH) */
+    --background: oklch(0.145 0.000 0);
+    --foreground: oklch(0.985 0.000 0);
+    --primary: oklch(0.685 0.169 237.3);
+    --primary-foreground: oklch(0.214 0.000 0);
+    --secondary: oklch(0.278 0.000 0);
+    --secondary-foreground: oklch(0.985 0.000 0);
+    --muted: oklch(0.278 0.000 0);
+    --muted-foreground: oklch(0.708 0.000 0);
+    --accent: oklch(0.278 0.000 0);
+    --accent-foreground: oklch(0.985 0.000 0);
+    --border: oklch(0.278 0.000 0);
   }
 }

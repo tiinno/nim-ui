@@ -10,7 +10,7 @@ import StarlightHead from '@astrojs/starlight/components/Head.astro';
 const { entry } = Astro.props;
 const title = entry.data.title;
 const description = entry.data.description || 'Modern, accessible, production-ready React component library built with TypeScript and Tailwind CSS v4';
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
 ---
 
 <StarlightHead {...Astro.props}>
@@ -18,7 +18,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content={canonical.href} />
+  {canonical && <meta property="og:url" content={canonical.href} />}
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
@@ -29,5 +29,5 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <!-- Canonical URL -->
-  <link rel="canonical" href={canonical.href} />
+  {canonical && <link rel="canonical" href={canonical.href} />}
 </StarlightHead>
