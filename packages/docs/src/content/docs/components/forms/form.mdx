@@ -18,10 +18,10 @@ import { Form } from '@tiinno-ui/components';
 ## Usage
 
 <ComponentPreview title="Basic Form">
-  <Form client:load onSubmit={(e) => { e.preventDefault(); alert('Form submitted!'); }}>
-    <Input client:load placeholder="Enter your name" />
-    <Input client:load type="email" placeholder="Enter your email" />
-    <Button client:load type="submit" variant="primary">
+  <Form client:only="react" onSubmit={(e) => { e.preventDefault(); alert('Form submitted!'); }}>
+    <Input placeholder="Enter your name" />
+    <Input type="email" placeholder="Enter your email" />
+    <Button type="submit" variant="primary">
       Submit
     </Button>
   </Form>
@@ -44,12 +44,12 @@ import { Form } from '@tiinno-ui/components';
 ### Vertical Layout (Default)
 
 <ComponentPreview title="Vertical Form Layout">
-  <Form client:load>
-    <Input client:load placeholder="First name" />
-    <Input client:load placeholder="Last name" />
-    <Input client:load type="email" placeholder="Email address" />
-    <Textarea client:load placeholder="Your message" rows={4} />
-    <Button client:load type="submit" variant="primary">
+  <Form client:only="react">
+    <Input placeholder="First name" />
+    <Input placeholder="Last name" />
+    <Input type="email" placeholder="Email address" />
+    <Textarea placeholder="Your message" rows={4} />
+    <Button type="submit" variant="primary">
       Send Message
     </Button>
   </Form>
@@ -72,13 +72,13 @@ import { Form } from '@tiinno-ui/components';
 ### Inline Fields
 
 <ComponentPreview title="Form with Inline Fields">
-  <Form client:load>
+  <Form client:only="react">
     <div className="flex gap-4">
-      <Input client:load placeholder="First name" />
-      <Input client:load placeholder="Last name" />
+      <Input placeholder="First name" />
+      <Input placeholder="Last name" />
     </div>
-    <Input client:load type="email" placeholder="Email address" />
-    <Button client:load type="submit" variant="primary">
+    <Input type="email" placeholder="Email address" />
+    <Button type="submit" variant="primary">
       Create Account
     </Button>
   </Form>
@@ -102,11 +102,10 @@ import { Form } from '@tiinno-ui/components';
 ## With Select and Checkbox
 
 <ComponentPreview title="Complete Form">
-  <Form client:load>
-    <Input client:load placeholder="Full name" />
-    <Input client:load type="email" placeholder="Email" />
+  <Form client:only="react">
+    <Input placeholder="Full name" />
+    <Input type="email" placeholder="Email" />
     <Select
-      client:load
       options={[
         { value: 'personal', label: 'Personal' },
         { value: 'business', label: 'Business' },
@@ -114,8 +113,8 @@ import { Form } from '@tiinno-ui/components';
       ]}
       placeholder="Select plan"
     />
-    <Checkbox client:load label="I agree to the terms and conditions" />
-    <Button client:load type="submit" variant="primary" fullWidth>
+    <Checkbox label="I agree to the terms and conditions" />
+    <Button type="submit" variant="primary" fullWidth>
       Sign Up
     </Button>
   </Form>
@@ -145,10 +144,10 @@ import { Form } from '@tiinno-ui/components';
 ## With Validation Errors
 
 <ComponentPreview title="Form with Errors">
-  <Form client:load>
-    <Input client:load placeholder="Email" type="email" error="Please enter a valid email address" />
-    <Input client:load placeholder="Password" type="password" error="Password must be at least 8 characters" />
-    <Button client:load type="submit" variant="primary" fullWidth>
+  <Form client:only="react">
+    <Input placeholder="Email" type="email" error="Please enter a valid email address" />
+    <Input placeholder="Password" type="password" error="Password must be at least 8 characters" />
+    <Button type="submit" variant="primary" fullWidth>
       Log In
     </Button>
   </Form>

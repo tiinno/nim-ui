@@ -18,7 +18,7 @@ import { Container } from '@tiinno-ui/components';
 ## Basic Usage
 
 <ComponentPreview title="Default Container">
-  <Container client:load>
+  <Container client:only="react">
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">
       Default container (max-width: xl) with padding
     </div>
@@ -38,22 +38,22 @@ import { Container } from '@tiinno-ui/components';
 The `maxWidth` prop controls the maximum width of the container. It maps directly to Tailwind's `max-w-screen-*` utilities.
 
 <ComponentPreview title="Max Width Variants">
-  <Container client:load maxWidth="sm">
+  <Container client:only="react" maxWidth="sm">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">sm</div>
   </Container>
-  <Container client:load maxWidth="md">
+  <Container client:only="react" maxWidth="md">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">md</div>
   </Container>
-  <Container client:load maxWidth="lg">
+  <Container client:only="react" maxWidth="lg">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">lg</div>
   </Container>
-  <Container client:load maxWidth="xl">
+  <Container client:only="react" maxWidth="xl">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">xl (default)</div>
   </Container>
-  <Container client:load maxWidth="2xl">
+  <Container client:only="react" maxWidth="2xl">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">2xl</div>
   </Container>
-  <Container client:load maxWidth="full">
+  <Container client:only="react" maxWidth="full">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">full</div>
   </Container>
 
@@ -74,12 +74,12 @@ The `maxWidth` prop controls the maximum width of the container. It maps directl
 The `padding` prop controls whether horizontal padding is applied. Padding is responsive: `px-4` on mobile, `px-6` on small screens, and `px-8` on large screens.
 
 <ComponentPreview title="With and Without Padding">
-  <Container client:load padding={true}>
+  <Container client:only="react" padding={true}>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">
       With padding (default)
     </div>
   </Container>
-  <Container client:load padding={false}>
+  <Container client:only="react" padding={false}>
     <div className="bg-amber-100 dark:bg-amber-900 p-3 rounded text-center text-xs">
       Without padding
     </div>

@@ -82,4 +82,16 @@ export const tokens = {
       '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
     },
   },
+  animation: {
+    duration: {
+      fast: '150ms',
+      normal: '200ms',
+      slow: '300ms',
+    },
+    easing: {
+      'ease-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
+      'ease-in': 'cubic-bezier(0.55, 0, 1, 0.45)',
+      'ease-in-out': 'cubic-bezier(0.45, 0, 0.55, 1)',
+    },
+  },
 };

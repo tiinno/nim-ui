@@ -41,6 +41,95 @@
   --color-warning-50: oklch(0.987 0.022 95.3);
   --color-warning-500: oklch(0.769 0.188 70.1);
   --color-warning-700: oklch(0.555 0.163 58.7);
+
+  /* Animation duration tokens */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+
+  /* Animation easing tokens */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* Animation keyframe references for Tailwind utility generation */
+  --animate-fade-in: fade-in var(--duration-normal) var(--ease-out);
+  --animate-fade-out: fade-out var(--duration-normal) var(--ease-in);
+  --animate-scale-in: scale-in var(--duration-normal) var(--ease-out);
+  --animate-scale-out: scale-out var(--duration-normal) var(--ease-in);
+  --animate-slide-in-from-top: slide-in-from-top var(--duration-normal) var(--ease-out);
+  --animate-slide-in-from-bottom: slide-in-from-bottom var(--duration-normal) var(--ease-out);
+  --animate-slide-in-from-left: slide-in-from-left var(--duration-slow) var(--ease-out);
+  --animate-slide-in-from-right: slide-in-from-right var(--duration-slow) var(--ease-out);
+  --animate-slide-out-to-top: slide-out-to-top var(--duration-normal) var(--ease-in);
+  --animate-slide-out-to-bottom: slide-out-to-bottom var(--duration-normal) var(--ease-in);
+  --animate-slide-out-to-left: slide-out-to-left var(--duration-slow) var(--ease-in);
+  --animate-slide-out-to-right: slide-out-to-right var(--duration-slow) var(--ease-in);
+}
+
+/* Fade */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Scale */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+
+/* Slide from directions */
+@keyframes slide-in-from-top {
+  from { opacity: 0; transform: translateY(-0.5rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-from-bottom {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-from-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes slide-in-from-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Slide out to directions */
+@keyframes slide-out-to-top {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-0.5rem); }
+}
+@keyframes slide-out-to-bottom {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(0.5rem); }
+}
+@keyframes slide-out-to-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+@keyframes slide-out-to-right {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+/* Reduced motion: disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @layer base {

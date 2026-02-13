@@ -5,6 +5,7 @@ description: Product display card with image, title, price, and optional action
 
 import { ProductCard } from '@tiinno-ui/components';
 import { Button } from '@tiinno-ui/components';
+import { ProductCardWithAction } from '../../../../components/ProductCardDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -67,14 +68,7 @@ Add a short description to provide more context about the product.
 Pass a custom action element such as a Button to the `action` prop.
 
 <ComponentPreview title="ProductCard with Action">
-  <ProductCard
-    client:load
-    image="https://picsum.photos/seed/product3/400/400"
-    title="Cotton T-Shirt"
-    price="$29.99"
-    description="Comfortable everyday wear"
-    action={<Button client:load size="sm">Add to Cart</Button>}
-  />
+  <ProductCardWithAction client:load />
 
   <Fragment slot="code">
 ```tsx

@@ -34,7 +34,7 @@ import { cn } from '../lib/utils';
  */
 
 const cardVariants = cva(
-  'rounded-lg border bg-white shadow-sm dark:bg-neutral-900 dark:border-neutral-700',
+  'rounded-lg border bg-white shadow-sm transition-[box-shadow,transform] duration-fast ease-out hover:-translate-y-0.5 hover:shadow-md dark:bg-neutral-900 dark:border-neutral-700',
   {
     variants: {},
     defaultVariants: {},

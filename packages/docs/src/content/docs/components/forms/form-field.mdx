@@ -18,8 +18,8 @@ import { FormField } from '@tiinno-ui/components';
 ## Usage
 
 <ComponentPreview title="Basic FormField">
-  <FormField client:load label="Email address" name="email">
-    <Input client:load type="email" placeholder="you@example.com" />
+  <FormField client:only="react" label="Email address" name="email">
+    <Input type="email" placeholder="you@example.com" />
   </FormField>
 
   <Fragment slot="code">
@@ -34,8 +34,8 @@ import { FormField } from '@tiinno-ui/components';
 ## Required Field
 
 <ComponentPreview title="Required FormField">
-  <FormField client:load label="Full name" name="fullName" required>
-    <Input client:load placeholder="Enter your full name" />
+  <FormField client:only="react" label="Full name" name="fullName" required>
+    <Input placeholder="Enter your full name" />
   </FormField>
 
   <Fragment slot="code">
@@ -51,12 +51,12 @@ import { FormField } from '@tiinno-ui/components';
 
 <ComponentPreview title="FormField with Helper Text">
   <FormField
-    client:load
+    client:only="react"
     label="Password"
     name="password"
     helperText="Must be at least 8 characters with one uppercase letter and one number."
   >
-    <Input client:load type="password" placeholder="Enter password" />
+    <Input type="password" placeholder="Enter password" />
   </FormField>
 
   <Fragment slot="code">
@@ -76,13 +76,13 @@ import { FormField } from '@tiinno-ui/components';
 
 <ComponentPreview title="FormField with Error">
   <FormField
-    client:load
+    client:only="react"
     label="Email"
     name="email"
     error="Please enter a valid email address."
     required
   >
-    <Input client:load type="email" placeholder="you@example.com" />
+    <Input type="email" placeholder="you@example.com" />
   </FormField>
 
   <Fragment slot="code">
@@ -102,9 +102,8 @@ import { FormField } from '@tiinno-ui/components';
 ## With Select
 
 <ComponentPreview title="FormField with Select">
-  <FormField client:load label="Country" name="country" required>
+  <FormField client:only="react" label="Country" name="country" required>
     <Select
-      client:load
       options={[
         { value: 'us', label: 'United States' },
         { value: 'uk', label: 'United Kingdom' },
@@ -136,12 +135,12 @@ import { FormField } from '@tiinno-ui/components';
 
 <ComponentPreview title="FormField with Textarea">
   <FormField
-    client:load
+    client:only="react"
     label="Bio"
     name="bio"
     helperText="Write a short description about yourself. Maximum 500 characters."
   >
-    <Textarea client:load placeholder="Tell us about yourself..." rows={4} />
+    <Textarea placeholder="Tell us about yourself..." rows={4} />
   </FormField>
 
   <Fragment slot="code">
@@ -161,18 +160,17 @@ import { FormField } from '@tiinno-ui/components';
 
 <ComponentPreview title="Form with Multiple FormFields">
   <form className="flex flex-col gap-4 w-full max-w-md">
-    <FormField client:load label="First name" name="firstName" required>
-      <Input client:load placeholder="Jane" />
+    <FormField client:only="react" label="First name" name="firstName" required>
+      <Input placeholder="Jane" />
     </FormField>
-    <FormField client:load label="Last name" name="lastName" required>
-      <Input client:load placeholder="Doe" />
+    <FormField client:only="react" label="Last name" name="lastName" required>
+      <Input placeholder="Doe" />
     </FormField>
-    <FormField client:load label="Email" name="email" required helperText="We will never share your email.">
-      <Input client:load type="email" placeholder="jane@example.com" />
+    <FormField client:only="react" label="Email" name="email" required helperText="We will never share your email.">
+      <Input type="email" placeholder="jane@example.com" />
     </FormField>
-    <FormField client:load label="Role" name="role">
+    <FormField client:only="react" label="Role" name="role">
       <Select
-        client:load
         options={[
           { value: 'dev', label: 'Developer' },
           { value: 'designer', label: 'Designer' },
@@ -181,8 +179,8 @@ import { FormField } from '@tiinno-ui/components';
         placeholder="Select your role"
       />
     </FormField>
-    <FormField client:load label="Message" name="message">
-      <Textarea client:load placeholder="Anything else you'd like to share?" rows={3} />
+    <FormField client:only="react" label="Message" name="message">
+      <Textarea placeholder="Anything else you'd like to share?" rows={3} />
     </FormField>
   </form>
 

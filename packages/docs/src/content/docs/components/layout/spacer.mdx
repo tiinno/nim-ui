@@ -18,9 +18,9 @@ import { Spacer } from '@tiinno-ui/components';
 ## Basic Usage
 
 <ComponentPreview title="Fixed Size Spacer">
-  <Stack client:load direction="vertical" spacing="none">
+  <Stack client:only="react" direction="vertical" spacing="none">
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Content above</div>
-    <Spacer client:load size="lg" />
+    <Spacer size="lg" />
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Content below (lg spacer)</div>
   </Stack>
 
@@ -40,34 +40,34 @@ import { Spacer } from '@tiinno-ui/components';
 The `size` prop sets a fixed width and height for the spacer.
 
 <ComponentPreview title="Size Variants">
-  <Flex client:load gap="none" align="center">
+  <Flex client:only="react" gap="none" align="center">
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
-    <Spacer client:load size="xs" className="bg-red-200 dark:bg-red-800" />
+    <Spacer size="xs" className="bg-red-200 dark:bg-red-800" />
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">xs</div>
   </Flex>
-  <Flex client:load gap="none" align="center">
+  <Flex client:only="react" gap="none" align="center">
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
-    <Spacer client:load size="sm" className="bg-red-200 dark:bg-red-800" />
+    <Spacer size="sm" className="bg-red-200 dark:bg-red-800" />
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">sm</div>
   </Flex>
-  <Flex client:load gap="none" align="center">
+  <Flex client:only="react" gap="none" align="center">
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
-    <Spacer client:load size="md" className="bg-red-200 dark:bg-red-800" />
+    <Spacer size="md" className="bg-red-200 dark:bg-red-800" />
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">md</div>
   </Flex>
-  <Flex client:load gap="none" align="center">
+  <Flex client:only="react" gap="none" align="center">
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
-    <Spacer client:load size="lg" className="bg-red-200 dark:bg-red-800" />
+    <Spacer size="lg" className="bg-red-200 dark:bg-red-800" />
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">lg</div>
   </Flex>
-  <Flex client:load gap="none" align="center">
+  <Flex client:only="react" gap="none" align="center">
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
-    <Spacer client:load size="xl" className="bg-red-200 dark:bg-red-800" />
+    <Spacer size="xl" className="bg-red-200 dark:bg-red-800" />
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">xl</div>
   </Flex>
-  <Flex client:load gap="none" align="center">
+  <Flex client:only="react" gap="none" align="center">
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">A</div>
-    <Spacer client:load size="2xl" className="bg-red-200 dark:bg-red-800" />
+    <Spacer size="2xl" className="bg-red-200 dark:bg-red-800" />
     <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded text-xs">2xl</div>
   </Flex>
 
@@ -88,9 +88,9 @@ The `size` prop sets a fixed width and height for the spacer.
 The `flex` prop applies `flex: 1` to the spacer, causing it to expand and fill all available space. This is useful for pushing items to opposite ends of a flex container.
 
 <ComponentPreview title="Flex Spacer">
-  <Flex client:load className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-xs">Left</div>
-    <Spacer client:load flex />
+    <Spacer flex />
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-xs">Right</div>
   </Flex>
 
@@ -110,11 +110,11 @@ The `flex` prop applies `flex: 1` to the spacer, causing it to expand and fill a
 When multiple flex spacers are used, they share the available space equally.
 
 <ComponentPreview title="Multiple Flex Spacers">
-  <Flex client:load className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Left</div>
-    <Spacer client:load flex />
+    <Spacer flex />
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Center</div>
-    <Spacer client:load flex />
+    <Spacer flex />
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Right</div>
   </Flex>
 

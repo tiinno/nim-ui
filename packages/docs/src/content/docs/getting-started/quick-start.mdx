@@ -13,18 +13,18 @@ This guide will walk you through creating your first functional component using 
 Let's build a simple login form using Tiinno UI components.
 
 <ComponentPreview title="Login Form Example">
-  <Card client:load className="w-full max-w-md p-6">
+  <Card client:only="react" className="w-full max-w-md p-6">
     <h2 className="text-xl font-bold mb-4">Welcome Back</h2>
     <div className="space-y-4">
       <div>
         <label className="block text-sm font-medium mb-1">Email</label>
-        <Input client:load type="email" placeholder="you@example.com" />
+        <Input type="email" placeholder="you@example.com" />
       </div>
       <div>
         <label className="block text-sm font-medium mb-1">Password</label>
-        <Input client:load type="password" placeholder="••••••••" />
+        <Input type="password" placeholder="••••••••" />
       </div>
-      <Button client:load variant="primary" className="w-full">
+      <Button variant="primary" className="w-full">
         Sign In
       </Button>
     </div>
@@ -97,8 +97,8 @@ Components work seamlessly together:
 
 <ComponentPreview title="Combined Components">
   <div className="flex items-center gap-3">
-    <Input client:load placeholder="Search..." className="flex-1" />
-    <Button client:load variant="primary">Search</Button>
+    <Input placeholder="Search..." className="flex-1" />
+    <Button variant="primary">Search</Button>
   </div>
 
   <Fragment slot="code">
@@ -144,7 +144,7 @@ export default function SearchBox() {
 Extend component styles with Tailwind classes:
 
 <ComponentPreview title="Custom Styling">
-  <Button client:load variant="primary" className="rounded-full px-8 shadow-lg">
+  <Button variant="primary" className="rounded-full px-8 shadow-lg">
     Custom Button
   </Button>
 

@@ -59,7 +59,7 @@ export interface RadioGroupProps
     VariantProps<typeof radioGroupVariants> {}
 
 const RadioGroup = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Root>,
+  React.ComponentRef<typeof RadioGroupPrimitive.Root>,
   RadioGroupProps
 >(({ className, ...props }, ref) => (
   <RadioGroupPrimitive.Root
@@ -83,7 +83,7 @@ export interface RadioGroupItemProps
     VariantProps<typeof radioGroupItemVariants> {}
 
 const RadioGroupItem = React.forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Item>,
+  React.ComponentRef<typeof RadioGroupPrimitive.Item>,
   RadioGroupItemProps
 >(({ className, ...props }, ref) => (
   <RadioGroupPrimitive.Item

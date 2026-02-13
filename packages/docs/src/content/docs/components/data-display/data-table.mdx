@@ -26,29 +26,29 @@ import {
 ## Basic Usage
 
 <ComponentPreview title="Basic Table">
-  <DataTable client:load>
-    <DataTableHeader client:load>
-      <DataTableRow client:load>
-        <DataTableHead client:load>Name</DataTableHead>
-        <DataTableHead client:load>Email</DataTableHead>
-        <DataTableHead client:load>Role</DataTableHead>
+  <DataTable client:only="react">
+    <DataTableHeader>
+      <DataTableRow>
+        <DataTableHead>Name</DataTableHead>
+        <DataTableHead>Email</DataTableHead>
+        <DataTableHead>Role</DataTableHead>
       </DataTableRow>
     </DataTableHeader>
-    <DataTableBody client:load>
-      <DataTableRow client:load>
-        <DataTableCell client:load>Alice Johnson</DataTableCell>
-        <DataTableCell client:load>alice@example.com</DataTableCell>
-        <DataTableCell client:load>Admin</DataTableCell>
+    <DataTableBody>
+      <DataTableRow>
+        <DataTableCell>Alice Johnson</DataTableCell>
+        <DataTableCell>alice@example.com</DataTableCell>
+        <DataTableCell>Admin</DataTableCell>
       </DataTableRow>
-      <DataTableRow client:load>
-        <DataTableCell client:load>Bob Smith</DataTableCell>
-        <DataTableCell client:load>bob@example.com</DataTableCell>
-        <DataTableCell client:load>Editor</DataTableCell>
+      <DataTableRow>
+        <DataTableCell>Bob Smith</DataTableCell>
+        <DataTableCell>bob@example.com</DataTableCell>
+        <DataTableCell>Editor</DataTableCell>
       </DataTableRow>
-      <DataTableRow client:load>
-        <DataTableCell client:load>Carol Davis</DataTableCell>
-        <DataTableCell client:load>carol@example.com</DataTableCell>
-        <DataTableCell client:load>Viewer</DataTableCell>
+      <DataTableRow>
+        <DataTableCell>Carol Davis</DataTableCell>
+        <DataTableCell>carol@example.com</DataTableCell>
+        <DataTableCell>Viewer</DataTableCell>
       </DataTableRow>
     </DataTableBody>
   </DataTable>
@@ -90,31 +90,31 @@ import {
 Use `DataTableFooter` to add summary rows such as totals or aggregates.
 
 <ComponentPreview title="Table with Footer">
-  <DataTable client:load>
-    <DataTableHeader client:load>
-      <DataTableRow client:load>
-        <DataTableHead client:load>Product</DataTableHead>
-        <DataTableHead client:load>Qty</DataTableHead>
-        <DataTableHead client:load>Price</DataTableHead>
+  <DataTable client:only="react">
+    <DataTableHeader>
+      <DataTableRow>
+        <DataTableHead>Product</DataTableHead>
+        <DataTableHead>Qty</DataTableHead>
+        <DataTableHead>Price</DataTableHead>
       </DataTableRow>
     </DataTableHeader>
-    <DataTableBody client:load>
-      <DataTableRow client:load>
-        <DataTableCell client:load>Widget A</DataTableCell>
-        <DataTableCell client:load>3</DataTableCell>
-        <DataTableCell client:load>$30.00</DataTableCell>
+    <DataTableBody>
+      <DataTableRow>
+        <DataTableCell>Widget A</DataTableCell>
+        <DataTableCell>3</DataTableCell>
+        <DataTableCell>$30.00</DataTableCell>
       </DataTableRow>
-      <DataTableRow client:load>
-        <DataTableCell client:load>Widget B</DataTableCell>
-        <DataTableCell client:load>1</DataTableCell>
-        <DataTableCell client:load>$45.00</DataTableCell>
+      <DataTableRow>
+        <DataTableCell>Widget B</DataTableCell>
+        <DataTableCell>1</DataTableCell>
+        <DataTableCell>$45.00</DataTableCell>
       </DataTableRow>
     </DataTableBody>
-    <DataTableFooter client:load>
-      <DataTableRow client:load>
-        <DataTableCell client:load>Total</DataTableCell>
-        <DataTableCell client:load>4</DataTableCell>
-        <DataTableCell client:load>$75.00</DataTableCell>
+    <DataTableFooter>
+      <DataTableRow>
+        <DataTableCell>Total</DataTableCell>
+        <DataTableCell>4</DataTableCell>
+        <DataTableCell>$75.00</DataTableCell>
       </DataTableRow>
     </DataTableFooter>
   </DataTable>

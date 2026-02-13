@@ -4,6 +4,7 @@ description: Single selection control for choosing one option from a group
 ---
 
 import { RadioGroup, RadioGroupItem } from '@tiinno-ui/components';
+import { RadioDefault, RadioHorizontal, RadioDisabledGroup, RadioDisabledItem } from '../../../../components/RadioDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -20,20 +21,7 @@ import { RadioGroup, RadioGroupItem } from '@tiinno-ui/components';
 ### Default
 
 <ComponentPreview title="Default Radio Group">
-  <RadioGroup client:load defaultValue="option-1">
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="option-1" id="r1" />
-      <label htmlFor="r1" className="text-sm font-medium">Option 1</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="option-2" id="r2" />
-      <label htmlFor="r2" className="text-sm font-medium">Option 2</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="option-3" id="r3" />
-      <label htmlFor="r3" className="text-sm font-medium">Option 3</label>
-    </div>
-  </RadioGroup>
+  <RadioDefault client:load />
 
   <Fragment slot="code">
 ```tsx
@@ -58,20 +46,7 @@ import { RadioGroup, RadioGroupItem } from '@tiinno-ui/components';
 ### Horizontal Layout
 
 <ComponentPreview title="Horizontal Radio Group">
-  <RadioGroup client:load defaultValue="small" className="flex gap-4">
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="small" id="size-sm" />
-      <label htmlFor="size-sm" className="text-sm font-medium">Small</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="medium" id="size-md" />
-      <label htmlFor="size-md" className="text-sm font-medium">Medium</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="large" id="size-lg" />
-      <label htmlFor="size-lg" className="text-sm font-medium">Large</label>
-    </div>
-  </RadioGroup>
+  <RadioHorizontal client:load />
 
   <Fragment slot="code">
 ```tsx
@@ -93,25 +68,12 @@ import { RadioGroup, RadioGroupItem } from '@tiinno-ui/components';
   </Fragment>
 </ComponentPreview>
 
-## Sizes
-
-RadioGroup and RadioGroupItem do not have built-in size variants. Sizing can be controlled through className on the individual items.
-
 ## States
 
 ### Disabled Group
 
 <ComponentPreview title="Disabled Radio Group">
-  <RadioGroup client:load defaultValue="option-1" disabled>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="option-1" id="d1" />
-      <label htmlFor="d1" className="text-sm font-medium text-gray-400">Option 1</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="option-2" id="d2" />
-      <label htmlFor="d2" className="text-sm font-medium text-gray-400">Option 2</label>
-    </div>
-  </RadioGroup>
+  <RadioDisabledGroup client:load />
 
   <Fragment slot="code">
 ```tsx
@@ -132,20 +94,7 @@ RadioGroup and RadioGroupItem do not have built-in size variants. Sizing can be 
 ### Disabled Individual Item
 
 <ComponentPreview title="Disabled Individual Radio Item">
-  <RadioGroup client:load defaultValue="available">
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="available" id="a1" />
-      <label htmlFor="a1" className="text-sm font-medium">Available</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="unavailable" id="a2" disabled />
-      <label htmlFor="a2" className="text-sm font-medium text-gray-400">Unavailable (disabled)</label>
-    </div>
-    <div className="flex items-center space-x-2">
-      <RadioGroupItem client:load value="other" id="a3" />
-      <label htmlFor="a3" className="text-sm font-medium">Other</label>
-    </div>
-  </RadioGroup>
+  <RadioDisabledItem client:load />
 
   <Fragment slot="code">
 ```tsx
@@ -231,105 +180,6 @@ RadioGroup and RadioGroupItem do not have built-in size variants. Sizing can be 
   ]}
 />
 
-## Usage Examples
-
-### Pricing Plan Selector
-
-```tsx
-function PlanSelector() {
-  const [plan, setPlan] = useState('pro');
-
-  return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold">Choose a Plan</h3>
-      <RadioGroup value={plan} onValueChange={setPlan}>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="free" id="plan-free" />
-          <label htmlFor="plan-free" className="text-sm">
-            <span className="font-medium">Free</span>
-            <span className="text-gray-500 ml-2">$0/month</span>
-          </label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="pro" id="plan-pro" />
-          <label htmlFor="plan-pro" className="text-sm">
-            <span className="font-medium">Pro</span>
-            <span className="text-gray-500 ml-2">$19/month</span>
-          </label>
-        </div>
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem value="enterprise" id="plan-ent" />
-          <label htmlFor="plan-ent" className="text-sm">
-            <span className="font-medium">Enterprise</span>
-            <span className="text-gray-500 ml-2">Contact us</span>
-          </label>
-        </div>
-      </RadioGroup>
-      <p className="text-sm text-gray-600">Selected: {plan}</p>
-    </div>
-  );
-}
-```
-
-### Shipping Method
-
-```tsx
-function ShippingSelector() {
-  const [shipping, setShipping] = useState('standard');
-
-  return (
-    <fieldset className="space-y-3">
-      <legend className="text-base font-semibold">Shipping Method</legend>
-      <RadioGroup value={shipping} onValueChange={setShipping}>
-        <div className="flex items-center space-x-2 p-3 border rounded-lg">
-          <RadioGroupItem value="standard" id="ship-standard" />
-          <label htmlFor="ship-standard" className="flex-1 cursor-pointer">
-            <div className="font-medium text-sm">Standard Shipping</div>
-            <div className="text-xs text-gray-500">5-7 business days - Free</div>
-          </label>
-        </div>
-        <div className="flex items-center space-x-2 p-3 border rounded-lg">
-          <RadioGroupItem value="express" id="ship-express" />
-          <label htmlFor="ship-express" className="flex-1 cursor-pointer">
-            <div className="font-medium text-sm">Express Shipping</div>
-            <div className="text-xs text-gray-500">2-3 business days - $9.99</div>
-          </label>
-        </div>
-        <div className="flex items-center space-x-2 p-3 border rounded-lg">
-          <RadioGroupItem value="overnight" id="ship-overnight" />
-          <label htmlFor="ship-overnight" className="flex-1 cursor-pointer">
-            <div className="font-medium text-sm">Overnight Shipping</div>
-            <div className="text-xs text-gray-500">Next business day - $24.99</div>
-          </label>
-        </div>
-      </RadioGroup>
-    </fieldset>
-  );
-}
-```
-
-### Survey Question
-
-```tsx
-function SurveyQuestion({ question, options, value, onChange }) {
-  return (
-    <div className="space-y-3">
-      <p className="text-sm font-medium">{question}</p>
-      <RadioGroup value={value} onValueChange={onChange}>
-        {options.map((option) => (
-          <div key={option.value} className="flex items-center space-x-2">
-            <RadioGroupItem value={option.value} id={`q-${option.value}`} />
-            <label htmlFor={`q-${option.value}`} className="text-sm">
-              {option.label}
-            </label>
-          </div>
-        ))}
-      </RadioGroup>
-    </div>
-  );
-}
-```
-
 ## Accessibility
 
 The RadioGroup component is built on Radix UI and follows WAI-ARIA best practices:
@@ -348,13 +198,6 @@ The RadioGroup component is built on Radix UI and follows WAI-ARIA best practice
 | Arrow Down / Arrow Right | Moves focus and selection to the next item |
 | Arrow Up / Arrow Left | Moves focus and selection to the previous item |
 | Space | Selects the focused item (if not already selected) |
-
-### Best Practices
-
-- Always pair RadioGroupItem elements with visible labels using `id` and `htmlFor`
-- Wrap radio groups in a `fieldset` with a descriptive `legend` for form context
-- Use RadioGroup for mutually exclusive choices; use Checkbox for multi-select
-- Provide a reasonable default selection when appropriate
 
 ## Related Components
 

@@ -18,7 +18,7 @@ import { Flex } from '@tiinno-ui/components';
 ## Basic Usage
 
 <ComponentPreview title="Default Flex (Row)">
-  <Flex client:load gap="md">
+  <Flex client:only="react" gap="md">
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 1</div>
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 2</div>
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 3</div>
@@ -40,22 +40,22 @@ import { Flex } from '@tiinno-ui/components';
 The `direction` prop controls the main axis direction of the flex container.
 
 <ComponentPreview title="Direction Variants">
-  <Flex client:load direction="row" gap="sm">
+  <Flex client:only="react" direction="row" gap="sm">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-xs">row 1</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-xs">row 2</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-xs">row 3</div>
   </Flex>
-  <Flex client:load direction="column" gap="sm">
+  <Flex client:only="react" direction="column" gap="sm">
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-xs">column 1</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-xs">column 2</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-xs">column 3</div>
   </Flex>
-  <Flex client:load direction="row-reverse" gap="sm">
+  <Flex client:only="react" direction="row-reverse" gap="sm">
     <div className="bg-amber-100 dark:bg-amber-900 p-3 rounded text-xs">row-reverse 1</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-3 rounded text-xs">row-reverse 2</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-3 rounded text-xs">row-reverse 3</div>
   </Flex>
-  <Flex client:load direction="column-reverse" gap="sm">
+  <Flex client:only="react" direction="column-reverse" gap="sm">
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">column-reverse 1</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">column-reverse 2</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">column-reverse 3</div>
@@ -76,27 +76,27 @@ The `direction` prop controls the main axis direction of the flex container.
 The `justify` prop controls how items are distributed along the main axis.
 
 <ComponentPreview title="Justify Variants">
-  <Flex client:load justify="start" gap="sm" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" justify="start" gap="sm" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">start</div>
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">start</div>
   </Flex>
-  <Flex client:load justify="center" gap="sm" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" justify="center" gap="sm" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">center</div>
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">center</div>
   </Flex>
-  <Flex client:load justify="end" gap="sm" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" justify="end" gap="sm" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">end</div>
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">end</div>
   </Flex>
-  <Flex client:load justify="between" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" justify="between" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">between</div>
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">between</div>
   </Flex>
-  <Flex client:load justify="around" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" justify="around" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">around</div>
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">around</div>
   </Flex>
-  <Flex client:load justify="evenly" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" justify="evenly" className="w-full bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">evenly</div>
     <div className="bg-blue-200 dark:bg-blue-800 p-2 rounded text-xs">evenly</div>
   </Flex>
@@ -118,19 +118,19 @@ The `justify` prop controls how items are distributed along the main axis.
 The `align` prop controls cross-axis alignment.
 
 <ComponentPreview title="Align Variants">
-  <Flex client:load align="start" gap="sm" className="h-24 bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" align="start" gap="sm" className="h-24 bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-green-200 dark:bg-green-800 p-2 rounded text-xs">start</div>
     <div className="bg-green-200 dark:bg-green-800 p-4 rounded text-xs">start</div>
   </Flex>
-  <Flex client:load align="center" gap="sm" className="h-24 bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" align="center" gap="sm" className="h-24 bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-green-200 dark:bg-green-800 p-2 rounded text-xs">center</div>
     <div className="bg-green-200 dark:bg-green-800 p-4 rounded text-xs">center</div>
   </Flex>
-  <Flex client:load align="end" gap="sm" className="h-24 bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" align="end" gap="sm" className="h-24 bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-green-200 dark:bg-green-800 p-2 rounded text-xs">end</div>
     <div className="bg-green-200 dark:bg-green-800 p-4 rounded text-xs">end</div>
   </Flex>
-  <Flex client:load align="baseline" gap="sm" className="bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
+  <Flex client:only="react" align="baseline" gap="sm" className="bg-neutral-50 dark:bg-neutral-800 p-2 rounded">
     <div className="bg-green-200 dark:bg-green-800 p-2 rounded text-xs">baseline</div>
     <div className="bg-green-200 dark:bg-green-800 p-4 rounded text-lg">baseline</div>
   </Flex>
@@ -151,7 +151,7 @@ The `align` prop controls cross-axis alignment.
 The `wrap` prop enables flex wrapping so items flow to the next line when they exceed the container width.
 
 <ComponentPreview title="Flex Wrap">
-  <Flex client:load wrap={true} gap="sm" className="w-full">
+  <Flex client:only="react" wrap={true} gap="sm" className="w-full">
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs w-32">Wrapped 1</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs w-32">Wrapped 2</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs w-32">Wrapped 3</div>
@@ -179,27 +179,27 @@ The `wrap` prop enables flex wrapping so items flow to the next line when they e
 The `gap` prop controls spacing between flex items.
 
 <ComponentPreview title="Gap Variants">
-  <Flex client:load gap="xs">
+  <Flex client:only="react" gap="xs">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xs</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xs</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xs</div>
   </Flex>
-  <Flex client:load gap="sm">
+  <Flex client:only="react" gap="sm">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">sm</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">sm</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">sm</div>
   </Flex>
-  <Flex client:load gap="md">
+  <Flex client:only="react" gap="md">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">md</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">md</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">md</div>
   </Flex>
-  <Flex client:load gap="lg">
+  <Flex client:only="react" gap="lg">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">lg</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">lg</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">lg</div>
   </Flex>
-  <Flex client:load gap="xl">
+  <Flex client:only="react" gap="xl">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xl</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xl</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xl</div>

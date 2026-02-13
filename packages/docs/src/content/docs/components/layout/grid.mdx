@@ -18,7 +18,7 @@ import { Grid } from '@tiinno-ui/components';
 ## Basic Usage
 
 <ComponentPreview title="Default Grid">
-  <Grid client:load cols={3} gap="md">
+  <Grid client:only="react" cols={3} gap="md">
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">1</div>
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">2</div>
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">3</div>
@@ -40,19 +40,19 @@ import { Grid } from '@tiinno-ui/components';
 The `cols` prop sets the number of columns. All column values include responsive breakpoints that collapse to fewer columns on smaller screens.
 
 <ComponentPreview title="Column Variants">
-  <Grid client:load cols={1} gap="sm">
+  <Grid client:only="react" cols={1} gap="sm">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">1 col</div>
   </Grid>
-  <Grid client:load cols={2} gap="sm">
+  <Grid client:only="react" cols={2} gap="sm">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">1</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">2</div>
   </Grid>
-  <Grid client:load cols={3} gap="sm">
+  <Grid client:only="react" cols={3} gap="sm">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">1</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">2</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">3</div>
   </Grid>
-  <Grid client:load cols={4} gap="sm">
+  <Grid client:only="react" cols={4} gap="sm">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">1</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">2</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">3</div>
@@ -88,27 +88,27 @@ Each column count includes automatic responsive behavior:
 The `gap` prop controls spacing between grid items.
 
 <ComponentPreview title="Gap Variants">
-  <Grid client:load cols={3} gap="none">
+  <Grid client:only="react" cols={3} gap="none">
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">none</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">none</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">none</div>
   </Grid>
-  <Grid client:load cols={3} gap="sm">
+  <Grid client:only="react" cols={3} gap="sm">
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">sm</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">sm</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">sm</div>
   </Grid>
-  <Grid client:load cols={3} gap="md">
+  <Grid client:only="react" cols={3} gap="md">
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">md</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">md</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">md</div>
   </Grid>
-  <Grid client:load cols={3} gap="lg">
+  <Grid client:only="react" cols={3} gap="lg">
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">lg</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">lg</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">lg</div>
   </Grid>
-  <Grid client:load cols={3} gap="xl">
+  <Grid client:only="react" cols={3} gap="xl">
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">xl</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">xl</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">xl</div>

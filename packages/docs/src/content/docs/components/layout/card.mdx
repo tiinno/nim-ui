@@ -19,8 +19,8 @@ import { Card, CardHeader, CardContent, CardFooter } from '@tiinno-ui/components
 ## Basic Usage
 
 <ComponentPreview title="Basic Card">
-  <Card client:load className="w-full max-w-sm">
-    <CardContent client:load>
+  <Card client:only="react" className="w-full max-w-sm">
+    <CardContent>
       <p className="text-sm text-neutral-700 dark:text-neutral-300">
         This is a basic card with content only.
       </p>
@@ -43,20 +43,20 @@ import { Card, CardHeader, CardContent, CardFooter } from '@tiinno-ui/components
 Use all three sub-components for a complete card layout with header, content, and footer.
 
 <ComponentPreview title="Full Card with Header, Content, and Footer">
-  <Card client:load className="w-full max-w-sm">
-    <CardHeader client:load>
+  <Card client:only="react" className="w-full max-w-sm">
+    <CardHeader>
       <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Card Title</h3>
       <p className="text-sm text-neutral-500 dark:text-neutral-400">Card description goes here</p>
     </CardHeader>
-    <CardContent client:load>
+    <CardContent>
       <p className="text-sm text-neutral-700 dark:text-neutral-300">
         This is the main content area of the card. It can contain any type of content
         including text, images, forms, or other components.
       </p>
     </CardContent>
-    <CardFooter client:load>
-      <Button client:load variant="primary" size="sm">Save</Button>
-      <Button client:load variant="outline" size="sm">Cancel</Button>
+    <CardFooter>
+      <Button variant="primary" size="sm">Save</Button>
+      <Button variant="outline" size="sm">Cancel</Button>
     </CardFooter>
   </Card>
 
@@ -82,11 +82,11 @@ Use all three sub-components for a complete card layout with header, content, an
 ## Header and Content Only
 
 <ComponentPreview title="Card Without Footer">
-  <Card client:load className="w-full max-w-sm">
-    <CardHeader client:load>
+  <Card client:only="react" className="w-full max-w-sm">
+    <CardHeader>
       <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Notifications</h3>
     </CardHeader>
-    <CardContent client:load>
+    <CardContent>
       <p className="text-sm text-neutral-700 dark:text-neutral-300">You have 3 unread notifications.</p>
     </CardContent>
   </Card>
@@ -110,18 +110,18 @@ Use all three sub-components for a complete card layout with header, content, an
 Cards accept a `className` prop for custom styling including width constraints, shadows, and border customization.
 
 <ComponentPreview title="Custom Styled Cards">
-  <Card client:load className="w-full max-w-sm shadow-lg">
-    <CardContent client:load>
+  <Card client:only="react" className="w-full max-w-sm shadow-lg">
+    <CardContent>
       <p className="text-sm text-neutral-700 dark:text-neutral-300">Elevated card with shadow-lg</p>
     </CardContent>
   </Card>
-  <Card client:load className="w-full max-w-sm border-primary-500 border-2">
-    <CardContent client:load>
+  <Card client:only="react" className="w-full max-w-sm border-primary-500 border-2">
+    <CardContent>
       <p className="text-sm text-neutral-700 dark:text-neutral-300">Card with custom border color</p>
     </CardContent>
   </Card>
-  <Card client:load className="w-full max-w-sm bg-primary-50 dark:bg-primary-900/20">
-    <CardContent client:load>
+  <Card client:only="react" className="w-full max-w-sm bg-primary-50 dark:bg-primary-900/20">
+    <CardContent>
       <p className="text-sm text-neutral-700 dark:text-neutral-300">Card with custom background</p>
     </CardContent>
   </Card>

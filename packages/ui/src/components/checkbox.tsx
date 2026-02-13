@@ -26,7 +26,7 @@ import { cn } from '../lib/utils';
  */
 
 const checkboxVariants = cva(
-  'peer h-5 w-5 shrink-0 rounded-sm border border-neutral-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-600 data-[state=checked]:text-white data-[state=checked]:border-primary-600 dark:border-neutral-600 dark:data-[state=checked]:bg-primary-700 dark:data-[state=checked]:border-primary-700',
+  'peer h-5 w-5 shrink-0 rounded-sm border border-neutral-300 transition-[background-color,border-color] duration-fast ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-600 data-[state=checked]:text-white data-[state=checked]:border-primary-600 dark:border-neutral-600 dark:data-[state=checked]:bg-primary-700 dark:data-[state=checked]:border-primary-700',
   {
     variants: {},
     defaultVariants: {},
@@ -38,7 +38,7 @@ export interface CheckboxProps
     VariantProps<typeof checkboxVariants> {}
 
 const Checkbox = React.forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  React.ComponentRef<typeof CheckboxPrimitive.Root>,
   CheckboxProps
 >(({ className, ...props }, ref) => (
   <CheckboxPrimitive.Root

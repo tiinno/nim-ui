@@ -19,7 +19,7 @@ import { cn } from '../lib/utils';
  */
 
 const textareaVariants = cva(
-  'flex w-full rounded-md border bg-white px-3 py-2 text-base transition-colors placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-neutral-900 dark:placeholder:text-neutral-400',
+  'flex w-full rounded-md border bg-white px-3 py-2 text-base transition-[border-color,box-shadow] duration-fast ease-in-out placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-neutral-900 dark:placeholder:text-neutral-400',
   {
     variants: {
       variant: {

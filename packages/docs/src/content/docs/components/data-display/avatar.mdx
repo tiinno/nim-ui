@@ -4,6 +4,7 @@ description: User profile image component with automatic fallback to initials
 ---
 
 import { Avatar, AvatarImage, AvatarFallback } from '@tiinno-ui/components';
+import { AvatarWithImage, AvatarWithFallback } from '../../../../components/AvatarDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -18,10 +19,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@tiinno-ui/components';
 ## Basic Usage
 
 <ComponentPreview title="Avatar with Image and Fallback">
-  <Avatar client:load>
-    <AvatarImage client:load src="https://i.pravatar.cc/150?u=1" alt="John Doe" />
-    <AvatarFallback client:load>JD</AvatarFallback>
-  </Avatar>
+  <AvatarWithImage client:load src="https://i.pravatar.cc/150?u=1" alt="John Doe" fallback="JD" />
 
   <Fragment slot="code">
 ```tsx
@@ -38,18 +36,10 @@ import { Avatar, AvatarImage, AvatarFallback } from '@tiinno-ui/components';
 Four size options are available to suit different layout contexts.
 
 <ComponentPreview title="Avatar Sizes">
-  <Avatar client:load size="sm">
-    <AvatarFallback client:load>SM</AvatarFallback>
-  </Avatar>
-  <Avatar client:load size="md">
-    <AvatarFallback client:load>MD</AvatarFallback>
-  </Avatar>
-  <Avatar client:load size="lg">
-    <AvatarFallback client:load>LG</AvatarFallback>
-  </Avatar>
-  <Avatar client:load size="xl">
-    <AvatarFallback client:load>XL</AvatarFallback>
-  </Avatar>
+  <AvatarWithFallback client:load fallback="SM" size="sm" />
+  <AvatarWithFallback client:load fallback="MD" size="md" />
+  <AvatarWithFallback client:load fallback="LG" size="lg" />
+  <AvatarWithFallback client:load fallback="XL" size="xl" />
 
   <Fragment slot="code">
 ```tsx
@@ -74,13 +64,8 @@ Four size options are available to suit different layout contexts.
 When the image fails to load or no `src` is provided, the AvatarFallback content is displayed automatically.
 
 <ComponentPreview title="Fallback Avatars">
-  <Avatar client:load>
-    <AvatarImage client:load src="/broken-image.jpg" alt="User" />
-    <AvatarFallback client:load>AB</AvatarFallback>
-  </Avatar>
-  <Avatar client:load size="lg">
-    <AvatarFallback client:load>CD</AvatarFallback>
-  </Avatar>
+  <AvatarWithImage client:load src="/broken-image.jpg" alt="User" fallback="AB" />
+  <AvatarWithFallback client:load fallback="CD" size="lg" />
 
   <Fragment slot="code">
 ```tsx

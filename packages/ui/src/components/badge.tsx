@@ -33,6 +33,9 @@ const badgeVariants = cva(
         md: 'px-2.5 py-1 text-sm',
         lg: 'px-3 py-1.5 text-base',
       },
+      animate: {
+        true: 'animate-scale-in',
+      },
     },
     defaultVariants: {
       variant: 'default',
@@ -46,9 +49,9 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {}
 
 const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
-  ({ className, variant, size, ...props }, ref) => (
+  ({ className, variant, size, animate, ...props }, ref) => (
     <div
-      className={cn(badgeVariants({ variant, size }), className)}
+      className={cn(badgeVariants({ variant, size, animate }), className)}
       ref={ref}
       {...props}
     />

@@ -4,6 +4,7 @@ description: Display product features in a responsive grid layout with icon, tit
 ---
 
 import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
+import { FeatureDefault, Feature2Cols, Feature4Cols, FeatureNoIcons } from '../../../../components/FeatureDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -18,26 +19,7 @@ import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
 ## Usage
 
 <ComponentPreview title="Default Feature Grid (3 columns)">
-  <FeatureGrid client:load>
-    <FeatureCard
-      client:load
-      icon={<span style={{ fontSize: '1.5rem' }}>⚡</span>}
-      title="Lightning Fast"
-      description="Optimized for performance with tree-shaking and minimal bundle size."
-    />
-    <FeatureCard
-      client:load
-      icon={<span style={{ fontSize: '1.5rem' }}>🎨</span>}
-      title="Fully Customizable"
-      description="Extend any component with Tailwind CSS classes and design tokens."
-    />
-    <FeatureCard
-      client:load
-      icon={<span style={{ fontSize: '1.5rem' }}>♿</span>}
-      title="Accessible"
-      description="WCAG 2.1 AA compliant with full keyboard navigation and screen reader support."
-    />
-  </FeatureGrid>
+  <FeatureDefault client:load />
 
   <Fragment slot="code">
 ```tsx
@@ -67,20 +49,7 @@ import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
 ### 2 Columns
 
 <ComponentPreview title="2-Column Grid">
-  <FeatureGrid client:load columns={2}>
-    <FeatureCard
-      client:load
-      icon={<span style={{ fontSize: '1.5rem' }}>🔒</span>}
-      title="Type Safe"
-      description="Built with TypeScript for complete type safety and IDE autocompletion."
-    />
-    <FeatureCard
-      client:load
-      icon={<span style={{ fontSize: '1.5rem' }}>🌙</span>}
-      title="Dark Mode"
-      description="Built-in dark mode support with smooth transitions across all components."
-    />
-  </FeatureGrid>
+  <Feature2Cols client:load />
 
   <Fragment slot="code">
 ```tsx
@@ -103,28 +72,7 @@ import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
 ### 4 Columns
 
 <ComponentPreview title="4-Column Grid">
-  <FeatureGrid client:load columns={4}>
-    <FeatureCard
-      client:load
-      title="24 Components"
-      description="Ready to use out of the box."
-    />
-    <FeatureCard
-      client:load
-      title="TypeScript"
-      description="Full type definitions included."
-    />
-    <FeatureCard
-      client:load
-      title="Tailwind v4"
-      description="Built on the latest Tailwind."
-    />
-    <FeatureCard
-      client:load
-      title="React 19"
-      description="Leveraging the newest features."
-    />
-  </FeatureGrid>
+  <Feature4Cols client:load />
 
   <Fragment slot="code">
 ```tsx
@@ -141,23 +89,7 @@ import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
 ## Without Icons
 
 <ComponentPreview title="Feature Cards Without Icons">
-  <FeatureGrid client:load columns={3}>
-    <FeatureCard
-      client:load
-      title="Easy Integration"
-      description="Install with a single command and start building immediately."
-    />
-    <FeatureCard
-      client:load
-      title="Well Documented"
-      description="Comprehensive documentation with live examples for every component."
-    />
-    <FeatureCard
-      client:load
-      title="Community Driven"
-      description="Open source and actively maintained by a growing community."
-    />
-  </FeatureGrid>
+  <FeatureNoIcons client:load />
 
   <Fragment slot="code">
 ```tsx

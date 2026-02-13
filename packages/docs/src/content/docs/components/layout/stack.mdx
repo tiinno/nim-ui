@@ -18,7 +18,7 @@ import { Stack } from '@tiinno-ui/components';
 ## Basic Usage
 
 <ComponentPreview title="Default Stack (Vertical)">
-  <Stack client:load spacing="md">
+  <Stack client:only="react" spacing="md">
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 1</div>
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 2</div>
     <div className="bg-primary-100 dark:bg-primary-900 p-4 rounded text-center text-sm">Item 3</div>
@@ -40,12 +40,12 @@ import { Stack } from '@tiinno-ui/components';
 The `direction` prop controls whether items are stacked vertically or horizontally.
 
 <ComponentPreview title="Stack Directions">
-  <Stack client:load direction="vertical" spacing="sm">
+  <Stack client:only="react" direction="vertical" spacing="sm">
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">Vertical 1</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">Vertical 2</div>
     <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded text-center text-xs">Vertical 3</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="sm">
+  <Stack client:only="react" direction="horizontal" spacing="sm">
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">Horizontal 1</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">Horizontal 2</div>
     <div className="bg-green-100 dark:bg-green-900 p-3 rounded text-center text-xs">Horizontal 3</div>
@@ -73,27 +73,27 @@ The `direction` prop controls whether items are stacked vertically or horizontal
 The `spacing` prop sets the gap between items.
 
 <ComponentPreview title="Spacing Variants">
-  <Stack client:load direction="horizontal" spacing="none">
+  <Stack client:only="react" direction="horizontal" spacing="none">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">none</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">none</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="xs">
+  <Stack client:only="react" direction="horizontal" spacing="xs">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xs</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xs</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="sm">
+  <Stack client:only="react" direction="horizontal" spacing="sm">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">sm</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">sm</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="md">
+  <Stack client:only="react" direction="horizontal" spacing="md">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">md</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">md</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="lg">
+  <Stack client:only="react" direction="horizontal" spacing="lg">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">lg</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">lg</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="xl">
+  <Stack client:only="react" direction="horizontal" spacing="xl">
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xl</div>
     <div className="bg-amber-100 dark:bg-amber-900 p-2 rounded text-xs">xl</div>
   </Stack>
@@ -115,22 +115,22 @@ The `spacing` prop sets the gap between items.
 The `align` prop controls cross-axis alignment of items.
 
 <ComponentPreview title="Alignment Variants">
-  <Stack client:load direction="horizontal" spacing="sm" align="start">
+  <Stack client:only="react" direction="horizontal" spacing="sm" align="start">
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Short</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-6 rounded text-xs">Tall</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">start</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="sm" align="center">
+  <Stack client:only="react" direction="horizontal" spacing="sm" align="center">
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Short</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-6 rounded text-xs">Tall</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">center</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="sm" align="end">
+  <Stack client:only="react" direction="horizontal" spacing="sm" align="end">
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Short</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-6 rounded text-xs">Tall</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">end</div>
   </Stack>
-  <Stack client:load direction="horizontal" spacing="sm" align="stretch">
+  <Stack client:only="react" direction="horizontal" spacing="sm" align="stretch">
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">Short</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-6 rounded text-xs">Tall</div>
     <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded text-xs">stretch</div>

@@ -3,6 +3,7 @@ title: Drawer
 description: Slide-in side panel overlay for navigation, forms, and supplementary content
 ---
 
+import { DrawerRight, DrawerLeft, DrawerWithClose } from '../../../../components/DrawerDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -29,28 +30,10 @@ import {
 
 The simplest drawer uses `Drawer`, `DrawerTrigger`, `DrawerContent`, `DrawerHeader`, `DrawerTitle`, and `DrawerBody`.
 
-```tsx
-<Drawer>
-  <DrawerTrigger asChild>
-    <Button>Open Drawer</Button>
-  </DrawerTrigger>
-  <DrawerContent>
-    <DrawerHeader>
-      <DrawerTitle>Drawer Title</DrawerTitle>
-    </DrawerHeader>
-    <DrawerBody>
-      <p>This is the drawer content.</p>
-    </DrawerBody>
-  </DrawerContent>
-</Drawer>
-```
+<ComponentPreview title="Right Drawer (Default)">
+  <DrawerRight client:only="react" />
 
-## Side Variants
-
-The `side` prop on `DrawerContent` controls which edge the drawer slides in from. It defaults to `'right'`.
-
-### Right Drawer (Default)
-
+  <Fragment slot="code">
 ```tsx
 <Drawer>
   <DrawerTrigger asChild>
@@ -59,9 +42,7 @@ The `side` prop on `DrawerContent` controls which edge the drawer slides in from
   <DrawerContent side="right">
     <DrawerHeader>
       <DrawerTitle>Right Drawer</DrawerTitle>
-      <DrawerDescription>
-        This drawer slides in from the right side.
-      </DrawerDescription>
+      <DrawerDescription>This drawer slides in from the right side.</DrawerDescription>
     </DrawerHeader>
     <DrawerBody>
       <p>Right drawer content here.</p>
@@ -69,9 +50,17 @@ The `side` prop on `DrawerContent` controls which edge the drawer slides in from
   </DrawerContent>
 </Drawer>
 ```
+  </Fragment>
+</ComponentPreview>
 
-### Left Drawer
+## Side Variants
 
+The `side` prop on `DrawerContent` controls which edge the drawer slides in from. It defaults to `'right'`.
+
+<ComponentPreview title="Left Drawer">
+  <DrawerLeft client:only="react" />
+
+  <Fragment slot="code">
 ```tsx
 <Drawer>
   <DrawerTrigger asChild>
@@ -80,19 +69,47 @@ The `side` prop on `DrawerContent` controls which edge the drawer slides in from
   <DrawerContent side="left">
     <DrawerHeader>
       <DrawerTitle>Navigation</DrawerTitle>
+      <DrawerDescription>Browse the menu items below.</DrawerDescription>
     </DrawerHeader>
     <DrawerBody>
-      <nav>
-        <Stack spacing="sm">
-          <a href="/dashboard">Dashboard</a>
-          <a href="/settings">Settings</a>
-          <a href="/profile">Profile</a>
-        </Stack>
-      </nav>
+      <nav>...</nav>
     </DrawerBody>
   </DrawerContent>
 </Drawer>
 ```
+  </Fragment>
+</ComponentPreview>
+
+## With Footer Actions
+
+<ComponentPreview title="Drawer with Footer">
+  <DrawerWithClose client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button variant="secondary">Open with Footer</Button>
+  </DrawerTrigger>
+  <DrawerContent side="right">
+    <DrawerHeader>
+      <DrawerTitle>Edit Profile</DrawerTitle>
+      <DrawerDescription>Make changes to your profile here.</DrawerDescription>
+    </DrawerHeader>
+    <DrawerBody>
+      <p>Profile editing form would go here.</p>
+      <div className="flex gap-3 justify-end mt-4">
+        <DrawerClose asChild>
+          <Button variant="outline">Cancel</Button>
+        </DrawerClose>
+        <Button>Save Changes</Button>
+      </div>
+    </DrawerBody>
+  </DrawerContent>
+</Drawer>
+```
+  </Fragment>
+</ComponentPreview>
 
 ## Controlled Drawer
 
@@ -116,89 +133,6 @@ function ControlledDrawer() {
           <Button onClick={() => setOpen(false)} className="mt-4">
             Close Programmatically
           </Button>
-        </DrawerBody>
-      </DrawerContent>
-    </Drawer>
-  );
-}
-```
-
-## With Close Button
-
-Use `DrawerClose` to add a visible close button.
-
-```tsx
-<Drawer>
-  <DrawerTrigger asChild>
-    <Button>Open</Button>
-  </DrawerTrigger>
-  <DrawerContent>
-    <DrawerHeader>
-      <Flex justify="between" align="center">
-        <DrawerTitle>Settings</DrawerTitle>
-        <DrawerClose asChild>
-          <button
-            className="rounded-sm opacity-70 hover:opacity-100 transition-opacity"
-            aria-label="Close"
-          >
-            X
-          </button>
-        </DrawerClose>
-      </Flex>
-    </DrawerHeader>
-    <DrawerBody>
-      <p>Settings content here.</p>
-    </DrawerBody>
-  </DrawerContent>
-</Drawer>
-```
-
-## With Form Content
-
-```tsx
-function FilterDrawer() {
-  const [open, setOpen] = useState(false);
-
-  const handleApply = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Apply filters
-    setOpen(false);
-  };
-
-  return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="outline">Filters</Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Filter Results</DrawerTitle>
-          <DrawerDescription>
-            Narrow down results using the filters below.
-          </DrawerDescription>
-        </DrawerHeader>
-        <DrawerBody>
-          <form onSubmit={handleApply}>
-            <Stack spacing="md">
-              <Select
-                options={[
-                  { value: 'all', label: 'All Categories' },
-                  { value: 'electronics', label: 'Electronics' },
-                  { value: 'clothing', label: 'Clothing' },
-                ]}
-                placeholder="Category"
-              />
-              <Input label="Min Price" type="number" />
-              <Input label="Max Price" type="number" />
-              <Checkbox label="In Stock Only" />
-              <Flex justify="end" gap="sm">
-                <DrawerClose asChild>
-                  <Button variant="outline" type="button">Cancel</Button>
-                </DrawerClose>
-                <Button variant="primary" type="submit">Apply</Button>
-              </Flex>
-            </Stack>
-          </form>
         </DrawerBody>
       </DrawerContent>
     </Drawer>

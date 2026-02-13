@@ -23,7 +23,7 @@ import { cn } from '../lib/utils';
  */
 
 const switchVariants = cva(
-  'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-600 data-[state=unchecked]:bg-neutral-200 dark:data-[state=checked]:bg-primary-700 dark:data-[state=unchecked]:bg-neutral-700',
+  'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-fast ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-600 data-[state=unchecked]:bg-neutral-200 dark:data-[state=checked]:bg-primary-700 dark:data-[state=unchecked]:bg-neutral-700',
   {
     variants: {
       size: {
@@ -39,7 +39,7 @@ const switchVariants = cva(
 );
 
 const switchThumbVariants = cva(
-  'pointer-events-none block rounded-full bg-white shadow-lg ring-0 transition-transform dark:bg-neutral-100',
+  'pointer-events-none block rounded-full bg-white shadow-lg ring-0 transition-transform duration-fast ease-out dark:bg-neutral-100',
   {
     variants: {
       size: {
@@ -59,7 +59,7 @@ export interface SwitchProps
     VariantProps<typeof switchVariants> {}
 
 const Switch = React.forwardRef<
-  React.ElementRef<typeof SwitchPrimitive.Root>,
+  React.ComponentRef<typeof SwitchPrimitive.Root>,
   SwitchProps
 >(({ className, size, ...props }, ref) => (
   <SwitchPrimitive.Root

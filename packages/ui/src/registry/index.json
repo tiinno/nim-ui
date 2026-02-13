@@ -587,6 +587,210 @@
           "code": "<RadioGroup><Radio value=\"a\" label=\"Choice A\" size=\"lg\" /><Radio value=\"b\" label=\"Choice B\" size=\"lg\" /></RadioGroup>"
         }
       ]
+    },
+    {
+      "name": "Textarea",
+      "category": "primitives",
+      "description": "A textarea component with validation states and sizes for multi-line text input",
+      "keywords": ["textarea", "text", "multiline", "input", "form"],
+      "file": "components/textarea.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "error", "success"]
+        },
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Textarea",
+          "code": "<Textarea placeholder=\"Enter your message...\" />"
+        },
+        {
+          "title": "Textarea with Error State",
+          "code": "<Textarea variant=\"error\" placeholder=\"Invalid input\" />"
+        }
+      ]
+    },
+    {
+      "name": "Switch",
+      "category": "primitives",
+      "description": "A toggle switch component for boolean on/off states, built with Radix UI",
+      "keywords": ["switch", "toggle", "on", "off", "boolean"],
+      "file": "components/switch.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Switch",
+          "code": "<Switch id=\"airplane-mode\" />"
+        },
+        {
+          "title": "Switch with Label",
+          "code": "<div className=\"flex items-center space-x-2\"><Switch id=\"notifications\" /><label htmlFor=\"notifications\">Enable notifications</label></div>"
+        }
+      ]
+    },
+    {
+      "name": "Container",
+      "category": "layout",
+      "description": "A responsive container component with max-width constraints and optional padding",
+      "keywords": ["container", "wrapper", "layout", "responsive", "max-width"],
+      "file": "components/container.tsx",
+      "variants": [
+        {
+          "name": "maxWidth",
+          "values": ["sm", "md", "lg", "xl", "2xl", "full"]
+        },
+        {
+          "name": "padding",
+          "values": ["true", "false"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Default Container",
+          "code": "<Container>Content here</Container>"
+        },
+        {
+          "title": "Small Container",
+          "code": "<Container maxWidth=\"sm\">Narrow content</Container>"
+        }
+      ]
+    },
+    {
+      "name": "Grid",
+      "category": "layout",
+      "description": "A responsive CSS Grid layout component with configurable columns and gap",
+      "keywords": ["grid", "layout", "columns", "responsive", "css-grid"],
+      "file": "components/grid.tsx",
+      "variants": [
+        {
+          "name": "cols",
+          "values": ["1", "2", "3", "4", "5", "6", "12"]
+        },
+        {
+          "name": "gap",
+          "values": ["none", "sm", "md", "lg", "xl"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "3-Column Grid",
+          "code": "<Grid cols={3} gap=\"md\"><div>Item 1</div><div>Item 2</div><div>Item 3</div></Grid>"
+        },
+        {
+          "title": "4-Column Grid",
+          "code": "<Grid cols={4} gap=\"lg\"><div>A</div><div>B</div><div>C</div><div>D</div></Grid>"
+        }
+      ]
+    },
+    {
+      "name": "Stack",
+      "category": "layout",
+      "description": "A stack component for vertical or horizontal stacking with consistent spacing",
+      "keywords": ["stack", "layout", "vertical", "horizontal", "spacing"],
+      "file": "components/stack.tsx",
+      "variants": [
+        {
+          "name": "direction",
+          "values": ["vertical", "horizontal"]
+        },
+        {
+          "name": "spacing",
+          "values": ["none", "xs", "sm", "md", "lg", "xl"]
+        },
+        {
+          "name": "align",
+          "values": ["start", "center", "end", "stretch"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Vertical Stack",
+          "code": "<Stack spacing=\"md\"><div>Item 1</div><div>Item 2</div></Stack>"
+        },
+        {
+          "title": "Horizontal Stack",
+          "code": "<Stack direction=\"horizontal\" spacing=\"lg\" align=\"center\"><Button>Action 1</Button><Button>Action 2</Button></Stack>"
+        }
+      ]
+    },
+    {
+      "name": "Flex",
+      "category": "layout",
+      "description": "A flexible flexbox layout component for common alignment and distribution patterns",
+      "keywords": ["flex", "flexbox", "layout", "align", "justify"],
+      "file": "components/flex.tsx",
+      "variants": [
+        {
+          "name": "direction",
+          "values": ["row", "column", "row-reverse", "column-reverse"]
+        },
+        {
+          "name": "justify",
+          "values": ["start", "center", "end", "between", "around", "evenly"]
+        },
+        {
+          "name": "align",
+          "values": ["start", "center", "end", "stretch", "baseline"]
+        },
+        {
+          "name": "gap",
+          "values": ["none", "xs", "sm", "md", "lg", "xl"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Space Between",
+          "code": "<Flex justify=\"between\" align=\"center\"><span>Left</span><span>Right</span></Flex>"
+        },
+        {
+          "title": "Centered Column",
+          "code": "<Flex direction=\"column\" justify=\"center\" align=\"center\"><h1>Title</h1><p>Description</p></Flex>"
+        }
+      ]
+    },
+    {
+      "name": "Spacer",
+      "category": "layout",
+      "description": "A spacer component for adding fixed or flexible spacing between elements",
+      "keywords": ["spacer", "space", "gap", "divider", "layout"],
+      "file": "components/spacer.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": ["xs", "sm", "md", "lg", "xl", "2xl"]
+        },
+        {
+          "name": "flex",
+          "values": ["true", "false"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Fixed Spacer",
+          "code": "<Spacer size=\"md\" />"
+        },
+        {
+          "title": "Flex Spacer",
+          "code": "<Flex><div>Left</div><Spacer flex /><div>Right</div></Flex>"
+        }
+      ]
     }
   ]
 }

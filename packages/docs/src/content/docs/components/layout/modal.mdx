@@ -3,6 +3,7 @@ title: Modal
 description: Dialog overlay for focused interactions, built on Radix UI Dialog
 ---
 
+import { ModalBasic, ModalWithDescription, ModalWithCloseButton } from '../../../../components/ModalDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -29,6 +30,10 @@ import {
 
 The simplest modal pattern uses `Modal`, `ModalTrigger`, `ModalContent`, `ModalHeader`, `ModalTitle`, and `ModalBody`.
 
+<ComponentPreview title="Basic Modal">
+  <ModalBasic client:only="react" />
+
+  <Fragment slot="code">
 ```tsx
 <Modal>
   <ModalTrigger asChild>
@@ -44,15 +49,21 @@ The simplest modal pattern uses `Modal`, `ModalTrigger`, `ModalContent`, `ModalH
   </ModalContent>
 </Modal>
 ```
+  </Fragment>
+</ComponentPreview>
 
 ## With Description
 
 Add `ModalDescription` to provide additional context for screen readers and visual users.
 
+<ComponentPreview title="Confirmation Modal">
+  <ModalWithDescription client:only="react" />
+
+  <Fragment slot="code">
 ```tsx
 <Modal>
   <ModalTrigger asChild>
-    <Button>Delete Item</Button>
+    <Button variant="destructive">Delete Item</Button>
   </ModalTrigger>
   <ModalContent>
     <ModalHeader>
@@ -63,17 +74,18 @@ Add `ModalDescription` to provide additional context for screen readers and visu
       </ModalDescription>
     </ModalHeader>
     <ModalBody>
-      <p>Are you sure you want to proceed?</p>
       <div className="flex gap-3 mt-4 justify-end">
         <ModalClose asChild>
           <Button variant="outline">Cancel</Button>
         </ModalClose>
-        <Button variant="danger">Delete</Button>
+        <Button variant="destructive">Delete</Button>
       </div>
     </ModalBody>
   </ModalContent>
 </Modal>
 ```
+  </Fragment>
+</ComponentPreview>
 
 ## Controlled Modal
 
@@ -152,6 +164,10 @@ function FormModal() {
 
 Use `ModalClose` to add a close button in the header area.
 
+<ComponentPreview title="Modal with Close Button">
+  <ModalWithCloseButton client:only="react" />
+
+  <Fragment slot="code">
 ```tsx
 <Modal>
   <ModalTrigger asChild>
@@ -159,17 +175,17 @@ Use `ModalClose` to add a close button in the header area.
   </ModalTrigger>
   <ModalContent>
     <ModalHeader>
-      <Flex justify="between" align="center">
+      <div className="flex justify-between items-center">
         <ModalTitle>Settings</ModalTitle>
         <ModalClose asChild>
           <button
             className="rounded-sm opacity-70 hover:opacity-100 transition-opacity"
             aria-label="Close"
           >
-            X
+            ✕
           </button>
         </ModalClose>
-      </Flex>
+      </div>
     </ModalHeader>
     <ModalBody>
       <p>Settings content here.</p>
@@ -177,6 +193,8 @@ Use `ModalClose` to add a close button in the header area.
   </ModalContent>
 </Modal>
 ```
+  </Fragment>
+</ComponentPreview>
 
 ## Component Architecture
 
