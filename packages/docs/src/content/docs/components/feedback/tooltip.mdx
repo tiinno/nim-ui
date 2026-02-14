@@ -1,0 +1,279 @@
+---
+title: Tooltip
+description: Displays informational text when hovering or focusing on an element
+---
+
+import { TooltipBasicDemo, TooltipVariantsDemo, TooltipArrowDemo, TooltipSidesDemo } from '../../../../components/TooltipDemo';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Tooltip component displays additional information when users hover or focus on an element. Built on [Radix UI Tooltip](https://www.radix-ui.com/primitives/docs/components/tooltip), it handles positioning, delay, keyboard interactions, and screen reader announcements automatically.
+
+## Import
+
+```tsx
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipArrow,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+Wrap your app (or a section) with `TooltipProvider`, then use `Tooltip`, `TooltipTrigger`, and `TooltipContent`.
+
+<ComponentPreview title="Basic Tooltip">
+  <TooltipBasicDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="outline">Hover me</Button>
+    </TooltipTrigger>
+    <TooltipContent>
+      This is a tooltip
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Variants
+
+Two visual styles: `default` (dark background) and `light` (light background with border).
+
+<ComponentPreview title="Tooltip Variants">
+  <TooltipVariantsDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="outline">Default</Button>
+    </TooltipTrigger>
+    <TooltipContent variant="default">
+      Default dark tooltip
+    </TooltipContent>
+  </Tooltip>
+
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="outline">Light</Button>
+    </TooltipTrigger>
+    <TooltipContent variant="light">
+      Light tooltip with border
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Arrow
+
+Use `showArrow` to display an arrow pointing to the trigger. The arrow color matches the variant automatically.
+
+<ComponentPreview title="Tooltip with Arrow">
+  <TooltipArrowDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<TooltipContent showArrow>
+  Tooltip with arrow
+</TooltipContent>
+
+<TooltipContent variant="light" showArrow>
+  Light tooltip with arrow
+</TooltipContent>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Positioning
+
+Control tooltip placement with the `side` prop. Radix automatically flips to the opposite side when there isn't enough space.
+
+<ComponentPreview title="Tooltip Sides">
+  <TooltipSidesDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<TooltipContent side="top" showArrow>Top</TooltipContent>
+<TooltipContent side="bottom" showArrow>Bottom</TooltipContent>
+<TooltipContent side="left" showArrow>Left</TooltipContent>
+<TooltipContent side="right" showArrow>Right</TooltipContent>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Delay Configuration
+
+Control how quickly tooltips appear via `TooltipProvider` or per-tooltip `delayDuration`.
+
+```tsx
+{/* Global: 500ms delay */}
+<TooltipProvider delayDuration={500}>
+  <Tooltip>...</Tooltip>
+</TooltipProvider>
+
+{/* Per-tooltip: instant */}
+<TooltipProvider>
+  <Tooltip delayDuration={0}>
+    <TooltipTrigger>Instant tooltip</TooltipTrigger>
+    <TooltipContent>Shows immediately</TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+
+## Controlled Mode
+
+Control the tooltip open state externally using React state.
+
+```tsx
+function ControlledTooltip() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <TooltipProvider>
+      <Tooltip open={open} onOpenChange={setOpen}>
+        <TooltipTrigger asChild>
+          <Button>Controlled</Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          Controlled tooltip
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+```
+
+## Component Architecture
+
+| Component | Description |
+|-----------|-------------|
+| `TooltipProvider` | Context provider for global delay settings. Place at app root. |
+| `Tooltip` | Root component managing open/close state (Radix Tooltip.Root) |
+| `TooltipTrigger` | Element that shows tooltip on hover/focus (Radix Tooltip.Trigger) |
+| `TooltipContent` | Tooltip panel with variant styling, rendered via Portal |
+| `TooltipArrow` | Arrow indicator matching the content variant color |
+
+## Props
+
+### TooltipProvider
+
+<PropsTable
+  props={[
+    {
+      name: 'delayDuration',
+      type: 'number',
+      default: '300',
+      description: 'Delay in ms before the tooltip opens',
+    },
+    {
+      name: 'skipDelayDuration',
+      type: 'number',
+      default: '300',
+      description: 'Delay for the next tooltip when one was recently visible',
+    },
+    {
+      name: 'disableHoverableContent',
+      type: 'boolean',
+      default: 'false',
+      description: 'When true, hovering the tooltip content will not keep it open',
+    },
+  ]}
+/>
+
+### Tooltip (Root)
+
+<PropsTable
+  props={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state for uncontrolled usage',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open: boolean) => void',
+      description: 'Callback when the open state changes',
+    },
+    {
+      name: 'delayDuration',
+      type: 'number',
+      description: 'Override the delay from the Provider for this tooltip',
+    },
+  ]}
+/>
+
+### TooltipContent
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: "'default' | 'light'",
+      default: "'default'",
+      description: 'Visual style variant',
+    },
+    {
+      name: 'side',
+      type: "'top' | 'bottom' | 'left' | 'right'",
+      default: "'top'",
+      description: 'Preferred side to display the tooltip',
+    },
+    {
+      name: 'sideOffset',
+      type: 'number',
+      default: '4',
+      description: 'Distance in px between the tooltip and the trigger',
+    },
+    {
+      name: 'showArrow',
+      type: 'boolean',
+      default: 'false',
+      description: 'Show an arrow pointing to the trigger element',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+## Accessibility
+
+Built on Radix UI Tooltip with full accessibility support:
+
+- **role="tooltip"**: Content is announced as a tooltip to screen readers
+- **aria-describedby**: Trigger is automatically linked to the tooltip content
+- **Keyboard focus**: Tooltip shows when trigger receives keyboard focus
+- **Escape key**: Pressing Escape dismisses the tooltip immediately
+- **Portal rendering**: Content renders outside the DOM hierarchy without affecting the accessibility tree
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Tab | Focus trigger to show tooltip |
+| Escape | Dismiss the tooltip |
+
+## Related Components
+
+- [Modal](/components/layout/modal/) — Dialog overlay for focused interactions
+- [Toast](/components/feedback/toast/) — Temporary notification messages

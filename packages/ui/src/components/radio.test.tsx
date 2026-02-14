@@ -138,7 +138,7 @@ describe('Radio', () => {
       );
 
       const radios = screen.getAllByRole('radio');
-      await user.click(radios[0]);
+      await user.click(radios[0]!);
 
       await waitFor(() => {
         expect(radios[0]).toBeChecked();
@@ -159,13 +159,13 @@ describe('Radio', () => {
       const radios = screen.getAllByRole('radio');
 
       // Select first option
-      await user.click(radios[0]);
+      await user.click(radios[0]!);
       await waitFor(() => {
         expect(radios[0]).toBeChecked();
       });
 
       // Select second option
-      await user.click(radios[1]);
+      await user.click(radios[1]!);
       await waitFor(() => {
         expect(radios[0]).not.toBeChecked();
         expect(radios[1]).toBeChecked();
@@ -173,7 +173,7 @@ describe('Radio', () => {
       });
 
       // Select third option
-      await user.click(radios[2]);
+      await user.click(radios[2]!);
       await waitFor(() => {
         expect(radios[0]).not.toBeChecked();
         expect(radios[1]).not.toBeChecked();
@@ -192,10 +192,10 @@ describe('Radio', () => {
         </RadioGroup>
       );
 
-      await user.click(screen.getAllByRole('radio')[0]);
+      await user.click(screen.getAllByRole('radio')[0]!);
       expect(handleChange).toHaveBeenCalledWith('option1');
 
-      await user.click(screen.getAllByRole('radio')[1]);
+      await user.click(screen.getAllByRole('radio')[1]!);
       expect(handleChange).toHaveBeenCalledWith('option2');
     });
 
@@ -373,11 +373,11 @@ describe('Radio', () => {
       const radios = screen.getAllByRole('radio');
 
       // Try to select disabled option
-      await user.click(radios[1]);
+      await user.click(radios[1]!);
       expect(handleChange).not.toHaveBeenCalled();
 
       // Select enabled option works
-      await user.click(radios[0]);
+      await user.click(radios[0]!);
       expect(handleChange).toHaveBeenCalledWith('option1');
     });
   });
@@ -417,7 +417,7 @@ describe('Radio', () => {
         </RadioGroup>
       );
 
-      await user.click(screen.getAllByRole('radio')[1]);
+      await user.click(screen.getAllByRole('radio')[1]!);
       expect(handleChange).toHaveBeenCalledWith('option2');
     });
   });
@@ -663,10 +663,10 @@ describe('Radio', () => {
 
       const radios = screen.getAllByRole('radio');
 
-      await user.click(radios[1]);
+      await user.click(radios[1]!);
       expect(handleChange).toHaveBeenCalledWith('second');
 
-      await user.click(radios[2]);
+      await user.click(radios[2]!);
       expect(handleChange).toHaveBeenCalledWith('third');
     });
   });

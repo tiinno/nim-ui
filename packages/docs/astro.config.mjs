@@ -92,6 +92,17 @@ export default defineConfig({
               ],
             },
             {
+              label: 'Feedback',
+              collapsed: false,
+              items: [
+                { label: 'Toast', slug: 'components/feedback/toast' },
+                { label: 'Tooltip', slug: 'components/feedback/tooltip' },
+                { label: 'Popover', slug: 'components/feedback/popover' },
+                { label: 'Dropdown Menu', slug: 'components/feedback/dropdown-menu' },
+                { label: 'Alert Dialog', slug: 'components/feedback/alert-dialog' },
+              ],
+            },
+            {
               label: 'Forms',
               collapsed: false,
               items: [

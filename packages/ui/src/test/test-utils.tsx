@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
+import { render, type RenderOptions, type RenderResult } from '@testing-library/react';
 
 /**
  * Custom render function with common providers
@@ -7,7 +7,7 @@ import { render, RenderOptions } from '@testing-library/react';
 export function renderWithProviders(
   ui: ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>
-) {
+): RenderResult {
   return render(ui, { ...options });
 }
 
