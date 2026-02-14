@@ -14,7 +14,7 @@ export default defineConfig({
         replacesTitle: true,
       },
       social: {
-        github: 'https://github.com/nim-ui/nim-ui',
+        github: 'https://github.com/tiinno/nim-ui',
       },
       customCss: [
         './src/styles/custom.css',
@@ -149,7 +149,7 @@ export default defineConfig({
         Head: './src/components/Head.astro',
       },
       editLink: {
-        baseUrl: 'https://github.com/nim-ui/nim-ui/edit/main/packages/docs/',
+        baseUrl: 'https://github.com/tiinno/nim-ui/edit/main/packages/docs/',
       },
       lastUpdated: true,
       expressiveCode: {
