@@ -15,7 +15,12 @@
       "Bash(pnpm --filter @tiinno-ui/components add:*)",
       "Bash(pnpm test:coverage:*)",
       "Bash(pnpm test:*)",
-      "Bash(pnpm test:run:*)"
+      "Bash(pnpm test:run:*)",
+      "Bash(python3:*)",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "Bash(pnpm --filter @tiinno-ui/components typecheck:*)",
+      "Bash(pnpm --filter @tiinno-ui/components test:*)"
     ]
   }
 }
