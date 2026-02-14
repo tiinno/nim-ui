@@ -19,7 +19,7 @@ build
 *.swp
 *.swo
 .kiro
-.claude/settings.local.json
+.claude
 
 # OS
 .DS_Store
