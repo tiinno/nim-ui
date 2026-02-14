@@ -36,3 +36,7 @@ coverage
 tmp
 temp
 *.tmp
+quick-test.*
+COMPONENTS_SUMMARY.md
+TEST_COMPONENTS.md
+scripts/convert-colors.*
