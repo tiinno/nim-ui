@@ -1,0 +1,147 @@
+---
+title: Progress
+description: A progress bar component for displaying completion percentage
+---
+
+import { Progress } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Progress component displays a horizontal bar that fills based on a value, indicating completion status. It supports color variants, three sizes, and an optional percentage label.
+
+## Import
+
+```tsx
+import { Progress } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Default Progress">
+  <Progress client:load value={60} className="w-full" />
+
+  <Fragment slot="code">
+```tsx
+<Progress value={60} />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Variants
+
+Five color variants to communicate different states.
+
+<ComponentPreview title="Progress Variants">
+  <div class="space-y-3 w-full">
+    <Progress client:load value={60} variant="default" />
+    <Progress client:load value={80} variant="success" />
+    <Progress client:load value={45} variant="warning" />
+    <Progress client:load value={30} variant="danger" />
+    <Progress client:load value={70} variant="info" />
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<Progress value={60} variant="default" />
+<Progress value={80} variant="success" />
+<Progress value={45} variant="warning" />
+<Progress value={30} variant="danger" />
+<Progress value={70} variant="info" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Three sizes: `sm`, `md` (default), and `lg`. The percentage label is only visible at `lg` size.
+
+<ComponentPreview title="Progress Sizes">
+  <div class="space-y-3 w-full">
+    <Progress client:load value={50} size="sm" />
+    <Progress client:load value={50} size="md" />
+    <Progress client:load value={50} size="lg" showLabel />
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<Progress value={50} size="sm" />
+<Progress value={50} size="md" />
+<Progress value={50} size="lg" showLabel />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'number',
+      required: true,
+      description: 'Current progress value',
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: '100',
+      description: 'Maximum value',
+    },
+    {
+      name: 'variant',
+      type: "'default' | 'success' | 'warning' | 'danger' | 'info'",
+      default: "'default'",
+      description: 'Color variant of the progress indicator',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Height of the progress bar',
+    },
+    {
+      name: 'showLabel',
+      type: 'boolean',
+      default: 'false',
+      description: 'Display percentage text (only visible at lg size)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### File Upload Progress
+
+```tsx
+function FileUpload({ progress }: { progress: number }) {
+  return (
+    <div className="space-y-2">
+      <div className="flex justify-between text-sm">
+        <span>Uploading...</span>
+        <span>{progress}%</span>
+      </div>
+      <Progress
+        value={progress}
+        variant={progress === 100 ? 'success' : 'default'}
+        size="md"
+      />
+    </div>
+  );
+}
+```
+
+## Accessibility
+
+- Uses `role="progressbar"` for screen reader support
+- Includes `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` attributes
+- Smooth width transition with `duration-slow` easing
+
+## Related Components
+
+- [Spinner](/components/feedback/spinner/) — Indeterminate loading indicator
+- [Skeleton](/components/feedback/skeleton/) — Content placeholder

@@ -1,0 +1,139 @@
+---
+title: Spinner
+description: An animated loading indicator for asynchronous operations
+---
+
+import { Spinner } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Spinner component provides a rotating SVG animation to indicate loading or processing states. It includes screen reader support via a hidden label.
+
+## Import
+
+```tsx
+import { Spinner } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Default Spinner">
+  <Spinner client:load />
+
+  <Fragment slot="code">
+```tsx
+<Spinner />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sizes
+
+Four sizes available: `sm`, `md` (default), `lg`, and `xl`.
+
+<ComponentPreview title="Spinner Sizes">
+  <div class="flex items-center gap-4">
+    <Spinner client:load size="sm" />
+    <Spinner client:load size="md" />
+    <Spinner client:load size="lg" />
+    <Spinner client:load size="xl" />
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+<Spinner size="xl" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Variants
+
+Five color variants to match different contexts.
+
+<ComponentPreview title="Spinner Variants">
+  <div class="flex items-center gap-4">
+    <Spinner client:load variant="default" size="lg" />
+    <Spinner client:load variant="secondary" size="lg" />
+    <Spinner client:load variant="success" size="lg" />
+    <Spinner client:load variant="destructive" size="lg" />
+    <Spinner client:load variant="info" size="lg" />
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<Spinner variant="default" />
+<Spinner variant="secondary" />
+<Spinner variant="success" />
+<Spinner variant="destructive" />
+<Spinner variant="info" />
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg' | 'xl'",
+      default: "'md'",
+      description: 'Size of the spinner',
+    },
+    {
+      name: 'variant',
+      type: "'default' | 'secondary' | 'success' | 'destructive' | 'info'",
+      default: "'default'",
+      description: 'Color variant',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: "'Loading'",
+      description: 'Screen reader label text',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Button with Loading State
+
+```tsx
+<Button disabled={isLoading}>
+  {isLoading && <Spinner size="sm" variant="secondary" />}
+  {isLoading ? 'Saving...' : 'Save'}
+</Button>
+```
+
+### Full Page Loading
+
+```tsx
+function PageLoader() {
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <Spinner size="xl" label="Loading page..." />
+    </div>
+  );
+}
+```
+
+## Accessibility
+
+- Wrapped in `role="status"` container for screen reader announcements
+- SVG uses `aria-hidden="true"` to prevent redundant announcements
+- Hidden `sr-only` label provides accessible text (customizable via `label` prop)
+
+## Related Components
+
+- [Progress](/components/feedback/progress/) — Determinate progress bar
+- [Skeleton](/components/feedback/skeleton/) — Content placeholder
+- [Button](/components/primitives/button/) — Button with built-in loading state

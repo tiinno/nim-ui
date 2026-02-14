@@ -34,7 +34,7 @@ import { cn } from '../lib/utils';
  */
 
 const productCardVariants = cva(
-  'rounded-lg border bg-white overflow-hidden shadow-sm transition-shadow hover:shadow-md dark:bg-neutral-900 dark:border-neutral-700',
+  'rounded-lg border bg-white overflow-hidden shadow-sm transition-[box-shadow,transform] duration-fast ease-out hover:shadow-md dark:bg-neutral-900 dark:border-neutral-700',
   {
     variants: {},
     defaultVariants: {},

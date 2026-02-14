@@ -56,7 +56,7 @@ describe('ProductCard', () => {
         />
       );
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('transition-shadow');
+      expect(card).toHaveClass('transition-[box-shadow,transform]');
       expect(card).toHaveClass('hover:shadow-md');
     });
   });

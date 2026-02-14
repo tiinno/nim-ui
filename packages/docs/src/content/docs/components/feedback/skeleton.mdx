@@ -1,0 +1,136 @@
+---
+title: Skeleton
+description: Placeholder loading component with pulse animation for content that is loading
+---
+
+import { Skeleton } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Skeleton component renders a pulsing placeholder that mimics the shape of content being loaded. It has no props of its own — control size and shape entirely through `className`.
+
+## Import
+
+```tsx
+import { Skeleton } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Text Skeleton">
+  <div class="space-y-2 w-full">
+    <Skeleton client:load className="h-4 w-3/4" />
+    <Skeleton client:load className="h-4 w-1/2" />
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="space-y-2">
+  <Skeleton className="h-4 w-3/4" />
+  <Skeleton className="h-4 w-1/2" />
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Common Patterns
+
+### Card Skeleton
+
+<ComponentPreview title="Card Skeleton">
+  <div class="w-full max-w-sm space-y-3 rounded-lg border p-4">
+    <Skeleton client:load className="h-40 w-full rounded-md" />
+    <Skeleton client:load className="h-5 w-3/4" />
+    <Skeleton client:load className="h-4 w-1/2" />
+    <Skeleton client:load className="h-9 w-24" />
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="space-y-3 rounded-lg border p-4">
+  <Skeleton className="h-40 w-full rounded-md" />
+  <Skeleton className="h-5 w-3/4" />
+  <Skeleton className="h-4 w-1/2" />
+  <Skeleton className="h-9 w-24" />
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+### Avatar + Text Skeleton
+
+<ComponentPreview title="Profile Skeleton">
+  <div class="flex items-center gap-3">
+    <Skeleton client:load className="h-10 w-10 rounded-full" />
+    <div class="space-y-2">
+      <Skeleton client:load className="h-4 w-32" />
+      <Skeleton client:load className="h-3 w-24" />
+    </div>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex items-center gap-3">
+  <Skeleton className="h-10 w-10 rounded-full" />
+  <div className="space-y-2">
+    <Skeleton className="h-4 w-32" />
+    <Skeleton className="h-3 w-24" />
+  </div>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Controls width, height, and shape (e.g., h-4 w-48 rounded-full)',
+    },
+  ]}
+/>
+
+The Skeleton component accepts all standard `div` HTML attributes.
+
+## Usage Examples
+
+### Conditional Loading
+
+```tsx
+function UserProfile({ user, isLoading }: Props) {
+  if (isLoading) {
+    return (
+      <div className="flex items-center gap-3">
+        <Skeleton className="h-12 w-12 rounded-full" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-40" />
+          <Skeleton className="h-3 w-28" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      <Avatar src={user.avatar} />
+      <div>
+        <p className="font-medium">{user.name}</p>
+        <p className="text-sm text-neutral-500">{user.email}</p>
+      </div>
+    </div>
+  );
+}
+```
+
+## Accessibility
+
+- Uses `animate-pulse` CSS animation which respects `prefers-reduced-motion`
+- Pair with appropriate `aria-busy` and `aria-live` attributes on the parent container
+
+## Related Components
+
+- [Spinner](/components/feedback/spinner/) — Animated loading indicator
+- [Progress](/components/feedback/progress/) — Determinate progress bar

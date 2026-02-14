@@ -895,6 +895,167 @@
           "code": "<AlertDialog><AlertDialogTrigger><Button variant=\"destructive\">Delete Account</Button></AlertDialogTrigger><AlertDialogContent variant=\"destructive\"><AlertDialogHeader><AlertDialogTitle>Delete Account</AlertDialogTitle><AlertDialogDescription>This will permanently delete your account.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction>Delete</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>"
         }
       ]
+    },
+    {
+      "name": "Alert",
+      "category": "feedback",
+      "description": "An inline feedback message component for displaying contextual alerts with dismiss support",
+      "keywords": ["alert", "message", "notification", "feedback", "warning", "info"],
+      "file": "components/alert.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["info", "success", "warning", "destructive"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Info Alert",
+          "code": "<Alert variant=\"info\"><AlertTitle>Information</AlertTitle><AlertDescription>This is an informational message.</AlertDescription></Alert>"
+        },
+        {
+          "title": "Dismissible Alert",
+          "code": "<Alert variant=\"warning\" dismissible onDismiss={() => {}}><AlertTitle>Warning</AlertTitle><AlertDescription>Please review your input.</AlertDescription></Alert>"
+        }
+      ]
+    },
+    {
+      "name": "Progress",
+      "category": "feedback",
+      "description": "A progress bar component for displaying completion percentage with multiple variants",
+      "keywords": ["progress", "bar", "loading", "percentage", "completion"],
+      "file": "components/progress.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "success", "warning", "danger", "info"]
+        },
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Progress",
+          "code": "<Progress value={60} />"
+        },
+        {
+          "title": "Progress with Label",
+          "code": "<Progress value={75} variant=\"success\" size=\"lg\" showLabel />"
+        }
+      ]
+    },
+    {
+      "name": "Spinner",
+      "category": "feedback",
+      "description": "An animated loading spinner indicator with multiple sizes and color variants",
+      "keywords": ["spinner", "loading", "indicator", "busy", "wait"],
+      "file": "components/spinner.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "secondary", "success", "destructive", "info"]
+        },
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg", "xl"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Default Spinner",
+          "code": "<Spinner />"
+        },
+        {
+          "title": "Large Spinner with Label",
+          "code": "<Spinner size=\"xl\" label=\"Loading data...\" />"
+        }
+      ]
+    },
+    {
+      "name": "Skeleton",
+      "category": "feedback",
+      "description": "A placeholder loading component with pulse animation for content that is loading",
+      "keywords": ["skeleton", "loading", "placeholder", "shimmer", "pulse"],
+      "file": "components/skeleton.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Text Skeleton",
+          "code": "<Skeleton className=\"h-4 w-48\" />"
+        },
+        {
+          "title": "Card Skeleton",
+          "code": "<div className=\"space-y-3\"><Skeleton className=\"h-40 w-full\" /><Skeleton className=\"h-4 w-3/4\" /><Skeleton className=\"h-4 w-1/2\" /></div>"
+        }
+      ]
+    },
+    {
+      "name": "Accordion",
+      "category": "layout",
+      "description": "A collapsible content component for organizing information into expandable sections, built with Radix UI",
+      "keywords": ["accordion", "collapse", "expand", "toggle", "faq", "sections"],
+      "file": "components/accordion.tsx",
+      "variants": [],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Single Accordion",
+          "code": "<Accordion type=\"single\" collapsible><AccordionItem value=\"item-1\"><AccordionTrigger>Section 1</AccordionTrigger><AccordionContent>Content for section 1</AccordionContent></AccordionItem><AccordionItem value=\"item-2\"><AccordionTrigger>Section 2</AccordionTrigger><AccordionContent>Content for section 2</AccordionContent></AccordionItem></Accordion>"
+        },
+        {
+          "title": "Multiple Accordion",
+          "code": "<Accordion type=\"multiple\"><AccordionItem value=\"item-1\"><AccordionTrigger>First</AccordionTrigger><AccordionContent>First content</AccordionContent></AccordionItem></Accordion>"
+        }
+      ]
+    },
+    {
+      "name": "Separator",
+      "category": "layout",
+      "description": "A visual divider component for separating content sections, built with Radix UI",
+      "keywords": ["separator", "divider", "line", "hr", "border"],
+      "file": "components/separator.tsx",
+      "variants": [
+        {
+          "name": "orientation",
+          "values": ["horizontal", "vertical"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Horizontal Separator",
+          "code": "<div><p>Above</p><Separator /><p>Below</p></div>"
+        },
+        {
+          "title": "Vertical Separator",
+          "code": "<div className=\"flex h-5 items-center space-x-4\"><span>Left</span><Separator orientation=\"vertical\" /><span>Right</span></div>"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb",
+      "category": "navigation",
+      "description": "A navigation component for displaying the current page location within a hierarchical structure",
+      "keywords": ["breadcrumb", "navigation", "path", "trail", "hierarchy"],
+      "file": "components/breadcrumb.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Breadcrumb",
+          "code": "<Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href=\"/\">Home</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbLink href=\"/products\">Products</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>Details</BreadcrumbPage></BreadcrumbItem></BreadcrumbList></Breadcrumb>"
+        },
+        {
+          "title": "Breadcrumb with Links",
+          "code": "<Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href=\"/\">Home</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>Current Page</BreadcrumbPage></BreadcrumbItem></BreadcrumbList></Breadcrumb>"
+        }
+      ]
     }
   ]
 }

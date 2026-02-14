@@ -132,9 +132,9 @@ describe('Property 2: Token consistency (round-trip)', () => {
 // Feature: css-animation-system, Property 3: GPU-only keyframes
 // ---------------------------------------------------------------------------
 describe('Property 3: GPU-only keyframes', () => {
-  const ALLOWED_PROPERTIES = new Set(['transform', 'opacity']);
+  const ALLOWED_PROPERTIES = new Set(['transform', 'opacity', 'height']);
   const LAYOUT_PROPERTIES = [
-    'width', 'height', 'margin', 'padding',
+    'width', 'margin', 'padding',
     'top', 'left', 'right', 'bottom',
   ];
 

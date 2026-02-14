@@ -109,14 +109,14 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
-                  className="h-6 w-6 rounded-md border border-neutral-300 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800"
+                  className="h-6 w-6 cursor-pointer rounded-md border border-neutral-300 transition-colors hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800"
                   aria-label="Decrease quantity"
                 >
                   -
                 </button>
                 <button
                   onClick={() => onQuantityChange(quantity + 1)}
-                  className="h-6 w-6 rounded-md border border-neutral-300 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800"
+                  className="h-6 w-6 cursor-pointer rounded-md border border-neutral-300 transition-colors hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800"
                   aria-label="Increase quantity"
                 >
                   +
@@ -127,7 +127,7 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
           {onRemove && (
             <button
               onClick={onRemove}
-              className="text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+              className="cursor-pointer text-sm text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
             >
               Remove
             </button>

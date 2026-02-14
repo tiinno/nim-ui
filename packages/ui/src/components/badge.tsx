@@ -26,7 +26,10 @@ const badgeVariants = cva(
         default: 'bg-primary-600 text-white dark:bg-primary-700',
         secondary: 'bg-neutral-200 text-neutral-900 dark:bg-neutral-700 dark:text-neutral-100',
         outline: 'border border-neutral-300 bg-transparent text-neutral-900 dark:border-neutral-600 dark:text-neutral-100',
-        destructive: 'bg-red-600 text-white dark:bg-red-700',
+        destructive: 'bg-error-600 text-white dark:bg-error-700',
+        success: 'bg-success-600 text-white dark:bg-success-700',
+        warning: 'bg-warning-500 text-warning-950 dark:bg-warning-600 dark:text-warning-50',
+        info: 'bg-info-600 text-white dark:bg-info-700',
       },
       size: {
         sm: 'px-2 py-0.5 text-xs',

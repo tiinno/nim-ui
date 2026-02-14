@@ -259,8 +259,8 @@ const ToastClose = React.forwardRef<
   <ToastPrimitive.Close
     ref={ref}
     className={cn(
-      'absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-md text-neutral-400 transition-colors',
-      'hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400',
+      'absolute right-2 top-2 inline-flex h-6 w-6 cursor-pointer items-center justify-center rounded-md text-neutral-400 transition-colors',
+      'hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400',
       'dark:text-neutral-500 dark:hover:text-neutral-100',
       className
     )}
@@ -310,8 +310,8 @@ const ToastAction = React.forwardRef<
   <ToastPrimitive.Action
     ref={ref}
     className={cn(
-      'inline-flex shrink-0 items-center justify-center rounded-md border border-neutral-200 bg-transparent px-3 py-1.5 text-sm font-medium transition-colors',
-      'hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-400',
+      'inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-transparent px-3 py-1.5 text-sm font-medium transition-colors',
+      'hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400',
       'dark:border-neutral-700 dark:hover:bg-neutral-800',
       className
     )}

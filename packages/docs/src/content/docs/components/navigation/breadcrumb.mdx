@@ -1,0 +1,169 @@
+---
+title: Breadcrumb
+description: Navigation component for displaying the current page location within a hierarchy
+---
+
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Breadcrumb component displays a trail of links showing the user's current location within a site hierarchy. It uses semantic HTML (`nav` > `ol` > `li`) with proper ARIA attributes for accessibility.
+
+## Import
+
+```tsx
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Breadcrumb">
+  <Breadcrumb client:load>
+    <BreadcrumbList>
+      <BreadcrumbItem>
+        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbSeparator />
+      <BreadcrumbItem>
+        <BreadcrumbLink href="/products">Products</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbSeparator />
+      <BreadcrumbItem>
+        <BreadcrumbPage>Details</BreadcrumbPage>
+      </BreadcrumbItem>
+    </BreadcrumbList>
+  </Breadcrumb>
+
+  <Fragment slot="code">
+```tsx
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/products">Products</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Details</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Custom Separator
+
+Pass children to `BreadcrumbSeparator` to replace the default `/` separator.
+
+```tsx
+<BreadcrumbSeparator>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+</BreadcrumbSeparator>
+```
+
+## Component Architecture
+
+| Component | HTML Element | Description |
+|-----------|-------------|-------------|
+| `Breadcrumb` | `<nav>` | Root container with `aria-label="Breadcrumb"` |
+| `BreadcrumbList` | `<ol>` | Ordered list of breadcrumb items |
+| `BreadcrumbItem` | `<li>` | Individual breadcrumb entry |
+| `BreadcrumbLink` | `<a>` | Clickable link to a parent page |
+| `BreadcrumbPage` | `<span>` | Current page (non-clickable) |
+| `BreadcrumbSeparator` | `<li>` | Visual separator between items |
+
+## Props
+
+### BreadcrumbLink
+
+<PropsTable
+  props={[
+    {
+      name: 'href',
+      type: 'string',
+      description: 'URL for the breadcrumb link',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+### BreadcrumbSeparator
+
+<PropsTable
+  props={[
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: "'/'",
+      description: 'Custom separator content (defaults to /)',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Dynamic Breadcrumb
+
+```tsx
+interface BreadcrumbPath {
+  label: string;
+  href?: string;
+}
+
+function DynamicBreadcrumb({ paths }: { paths: BreadcrumbPath[] }) {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        {paths.map((path, index) => (
+          <React.Fragment key={path.label}>
+            {index > 0 && <BreadcrumbSeparator />}
+            <BreadcrumbItem>
+              {index === paths.length - 1 ? (
+                <BreadcrumbPage>{path.label}</BreadcrumbPage>
+              ) : (
+                <BreadcrumbLink href={path.href}>{path.label}</BreadcrumbLink>
+              )}
+            </BreadcrumbItem>
+          </React.Fragment>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+```
+
+## Accessibility
+
+- `<nav>` element with `aria-label="Breadcrumb"` for landmark navigation
+- Uses `<ol>` for ordered semantic structure
+- Current page marked with `aria-current="page"` and `aria-disabled="true"`
+- Separators use `role="presentation"` and `aria-hidden="true"`
+
+## Related Components
+
+- [Tabs](/components/layout/tabs/) — Content organization with tabbed interface

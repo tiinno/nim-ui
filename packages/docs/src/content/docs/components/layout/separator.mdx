@@ -1,0 +1,97 @@
+---
+title: Separator
+description: A visual divider for separating content sections horizontally or vertically
+---
+
+import { Separator } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Separator component renders a thin line to visually divide content sections. Built on [Radix UI Separator](https://www.radix-ui.com/primitives/docs/components/separator), it supports horizontal and vertical orientations with proper accessibility semantics.
+
+## Import
+
+```tsx
+import { Separator } from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Horizontal Separator">
+  <div class="w-full space-y-4">
+    <p>Content above the separator</p>
+    <Separator client:load />
+    <p>Content below the separator</p>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="space-y-4">
+  <p>Content above the separator</p>
+  <Separator />
+  <p>Content below the separator</p>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Vertical
+
+Use `orientation="vertical"` in a flex container.
+
+<ComponentPreview title="Vertical Separator">
+  <div class="flex h-5 items-center gap-4 text-sm">
+    <span>Blog</span>
+    <Separator client:load orientation="vertical" />
+    <span>Docs</span>
+    <Separator client:load orientation="vertical" />
+    <span>Source</span>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<div className="flex h-5 items-center gap-4 text-sm">
+  <span>Blog</span>
+  <Separator orientation="vertical" />
+  <span>Docs</span>
+  <Separator orientation="vertical" />
+  <span>Source</span>
+</div>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'orientation',
+      type: "'horizontal' | 'vertical'",
+      default: "'horizontal'",
+      description: 'Direction of the separator line',
+    },
+    {
+      name: 'decorative',
+      type: 'boolean',
+      default: 'true',
+      description: 'When true, renders as role="none" (purely visual)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- When `decorative={true}` (default): renders with `role="none"`, ignored by screen readers
+- When `decorative={false}`: renders with `role="separator"`, announced to screen readers
+- Proper `aria-orientation` attribute for vertical separators
+
+## Related Components
+
+- [Spacer](/components/layout/spacer/) — Flexible spacing element
+- [Stack](/components/layout/stack/) — Stacked layout with consistent spacing

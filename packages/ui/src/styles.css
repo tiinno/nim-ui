@@ -27,20 +27,57 @@
   --color-neutral-900: oklch(0.214 0.000 0);
   --color-neutral-950: oklch(0.145 0.000 0);
 
-  /* Success colors (OKLCH) */
+  /* Success colors (OKLCH) - green */
   --color-success-50: oklch(0.982 0.018 155.8);
+  --color-success-100: oklch(0.962 0.044 156.6);
+  --color-success-200: oklch(0.925 0.084 155.0);
+  --color-success-300: oklch(0.871 0.150 154.4);
+  --color-success-400: oklch(0.792 0.177 152.0);
   --color-success-500: oklch(0.723 0.191 149.6);
+  --color-success-600: oklch(0.627 0.174 149.2);
   --color-success-700: oklch(0.527 0.154 150.1);
+  --color-success-800: oklch(0.448 0.119 151.3);
+  --color-success-900: oklch(0.386 0.095 152.5);
+  --color-success-950: oklch(0.266 0.065 152.9);
 
-  /* Error colors (OKLCH) */
+  /* Error colors (OKLCH) - red */
   --color-error-50: oklch(0.971 0.013 17.4);
+  --color-error-100: oklch(0.946 0.030 18.8);
+  --color-error-200: oklch(0.896 0.076 19.9);
+  --color-error-300: oklch(0.828 0.141 21.1);
+  --color-error-400: oklch(0.740 0.213 23.6);
   --color-error-500: oklch(0.637 0.237 25.3);
+  --color-error-600: oklch(0.567 0.225 26.2);
   --color-error-700: oklch(0.505 0.213 27.3);
+  --color-error-800: oklch(0.444 0.177 26.9);
+  --color-error-900: oklch(0.396 0.141 25.7);
+  --color-error-950: oklch(0.258 0.092 26.0);
 
-  /* Warning colors (OKLCH) */
+  /* Warning colors (OKLCH) - amber */
   --color-warning-50: oklch(0.987 0.022 95.3);
+  --color-warning-100: oklch(0.968 0.052 95.1);
+  --color-warning-200: oklch(0.940 0.112 93.6);
+  --color-warning-300: oklch(0.905 0.163 84.4);
+  --color-warning-400: oklch(0.852 0.199 75.8);
   --color-warning-500: oklch(0.769 0.188 70.1);
+  --color-warning-600: oklch(0.666 0.179 58.3);
   --color-warning-700: oklch(0.555 0.163 58.7);
+  --color-warning-800: oklch(0.473 0.137 60.2);
+  --color-warning-900: oklch(0.414 0.112 61.1);
+  --color-warning-950: oklch(0.279 0.077 60.8);
+
+  /* Info colors (OKLCH) - blue */
+  --color-info-50: oklch(0.970 0.014 254.6);
+  --color-info-100: oklch(0.945 0.032 255.6);
+  --color-info-200: oklch(0.894 0.068 254.1);
+  --color-info-300: oklch(0.821 0.120 253.9);
+  --color-info-400: oklch(0.735 0.166 254.6);
+  --color-info-500: oklch(0.623 0.214 259.1);
+  --color-info-600: oklch(0.546 0.215 262.9);
+  --color-info-700: oklch(0.488 0.196 264.4);
+  --color-info-800: oklch(0.424 0.160 265.6);
+  --color-info-900: oklch(0.379 0.126 264.5);
+  --color-info-950: oklch(0.282 0.091 267.9);
 
   /* Animation duration tokens */
   --duration-fast: 150ms;
@@ -65,6 +102,8 @@
   --animate-slide-out-to-bottom: slide-out-to-bottom var(--duration-normal) var(--ease-in);
   --animate-slide-out-to-left: slide-out-to-left var(--duration-slow) var(--ease-in);
   --animate-slide-out-to-right: slide-out-to-right var(--duration-slow) var(--ease-in);
+  --animate-accordion-down: accordion-down var(--duration-normal) var(--ease-out);
+  --animate-accordion-up: accordion-up var(--duration-normal) var(--ease-in);
 }
 
 /* Fade */
@@ -123,6 +162,16 @@
   to { transform: translateX(100%); }
 }
 
+/* Accordion */
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
 /* Reduced motion: disable animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -146,6 +195,15 @@
     --accent: oklch(0.970 0.000 0);
     --accent-foreground: oklch(0.214 0.000 0);
     --border: oklch(0.922 0.000 0);
+    --destructive: oklch(0.637 0.237 25.3);
+    --destructive-foreground: oklch(0.985 0.000 0);
+    --info: oklch(0.623 0.214 259.1);
+    --info-foreground: oklch(0.985 0.000 0);
+    --success: oklch(0.723 0.191 149.6);
+    --success-foreground: oklch(0.985 0.000 0);
+    --warning: oklch(0.769 0.188 70.1);
+    --warning-foreground: oklch(0.214 0.000 0);
+    --ring: oklch(0.685 0.169 237.3);
     --radius: 0.5rem;
   }
 
@@ -162,5 +220,14 @@
     --accent: oklch(0.278 0.000 0);
     --accent-foreground: oklch(0.985 0.000 0);
     --border: oklch(0.278 0.000 0);
+    --destructive: oklch(0.567 0.225 26.2);
+    --destructive-foreground: oklch(0.985 0.000 0);
+    --info: oklch(0.546 0.215 262.9);
+    --info-foreground: oklch(0.985 0.000 0);
+    --success: oklch(0.627 0.174 149.2);
+    --success-foreground: oklch(0.985 0.000 0);
+    --warning: oklch(0.852 0.199 75.8);
+    --warning-foreground: oklch(0.214 0.000 0);
+    --ring: oklch(0.685 0.169 237.3);
   }
 }

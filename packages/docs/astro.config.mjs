@@ -58,6 +58,8 @@ export default defineConfig({
                 { label: 'Modal', slug: 'components/layout/modal' },
                 { label: 'Drawer', slug: 'components/layout/drawer' },
                 { label: 'Tabs', slug: 'components/layout/tabs' },
+                { label: 'Accordion', slug: 'components/layout/accordion' },
+                { label: 'Separator', slug: 'components/layout/separator' },
               ],
             },
             {
@@ -100,6 +102,10 @@ export default defineConfig({
                 { label: 'Popover', slug: 'components/feedback/popover' },
                 { label: 'Dropdown Menu', slug: 'components/feedback/dropdown-menu' },
                 { label: 'Alert Dialog', slug: 'components/feedback/alert-dialog' },
+                { label: 'Alert', slug: 'components/feedback/alert' },
+                { label: 'Progress', slug: 'components/feedback/progress' },
+                { label: 'Spinner', slug: 'components/feedback/spinner' },
+                { label: 'Skeleton', slug: 'components/feedback/skeleton' },
               ],
             },
             {
@@ -108,6 +114,13 @@ export default defineConfig({
               items: [
                 { label: 'Form', slug: 'components/forms/form' },
                 { label: 'FormField', slug: 'components/forms/form-field' },
+              ],
+            },
+            {
+              label: 'Navigation',
+              collapsed: false,
+              items: [
+                { label: 'Breadcrumb', slug: 'components/navigation/breadcrumb' },
               ],
             },
           ],

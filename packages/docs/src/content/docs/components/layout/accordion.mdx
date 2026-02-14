@@ -1,0 +1,178 @@
+---
+title: Accordion
+description: Collapsible content sections for organizing information into expandable panels
+---
+
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@tiinno-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Accordion component organizes content into collapsible sections. Built on [Radix UI Accordion](https://www.radix-ui.com/primitives/docs/components/accordion), it supports single or multiple open panels, animated transitions, and full keyboard navigation.
+
+## Import
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Single Accordion">
+  <Accordion client:only="react" type="single" collapsible className="w-full">
+    <AccordionItem value="item-1">
+      <AccordionTrigger>Is it accessible?</AccordionTrigger>
+      <AccordionContent>Yes. It adheres to the WAI-ARIA Accordion pattern.</AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="item-2">
+      <AccordionTrigger>Is it styled?</AccordionTrigger>
+      <AccordionContent>Yes. It comes with default styling using Tailwind CSS.</AccordionContent>
+    </AccordionItem>
+    <AccordionItem value="item-3">
+      <AccordionTrigger>Is it animated?</AccordionTrigger>
+      <AccordionContent>Yes. It uses CSS animations for smooth open/close transitions.</AccordionContent>
+    </AccordionItem>
+  </Accordion>
+
+  <Fragment slot="code">
+```tsx
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It adheres to the WAI-ARIA Accordion pattern.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>Is it styled?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It comes with default styling using Tailwind CSS.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Multiple Open
+
+Set `type="multiple"` to allow multiple sections to be open simultaneously.
+
+```tsx
+<Accordion type="multiple" defaultValue={['item-1', 'item-3']}>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Section 1</AccordionTrigger>
+    <AccordionContent>Content 1</AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>Section 2</AccordionTrigger>
+    <AccordionContent>Content 2</AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-3">
+    <AccordionTrigger>Section 3</AccordionTrigger>
+    <AccordionContent>Content 3</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Props
+
+### Accordion
+
+<PropsTable
+  props={[
+    {
+      name: 'type',
+      type: "'single' | 'multiple'",
+      required: true,
+      description: 'Whether one or multiple items can be open at once',
+    },
+    {
+      name: 'collapsible',
+      type: 'boolean',
+      default: 'false',
+      description: 'Allow closing all items (only for type="single")',
+    },
+    {
+      name: 'defaultValue',
+      type: 'string | string[]',
+      description: 'Initially open item(s)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+### AccordionItem
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      required: true,
+      description: 'Unique identifier for this item',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      description: 'Prevent opening this item',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### FAQ Section
+
+```tsx
+const faqs = [
+  { q: 'How do I get started?', a: 'Install the package and import components.' },
+  { q: 'Is dark mode supported?', a: 'Yes, all components support dark mode.' },
+  { q: 'Can I customize styles?', a: 'Yes, use className or Tailwind utilities.' },
+];
+
+function FAQ() {
+  return (
+    <Accordion type="single" collapsible>
+      {faqs.map((faq, i) => (
+        <AccordionItem key={i} value={`faq-${i}`}>
+          <AccordionTrigger>{faq.q}</AccordionTrigger>
+          <AccordionContent>{faq.a}</AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+}
+```
+
+## Accessibility
+
+Built on Radix UI Accordion with full accessibility support:
+
+- **WAI-ARIA Accordion pattern** compliance
+- **Keyboard navigation**: Arrow keys navigate between triggers, Enter/Space toggles
+- **Focus management**: Focus ring visible on trigger elements
+- **Reduced motion**: Animations respect `prefers-reduced-motion`
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Enter / Space | Toggle the focused section |
+| Arrow Down | Move focus to next trigger |
+| Arrow Up | Move focus to previous trigger |
+| Home | Move focus to first trigger |
+| End | Move focus to last trigger |
+
+## Related Components
+
+- [Tabs](/components/layout/tabs/) — Content organization with tabbed interface
+- [Card](/components/layout/card/) — Content container
