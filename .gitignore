@@ -13,11 +13,13 @@ build
 .env
 .env*.local
 
-# IDEs
+# IDEs & Tools
 .vscode
 .idea
 *.swp
 *.swo
+.kiro
+.claude/settings.local.json
 
 # OS
 .DS_Store
