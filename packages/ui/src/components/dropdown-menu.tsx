@@ -161,8 +161,8 @@ const DropdownMenuItem = React.forwardRef<
     ref={ref}
     className={cn(
       'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',
-      'focus:bg-primary-500 focus:text-white',
-      'dark:focus:bg-primary-600 dark:focus:text-white',
+      'focus-visible:bg-primary-500 focus-visible:text-white',
+      'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',
       'data-disabled:pointer-events-none data-disabled:opacity-50 data-disabled:cursor-default',
       inset && 'pl-8',
       className
@@ -233,8 +233,8 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     ref={ref}
     className={cn(
       'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors',
-      'focus:bg-primary-500 focus:text-white',
-      'dark:focus:bg-primary-600 dark:focus:text-white',
+      'focus-visible:bg-primary-500 focus-visible:text-white',
+      'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',
       'data-disabled:pointer-events-none data-disabled:opacity-50 data-disabled:cursor-default',
       className
     )}
@@ -276,8 +276,8 @@ const DropdownMenuRadioItem = React.forwardRef<
     ref={ref}
     className={cn(
       'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors',
-      'focus:bg-primary-500 focus:text-white',
-      'dark:focus:bg-primary-600 dark:focus:text-white',
+      'focus-visible:bg-primary-500 focus-visible:text-white',
+      'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',
       'data-disabled:pointer-events-none data-disabled:opacity-50 data-disabled:cursor-default',
       className
     )}
@@ -321,9 +321,9 @@ const DropdownMenuSubTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',
-      'focus:bg-primary-500 focus:text-white',
+      'focus-visible:bg-primary-500 focus-visible:text-white',
       'data-[state=open]:bg-neutral-100 dark:data-[state=open]:bg-neutral-700',
-      'dark:focus:bg-primary-600 dark:focus:text-white',
+      'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',
       inset && 'pl-8',
       className
     )}

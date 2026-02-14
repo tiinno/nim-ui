@@ -125,7 +125,7 @@ const SelectLabel = React.forwardRef<
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
 const selectItemVariants = cva(
-  'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-neutral-100 focus:text-neutral-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-neutral-800 dark:focus:text-neutral-100 dark:text-neutral-100',
+  'relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus-visible:bg-neutral-100 focus-visible:text-neutral-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus-visible:bg-neutral-800 dark:focus-visible:text-neutral-100 dark:text-neutral-100',
   {
     variants: {},
     defaultVariants: {},

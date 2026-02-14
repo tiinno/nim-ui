@@ -17,7 +17,7 @@ import { toastStore } from './toast-store';
  * ```
  */
 const viewportVariants = cva(
-  'fixed z-[100] flex w-[380px] max-w-[calc(100vw-2rem)] flex-col gap-3 p-4 max-h-screen',
+  'fixed z-[100] flex w-full sm:w-[380px] max-w-[calc(100vw-2rem)] flex-col gap-3 p-4 max-h-screen',
   {
     variants: {
       position: {

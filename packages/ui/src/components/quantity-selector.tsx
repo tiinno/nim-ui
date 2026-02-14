@@ -72,7 +72,7 @@ const QuantitySelector = React.forwardRef<HTMLDivElement, QuantitySelectorProps>
     };
 
     const buttonClass = cn(
-      'px-3 font-medium transition-colors hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-neutral-800 dark:text-neutral-100',
+      'cursor-pointer px-3 font-medium transition-colors hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-neutral-800 dark:text-neutral-100',
       size === 'sm' && 'text-sm',
       size === 'md' && 'text-base',
       size === 'lg' && 'text-lg'
