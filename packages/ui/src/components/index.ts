@@ -44,3 +44,9 @@ export * from './radio';
 // Feedback
 export * from './toast';
 export * from './toast-store';
+
+// Overlay
+export * from './tooltip';
+export * from './popover';
+export * from './dropdown-menu';
+export * from './alert-dialog';

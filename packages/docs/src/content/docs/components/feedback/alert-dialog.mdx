@@ -1,0 +1,201 @@
+---
+title: Alert Dialog
+description: A modal dialog for confirming destructive or important actions that requires explicit user response
+---
+
+import { AlertDialogBasicDemo, AlertDialogDestructiveDemo } from '../../../../components/AlertDialogDemo';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Alert Dialog component displays a modal dialog that interrupts the user to confirm a critical action. Unlike regular dialogs, alert dialogs cannot be dismissed by clicking the overlay — users must explicitly choose an action. Built on [Radix UI Alert Dialog](https://www.radix-ui.com/primitives/docs/components/alert-dialog).
+
+## Import
+
+```tsx
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Alert Dialog">
+  <AlertDialogBasicDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">Delete Item</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone. This will permanently delete the item.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel asChild>
+        <Button variant="outline">Cancel</Button>
+      </AlertDialogCancel>
+      <AlertDialogAction asChild>
+        <Button>Continue</Button>
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Destructive Variant
+
+Use `variant="destructive"` for dangerous actions like account deletion. This adds a red accent border to visually signal danger.
+
+<ComponentPreview title="Destructive Alert Dialog">
+  <AlertDialogDestructiveDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="destructive">Delete Account</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent variant="destructive">
+    <AlertDialogHeader>
+      <AlertDialogTitle>Delete Account</AlertDialogTitle>
+      <AlertDialogDescription>
+        This will permanently delete your account and all associated data.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel asChild>
+        <Button variant="outline">Cancel</Button>
+      </AlertDialogCancel>
+      <AlertDialogAction asChild>
+        <Button variant="destructive">Delete</Button>
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Controlled Mode
+
+```tsx
+function ControlledAlertDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger asChild>
+        <Button>Controlled</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Confirm</AlertDialogTitle>
+          <AlertDialogDescription>Are you sure?</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel asChild>
+            <Button variant="outline">Cancel</Button>
+          </AlertDialogCancel>
+          <AlertDialogAction asChild>
+            <Button onClick={() => setOpen(false)}>Confirm</Button>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+```
+
+## Component Architecture
+
+| Component | Description |
+|-----------|-------------|
+| `AlertDialog` | Root component managing open/close state (Radix AlertDialog.Root) |
+| `AlertDialogTrigger` | Element that opens the alert dialog on click |
+| `AlertDialogContent` | Centered modal panel with variant styling, rendered via Portal |
+| `AlertDialogOverlay` | Backdrop overlay (included automatically by Content) |
+| `AlertDialogHeader` | Container for Title and Description |
+| `AlertDialogFooter` | Container for Action and Cancel buttons |
+| `AlertDialogTitle` | Dialog heading, linked via aria-labelledby |
+| `AlertDialogDescription` | Dialog body text, linked via aria-describedby |
+| `AlertDialogAction` | Confirm button that closes the dialog |
+| `AlertDialogCancel` | Cancel button that closes the dialog |
+
+## Props
+
+### AlertDialog (Root)
+
+<PropsTable
+  props={[
+    { name: 'open', type: 'boolean', description: 'Controlled open state' },
+    { name: 'defaultOpen', type: 'boolean', default: 'false', description: 'Initial open state for uncontrolled usage' },
+    { name: 'onOpenChange', type: '(open: boolean) => void', description: 'Callback when the open state changes' },
+  ]}
+/>
+
+### AlertDialogContent
+
+<PropsTable
+  props={[
+    { name: 'variant', type: "'default' | 'destructive'", default: "'default'", description: 'Visual style variant. Use destructive for dangerous actions.' },
+    { name: 'className', type: 'string', description: 'Additional CSS classes' },
+  ]}
+/>
+
+### AlertDialogAction / AlertDialogCancel
+
+<PropsTable
+  props={[
+    { name: 'asChild', type: 'boolean', default: 'false', description: 'Use child element as the button' },
+  ]}
+/>
+
+## Accessibility
+
+Built on Radix UI Alert Dialog with full accessibility support:
+
+- **role="alertdialog"**: Content is announced as an alert dialog to screen readers
+- **aria-labelledby**: Automatically linked to AlertDialogTitle
+- **aria-describedby**: Automatically linked to AlertDialogDescription
+- **Focus trapping**: Focus is trapped within the dialog while open
+- **Focus restoration**: Focus returns to the trigger when the dialog closes
+- **Escape key**: Pressing Escape dismisses the dialog
+- **No overlay dismiss**: Clicking the overlay does NOT close the dialog (requires explicit action)
+- **Portal rendering**: Content renders outside the DOM hierarchy without affecting the accessibility tree
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Enter / Space | Open dialog (on trigger) |
+| Escape | Close the dialog |
+| Tab | Navigate within dialog content |
+
+## Alert Dialog vs Dialog
+
+| Feature | Alert Dialog | Dialog (Modal) |
+|---------|-------------|----------------|
+| Overlay dismiss | No | Yes |
+| ARIA role | alertdialog | dialog |
+| Use case | Destructive/important confirmations | General content |
+| User response | Required (Action or Cancel) | Optional |
+
+## Related Components
+
+- [Modal](/components/layout/modal/) — General-purpose dialog overlay
+- [Popover](/components/feedback/popover/) — Non-modal floating panel

@@ -1,0 +1,275 @@
+---
+title: Dropdown Menu
+description: Displays a menu of actions or options triggered by a button click
+---
+
+import { DropdownMenuBasicDemo, DropdownMenuVariantsDemo, DropdownMenuCheckboxDemo, DropdownMenuRadioDemo, DropdownMenuSubMenuDemo } from '../../../../components/DropdownMenuDemo';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The DropdownMenu component displays a list of actions or options when users click a trigger element. Built on [Radix UI DropdownMenu](https://www.radix-ui.com/primitives/docs/components/dropdown-menu), it handles positioning, keyboard navigation, focus management, checkbox/radio items, and sub-menus automatically.
+
+## Import
+
+```tsx
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Dropdown Menu">
+  <DropdownMenuBasicDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline">Open Menu</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem>Profile</DropdownMenuItem>
+    <DropdownMenuItem>Settings</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem>Log out</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Variants
+
+Two visual styles: `default` (subtle border) and `outline` (thicker border).
+
+<ComponentPreview title="Dropdown Menu Variants">
+  <DropdownMenuVariantsDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<DropdownMenuContent variant="default">...</DropdownMenuContent>
+<DropdownMenuContent variant="outline">...</DropdownMenuContent>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Checkbox Items
+
+Use `DropdownMenuCheckboxItem` for togglable options within the menu.
+
+<ComponentPreview title="Checkbox Items">
+  <DropdownMenuCheckboxDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+const [showToolbar, setShowToolbar] = useState(true);
+const [showSidebar, setShowSidebar] = useState(false);
+
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline">View Options</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuCheckboxItem checked={showToolbar} onCheckedChange={setShowToolbar}>
+      Show Toolbar
+    </DropdownMenuCheckboxItem>
+    <DropdownMenuCheckboxItem checked={showSidebar} onCheckedChange={setShowSidebar}>
+      Show Sidebar
+    </DropdownMenuCheckboxItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Radio Items
+
+Use `DropdownMenuRadioGroup` and `DropdownMenuRadioItem` for exclusive selection.
+
+<ComponentPreview title="Radio Items">
+  <DropdownMenuRadioDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+const [theme, setTheme] = useState('system');
+
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline">Theme: {theme}</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+      <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
+      <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
+      <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+    </DropdownMenuRadioGroup>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Sub-menus
+
+Nest `DropdownMenuSub` for hierarchical menu structures.
+
+<ComponentPreview title="Sub-menu">
+  <DropdownMenuSubMenuDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="outline">Actions</Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>New File</DropdownMenuItem>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>Share</DropdownMenuSubTrigger>
+      <DropdownMenuSubContent>
+        <DropdownMenuItem>Email</DropdownMenuItem>
+        <DropdownMenuItem>Slack</DropdownMenuItem>
+        <DropdownMenuItem>Copy Link</DropdownMenuItem>
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem>Delete</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Controlled Mode
+
+```tsx
+function ControlledMenu() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button>Controlled</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>Action</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+```
+
+## Component Architecture
+
+| Component | Description |
+|-----------|-------------|
+| `DropdownMenu` | Root component managing open/close state |
+| `DropdownMenuTrigger` | Element that opens the menu on click |
+| `DropdownMenuContent` | Floating menu panel with variant styling, rendered via Portal |
+| `DropdownMenuItem` | A single actionable menu item |
+| `DropdownMenuSeparator` | Horizontal divider between groups |
+| `DropdownMenuLabel` | Non-interactive label for grouping items |
+| `DropdownMenuCheckboxItem` | Togglable checkbox menu item |
+| `DropdownMenuRadioGroup` | Container for exclusive radio selection |
+| `DropdownMenuRadioItem` | Radio option within a group |
+| `DropdownMenuSub` | Sub-menu container |
+| `DropdownMenuSubTrigger` | Item that opens a sub-menu |
+| `DropdownMenuSubContent` | Floating panel for sub-menu items |
+
+## Props
+
+### DropdownMenu (Root)
+
+<PropsTable
+  props={[
+    { name: 'open', type: 'boolean', description: 'Controlled open state' },
+    { name: 'defaultOpen', type: 'boolean', default: 'false', description: 'Initial open state for uncontrolled usage' },
+    { name: 'onOpenChange', type: '(open: boolean) => void', description: 'Callback when the open state changes' },
+    { name: 'dir', type: "'ltr' | 'rtl'", description: 'Text direction' },
+    { name: 'modal', type: 'boolean', default: 'true', description: 'When true, traps focus and makes background inert' },
+  ]}
+/>
+
+### DropdownMenuContent
+
+<PropsTable
+  props={[
+    { name: 'variant', type: "'default' | 'outline'", default: "'default'", description: 'Visual style variant' },
+    { name: 'side', type: "'top' | 'bottom' | 'left' | 'right'", default: "'bottom'", description: 'Preferred side to display the menu' },
+    { name: 'sideOffset', type: 'number', default: '4', description: 'Distance in px between the menu and the trigger' },
+    { name: 'className', type: 'string', description: 'Additional CSS classes' },
+  ]}
+/>
+
+### DropdownMenuItem
+
+<PropsTable
+  props={[
+    { name: 'inset', type: 'boolean', default: 'false', description: 'Add left padding to align with labels' },
+    { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the item' },
+    { name: 'onSelect', type: '(event: Event) => void', description: 'Callback when the item is selected' },
+  ]}
+/>
+
+### DropdownMenuCheckboxItem
+
+<PropsTable
+  props={[
+    { name: 'checked', type: 'boolean', description: 'Controlled checked state' },
+    { name: 'onCheckedChange', type: '(checked: boolean) => void', description: 'Callback when checked state changes' },
+    { name: 'disabled', type: 'boolean', default: 'false', description: 'Disable the item' },
+  ]}
+/>
+
+### DropdownMenuRadioGroup
+
+<PropsTable
+  props={[
+    { name: 'value', type: 'string', description: 'Currently selected value' },
+    { name: 'onValueChange', type: '(value: string) => void', description: 'Callback when selected value changes' },
+  ]}
+/>
+
+## Accessibility
+
+Built on Radix UI DropdownMenu with full accessibility support:
+
+- **role="menu"**: Content is announced as a menu to screen readers
+- **role="menuitem"**: Each item is properly identified
+- **role="menuitemcheckbox"**: Checkbox items have correct role
+- **role="menuitemradio"**: Radio items have correct role
+- **Focus management**: Focus moves into the menu when opened and returns to trigger on close
+- **Escape key**: Pressing Escape dismisses the menu
+- **Click outside**: Clicking outside the menu closes it
+- **Portal rendering**: Content renders outside the DOM hierarchy without affecting the accessibility tree
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Enter / Space | Open menu (on trigger) or select item |
+| Escape | Close the menu |
+| Arrow Down | Move focus to next item |
+| Arrow Up | Move focus to previous item |
+| Arrow Right | Open sub-menu (on sub-trigger) |
+| Arrow Left | Close sub-menu |
+
+## Related Components
+
+- [Popover](/components/feedback/popover/) — Rich floating content panel
+- [Tooltip](/components/feedback/tooltip/) — Lightweight text hint on hover/focus
+- [Select](/components/primitives/select/) — Form select input for value selection

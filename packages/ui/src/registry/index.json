@@ -589,6 +589,62 @@
       ]
     },
     {
+      "name": "Popover",
+      "category": "overlay",
+      "description": "Displays rich content in a floating panel triggered by a click, built with Radix UI",
+      "keywords": ["popover", "popup", "dropdown", "floating", "panel"],
+      "file": "components/popover.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "outline"]
+        },
+        {
+          "name": "side",
+          "values": ["top", "bottom", "left", "right"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Popover",
+          "code": "<Popover><PopoverTrigger>Click me</PopoverTrigger><PopoverContent>Popover content</PopoverContent></Popover>"
+        },
+        {
+          "title": "Popover with Close and Arrow",
+          "code": "<Popover><PopoverTrigger>Click me</PopoverTrigger><PopoverContent variant=\"outline\" showArrow><p>Content</p><PopoverClose>Close</PopoverClose></PopoverContent></Popover>"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip",
+      "category": "overlay",
+      "description": "Displays informational text when hovering or focusing on an element, built with Radix UI",
+      "keywords": ["tooltip", "hover", "popover", "hint", "info"],
+      "file": "components/tooltip.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "light"]
+        },
+        {
+          "name": "side",
+          "values": ["top", "bottom", "left", "right"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Tooltip",
+          "code": "<TooltipProvider><Tooltip><TooltipTrigger>Hover me</TooltipTrigger><TooltipContent>Tooltip text</TooltipContent></Tooltip></TooltipProvider>"
+        },
+        {
+          "title": "Light Tooltip with Arrow",
+          "code": "<TooltipProvider><Tooltip><TooltipTrigger>Hover me</TooltipTrigger><TooltipContent variant=\"light\" showArrow>Light tooltip</TooltipContent></Tooltip></TooltipProvider>"
+        }
+      ]
+    },
+    {
       "name": "Textarea",
       "category": "primitives",
       "description": "A textarea component with validation states and sizes for multi-line text input",
@@ -789,6 +845,54 @@
         {
           "title": "Flex Spacer",
           "code": "<Flex><div>Left</div><Spacer flex /><div>Right</div></Flex>"
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu",
+      "category": "overlay",
+      "description": "A dropdown menu component for displaying actions or options triggered by a button click, built with Radix UI",
+      "keywords": ["dropdown", "menu", "context", "actions", "options", "navigation"],
+      "file": "components/dropdown-menu.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "outline"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Dropdown Menu",
+          "code": "<DropdownMenu><DropdownMenuTrigger><Button>Open</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem>Profile</DropdownMenuItem><DropdownMenuItem>Settings</DropdownMenuItem></DropdownMenuContent></DropdownMenu>"
+        },
+        {
+          "title": "Dropdown with Checkbox Items",
+          "code": "<DropdownMenu><DropdownMenuTrigger><Button>View</Button></DropdownMenuTrigger><DropdownMenuContent><DropdownMenuCheckboxItem checked>Show Toolbar</DropdownMenuCheckboxItem><DropdownMenuCheckboxItem>Show Sidebar</DropdownMenuCheckboxItem></DropdownMenuContent></DropdownMenu>"
+        }
+      ]
+    },
+    {
+      "name": "AlertDialog",
+      "category": "overlay",
+      "description": "A modal dialog for confirming destructive or important actions that requires explicit user response, built with Radix UI",
+      "keywords": ["alert", "dialog", "confirm", "modal", "destructive", "warning"],
+      "file": "components/alert-dialog.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": ["default", "destructive"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Alert Dialog",
+          "code": "<AlertDialog><AlertDialogTrigger><Button>Delete</Button></AlertDialogTrigger><AlertDialogContent><AlertDialogHeader><AlertDialogTitle>Are you sure?</AlertDialogTitle><AlertDialogDescription>This action cannot be undone.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction>Continue</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>"
+        },
+        {
+          "title": "Destructive Alert Dialog",
+          "code": "<AlertDialog><AlertDialogTrigger><Button variant=\"destructive\">Delete Account</Button></AlertDialogTrigger><AlertDialogContent variant=\"destructive\"><AlertDialogHeader><AlertDialogTitle>Delete Account</AlertDialogTitle><AlertDialogDescription>This will permanently delete your account.</AlertDialogDescription></AlertDialogHeader><AlertDialogFooter><AlertDialogCancel>Cancel</AlertDialogCancel><AlertDialogAction>Delete</AlertDialogAction></AlertDialogFooter></AlertDialogContent></AlertDialog>"
         }
       ]
     }

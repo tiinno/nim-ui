@@ -1,0 +1,307 @@
+---
+title: Toast
+description: Lightweight notification messages that appear temporarily and dismiss automatically
+---
+
+import { ToastBasicDemo, ToastVariantsDemo, ToastWithActionDemo } from '../../../../components/ToastDemo';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Toast component provides lightweight, non-intrusive notification messages. Built on [Radix UI Toast](https://www.radix-ui.com/primitives/docs/components/toast), it handles auto-dismiss, swipe-to-close, keyboard navigation, and screen reader announcements. Supports both declarative JSX and an imperative API (`toast.success("Saved!")`).
+
+## Import
+
+```tsx
+import {
+  // Imperative API
+  toast,
+  Toaster,
+
+  // Declarative components
+  Toast,
+  ToastProvider,
+  ToastViewport,
+  ToastTitle,
+  ToastDescription,
+  ToastClose,
+  ToastAction,
+} from '@tiinno-ui/components';
+```
+
+## Quick Start (Imperative API)
+
+The easiest way to use toasts. Place `<Toaster />` once at your app root, then call `toast()` from anywhere.
+
+<ComponentPreview title="Basic Toast">
+  <ToastBasicDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+import { Toaster, toast } from '@tiinno-ui/components';
+
+function App() {
+  return (
+    <>
+      <button onClick={() => toast({ title: 'Hello!', description: 'This is a toast.' })}>
+        Show Toast
+      </button>
+      <Toaster />
+    </>
+  );
+}
+```
+  </Fragment>
+</ComponentPreview>
+
+## Variants
+
+Use shorthand functions for common notification types. Each sets the appropriate color scheme automatically.
+
+<ComponentPreview title="Toast Variants">
+  <ToastVariantsDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+toast.success('Changes saved successfully');
+toast.error('Something went wrong');
+toast.warning('Please check your input');
+toast.info('New version available');
+```
+  </Fragment>
+</ComponentPreview>
+
+## With Action
+
+Add an action button inside the toast for undo or retry patterns.
+
+<ComponentPreview title="Toast with Action">
+  <ToastWithActionDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+toast({
+  title: 'Item deleted',
+  description: 'The item has been moved to trash.',
+  action: {
+    label: 'Undo',
+    altText: 'Undo the delete action',
+    onClick: () => toast.success('Item restored'),
+  },
+});
+```
+  </Fragment>
+</ComponentPreview>
+
+## Positioning
+
+Control where toasts appear on screen via the `position` prop on `Toaster`.
+
+```tsx
+<Toaster position="top-right" />
+<Toaster position="top-center" />
+<Toaster position="bottom-left" />
+<Toaster position="bottom-center" />
+```
+
+Available positions: `top-right`, `top-left`, `top-center`, `bottom-right`, `bottom-left`, `bottom-center`.
+
+## Duration
+
+Toasts auto-dismiss after 5 seconds by default. Override per-toast or globally.
+
+```tsx
+// Global default: 3 seconds
+<Toaster duration={3000} />
+
+// Per-toast override
+toast({ title: 'Quick!', duration: 2000 });
+
+// Persistent toast (no auto-dismiss)
+toast({ title: 'Action required', duration: Infinity });
+```
+
+## Programmatic Dismiss
+
+Use the returned id to dismiss a specific toast, or clear all at once.
+
+```tsx
+const id = toast.success('Uploading...');
+
+// Dismiss specific toast
+toast.dismiss(id);
+
+// Clear all toasts
+toast.clear();
+```
+
+## Declarative API
+
+For full control, use the compound components directly.
+
+```tsx
+<ToastProvider duration={5000} swipeDirection="right">
+  <Toast variant="success">
+    <ToastTitle>Saved!</ToastTitle>
+    <ToastDescription>Your changes have been saved.</ToastDescription>
+    <ToastAction altText="Undo the save">Undo</ToastAction>
+    <ToastClose />
+  </Toast>
+  <ToastViewport position="bottom-right" />
+</ToastProvider>
+```
+
+## Component Architecture
+
+| Component | Description |
+|-----------|-------------|
+| `Toaster` | Convenience component — combines Provider + Viewport + renders toasts from store |
+| `toast()` | Imperative function to create toasts from anywhere in your code |
+| `ToastProvider` | Radix Toast.Provider for context management |
+| `ToastViewport` | Fixed-position container with ARIA live region |
+| `Toast` | Individual toast with variant styling and animations |
+| `ToastTitle` | Title text |
+| `ToastDescription` | Description text |
+| `ToastClose` | Close button with accessible label |
+| `ToastAction` | Action button (e.g., Undo) |
+
+## Props
+
+### Toaster
+
+<PropsTable
+  props={[
+    {
+      name: 'position',
+      type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center'",
+      default: "'bottom-right'",
+      description: 'Position of the toast viewport on screen',
+    },
+    {
+      name: 'duration',
+      type: 'number',
+      default: '5000',
+      description: 'Default auto-dismiss duration in milliseconds',
+    },
+    {
+      name: 'swipeDirection',
+      type: "'right' | 'left' | 'up' | 'down'",
+      default: "'right'",
+      description: 'Swipe direction to dismiss toasts',
+    },
+  ]}
+/>
+
+### Toast
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: "'default' | 'success' | 'error' | 'warning' | 'info'",
+      default: "'default'",
+      description: 'Visual style variant',
+    },
+    {
+      name: 'duration',
+      type: 'number',
+      description: 'Override auto-dismiss duration for this toast',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open: boolean) => void',
+      description: 'Callback when the toast open state changes',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+### ToastViewport
+
+<PropsTable
+  props={[
+    {
+      name: 'position',
+      type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center'",
+      default: "'bottom-right'",
+      description: 'Position on screen',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+### ToastAction
+
+<PropsTable
+  props={[
+    {
+      name: 'altText',
+      type: 'string',
+      required: true,
+      description: 'Accessible description of the action for screen readers',
+    },
+    {
+      name: 'onClick',
+      type: '() => void',
+      description: 'Click handler for the action',
+    },
+  ]}
+/>
+
+### toast() API
+
+```tsx
+// Main function
+toast(options: ToastOptions): string  // returns toast id
+
+// Shorthand functions
+toast.success(title: string): string
+toast.error(title: string): string
+toast.warning(title: string): string
+toast.info(title: string): string
+
+// Management
+toast.dismiss(id: string): void
+toast.clear(): void
+```
+
+#### ToastOptions
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | `string` | No | Toast title text |
+| `description` | `string` | No | Toast description text |
+| `variant` | `'default' \| 'success' \| 'error' \| 'warning' \| 'info'` | No | Visual variant (default: `'default'`) |
+| `duration` | `number` | No | Auto-dismiss duration in ms |
+| `action` | `{ label, altText, onClick }` | No | Action button configuration |
+
+## Accessibility
+
+Built on Radix UI Toast with full accessibility support:
+
+- **ARIA live region**: ToastViewport renders as a live region for screen reader announcements
+- **Keyboard dismiss**: Press Escape to close the focused toast
+- **Swipe dismiss**: Swipe gesture support for touch devices
+- **Focus navigation**: Tab through interactive elements within a toast
+- **Close button label**: ToastClose includes `aria-label` for screen readers
+- **Reduced motion**: Respects `prefers-reduced-motion` media query
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Escape | Closes the focused toast |
+| Tab | Moves focus to next interactive element |
+| Shift + Tab | Moves focus to previous interactive element |
+
+## Related Components
+
+- [Modal](/components/layout/modal/) — Dialog overlay for focused interactions
+- [Drawer](/components/layout/drawer/) — Side panel overlay

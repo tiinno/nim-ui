@@ -111,7 +111,7 @@ describe('Form', () => {
       await user.click(screen.getByRole('button'));
 
       expect(handleSubmit).toHaveBeenCalled();
-      const event = handleSubmit.mock.calls[0][0];
+      const event = handleSubmit.mock.calls[0]![0];
       expect(event.target).toBeInstanceOf(HTMLFormElement);
     });
   });

@@ -1,0 +1,199 @@
+---
+title: Popover
+description: Displays rich content in a floating panel triggered by a click
+---
+
+import { PopoverBasicDemo, PopoverVariantsDemo, PopoverArrowDemo, PopoverSidesDemo, PopoverCloseDemo } from '../../../../components/PopoverDemo';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Popover component displays rich content in a floating panel when users click on a trigger element. Built on [Radix UI Popover](https://www.radix-ui.com/primitives/docs/components/popover), it handles positioning, focus trapping, keyboard navigation, and click-outside dismissal automatically.
+
+## Import
+
+```tsx
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverClose,
+} from '@tiinno-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Popover">
+  <PopoverBasicDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="outline">Open Popover</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <p>This is a basic popover with some content.</p>
+  </PopoverContent>
+</Popover>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Variants
+
+Two visual styles: `default` (subtle border) and `outline` (thicker border).
+
+<ComponentPreview title="Popover Variants">
+  <PopoverVariantsDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<PopoverContent variant="default">Default variant</PopoverContent>
+<PopoverContent variant="outline">Outline variant</PopoverContent>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Arrow
+
+Use `showArrow` to display an arrow pointing to the trigger.
+
+<ComponentPreview title="Popover with Arrow">
+  <PopoverArrowDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<PopoverContent showArrow>Content with arrow</PopoverContent>
+<PopoverContent variant="outline" showArrow>Outline with arrow</PopoverContent>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Positioning
+
+Control popover placement with the `side` prop. Radix automatically flips when there isn't enough space.
+
+<ComponentPreview title="Popover Sides">
+  <PopoverSidesDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<PopoverContent side="top" showArrow>Top</PopoverContent>
+<PopoverContent side="bottom" showArrow>Bottom</PopoverContent>
+<PopoverContent side="left" showArrow>Left</PopoverContent>
+<PopoverContent side="right" showArrow>Right</PopoverContent>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Close Button
+
+Use `PopoverClose` inside the content for an explicit close action.
+
+<ComponentPreview title="Popover with Close">
+  <PopoverCloseDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<Popover>
+  <PopoverTrigger asChild>
+    <Button>Open</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <p>Content here</p>
+    <PopoverClose asChild>
+      <Button variant="outline">Close</Button>
+    </PopoverClose>
+  </PopoverContent>
+</Popover>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Controlled Mode
+
+```tsx
+function ControlledPopover() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button>Controlled</Button>
+      </PopoverTrigger>
+      <PopoverContent>
+        <p>Controlled popover</p>
+        <Button onClick={() => setOpen(false)}>Close</Button>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+## Component Architecture
+
+| Component | Description |
+|-----------|-------------|
+| `Popover` | Root component managing open/close state (Radix Popover.Root) |
+| `PopoverTrigger` | Element that opens popover on click (Radix Popover.Trigger) |
+| `PopoverContent` | Floating panel with variant styling, rendered via Portal |
+| `PopoverArrow` | Arrow indicator pointing to the trigger |
+| `PopoverClose` | Button that closes the popover when clicked |
+
+## Props
+
+### Popover (Root)
+
+<PropsTable
+  props={[
+    { name: 'open', type: 'boolean', description: 'Controlled open state' },
+    { name: 'defaultOpen', type: 'boolean', default: 'false', description: 'Initial open state for uncontrolled usage' },
+    { name: 'onOpenChange', type: '(open: boolean) => void', description: 'Callback when the open state changes' },
+    { name: 'modal', type: 'boolean', default: 'false', description: 'When true, traps focus and makes background inert' },
+  ]}
+/>
+
+### PopoverContent
+
+<PropsTable
+  props={[
+    { name: 'variant', type: "'default' | 'outline'", default: "'default'", description: 'Visual style variant' },
+    { name: 'side', type: "'top' | 'bottom' | 'left' | 'right'", default: "'bottom'", description: 'Preferred side to display the popover' },
+    { name: 'sideOffset', type: 'number', default: '4', description: 'Distance in px between the popover and the trigger' },
+    { name: 'showArrow', type: 'boolean', default: 'false', description: 'Show an arrow pointing to the trigger' },
+    { name: 'className', type: 'string', description: 'Additional CSS classes' },
+  ]}
+/>
+
+### PopoverClose
+
+<PropsTable
+  props={[
+    { name: 'asChild', type: 'boolean', default: 'false', description: 'Use child element as the close button' },
+  ]}
+/>
+
+## Accessibility
+
+Built on Radix UI Popover with full accessibility support:
+
+- **role="dialog"**: Content is announced as a dialog to screen readers
+- **Focus trapping**: Focus is trapped within the popover while open
+- **Focus restoration**: Focus returns to the trigger when the popover closes
+- **Escape key**: Pressing Escape dismisses the popover
+- **Click outside**: Clicking outside the popover closes it
+- **Portal rendering**: Content renders outside the DOM hierarchy without affecting the accessibility tree
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Enter / Space | Open popover (on trigger) |
+| Escape | Close the popover |
+| Tab | Navigate within popover content |
+
+## Related Components
+
+- [Tooltip](/components/feedback/tooltip/) — Lightweight text hint on hover/focus
+- [Modal](/components/layout/modal/) — Full dialog overlay for focused interactions
