@@ -1,8 +1,8 @@
-# Design Document: ระบบ CSS Animation สำหรับ Tiinno UI
+# Design Document: ระบบ CSS Animation สำหรับ Nim UI
 
 ## Overview
 
-ระบบ CSS Animation นี้เพิ่ม transition และ animation ให้กับ Tiinno UI component library โดยใช้ CSS เพียงอย่างเดียว ไม่เพิ่ม JS bundle size แม้แต่ byte เดียว
+ระบบ CSS Animation นี้เพิ่ม transition และ animation ให้กับ Nim UI component library โดยใช้ CSS เพียงอย่างเดียว ไม่เพิ่ม JS bundle size แม้แต่ byte เดียว
 
 แนวทางหลัก:
 - ใช้ CSS custom properties เป็น animation design tokens (duration, easing)

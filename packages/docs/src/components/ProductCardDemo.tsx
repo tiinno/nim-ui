@@ -1,4 +1,4 @@
-import { ProductCard, Button } from '@tiinno-ui/components';
+import { ProductCard, Button } from '@nim-ui/components';
 
 export function ProductCardWithAction() {
   return (

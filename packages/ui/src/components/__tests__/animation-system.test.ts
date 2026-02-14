@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — tokens.js is a plain JS module without type declarations
-import { tokens } from '@tiinno-ui/tailwind-config/tokens';
+import { tokens } from '@nim-ui/tailwind-config/tokens';
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
 import { readFileSync } from 'fs';

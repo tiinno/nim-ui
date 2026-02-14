@@ -3,17 +3,17 @@ inclusion: fileMatch
 fileMatchPattern: "packages/mcp-server/**"
 ---
 
-# Tiinno UI — MCP Server
+# Nim UI — MCP Server
 
-Package: `@tiinno-ui/mcp-server`
+Package: `@nim-ui/mcp-server`
 Location: `packages/mcp-server/`
 
-The MCP server exposes Tiinno UI's component library to AI assistants via the Model Context Protocol.
+The MCP server exposes Nim UI's component library to AI assistants via the Model Context Protocol.
 
 ## Architecture
 
 - Entry: `src/index.ts`
-- Main class: `TiinnoMCPServer`
+- Main class: `NimMCPServer`
 - Loads component registry data on startup via `loadData()`
 - Uses `@modelcontextprotocol/sdk` for the MCP protocol
 
@@ -38,7 +38,7 @@ interface RegistryData { components: Component[]; tokens: any; }
 
 ```bash
 # Build
-pnpm --filter @tiinno-ui/mcp-server build
+pnpm --filter @nim-ui/mcp-server build
 
 # Test the server
 npx tsx packages/mcp-server/test-server.ts
@@ -49,7 +49,7 @@ npx tsx packages/mcp-server/test-server.ts
 ```json
 {
   "mcpServers": {
-    "tiinno-ui": {
+    "nim-ui": {
       "command": "node",
       "args": ["packages/mcp-server/dist/index.js"]
     }

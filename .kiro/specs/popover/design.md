@@ -1,8 +1,8 @@
-# Design Document: Popover Component สำหรับ Tiinno UI
+# Design Document: Popover Component สำหรับ Nim UI
 
 ## Overview
 
-Popover component เพิ่ม overlay component ให้กับ Tiinno UI โดยสร้างบน `@radix-ui/react-popover` primitive ที่จัดการ accessibility, positioning, focus trapping, และ keyboard interactions ให้อัตโนมัติ
+Popover component เพิ่ม overlay component ให้กับ Nim UI โดยสร้างบน `@radix-ui/react-popover` primitive ที่จัดการ accessibility, positioning, focus trapping, และ keyboard interactions ให้อัตโนมัติ
 
 แนวทางหลัก:
 - ใช้ Radix UI Popover primitive เป็น base (เหมือน Tooltip ใช้ Radix Tooltip, Modal ใช้ Radix Dialog)

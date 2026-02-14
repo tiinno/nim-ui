@@ -1,17 +1,17 @@
 /**
- * Custom styles for Tiinno UI documentation
+ * Custom styles for Nim UI documentation
  *
- * This file imports Tiinno UI component styles and adds
+ * This file imports Nim UI component styles and adds
  * custom documentation-specific styles.
  */
 
 /* Tailwind CSS v4 */
 @import 'tailwindcss';
 
-/* Import Tiinno UI component styles */
-@import '@tiinno-ui/components/styles';
+/* Import Nim UI component styles */
+@import '@nim-ui/components/styles';
 
-/* Scan Tiinno UI component source for Tailwind classes (Radix Portal renders outside docs tree) */
+/* Scan Nim UI component source for Tailwind classes (Radix Portal renders outside docs tree) */
 @source "../../../ui/src/components/*.tsx";
 
 /* Define primary colors for Tailwind v4 (OKLCH) */

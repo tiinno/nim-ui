@@ -2,7 +2,7 @@
 
 ## Overview
 
-ย้ายระบบสีของ Tiinno UI จาก Hex เป็น OKLCH โดยสร้าง conversion script ก่อน แล้วอัปเดต token, CSS, docs, และ steering files ตามลำดับ Component source code ไม่ต้องแก้ไข
+ย้ายระบบสีของ Nim UI จาก Hex เป็น OKLCH โดยสร้าง conversion script ก่อน แล้วอัปเดต token, CSS, docs, และ steering files ตามลำดับ Component source code ไม่ต้องแก้ไข
 
 ## Tasks
 

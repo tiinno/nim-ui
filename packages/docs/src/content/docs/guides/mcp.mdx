@@ -1,0 +1,141 @@
+---
+title: MCP Server
+description: Use the Nim UI MCP server to give AI assistants knowledge of your component library
+---
+
+The Nim UI MCP (Model Context Protocol) server gives AI assistants like Claude direct access to your component library — including component metadata, source code, design tokens, and usage examples.
+
+## What is MCP?
+
+[Model Context Protocol](https://modelcontextprotocol.io/) is an open standard that lets AI assistants interact with external tools and data sources. The Nim UI MCP server exposes your component library as a set of tools that any MCP-compatible client can use.
+
+## Installation
+
+### 1. Build the MCP server
+
+```bash
+# From the monorepo root
+pnpm --filter @nim-ui/mcp-server build
+```
+
+This compiles the server to `packages/mcp-server/dist/index.js`.
+
+### 2. Configure Claude Desktop
+
+Add the following to your Claude Desktop configuration file:
+
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "nim-ui": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/nim-ui/packages/mcp-server/dist/index.js"
+      ]
+    }
+  }
+}
+```
+
+Replace `/absolute/path/to/nim-ui` with the actual path to your project.
+
+### 3. Restart Claude Desktop
+
+After saving the config, restart Claude Desktop. You should see "nim-ui" listed in the available MCP servers.
+
+## Available Tools
+
+The MCP server exposes 5 tools:
+
+### `ui_list_components`
+
+List all available components, optionally filtered by category.
+
+**Parameters:**
+- `category` (optional): `"primitives"` | `"layout"` | `"data-display"` | `"commerce"` | `"landing"` | `"forms"`
+
+**Example prompt:**
+> "List all layout components in Nim UI"
+
+### `ui_get_component`
+
+Get full details of a specific component including metadata, variants, examples, and source code.
+
+**Parameters:**
+- `name` (required): Component name (e.g., `"Button"`, `"Card"`)
+
+**Example prompt:**
+> "Show me the Button component details and source code"
+
+### `ui_get_tokens`
+
+Retrieve design tokens from the Nim UI design system.
+
+**Parameters:**
+- `tokenType` (optional): `"colors"` | `"spacing"` | `"typography"` | `"all"` (default: `"all"`)
+
+**Example prompt:**
+> "What colors are available in the Nim UI design system?"
+
+### `ui_search_components`
+
+Search for components by keyword across names, descriptions, keywords, and categories.
+
+**Parameters:**
+- `query` (required): Search query string
+
+**Example prompt:**
+> "Find components related to forms"
+
+### `ui_get_example`
+
+Get usage examples for a specific component.
+
+**Parameters:**
+- `name` (required): Component name
+- `exampleIndex` (optional): Index of a specific example (0-based)
+
+**Example prompt:**
+> "Show me examples of how to use the DataTable component"
+
+## Usage Tips
+
+### Building pages with AI
+
+Once the MCP server is configured, you can ask Claude to build pages using Nim UI components:
+
+> "Create a landing page with a Hero section, a FeatureGrid showing 3 features, and a CTA section at the bottom. Use Nim UI components."
+
+Claude will use the MCP tools to look up each component's API, design tokens, and examples, then generate accurate code.
+
+### Exploring the design system
+
+> "What spacing tokens does Nim UI provide? Show me the full color palette too."
+
+### Getting component help
+
+> "How do I use the Toast component? Show me all the variants."
+
+## Troubleshooting
+
+### Server not appearing in Claude Desktop
+
+1. Verify the path in your config points to the built `dist/index.js` file
+2. Make sure you ran `pnpm --filter @nim-ui/mcp-server build`
+3. Check that Node.js is available in your system PATH
+4. Restart Claude Desktop after config changes
+
+### "Registry data not loaded" error
+
+The MCP server reads component data from `packages/ui/src/registry/index.json`. Make sure the UI package has been built:
+
+```bash
+pnpm --filter @nim-ui/components build
+```
+
+### Checking server logs
+
+MCP server logs are written to stderr. In Claude Desktop, check the MCP server logs panel for error messages.

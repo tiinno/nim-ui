@@ -1,4 +1,4 @@
-import { RadioGroup, RadioGroupItem } from '@tiinno-ui/components';
+import { RadioGroup, RadioGroupItem } from '@nim-ui/components';
 
 export function RadioDefault() {
   return (

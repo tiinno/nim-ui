@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Popover component สำหรับ Tiinno UI component library เป็น component ในหมวด Overlay ที่แสดงเนื้อหาแบบ rich content (ไม่จำกัดแค่ข้อความ) เมื่อผู้ใช้คลิกบน trigger element สร้างบน Radix UI Popover primitive (`@radix-ui/react-popover`) ตามแบบแผน CVA pattern ของ library รองรับ compound component pattern (PopoverProvider, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverClose), หลายตำแหน่ง (top, bottom, left, right), configurable sideOffset, arrow indicator, controlled mode, enter/exit animation, dark mode, และ accessibility ครบถ้วน
+Popover component สำหรับ Nim UI component library เป็น component ในหมวด Overlay ที่แสดงเนื้อหาแบบ rich content (ไม่จำกัดแค่ข้อความ) เมื่อผู้ใช้คลิกบน trigger element สร้างบน Radix UI Popover primitive (`@radix-ui/react-popover`) ตามแบบแผน CVA pattern ของ library รองรับ compound component pattern (PopoverProvider, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverClose), หลายตำแหน่ง (top, bottom, left, right), configurable sideOffset, arrow indicator, controlled mode, enter/exit animation, dark mode, และ accessibility ครบถ้วน
 
 ## Glossary
 
@@ -40,7 +40,7 @@ Popover component สำหรับ Tiinno UI component library เป็น co
 4. THE Popover_Content SHALL รองรับ dark mode โดยมี dark variant classes สำหรับทุก variant
 5. WHEN side prop ถูกกำหนดเป็นค่าใดค่าหนึ่งจาก top, bottom, left, right, THE Popover_Content SHALL แสดงผลที่ตำแหน่งตาม side ที่กำหนด
 6. THE Popover_Content SHALL มี default side เป็น bottom
-7. THE Popover_Content SHALL ใช้ forwardRef pattern ตามแบบแผนของ Tiinno UI
+7. THE Popover_Content SHALL ใช้ forwardRef pattern ตามแบบแผนของ Nim UI
 8. THE Popover_Content SHALL รองรับ sideOffset prop สำหรับกำหนดระยะห่างจาก trigger element
 9. THE Popover_Content SHALL มี default sideOffset เท่ากับ 4 pixels
 10. THE Popover_Content SHALL ใช้ enter/exit animation จากระบบ CSS animation ที่มีอยู่ (animate-fade-in, animate-fade-out)
@@ -95,5 +95,5 @@ Popover component สำหรับ Tiinno UI component library เป็น co
 
 1. THE Popover_Content SHALL export TypeScript interfaces สำหรับ props ทั้งหมด: PopoverProps, PopoverProviderProps, PopoverTriggerProps, PopoverContentProps, PopoverArrowProps, PopoverCloseProps
 2. THE Popover_Content SHALL export CVA variants type ผ่าน VariantProps
-3. WHEN component ถูก export จาก index.ts, THE Popover_Content SHALL สามารถ import ได้จาก '@tiinno-ui/components'
+3. WHEN component ถูก export จาก index.ts, THE Popover_Content SHALL สามารถ import ได้จาก '@nim-ui/components'
 4. THE Popover_Content SHALL export popoverContentVariants สำหรับให้นักพัฒนาใช้ variant classes ภายนอก component ได้

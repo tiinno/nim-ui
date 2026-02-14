@@ -1,8 +1,8 @@
-# Design Document: Alert Dialog Component สำหรับ Tiinno UI
+# Design Document: Alert Dialog Component สำหรับ Nim UI
 
 ## Overview
 
-Alert Dialog component เพิ่ม feedback/overlay component ให้กับ Tiinno UI โดยสร้างบน `@radix-ui/react-alert-dialog` primitive ที่จัดการ accessibility (role="alertdialog"), focus trapping, keyboard navigation, และ portal rendering ให้อัตโนมัติ
+Alert Dialog component เพิ่ม feedback/overlay component ให้กับ Nim UI โดยสร้างบน `@radix-ui/react-alert-dialog` primitive ที่จัดการ accessibility (role="alertdialog"), focus trapping, keyboard navigation, และ portal rendering ให้อัตโนมัติ
 
 แนวทางหลัก:
 - ใช้ Radix UI AlertDialog primitive เป็น base (เหมือน Popover ใช้ Radix Popover, DropdownMenu ใช้ Radix DropdownMenu)

@@ -1,12 +1,12 @@
-# เอกสารข้อกำหนด: ระบบ CSS Animation สำหรับ Tiinno UI
+# เอกสารข้อกำหนด: ระบบ CSS Animation สำหรับ Nim UI
 
 ## บทนำ
 
-ระบบ CSS Animation สำหรับ Tiinno UI เป็นการเพิ่มชุด transition และ animation ที่ใช้ CSS เพียงอย่างเดียว (ไม่ใช้ JS animation library) ให้กับ component library ที่มีอยู่แล้ว 31 components เพื่อให้ UI มีความรู้สึกเนียนและเป็นมืออาชีพมากขึ้น โดยใช้ Tailwind CSS v4 utilities, `@keyframes`, และ CSS custom properties เท่านั้น ไม่เพิ่มขนาด JS bundle
+ระบบ CSS Animation สำหรับ Nim UI เป็นการเพิ่มชุด transition และ animation ที่ใช้ CSS เพียงอย่างเดียว (ไม่ใช้ JS animation library) ให้กับ component library ที่มีอยู่แล้ว 31 components เพื่อให้ UI มีความรู้สึกเนียนและเป็นมืออาชีพมากขึ้น โดยใช้ Tailwind CSS v4 utilities, `@keyframes`, และ CSS custom properties เท่านั้น ไม่เพิ่มขนาด JS bundle
 
 ## อภิธานศัพท์
 
-- **Animation_System**: ระบบรวมของ CSS keyframes, transitions, design tokens สำหรับ duration/easing, และ Tailwind utility classes ที่ใช้ขับเคลื่อน animation ทั้งหมดใน Tiinno UI
+- **Animation_System**: ระบบรวมของ CSS keyframes, transitions, design tokens สำหรับ duration/easing, และ Tailwind utility classes ที่ใช้ขับเคลื่อน animation ทั้งหมดใน Nim UI
 - **Animation_Token**: CSS custom property ที่กำหนดค่า duration และ easing curve สำหรับใช้ร่วมกันทั้ง library เช่น `--duration-fast`, `--ease-out`
 - **GPU_Property**: CSS property ที่ browser สามารถ composite บน GPU ได้โดยไม่ trigger layout/paint ได้แก่ `transform` และ `opacity`
 - **Reduced_Motion_Mode**: สถานะที่ผู้ใช้เปิด `prefers-reduced-motion: reduce` ใน OS ซึ่งระบบต้องลดหรือปิด animation
@@ -106,7 +106,7 @@
 
 ### ข้อกำหนดที่ 9: Backward Compatibility
 
-**User Story:** ในฐานะนักพัฒนาที่ใช้ Tiinno UI อยู่แล้ว ฉันต้องการให้การเพิ่ม animation ไม่ทำให้ component ที่มีอยู่เสียหาย เพื่อให้ฉันอัปเดตได้อย่างมั่นใจ
+**User Story:** ในฐานะนักพัฒนาที่ใช้ Nim UI อยู่แล้ว ฉันต้องการให้การเพิ่ม animation ไม่ทำให้ component ที่มีอยู่เสียหาย เพื่อให้ฉันอัปเดตได้อย่างมั่นใจ
 
 #### เกณฑ์การยอมรับ
 

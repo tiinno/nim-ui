@@ -3,11 +3,11 @@ inclusion: fileMatch
 fileMatchPattern: "packages/docs/**"
 ---
 
-# Tiinno UI — Documentation Site
+# Nim UI — Documentation Site
 
 Package: `packages/docs/`
 Framework: Astro + Starlight
-Components import from: `@tiinno-ui/components`
+Components import from: `@nim-ui/components`
 
 ## Structure
 
@@ -46,13 +46,13 @@ title: ComponentName
 description: Brief description
 ---
 
-import { ComponentName } from '@tiinno-ui/components';
+import { ComponentName } from '@nim-ui/components';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
 ## Import
 \`\`\`tsx
-import { ComponentName } from '@tiinno-ui/components';
+import { ComponentName } from '@nim-ui/components';
 \`\`\`
 
 ## Variants

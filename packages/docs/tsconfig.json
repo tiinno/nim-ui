@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@tiinno-ui/components": ["../ui/src/index.ts"]
+      "@nim-ui/components": ["../ui/src/index.ts"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"

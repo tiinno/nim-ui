@@ -3,11 +3,11 @@ title: Theming
 description: Design tokens, Tailwind CSS v4 theme configuration, and custom theme creation
 ---
 
-Tiinno UI is built on a design token system that maps to Tailwind CSS utility classes. By modifying these tokens, you can create a fully branded theme that applies consistently across all components.
+Nim UI is built on a design token system that maps to Tailwind CSS utility classes. By modifying these tokens, you can create a fully branded theme that applies consistently across all components.
 
 ## Design Tokens Overview
 
-Design tokens are the foundational values of the design system. They define colors, spacing, typography, borders, and shadows. Tiinno UI organizes tokens into the following categories:
+Design tokens are the foundational values of the design system. They define colors, spacing, typography, borders, and shadows. Nim UI organizes tokens into the following categories:
 
 | Category | Examples | CSS Properties |
 |----------|----------|---------------|
@@ -19,7 +19,7 @@ Design tokens are the foundational values of the design system. They define colo
 
 ## Tailwind CSS v4 Theme Configuration
 
-Tiinno UI uses Tailwind CSS v4, which supports theme configuration through both the `tailwind.config.js` file and CSS custom properties.
+Nim UI uses Tailwind CSS v4, which supports theme configuration through both the `tailwind.config.js` file and CSS custom properties.
 
 ### Extending the Theme
 
@@ -30,7 +30,7 @@ export default {
   darkMode: 'class',
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@tiinno-ui/components/dist/**/*.js',
+    './node_modules/@nim-ui/components/dist/**/*.js',
   ],
   theme: {
     extend: {
@@ -91,7 +91,7 @@ export default {
 };
 ```
 
-All Tiinno UI components that reference `primary-*` colors will automatically use your custom palette.
+All Nim UI components that reference `primary-*` colors will automatically use your custom palette.
 
 ## CSS Custom Properties
 
@@ -259,7 +259,7 @@ export default {
   darkMode: 'class',
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@tiinno-ui/components/dist/**/*.js',
+    './node_modules/@nim-ui/components/dist/**/*.js',
   ],
   theme: {
     extend: {

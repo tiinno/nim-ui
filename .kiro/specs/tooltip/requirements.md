@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Tooltip component สำหรับ Tiinno UI component library เป็น component ในหมวด Overlay ที่แสดงข้อความอธิบายเพิ่มเติมเมื่อผู้ใช้ hover หรือ focus บน element สร้างบน Radix UI Tooltip primitive (`@radix-ui/react-tooltip`) ตามแบบแผน CVA pattern ของ library รองรับหลายตำแหน่ง (top, bottom, left, right), configurable delay, arrow indicator, dark mode, และ accessibility ครบถ้วน
+Tooltip component สำหรับ Nim UI component library เป็น component ในหมวด Overlay ที่แสดงข้อความอธิบายเพิ่มเติมเมื่อผู้ใช้ hover หรือ focus บน element สร้างบน Radix UI Tooltip primitive (`@radix-ui/react-tooltip`) ตามแบบแผน CVA pattern ของ library รองรับหลายตำแหน่ง (top, bottom, left, right), configurable delay, arrow indicator, dark mode, และ accessibility ครบถ้วน
 
 ## Glossary
 
@@ -40,7 +40,7 @@ Tooltip component สำหรับ Tiinno UI component library เป็น co
 4. THE Tooltip_Content SHALL รองรับ dark mode โดยมี dark variant classes สำหรับทุก variant
 5. WHEN side prop ถูกกำหนดเป็นค่าใดค่าหนึ่งจาก top, bottom, left, right, THE Tooltip_Content SHALL แสดงผลที่ตำแหน่งตาม side ที่กำหนด
 6. THE Tooltip_Content SHALL มี default side เป็น top
-7. THE Tooltip_Content SHALL ใช้ forwardRef pattern ตามแบบแผนของ Tiinno UI
+7. THE Tooltip_Content SHALL ใช้ forwardRef pattern ตามแบบแผนของ Nim UI
 8. THE Tooltip_Content SHALL รองรับ sideOffset prop สำหรับกำหนดระยะห่างจาก trigger element
 9. THE Tooltip_Content SHALL มี default sideOffset เท่ากับ 4 pixels
 10. THE Tooltip_Content SHALL ใช้ enter/exit animation จากระบบ CSS animation ที่มีอยู่ (animate-fade-in, animate-fade-out)
@@ -85,5 +85,5 @@ Tooltip component สำหรับ Tiinno UI component library เป็น co
 
 1. THE Tooltip_Content SHALL export TypeScript interfaces สำหรับ props ทั้งหมด: TooltipProps, TooltipProviderProps, TooltipTriggerProps, TooltipContentProps, TooltipArrowProps
 2. THE Tooltip_Content SHALL export CVA variants type ผ่าน VariantProps
-3. WHEN component ถูก export จาก index.ts, THE Tooltip_Content SHALL สามารถ import ได้จาก '@tiinno-ui/components'
+3. WHEN component ถูก export จาก index.ts, THE Tooltip_Content SHALL สามารถ import ได้จาก '@nim-ui/components'
 4. THE Tooltip_Content SHALL export tooltipContentVariants สำหรับให้นักพัฒนาใช้ variant classes ภายนอก component ได้

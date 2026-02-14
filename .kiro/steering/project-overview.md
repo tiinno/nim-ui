@@ -1,4 +1,4 @@
-# Tiinno UI — Project Overview
+# Nim UI — Project Overview
 
 Modern, accessible, production-ready React component library built with TypeScript and Tailwind CSS v4.
 
@@ -18,9 +18,9 @@ Modern, accessible, production-ready React component library built with TypeScri
 ## Monorepo Structure
 
 ```
-tiinno-ui/
+nim-ui/
 ├── packages/
-│   ├── ui/                    # Main component library (@tiinno-ui/components)
+│   ├── ui/                    # Main component library (@nim-ui/components)
 │   │   ├── src/
 │   │   │   ├── components/    # All UI components (flat structure, kebab-case files)
 │   │   │   ├── lib/           # Utility functions (cn, utils)
@@ -75,9 +75,9 @@ pnpm lint && pnpm typecheck && pnpm test && pnpm build
 
 ## Package Names
 
-- UI library: `@tiinno-ui/components`
-- Tailwind config: `@tiinno-ui/tailwind-config`
-- MCP server: `@tiinno-ui/mcp-server`
+- UI library: `@nim-ui/components`
+- Tailwind config: `@nim-ui/tailwind-config`
+- MCP server: `@nim-ui/mcp-server`
 
 ## Git Workflow
 

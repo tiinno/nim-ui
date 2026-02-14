@@ -3,7 +3,7 @@ title: Feature Grid & Feature Card
 description: Display product features in a responsive grid layout with icon, title, and description
 ---
 
-import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
+import { FeatureGrid, FeatureCard } from '@nim-ui/components';
 import { FeatureDefault, Feature2Cols, Feature4Cols, FeatureNoIcons } from '../../../../components/FeatureDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
@@ -13,7 +13,7 @@ The FeatureGrid and FeatureCard components work together to present product feat
 ## Import
 
 ```tsx
-import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
+import { FeatureGrid, FeatureCard } from '@nim-ui/components';
 ```
 
 ## Usage
@@ -171,7 +171,7 @@ import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
 ### Product Landing Page
 
 ```tsx
-import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
+import { FeatureGrid, FeatureCard } from '@nim-ui/components';
 import {
   RocketIcon,
   ShieldIcon,
@@ -185,7 +185,7 @@ function FeaturesSection() {
   return (
     <section className="py-16">
       <h2 className="text-3xl font-bold text-center mb-12">
-        Why choose Tiinno UI?
+        Why choose Nim UI?
       </h2>
       <FeatureGrid columns={3}>
         <FeatureCard
@@ -232,12 +232,12 @@ function ComparisonFeatures() {
     <FeatureGrid columns={2}>
       <FeatureCard
         icon={<CheckCircleIcon className="w-6 h-6 text-green-500" />}
-        title="With Tiinno UI"
+        title="With Nim UI"
         description="Ship a complete landing page in under an hour with accessible, responsive components."
       />
       <FeatureCard
         icon={<XCircleIcon className="w-6 h-6 text-red-500" />}
-        title="Without Tiinno UI"
+        title="Without Nim UI"
         description="Spend days building custom components, handling edge cases, and fixing accessibility issues."
       />
     </FeatureGrid>

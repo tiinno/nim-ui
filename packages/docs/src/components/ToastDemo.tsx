@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type ReactNode } from 'react';
-import { toast, toastStore, type ToastData } from '@tiinno-ui/components';
-import { Button } from '@tiinno-ui/components';
+import { toast, toastStore, type ToastData } from '@nim-ui/components';
+import { Button } from '@nim-ui/components';
 
 // ---------------------------------------------------------------------------
 // Inline-styled Toaster for docs — immune to Starlight CSS resets
@@ -43,8 +43,8 @@ const icons: Record<string, ReactNode> = {
 
 function DocsToastItem({ data, onDismiss }: { data: ToastData; onDismiss: (id: string) => void }) {
   const [visible, setVisible] = useState(true);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
-  const v = variantStyles[data.variant] ?? variantStyles.default;
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const v = variantStyles[data.variant] ?? variantStyles.default!;
 
   useEffect(() => {
     const dur = data.duration ?? 5000;

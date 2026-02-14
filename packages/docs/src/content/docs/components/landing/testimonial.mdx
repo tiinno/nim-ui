@@ -3,7 +3,7 @@ title: Testimonial
 description: Display customer testimonials and quotes with author attribution
 ---
 
-import { Testimonial } from '@tiinno-ui/components';
+import { Testimonial } from '@nim-ui/components';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -12,7 +12,7 @@ The Testimonial component displays a customer quote with author attribution, inc
 ## Import
 
 ```tsx
-import { Testimonial } from '@tiinno-ui/components';
+import { Testimonial } from '@nim-ui/components';
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ import { Testimonial } from '@tiinno-ui/components';
 <ComponentPreview title="Default Testimonial">
   <Testimonial
     client:load
-    quote="Tiinno UI has transformed the way our team builds interfaces. We ship features twice as fast now."
+    quote="Nim UI has transformed the way our team builds interfaces. We ship features twice as fast now."
     author="Sarah Chen"
     role="Engineering Lead"
     company="Acme Corp"
@@ -29,7 +29,7 @@ import { Testimonial } from '@tiinno-ui/components';
   <Fragment slot="code">
 ```tsx
 <Testimonial
-  quote="Tiinno UI has transformed the way our team builds interfaces. We ship features twice as fast now."
+  quote="Nim UI has transformed the way our team builds interfaces. We ship features twice as fast now."
   author="Sarah Chen"
   role="Engineering Lead"
   company="Acme Corp"
@@ -87,7 +87,7 @@ import { Testimonial } from '@tiinno-ui/components';
 <ComponentPreview title="Testimonial with Role">
   <Testimonial
     client:load
-    quote="We migrated our entire design system to Tiinno UI in a weekend. The TypeScript support is phenomenal."
+    quote="We migrated our entire design system to Nim UI in a weekend. The TypeScript support is phenomenal."
     author="Priya Patel"
     role="CTO"
   />
@@ -95,7 +95,7 @@ import { Testimonial } from '@tiinno-ui/components';
   <Fragment slot="code">
 ```tsx
 <Testimonial
-  quote="We migrated our entire design system to Tiinno UI in a weekend. The TypeScript support is phenomenal."
+  quote="We migrated our entire design system to Nim UI in a weekend. The TypeScript support is phenomenal."
   author="Priya Patel"
   role="CTO"
 />
@@ -187,11 +187,11 @@ import { Testimonial } from '@tiinno-ui/components';
 ### Social Proof Section
 
 ```tsx
-import { Testimonial } from '@tiinno-ui/components';
+import { Testimonial } from '@nim-ui/components';
 
 const testimonials = [
   {
-    quote: "Tiinno UI reduced our development time by 60%.",
+    quote: "Nim UI reduced our development time by 60%.",
     author: "Sarah Chen",
     role: "Engineering Lead",
     company: "Acme Corp",
@@ -236,7 +236,7 @@ function FeaturedTestimonial() {
   return (
     <div className="max-w-2xl mx-auto py-12">
       <Testimonial
-        quote="Moving to Tiinno UI was the best decision we made this year. Our designers love the consistency, our developers love the DX, and our users love the performance."
+        quote="Moving to Nim UI was the best decision we made this year. Our designers love the consistency, our developers love the DX, and our users love the performance."
         author="Elena Rodriguez"
         role="VP of Engineering"
         company="ScaleUp Inc."

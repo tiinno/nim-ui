@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Quick Test Script for Tiinno UI Components
+ * Quick Test Script for Nim UI Components
  *
  * This script verifies that all components can be imported and have the correct structure
  */
@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-console.log('🧪 Tiinno UI Quick Test\n');
+console.log('🧪 Nim UI Quick Test\n');
 
 // Test 1: Check if build artifacts exist
 console.log('📦 Test 1: Checking build artifacts...');
@@ -161,5 +161,5 @@ console.log('\nNext steps:');
 console.log('1. Review TEST_COMPONENTS.md for detailed testing guide');
 console.log('2. Create a test app to visually verify components');
 console.log('3. Set up MCP server in Claude Desktop');
-console.log('4. Start building with Tiinno UI! 🚀');
+console.log('4. Start building with Nim UI! 🚀');
 console.log('='.repeat(50) + '\n');

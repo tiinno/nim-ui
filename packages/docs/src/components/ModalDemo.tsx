@@ -8,7 +8,7 @@ import {
   ModalDescription,
   ModalClose,
   Button,
-} from '@tiinno-ui/components';
+} from '@nim-ui/components';
 
 export function ModalBasic() {
   return (

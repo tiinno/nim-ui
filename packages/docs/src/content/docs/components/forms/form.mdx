@@ -3,7 +3,7 @@ title: Form
 description: Styled form wrapper component for consistent form layouts and structure
 ---
 
-import { Form, Input, Textarea, Select, Checkbox, Button } from '@tiinno-ui/components';
+import { Form, Input, Textarea, Select, Checkbox, Button } from '@nim-ui/components';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -12,7 +12,7 @@ The Form component is a lightweight wrapper around the native HTML `<form>` elem
 ## Import
 
 ```tsx
-import { Form } from '@tiinno-ui/components';
+import { Form } from '@nim-ui/components';
 ```
 
 ## Usage
@@ -214,7 +214,7 @@ The Form component extends `React.FormHTMLAttributes<HTMLFormElement>`, so it ac
 
 ```tsx
 import { useState } from 'react';
-import { Form, Input, Button, Checkbox } from '@tiinno-ui/components';
+import { Form, Input, Button, Checkbox } from '@nim-ui/components';
 
 function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -263,7 +263,7 @@ function LoginForm() {
 ### Contact Form
 
 ```tsx
-import { Form, Input, Textarea, Select, Button } from '@tiinno-ui/components';
+import { Form, Input, Textarea, Select, Button } from '@nim-ui/components';
 
 function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
@@ -306,7 +306,7 @@ function ContactForm() {
 
 ```tsx
 import { useState } from 'react';
-import { Form, Input, Button } from '@tiinno-ui/components';
+import { Form, Input, Button } from '@nim-ui/components';
 
 function MultiStepForm() {
   const [step, setStep] = useState(1);

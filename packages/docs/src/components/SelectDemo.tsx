@@ -6,7 +6,7 @@ import {
   SelectGroup,
   SelectLabel,
   SelectItem,
-} from '@tiinno-ui/components';
+} from '@nim-ui/components';
 
 export function SelectDefault() {
   return (

@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 async function testServer() {
-  console.log('Testing Tiinno UI MCP Server...\n');
+  console.log('Testing Nim UI MCP Server...\n');
 
   try {
     // Test 1: Load registry

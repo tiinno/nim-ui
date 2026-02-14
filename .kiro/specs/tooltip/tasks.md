@@ -2,7 +2,7 @@
 
 ## Overview
 
-สร้าง Tooltip component สำหรับ Tiinno UI โดยใช้ Radix UI Tooltip primitive, CVA pattern สำหรับ variant styling ไฟล์ทั้งหมดอยู่ใน `packages/ui/src/components/` เป็น flat kebab-case
+สร้าง Tooltip component สำหรับ Nim UI โดยใช้ Radix UI Tooltip primitive, CVA pattern สำหรับ variant styling ไฟล์ทั้งหมดอยู่ใน `packages/ui/src/components/` เป็น flat kebab-case
 
 ## Tasks
 

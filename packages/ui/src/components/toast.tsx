@@ -375,7 +375,7 @@ const variantIcons: Record<string, React.FC> = {
  *
  * @example
  * ```tsx
- * import { Toaster, toast } from '@tiinno-ui/components';
+ * import { Toaster, toast } from '@nim-ui/components';
  *
  * function App() {
  *   return (

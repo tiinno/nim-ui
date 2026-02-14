@@ -1,13 +1,13 @@
 ---
 title: Installation
-description: Install Tiinno UI in your React project
+description: Install Nim UI in your React project
 ---
 
 import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
 
 ## Prerequisites
 
-Before installing Tiinno UI, make sure you have:
+Before installing Nim UI, make sure you have:
 
 - **Node.js** 18.0 or later
 - **React** 19.2.0 or later
@@ -15,33 +15,33 @@ Before installing Tiinno UI, make sure you have:
 
 ## Install the Package
 
-Install Tiinno UI and its peer dependencies using your preferred package manager:
+Install Nim UI and its peer dependencies using your preferred package manager:
 
 <Tabs>
   <TabItem label="pnpm">
 ```bash
-pnpm add @tiinno-ui/components
+pnpm add @nim-ui/components
 pnpm add -D tailwindcss @tailwindcss/postcss
 ```
   </TabItem>
 
   <TabItem label="npm">
 ```bash
-npm install @tiinno-ui/components
+npm install @nim-ui/components
 npm install -D tailwindcss @tailwindcss/postcss
 ```
   </TabItem>
 
   <TabItem label="yarn">
 ```bash
-yarn add @tiinno-ui/components
+yarn add @nim-ui/components
 yarn add -D tailwindcss @tailwindcss/postcss
 ```
   </TabItem>
 
   <TabItem label="bun">
 ```bash
-bun add @tiinno-ui/components
+bun add @nim-ui/components
 bun add -D tailwindcss @tailwindcss/postcss
 ```
   </TabItem>
@@ -49,7 +49,7 @@ bun add -D tailwindcss @tailwindcss/postcss
 
 ## Configure Tailwind CSS
 
-Tiinno UI uses Tailwind CSS v4 for styling. Set up Tailwind in your project:
+Nim UI uses Tailwind CSS v4 for styling. Set up Tailwind in your project:
 
 ### 1. Create Tailwind Config
 
@@ -60,7 +60,7 @@ Create a `tailwind.config.js` file in your project root:
 export default {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@tiinno-ui/components/dist/**/*.js',
+    './node_modules/@nim-ui/components/dist/**/*.js',
   ],
   theme: {
     extend: {},
@@ -83,10 +83,10 @@ export default {
 
 ### 3. Import Styles
 
-Import Tiinno UI styles in your main CSS file:
+Import Nim UI styles in your main CSS file:
 
 ```css title="src/index.css"
-@import '@tiinno-ui/components/styles';
+@import '@nim-ui/components/styles';
 
 @tailwind base;
 @tailwind components;
@@ -149,12 +149,12 @@ export default defineConfig({
 Create a simple component to verify everything is working:
 
 ```tsx title="src/App.tsx"
-import { Button } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
 
 export default function App() {
   return (
     <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Tiinno UI Test</h1>
+      <h1 className="text-2xl font-bold mb-4">Nim UI Test</h1>
       <Button variant="primary" onClick={() => alert('It works!')}>
         Click me
       </Button>
@@ -163,7 +163,7 @@ export default function App() {
 }
 ```
 
-If you see a styled button, congratulations! Tiinno UI is successfully installed.
+If you see a styled button, congratulations! Nim UI is successfully installed.
 
 ## What's Next?
 
@@ -180,7 +180,7 @@ For Next.js projects, additional configuration is needed:
 ```js title="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@tiinno-ui/components'],
+  transpilePackages: ['@nim-ui/components'],
 };
 
 export default nextConfig;
@@ -193,7 +193,7 @@ For Remix, add to your `remix.config.js`:
 ```js title="remix.config.js"
 /** @type {import('@remix-run/dev').AppConfig} */
 export default {
-  serverDependenciesToBundle: ['@tiinno-ui/components'],
+  serverDependenciesToBundle: ['@nim-ui/components'],
 };
 ```
 
@@ -203,14 +203,14 @@ export default {
 
 If styles aren't appearing:
 
-1. Verify Tailwind content paths include Tiinno UI:
+1. Verify Tailwind content paths include Nim UI:
    ```js
-   content: ['./node_modules/@tiinno-ui/components/dist/**/*.js']
+   content: ['./node_modules/@nim-ui/components/dist/**/*.js']
    ```
 
 2. Ensure you imported the component styles:
    ```css
-   @import '@tiinno-ui/components/styles';
+   @import '@nim-ui/components/styles';
    ```
 
 3. Check that PostCSS is configured correctly
@@ -231,4 +231,4 @@ If you encounter build errors:
 2. Reinstall dependencies
 3. Ensure all peer dependencies are installed
 
-For more help, check our [GitHub Issues](https://github.com/tiinno-ui/tiinno-ui/issues).
+For more help, check our [GitHub Issues](https://github.com/nim-ui/nim-ui/issues).

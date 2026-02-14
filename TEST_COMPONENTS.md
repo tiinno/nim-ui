@@ -1,4 +1,4 @@
-# Testing Tiinno UI Components
+# Testing Nim UI Components
 
 ## วิธีที่ 1: Storybook (แนะนำสำหรับ production)
 
@@ -31,7 +31,7 @@ cd test-app
     "build": "vite build"
   },
   "dependencies": {
-    "@tiinno-ui/components": "workspace:*",
+    "@nim-ui/components": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -53,7 +53,7 @@ cd test-app
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tiinno UI Test</title>
+    <title>Nim UI Test</title>
   </head>
   <body>
     <div id="root"></div>
@@ -68,7 +68,7 @@ cd test-app
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import '@tiinno-ui/components/styles';
+import '@nim-ui/components/styles';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -99,7 +99,7 @@ import {
   ProductCard,
   DataCard,
   Stat,
-} from '@tiinno-ui/components';
+} from '@nim-ui/components';
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(false);
@@ -114,7 +114,7 @@ function App() {
       <div className="max-w-7xl mx-auto mb-8">
         <div className="flex items-center justify-between">
           <h1 className="text-4xl font-bold text-neutral-900 dark:text-neutral-100">
-            Tiinno UI Components Test
+            Nim UI Components Test
           </h1>
           <Button
             variant="outline"
@@ -296,7 +296,7 @@ function App() {
       {/* Footer */}
       <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800">
         <p className="text-center text-neutral-600 dark:text-neutral-400">
-          Tiinno UI Component Library - All 24 components ready to test!
+          Nim UI Component Library - All 24 components ready to test!
         </p>
       </div>
     </div>
@@ -309,7 +309,7 @@ export default App;
 ### 2.6 สร้าง src/index.css
 
 ```css
-@import '@tiinno-ui/components/styles';
+@import '@nim-ui/components/styles';
 
 body {
   margin: 0;
@@ -387,7 +387,7 @@ node dist/index.js
 ```
 
 จากนั้นใช้ Claude Desktop สั่ง:
-- "Show me all Tiinno UI components"
+- "Show me all Nim UI components"
 - "Get the Button component source code"
 - "Search for card components"
 

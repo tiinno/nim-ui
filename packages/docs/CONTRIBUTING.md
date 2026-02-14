@@ -1,6 +1,6 @@
-# Contributing to Tiinno UI Documentation
+# Contributing to Nim UI Documentation
 
-Thank you for contributing to the Tiinno UI documentation!
+Thank you for contributing to the Nim UI documentation!
 
 ## Getting Started
 
@@ -43,7 +43,7 @@ title: Component Name
 description: Brief description of the component
 ---
 
-import { ComponentName } from '@tiinno-ui/components';
+import { ComponentName } from '@nim-ui/components';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -52,7 +52,7 @@ Brief introduction to the component.
 ## Import
 
 \`\`\`tsx
-import { ComponentName } from '@tiinno-ui/components';
+import { ComponentName } from '@nim-ui/components';
 \`\`\`
 
 ## Basic Usage
@@ -234,7 +234,7 @@ If components don't render in previews:
 
 1. Ensure `client:load` directive is present
 2. Check imports are correct
-3. Verify component is exported from `@tiinno-ui/components`
+3. Verify component is exported from `@nim-ui/components`
 
 ### Styles Not Applied
 
@@ -257,7 +257,7 @@ If build fails:
 
 - Open an issue on GitHub
 - Ask in our Discord
-- Email: docs@tiinno-ui.com
+- Email: docs@nim-ui.com
 
 ## License
 

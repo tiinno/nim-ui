@@ -1,4 +1,4 @@
-# Tiinno UI MCP Server Package Summary
+# Nim UI MCP Server Package Summary
 
 ## Package Structure
 
@@ -25,7 +25,7 @@ packages/mcp-server/
 ### Source Files
 
 **src/index.ts** (470 lines)
-- TiinnoMCPServer class implementation
+- NimMCPServer class implementation
 - 5 MCP tools (list, get, tokens, search, examples)
 - Data loading (registry + tokens)
 - Zod validation schemas
@@ -35,8 +35,8 @@ packages/mcp-server/
 ### Configuration Files
 
 **package.json**
-- Package metadata (@tiinno-ui/mcp-server v0.0.0)
-- Binary entry point (tiinno-mcp)
+- Package metadata (@nim-ui/mcp-server v0.0.0)
+- Binary entry point (nim-mcp)
 - Scripts: build, dev, type-check, start, clean
 - Dependencies: @modelcontextprotocol/sdk, zod
 - Dev dependencies: TypeScript, tsup, @types/node
@@ -151,7 +151,7 @@ Running `pnpm run build` generates:
 - `zod@^3.24.1` - Schema validation
 
 ### Development
-- `@tiinno-ui/components@workspace:*` - Component registry access
+- `@nim-ui/components@workspace:*` - Component registry access
 - `@types/node@^22.10.5` - Node.js types
 - `tsup@^8.3.5` - TypeScript bundler
 - `typescript@^5.9.3` - TypeScript compiler
@@ -184,7 +184,7 @@ npx tsx test-server.ts
 ```json
 {
   "mcpServers": {
-    "tiinno-ui": {
+    "nim-ui": {
       "command": "node",
       "args": ["<absolute-path>/packages/mcp-server/dist/index.js"]
     }
@@ -194,7 +194,7 @@ npx tsx test-server.ts
 
 ### Use in Claude
 ```
-"Show me all Tiinno UI components"
+"Show me all Nim UI components"
 "Get the Button component with source code"
 "What colors are available?"
 "Search for cart components"
@@ -238,7 +238,7 @@ To use this MCP server:
 1. Build the package: `pnpm run build`
 2. Configure Claude Desktop (see INTEGRATION_GUIDE.md)
 3. Restart Claude Desktop
-4. Start using Tiinno UI tools in conversations
+4. Start using Nim UI tools in conversations
 
 ## Version
 

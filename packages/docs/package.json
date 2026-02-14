@@ -1,5 +1,5 @@
 {
-  "name": "@tiinno-ui/docs",
+  "name": "@nim-ui/docs",
   "version": "0.0.0",
   "type": "module",
   "private": true,
@@ -17,8 +17,8 @@
     "@astrojs/starlight": "^0.30.0",
     "@astrojs/starlight-tailwind": "^2.0.3",
     "@astrojs/tailwind": "^6.0.0",
-    "@tiinno-ui/components": "workspace:*",
-    "@tiinno-ui/tailwind-config": "workspace:*",
+    "@nim-ui/components": "workspace:*",
+    "@nim-ui/tailwind-config": "workspace:*",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.2",
     "astro": "^5.1.3",

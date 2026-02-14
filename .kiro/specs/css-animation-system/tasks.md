@@ -2,7 +2,7 @@
 
 ## Overview
 
-เพิ่มระบบ CSS-only animation ให้ Tiinno UI โดยแก้ไขไฟล์ที่มีอยู่แล้ว: เพิ่ม animation tokens, @keyframes, reduced motion support ใน styles.css และ tokens.js จากนั้นอัปเดต CVA class strings ของแต่ละ component
+เพิ่มระบบ CSS-only animation ให้ Nim UI โดยแก้ไขไฟล์ที่มีอยู่แล้ว: เพิ่ม animation tokens, @keyframes, reduced motion support ใน styles.css และ tokens.js จากนั้นอัปเดต CVA class strings ของแต่ละ component
 
 ## Tasks
 

@@ -1,5 +1,5 @@
 import starlightPlugin from '@astrojs/starlight-tailwind';
-import baseConfig from '@tiinno-ui/tailwind-config';
+import baseConfig from '@nim-ui/tailwind-config';
 
 /** @type {import('tailwindcss').Config} */
 export default {

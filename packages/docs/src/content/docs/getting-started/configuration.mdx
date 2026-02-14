@@ -1,13 +1,13 @@
 ---
 title: Configuration
-description: Configure and customize Tiinno UI for your project
+description: Configure and customize Nim UI for your project
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Tailwind Configuration
 
-Tiinno UI is built on Tailwind CSS v4. You can customize the theme by extending the Tailwind configuration.
+Nim UI is built on Tailwind CSS v4. You can customize the theme by extending the Tailwind configuration.
 
 ### Basic Setup
 
@@ -16,7 +16,7 @@ Tiinno UI is built on Tailwind CSS v4. You can customize the theme by extending 
 export default {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@tiinno-ui/components/dist/**/*.js',
+    './node_modules/@nim-ui/components/dist/**/*.js',
   ],
   theme: {
     extend: {
@@ -29,17 +29,17 @@ export default {
 
 ### Using the Preset
 
-For a quick start, use the Tiinno UI Tailwind preset:
+For a quick start, use the Nim UI Tailwind preset:
 
 ```js title="tailwind.config.js"
-import tiinnoPreset from '@tiinno-ui/tailwind-config';
+import nimPreset from '@nim-ui/tailwind-config';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  presets: [tiinnoPreset],
+  presets: [nimPreset],
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@tiinno-ui/components/dist/**/*.js',
+    './node_modules/@nim-ui/components/dist/**/*.js',
   ],
 };
 ```
@@ -153,7 +153,7 @@ Implement a dark mode toggle:
 
 ```tsx title="src/components/DarkModeToggle.tsx"
 import { useEffect, useState } from 'react';
-import { Button } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
 
 export default function DarkModeToggle() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -198,7 +198,7 @@ Override component styles using CSS layers:
 ```css title="src/styles/custom.css"
 @layer components {
   /* Override button styles */
-  .tiinno-button {
+  .nim-button {
     @apply rounded-full;
   }
 
@@ -252,13 +252,13 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'tiinno-ui': ['@tiinno-ui/components'],
+          'nim-ui': ['@nim-ui/components'],
         },
       },
     },
   },
   optimizeDeps: {
-    include: ['@tiinno-ui/components'],
+    include: ['@nim-ui/components'],
   },
 });
 ```
@@ -270,12 +270,12 @@ Configure Next.js for optimal performance:
 ```js title="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@tiinno-ui/components'],
+  transpilePackages: ['@nim-ui/components'],
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   experimental: {
-    optimizePackageImports: ['@tiinno-ui/components'],
+    optimizePackageImports: ['@nim-ui/components'],
   },
 };
 
@@ -351,7 +351,7 @@ Set up path aliases for cleaner imports:
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
-      "@ui/*": ["./node_modules/@tiinno-ui/components/*"]
+      "@ui/*": ["./node_modules/@nim-ui/components/*"]
     }
   }
 }
@@ -372,10 +372,10 @@ Ensure tree shaking works correctly:
 
 ```tsx
 // ✅ Good - imports only Button
-import { Button } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
 
 // ❌ Bad - imports everything
-import * as TiinnoUI from '@tiinno-ui/components';
+import * as NimUI from '@nim-ui/components';
 ```
 
 ### Code Splitting

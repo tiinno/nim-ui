@@ -1,4 +1,4 @@
-# Tiinno UI MCP Server - Integration Guide
+# Nim UI MCP Server - Integration Guide
 
 ## Quick Start
 
@@ -23,17 +23,17 @@ Add the server to your Claude Desktop configuration file:
 ```json
 {
   "mcpServers": {
-    "tiinno-ui": {
+    "nim-ui": {
       "command": "node",
       "args": [
-        "/absolute/path/to/tiinno-ui/packages/mcp-server/dist/index.js"
+        "/absolute/path/to/nim-ui/packages/mcp-server/dist/index.js"
       ]
     }
   }
 }
 ```
 
-Replace `/absolute/path/to/tiinno-ui` with your actual project path.
+Replace `/absolute/path/to/nim-ui` with your actual project path.
 
 ### 3. Restart Claude Desktop
 
@@ -44,7 +44,7 @@ After updating the configuration, restart Claude Desktop to load the MCP server.
 In Claude Desktop, you should now be able to:
 
 ```
-List all Tiinno UI components
+List all Nim UI components
 ```
 
 Claude will use the `ui_list_components` tool to show you all available components.
@@ -54,7 +54,7 @@ Claude will use the `ui_list_components` tool to show you all available componen
 ### Example 1: Browse Components
 
 ```
-Show me all the primitive components in Tiinno UI
+Show me all the primitive components in Nim UI
 ```
 
 Claude will use: `ui_list_components` with `category: "primitives"`
@@ -78,7 +78,7 @@ Claude will use: `ui_search_components` with `query: "cart"`
 ### Example 4: Get Design Tokens
 
 ```
-What colors are available in Tiinno UI?
+What colors are available in Nim UI?
 ```
 
 Claude will use: `ui_get_tokens` with `tokenType: "colors"`

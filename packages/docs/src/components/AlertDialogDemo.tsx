@@ -9,7 +9,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   Button,
-} from '@tiinno-ui/components';
+} from '@nim-ui/components';
 
 export function AlertDialogBasicDemo() {
   return (

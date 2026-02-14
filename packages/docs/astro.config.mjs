@@ -4,17 +4,17 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'http://localhost:4321',
+  site: 'https://nim-ui.pages.dev',
   integrations: [
     starlight({
-      title: 'Tiinno UI',
+      title: 'Nim UI',
       description: 'Modern, accessible, production-ready React component library',
       logo: {
         src: './src/assets/logo.svg',
         replacesTitle: true,
       },
       social: {
-        github: 'https://github.com/tiinno-ui/tiinno-ui',
+        github: 'https://github.com/nim-ui/nim-ui',
       },
       customCss: [
         './src/styles/custom.css',
@@ -141,6 +141,7 @@ export default defineConfig({
             { label: 'Theming', slug: 'guides/theming' },
             { label: 'Best Practices', slug: 'guides/best-practices' },
             { label: 'Accessibility', slug: 'guides/accessibility' },
+            { label: 'MCP Server', slug: 'guides/mcp' },
           ],
         },
       ],
@@ -148,7 +149,7 @@ export default defineConfig({
         Head: './src/components/Head.astro',
       },
       editLink: {
-        baseUrl: 'https://github.com/tiinno-ui/tiinno-ui/edit/main/packages/docs/',
+        baseUrl: 'https://github.com/nim-ui/nim-ui/edit/main/packages/docs/',
       },
       lastUpdated: true,
       expressiveCode: {

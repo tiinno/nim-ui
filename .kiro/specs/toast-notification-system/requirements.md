@@ -2,7 +2,7 @@
 
 ## Introduction
 
-ระบบ Toast/Notification สำหรับ Tiinno UI component library เป็น component ในหมวด Feedback ที่ให้ผู้ใช้แสดงข้อความแจ้งเตือนแบบ lightweight ที่ปรากฏชั่วคราวและหายไปอัตโนมัติ รองรับทั้ง declarative JSX API และ imperative API (`toast.success("Saved!")`) สร้างบน Radix UI Toast primitive (`@radix-ui/react-toast`) ตามแบบแผน CVA pattern ของ library
+ระบบ Toast/Notification สำหรับ Nim UI component library เป็น component ในหมวด Feedback ที่ให้ผู้ใช้แสดงข้อความแจ้งเตือนแบบ lightweight ที่ปรากฏชั่วคราวและหายไปอัตโนมัติ รองรับทั้ง declarative JSX API และ imperative API (`toast.success("Saved!")`) สร้างบน Radix UI Toast primitive (`@radix-ui/react-toast`) ตามแบบแผน CVA pattern ของ library
 
 ## Glossary
 
@@ -43,7 +43,7 @@
 4. WHEN variant เป็น warning, THE Toast_Component SHALL แสดงสีพื้นหลังและขอบที่สื่อถึงคำเตือนโดยใช้ warning design token
 5. WHEN variant เป็น info, THE Toast_Component SHALL แสดงสีพื้นหลังและขอบที่สื่อถึงข้อมูลโดยใช้ primary design token
 6. THE Toast_Component SHALL รองรับ dark mode โดยมี dark variant classes สำหรับทุก variant
-7. THE Toast_Component SHALL ใช้ forwardRef pattern ตามแบบแผนของ Tiinno UI
+7. THE Toast_Component SHALL ใช้ forwardRef pattern ตามแบบแผนของ Nim UI
 8. THE Toast_Component SHALL รองรับ sub-components: ToastTitle, ToastDescription, ToastClose, ToastAction
 
 ### Requirement 3: Auto-dismiss
@@ -113,4 +113,4 @@
 1. THE Toast_Component SHALL export TypeScript interfaces สำหรับ props ทั้งหมด: ToastProps, ToastProviderProps, ToastViewportProps, ToastTitleProps, ToastDescriptionProps, ToastCloseProps, ToastActionProps
 2. THE Toast_Component SHALL export CVA variants type ผ่าน VariantProps
 3. THE Toast_Store SHALL export type สำหรับ toast data: ToastData ประกอบด้วย id, title, description, variant, duration
-4. WHEN component ถูก export จาก index.ts, THE Toast_Component SHALL สามารถ import ได้จาก '@tiinno-ui/components'
+4. WHEN component ถูก export จาก index.ts, THE Toast_Component SHALL สามารถ import ได้จาก '@nim-ui/components'

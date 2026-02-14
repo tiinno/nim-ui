@@ -1,8 +1,8 @@
-# Design Document: Tooltip Component สำหรับ Tiinno UI
+# Design Document: Tooltip Component สำหรับ Nim UI
 
 ## Overview
 
-Tooltip component เพิ่ม overlay component ให้กับ Tiinno UI โดยสร้างบน `@radix-ui/react-tooltip` primitive ที่จัดการ accessibility, positioning, delay, และ keyboard interactions ให้อัตโนมัติ
+Tooltip component เพิ่ม overlay component ให้กับ Nim UI โดยสร้างบน `@radix-ui/react-tooltip` primitive ที่จัดการ accessibility, positioning, delay, และ keyboard interactions ให้อัตโนมัติ
 
 แนวทางหลัก:
 - ใช้ Radix UI Tooltip primitive เป็น base (เหมือน Modal ใช้ Radix Dialog, Toast ใช้ Radix Toast)

@@ -2,7 +2,7 @@
 
 ## Overview
 
-การย้ายระบบสีของ Tiinno UI จาก Hex เป็น OKLCH เป็นการเปลี่ยนแปลงที่เกิดขึ้นที่ระดับ design token และ CSS configuration เท่านั้น — component source code ไม่ต้องเปลี่ยนแปลงเลย เพราะ component ใช้ Tailwind utility class (เช่น `bg-primary-600`) ซึ่ง resolve ค่าจาก CSS custom properties
+การย้ายระบบสีของ Nim UI จาก Hex เป็น OKLCH เป็นการเปลี่ยนแปลงที่เกิดขึ้นที่ระดับ design token และ CSS configuration เท่านั้น — component source code ไม่ต้องเปลี่ยนแปลงเลย เพราะ component ใช้ Tailwind utility class (เช่น `bg-primary-600`) ซึ่ง resolve ค่าจาก CSS custom properties
 
 ### ทำไมต้อง OKLCH?
 

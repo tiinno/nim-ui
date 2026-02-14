@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Alert Dialog component สำหรับ Tiinno UI component library เป็น component ในหมวด Feedback/Overlay ที่แสดง dialog แบบ modal สำหรับการยืนยันการกระทำที่สำคัญ (เช่น ลบข้อมูล, ยกเลิกการเปลี่ยนแปลง) สร้างบน Radix UI Alert Dialog primitive (`@radix-ui/react-alert-dialog`) ตามแบบแผน CVA pattern ของ library รองรับ compound component pattern (AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel), overlay backdrop พร้อม animation, dark mode, และ accessibility ครบถ้วนตาม WAI-ARIA alertdialog pattern
+Alert Dialog component สำหรับ Nim UI component library เป็น component ในหมวด Feedback/Overlay ที่แสดง dialog แบบ modal สำหรับการยืนยันการกระทำที่สำคัญ (เช่น ลบข้อมูล, ยกเลิกการเปลี่ยนแปลง) สร้างบน Radix UI Alert Dialog primitive (`@radix-ui/react-alert-dialog`) ตามแบบแผน CVA pattern ของ library รองรับ compound component pattern (AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel), overlay backdrop พร้อม animation, dark mode, และ accessibility ครบถ้วนตาม WAI-ARIA alertdialog pattern
 
 ## Glossary
 
@@ -42,7 +42,7 @@ Alert Dialog component สำหรับ Tiinno UI component library เป็�
 3. WHEN variant เป็น destructive, THE AlertDialog_Content SHALL แสดงพื้นหลังสีขาว (white) พร้อมขอบสีแดง (border-error-500) ที่ด้านบนหรือด้านซ้าย เพื่อบ่งบอกการกระทำอันตราย
 4. THE AlertDialog_Content SHALL รองรับ dark mode โดยมี dark variant classes สำหรับทุก variant
 5. THE AlertDialog_Content SHALL แสดงอยู่กลางหน้าจอ (centered) ทั้งแนวนอนและแนวตั้ง
-6. THE AlertDialog_Content SHALL ใช้ forwardRef pattern ตามแบบแผนของ Tiinno UI
+6. THE AlertDialog_Content SHALL ใช้ forwardRef pattern ตามแบบแผนของ Nim UI
 7. THE AlertDialog_Content SHALL ใช้ enter/exit animation สำหรับทั้ง content และ overlay (animate-fade-in, animate-fade-out)
 8. THE AlertDialog_Content SHALL render ผ่าน Radix Portal นอก DOM hierarchy
 
@@ -106,5 +106,5 @@ Alert Dialog component สำหรับ Tiinno UI component library เป็�
 
 1. THE AlertDialog component SHALL export TypeScript interfaces สำหรับ props ทั้งหมด: AlertDialogProps, AlertDialogTriggerProps, AlertDialogContentProps, AlertDialogOverlayProps, AlertDialogHeaderProps, AlertDialogFooterProps, AlertDialogTitleProps, AlertDialogDescriptionProps, AlertDialogActionProps, AlertDialogCancelProps
 2. THE AlertDialog component SHALL export CVA variants type ผ่าน VariantProps
-3. WHEN component ถูก export จาก index.ts, THE AlertDialog component SHALL สามารถ import ได้จาก '@tiinno-ui/components'
+3. WHEN component ถูก export จาก index.ts, THE AlertDialog component SHALL สามารถ import ได้จาก '@nim-ui/components'
 4. THE AlertDialog component SHALL export alertDialogContentVariants สำหรับให้นักพัฒนาใช้ variant classes ภายนอก component ได้

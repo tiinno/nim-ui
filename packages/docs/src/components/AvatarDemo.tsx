@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage, AvatarFallback } from '@tiinno-ui/components';
+import { Avatar, AvatarImage, AvatarFallback } from '@nim-ui/components';
 
 export function AvatarWithImage({ src, alt, fallback, size }: { src: string; alt: string; fallback: string; size?: 'sm' | 'md' | 'lg' | 'xl' }) {
   return (

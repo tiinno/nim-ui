@@ -2,7 +2,7 @@
 
 ## Overview
 
-สร้างระบบ Toast/Notification สำหรับ Tiinno UI โดยใช้ Radix UI Toast primitive, CVA pattern, และ external store สำหรับ imperative API ไฟล์ทั้งหมดอยู่ใน `packages/ui/src/components/` เป็น flat kebab-case
+สร้างระบบ Toast/Notification สำหรับ Nim UI โดยใช้ Radix UI Toast primitive, CVA pattern, และ external store สำหรับ imperative API ไฟล์ทั้งหมดอยู่ใน `packages/ui/src/components/` เป็น flat kebab-case
 
 ## Tasks
 

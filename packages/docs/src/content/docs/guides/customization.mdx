@@ -3,14 +3,14 @@ title: Customization
 description: Override component styles, extend CVA variants, and use the cn() utility for custom styling
 ---
 
-Tiinno UI components are designed to be customized without fighting the framework. Every component accepts a `className` prop for style overrides, uses class-variance-authority (CVA) for variant management, and provides the `cn()` utility for merging Tailwind classes safely.
+Nim UI components are designed to be customized without fighting the framework. Every component accepts a `className` prop for style overrides, uses class-variance-authority (CVA) for variant management, and provides the `cn()` utility for merging Tailwind classes safely.
 
 ## Override Styles with className
 
 The simplest way to customize any component is through the `className` prop. Additional classes are merged with the component's default styles.
 
 ```tsx
-import { Button } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
 
 // Add rounded corners
 <Button className="rounded-full">
@@ -31,7 +31,7 @@ import { Button } from '@tiinno-ui/components';
 ### Customizing Cards
 
 ```tsx
-import { Card } from '@tiinno-ui/components';
+import { Card } from '@nim-ui/components';
 
 // Card with custom border
 <Card className="border-2 border-primary-500">
@@ -52,7 +52,7 @@ import { Card } from '@tiinno-ui/components';
 ### Customizing Inputs
 
 ```tsx
-import { Input } from '@tiinno-ui/components';
+import { Input } from '@nim-ui/components';
 
 // Input with custom focus ring
 <Input className="focus:ring-2 focus:ring-purple-500 focus:border-purple-500" />
@@ -66,12 +66,12 @@ import { Input } from '@tiinno-ui/components';
 
 ## The cn() Utility
 
-Tiinno UI uses the `cn()` utility internally for class merging. It combines `clsx` for conditional classes with `tailwind-merge` for resolving Tailwind class conflicts.
+Nim UI uses the `cn()` utility internally for class merging. It combines `clsx` for conditional classes with `tailwind-merge` for resolving Tailwind class conflicts.
 
 ### How It Works
 
 ```tsx
-import { cn } from '@tiinno-ui/components';
+import { cn } from '@nim-ui/components';
 
 // Basic merging
 cn('p-4 text-red-500', 'p-8')
@@ -91,11 +91,11 @@ cn(
 
 ### Using cn() in Custom Components
 
-When building your own components that wrap Tiinno UI, use `cn()` to merge default and custom classes safely:
+When building your own components that wrap Nim UI, use `cn()` to merge default and custom classes safely:
 
 ```tsx
-import { cn } from '@tiinno-ui/components';
-import { Button, type ButtonProps } from '@tiinno-ui/components';
+import { cn } from '@nim-ui/components';
+import { Button, type ButtonProps } from '@nim-ui/components';
 
 interface IconButtonProps extends ButtonProps {
   icon: React.ReactNode;
@@ -116,7 +116,7 @@ function IconButton({ icon, children, className, ...props }: IconButtonProps) {
 
 ## Extending CVA Variants
 
-Tiinno UI uses class-variance-authority (CVA) for managing component variants. You can extend the variant system to add your own custom variants.
+Nim UI uses class-variance-authority (CVA) for managing component variants. You can extend the variant system to add your own custom variants.
 
 ### Understanding CVA
 
@@ -150,13 +150,13 @@ const buttonVariants = cva(
 
 ### Creating Extended Components
 
-Wrap a Tiinno UI component and add custom variants:
+Wrap a Nim UI component and add custom variants:
 
 ```tsx
 import { forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@tiinno-ui/components';
-import { Button as BaseButton, type ButtonProps as BaseButtonProps } from '@tiinno-ui/components';
+import { cn } from '@nim-ui/components';
+import { Button as BaseButton, type ButtonProps as BaseButtonProps } from '@nim-ui/components';
 
 const extendedButtonVariants = cva('', {
   variants: {
@@ -208,8 +208,8 @@ Usage:
 
 ```tsx
 import { cva } from 'class-variance-authority';
-import { cn } from '@tiinno-ui/components';
-import { Button as BaseButton } from '@tiinno-ui/components';
+import { cn } from '@nim-ui/components';
+import { Button as BaseButton } from '@nim-ui/components';
 
 const brandVariants = cva('', {
   variants: {
@@ -237,13 +237,13 @@ export function BrandButton({ brand, className, ...props }: BrandButtonProps) {
 
 ## Composing Custom Components
 
-Build higher-level components by composing Tiinno UI primitives:
+Build higher-level components by composing Nim UI primitives:
 
 ### Stat Card
 
 ```tsx
-import { Card, Badge } from '@tiinno-ui/components';
-import { cn } from '@tiinno-ui/components';
+import { Card, Badge } from '@nim-ui/components';
+import { cn } from '@nim-ui/components';
 
 interface StatCardProps {
   label: string;
@@ -277,8 +277,8 @@ function StatCard({ label, value, change, className }: StatCardProps) {
 ### Navigation Item
 
 ```tsx
-import { Button } from '@tiinno-ui/components';
-import { cn } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
+import { cn } from '@nim-ui/components';
 
 interface NavItemProps {
   href: string;
@@ -337,4 +337,4 @@ For values that need to change dynamically (e.g., based on user settings), use C
 
 - [Theming](/guides/theming/) - Design tokens and theme configuration
 - [Dark Mode](/design-system/dark-mode/) - Implementing dark mode
-- [Best Practices](/guides/best-practices/) - Tips for building with Tiinno UI
+- [Best Practices](/guides/best-practices/) - Tips for building with Nim UI

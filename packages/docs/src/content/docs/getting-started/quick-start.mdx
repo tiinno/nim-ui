@@ -1,16 +1,16 @@
 ---
 title: Quick Start
-description: Build your first component with Tiinno UI
+description: Build your first component with Nim UI
 ---
 
-import { Button, Input, Card } from '@tiinno-ui/components';
+import { Button, Input, Card } from '@nim-ui/components';
 import ComponentPreview from '../../../components/ComponentPreview.astro';
 
-This guide will walk you through creating your first functional component using Tiinno UI.
+This guide will walk you through creating your first functional component using Nim UI.
 
 ## Your First Component
 
-Let's build a simple login form using Tiinno UI components.
+Let's build a simple login form using Nim UI components.
 
 <ComponentPreview title="Login Form Example">
   <Card client:only="react" className="w-full max-w-md p-6">
@@ -32,7 +32,7 @@ Let's build a simple login form using Tiinno UI components.
 
   <Fragment slot="code">
 ```tsx
-import { Button, Input, Card } from '@tiinno-ui/components';
+import { Button, Input, Card } from '@nim-ui/components';
 
 export default function LoginForm() {
   const handleSubmit = (e: React.FormEvent) => {
@@ -65,12 +65,12 @@ export default function LoginForm() {
 
 ## Basic Usage Pattern
 
-All Tiinno UI components follow a consistent pattern:
+All Nim UI components follow a consistent pattern:
 
 ### 1. Import the Component
 
 ```tsx
-import { Button } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
 ```
 
 ### 2. Use with Props
@@ -117,7 +117,7 @@ Use React state naturally:
 
 ```tsx
 import { useState } from 'react';
-import { Input, Button } from '@tiinno-ui/components';
+import { Input, Button } from '@nim-ui/components';
 
 export default function SearchBox() {
   const [query, setQuery] = useState('');
@@ -166,7 +166,7 @@ Build complete forms with proper validation:
 
 ```tsx
 import { useState } from 'react';
-import { Input, Button, Card } from '@tiinno-ui/components';
+import { Input, Button, Card } from '@nim-ui/components';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -304,4 +304,4 @@ Check out these example projects:
 - **Landing Page** - Marketing site with hero and features
 - **Authentication** - Login, signup, and password reset forms
 
-All examples are available in our [GitHub repository](https://github.com/tiinno-ui/tiinno-ui/tree/main/examples).
+All examples are available in our [GitHub repository](https://github.com/nim-ui/nim-ui/tree/main/examples).

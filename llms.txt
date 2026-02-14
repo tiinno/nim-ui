@@ -1,4 +1,4 @@
-# Tiinno UI - Quick Reference for AI
+# Nim UI - Quick Reference for AI
 
 > Modern React component library with TypeScript, Tailwind v4, and accessibility-first design
 
@@ -12,7 +12,7 @@
 ## Project Structure
 
 ```
-tiinno-ui/
+nim-ui/
 ├── packages/
 │   ├── ui/              # Component library
 │   │   └── src/
@@ -212,7 +212,7 @@ Located: `/packages/mcp-server/`
 ```json
 {
   "mcpServers": {
-    "tiinno-ui": {
+    "nim-ui": {
       "command": "node",
       "args": ["path/to/mcp-server/dist/index.js"]
     }
@@ -234,9 +234,9 @@ Located: `/packages/mcp-server/`
 ## Common Imports
 
 ```tsx
-import { Button, Input, Card, Modal } from '@tiinno/ui';
-import { cn } from '@tiinno/ui/utils';
-import { useToast } from '@tiinno/ui/hooks';
+import { Button, Input, Card, Modal } from '@nim/ui';
+import { cn } from '@nim/ui/utils';
+import { useToast } from '@nim/ui/hooks';
 ```
 
 ## File Paths

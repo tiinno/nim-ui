@@ -1,4 +1,4 @@
-import { FeatureGrid, FeatureCard } from '@tiinno-ui/components';
+import { FeatureGrid, FeatureCard } from '@nim-ui/components';
 
 export function FeatureDefault() {
   return (

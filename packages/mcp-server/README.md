@@ -1,10 +1,10 @@
-# @tiinno-ui/mcp-server
+# @nim-ui/mcp-server
 
-Model Context Protocol (MCP) Server for the Tiinno UI component library.
+Model Context Protocol (MCP) Server for the Nim UI component library.
 
 ## Overview
 
-This package provides an MCP server that exposes Tiinno UI components, design tokens, and documentation through a standardized protocol. It enables AI assistants and other tools to discover and use Tiinno UI components effectively.
+This package provides an MCP server that exposes Nim UI components, design tokens, and documentation through a standardized protocol. It enables AI assistants and other tools to discover and use Nim UI components effectively.
 
 ## Installation
 
@@ -21,7 +21,7 @@ pnpm run start
 
 ## Available Tools
 
-The MCP server provides 5 tools for interacting with the Tiinno UI component library:
+The MCP server provides 5 tools for interacting with the Nim UI component library:
 
 ### 1. ui_list_components
 
@@ -53,7 +53,7 @@ Get full details of a specific component including metadata and source code.
 
 ### 3. ui_get_tokens
 
-Get design tokens from the Tiinno UI design system.
+Get design tokens from the Nim UI design system.
 
 **Parameters:**
 - `tokenType` (optional): Type of tokens to retrieve (`colors`, `spacing`, `typography`, `all`). Default: `all`
@@ -102,9 +102,9 @@ To use this MCP server with Claude Desktop or other MCP clients, add it to your 
 ```json
 {
   "mcpServers": {
-    "tiinno-ui": {
+    "nim-ui": {
       "command": "node",
-      "args": ["/path/to/tiinno-ui/packages/mcp-server/dist/index.js"]
+      "args": ["/path/to/nim-ui/packages/mcp-server/dist/index.js"]
     }
   }
 }

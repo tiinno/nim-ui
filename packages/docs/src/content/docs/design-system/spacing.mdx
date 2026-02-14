@@ -5,7 +5,7 @@ description: Consistent spacing scale for padding, margins, and gaps throughout 
 
 import ComponentPreview from '../../../components/ComponentPreview.astro';
 
-Tiinno UI uses a harmonious spacing scale based on a 4px base unit. This scale provides consistent spacing for padding, margins, gaps, and layout dimensions. All values are available as Tailwind CSS utility classes and CSS custom properties.
+Nim UI uses a harmonious spacing scale based on a 4px base unit. This scale provides consistent spacing for padding, margins, gaps, and layout dimensions. All values are available as Tailwind CSS utility classes and CSS custom properties.
 
 ## Spacing Scale
 
@@ -172,7 +172,7 @@ The `gap` utility is the preferred method for spacing items within flex and grid
 
 ## Component Spacing
 
-Tiinno UI components use the spacing tokens internally. Here is how the scale maps to common component patterns:
+Nim UI components use the spacing tokens internally. Here is how the scale maps to common component patterns:
 
 | Pattern | Spacing Token | Tailwind | Usage |
 |---------|--------------|----------|-------|
@@ -246,7 +246,7 @@ Use CSS custom properties for dynamic spacing:
 
 1. **Use the spacing scale consistently.** Avoid arbitrary pixel values. Stick to the defined tokens so all spacing is harmonious.
 2. **Prefer `gap` over margins for layout spacing.** The `gap` property on flex and grid containers produces cleaner markup and avoids issues with collapsing margins.
-3. **Use spacing tokens from components.** When using Tiinno UI layout components like `Stack`, `Grid`, and `Flex`, use the built-in spacing props rather than adding manual padding or margin.
+3. **Use spacing tokens from components.** When using Nim UI layout components like `Stack`, `Grid`, and `Flex`, use the built-in spacing props rather than adding manual padding or margin.
 4. **Increase spacing for larger screens.** Use responsive Tailwind utilities like `md:p-8 lg:p-12` to scale spacing up on wider viewports.
 5. **Keep vertical rhythm consistent.** Use the same spacing value between sibling elements (e.g., all form fields spaced with `gap-4`).
 

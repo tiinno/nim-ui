@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Dropdown Menu component สำหรับ Tiinno UI component library เป็น component ในหมวด Overlay/Navigation ที่แสดงรายการเมนูแบบ dropdown เมื่อผู้ใช้คลิกบน trigger element สร้างบน Radix UI Dropdown Menu primitive (`@radix-ui/react-dropdown-menu`) ตามแบบแผน CVA pattern ของ library รองรับ compound component pattern (DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent), หลายตำแหน่ง (top, bottom, left, right), configurable sideOffset, checkbox items, radio items, sub-menus, dark mode, และ accessibility ครบถ้วน
+Dropdown Menu component สำหรับ Nim UI component library เป็น component ในหมวด Overlay/Navigation ที่แสดงรายการเมนูแบบ dropdown เมื่อผู้ใช้คลิกบน trigger element สร้างบน Radix UI Dropdown Menu primitive (`@radix-ui/react-dropdown-menu`) ตามแบบแผน CVA pattern ของ library รองรับ compound component pattern (DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent), หลายตำแหน่ง (top, bottom, left, right), configurable sideOffset, checkbox items, radio items, sub-menus, dark mode, และ accessibility ครบถ้วน
 
 ## Glossary
 
@@ -47,7 +47,7 @@ Dropdown Menu component สำหรับ Tiinno UI component library เป็
 4. THE DropdownMenu_Content SHALL รองรับ dark mode โดยมี dark variant classes สำหรับทุก variant
 5. WHEN side prop ถูกกำหนดเป็นค่าใดค่าหนึ่งจาก top, bottom, left, right, THE DropdownMenu_Content SHALL แสดงผลที่ตำแหน่งตาม side ที่กำหนด
 6. THE DropdownMenu_Content SHALL มี default side เป็น bottom
-7. THE DropdownMenu_Content SHALL ใช้ forwardRef pattern ตามแบบแผนของ Tiinno UI
+7. THE DropdownMenu_Content SHALL ใช้ forwardRef pattern ตามแบบแผนของ Nim UI
 8. THE DropdownMenu_Content SHALL รองรับ sideOffset prop สำหรับกำหนดระยะห่างจาก trigger element
 9. THE DropdownMenu_Content SHALL มี default sideOffset เท่ากับ 4 pixels
 10. THE DropdownMenu_Content SHALL ใช้ enter/exit animation จากระบบ CSS animation ที่มีอยู่ (animate-fade-in, animate-fade-out)
@@ -62,7 +62,7 @@ Dropdown Menu component สำหรับ Tiinno UI component library เป็
 2. THE DropdownMenu_Item SHALL รองรับ dark mode hover/focus styling
 3. WHEN disabled prop เป็น true, THE DropdownMenu_Item SHALL แสดงด้วย opacity ลดลง (opacity-50) และป้องกันการ interaction
 4. THE DropdownMenu_Item SHALL รองรับ inset prop สำหรับเพิ่ม padding ด้านซ้ายเพื่อจัดแนวกับ label
-5. THE DropdownMenu_Item SHALL ใช้ forwardRef pattern ตามแบบแผนของ Tiinno UI
+5. THE DropdownMenu_Item SHALL ใช้ forwardRef pattern ตามแบบแผนของ Nim UI
 6. WHEN ผู้ใช้คลิก DropdownMenu_Item, THE DropdownMenu_Root SHALL ปิด dropdown menu ทันที
 
 ### Requirement 4: DropdownMenu Separator และ Label
@@ -86,7 +86,7 @@ Dropdown Menu component สำหรับ Tiinno UI component library เป็
 2. THE DropdownMenu_CheckboxItem SHALL รองรับ onCheckedChange callback เมื่อ checked state เปลี่ยนแปลง
 3. WHEN checked เป็น true, THE DropdownMenu_CheckboxItem SHALL แสดง check indicator icon ที่ด้านซ้ายของ item
 4. THE DropdownMenu_CheckboxItem SHALL มี hover/focus styling เหมือนกับ DropdownMenu_Item
-5. THE DropdownMenu_CheckboxItem SHALL ใช้ forwardRef pattern ตามแบบแผนของ Tiinno UI
+5. THE DropdownMenu_CheckboxItem SHALL ใช้ forwardRef pattern ตามแบบแผนของ Nim UI
 
 ### Requirement 6: DropdownMenu RadioGroup และ RadioItem
 
@@ -98,7 +98,7 @@ Dropdown Menu component สำหรับ Tiinno UI component library เป็
 2. THE DropdownMenu_RadioGroup SHALL รองรับ onValueChange callback เมื่อ selected value เปลี่ยนแปลง
 3. WHEN RadioItem ถูกเลือก, THE DropdownMenu_RadioItem SHALL แสดง dot indicator icon ที่ด้านซ้ายของ item
 4. THE DropdownMenu_RadioItem SHALL มี hover/focus styling เหมือนกับ DropdownMenu_Item
-5. THE DropdownMenu_RadioItem SHALL ใช้ forwardRef pattern ตามแบบแผนของ Tiinno UI
+5. THE DropdownMenu_RadioItem SHALL ใช้ forwardRef pattern ตามแบบแผนของ Nim UI
 
 ### Requirement 7: DropdownMenu Sub-menu
 
@@ -135,5 +135,5 @@ Dropdown Menu component สำหรับ Tiinno UI component library เป็
 
 1. THE DropdownMenu_Content SHALL export TypeScript interfaces สำหรับ props ทั้งหมด: DropdownMenuProps, DropdownMenuTriggerProps, DropdownMenuContentProps, DropdownMenuItemProps, DropdownMenuSeparatorProps, DropdownMenuLabelProps, DropdownMenuCheckboxItemProps, DropdownMenuRadioGroupProps, DropdownMenuRadioItemProps, DropdownMenuSubProps, DropdownMenuSubTriggerProps, DropdownMenuSubContentProps
 2. THE DropdownMenu_Content SHALL export CVA variants type ผ่าน VariantProps
-3. WHEN component ถูก export จาก index.ts, THE DropdownMenu_Content SHALL สามารถ import ได้จาก '@tiinno-ui/components'
+3. WHEN component ถูก export จาก index.ts, THE DropdownMenu_Content SHALL สามารถ import ได้จาก '@nim-ui/components'
 4. THE DropdownMenu_Content SHALL export dropdownMenuContentVariants สำหรับให้นักพัฒนาใช้ variant classes ภายนอก component ได้

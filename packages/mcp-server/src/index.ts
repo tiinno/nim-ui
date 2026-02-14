@@ -63,7 +63,7 @@ const GetExampleSchema = z.object({
   exampleIndex: z.number().int().min(0).optional(),
 });
 
-class TiinnoMCPServer {
+class NimMCPServer {
   private server: Server;
   private registryData: RegistryData | null = null;
   private tokensData: any = null;
@@ -71,7 +71,7 @@ class TiinnoMCPServer {
   constructor() {
     this.server = new Server(
       {
-        name: 'tiinno-ui-mcp',
+        name: 'nim-ui-mcp',
         version: '0.0.0',
       },
       {
@@ -99,7 +99,7 @@ class TiinnoMCPServer {
         this.tokensData = new Function(`return ${tokensMatch[1]}`)();
       }
 
-      console.error('Tiinno UI data loaded successfully');
+      console.error('Nim UI data loaded successfully');
     } catch (error) {
       console.error('Error loading data:', error);
       throw error;
@@ -143,7 +143,7 @@ class TiinnoMCPServer {
         {
           name: 'ui_get_tokens',
           description:
-            'Get design tokens from the Tiinno UI design system (colors, spacing, typography).',
+            'Get design tokens from the Nim UI design system (colors, spacing, typography).',
           inputSchema: {
             type: 'object',
             properties: {
@@ -247,7 +247,7 @@ class TiinnoMCPServer {
     });
 
     // Format output
-    let output = `# Tiinno UI Components${category ? ` (${category})` : ''}\n\n`;
+    let output = `# Nim UI Components${category ? ` (${category})` : ''}\n\n`;
     output += `Total: ${components.length} component${components.length !== 1 ? 's' : ''}\n\n`;
 
     for (const [cat, comps] of Object.entries(grouped)) {
@@ -343,7 +343,7 @@ class TiinnoMCPServer {
       throw new Error('Tokens data not loaded');
     }
 
-    let output = `# Tiinno UI Design Tokens\n\n`;
+    let output = `# Nim UI Design Tokens\n\n`;
 
     const formatTokens = (tokens: any, category: string) => {
       let result = `## ${category.charAt(0).toUpperCase() + category.slice(1)}\n\n`;
@@ -485,11 +485,11 @@ class TiinnoMCPServer {
     await this.loadData();
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error('Tiinno UI MCP Server started');
+    console.error('Nim UI MCP Server started');
   }
 }
 
-const server = new TiinnoMCPServer();
+const server = new NimMCPServer();
 server.start().catch((error) => {
   console.error('Failed to start server:', error);
   process.exit(1);

@@ -2,7 +2,7 @@
 
 ## Overview
 
-สร้าง Alert Dialog component สำหรับ Tiinno UI โดยใช้ Radix UI AlertDialog primitive, CVA pattern สำหรับ variant styling ไฟล์ทั้งหมดอยู่ใน `packages/ui/src/components/` เป็น flat kebab-case รวมถึง docs page, MCP registry entry, และ sidebar config update
+สร้าง Alert Dialog component สำหรับ Nim UI โดยใช้ Radix UI AlertDialog primitive, CVA pattern สำหรับ variant styling ไฟล์ทั้งหมดอยู่ใน `packages/ui/src/components/` เป็น flat kebab-case รวมถึง docs page, MCP registry entry, และ sidebar config update
 
 ## Tasks
 
@@ -64,7 +64,7 @@
   - [x] 5.1 Create AlertDialogDemo.tsx for docs interactive demos
     - Create `packages/docs/src/components/AlertDialogDemo.tsx`
     - Implement AlertDialogBasicDemo, AlertDialogDestructiveDemo
-    - Import AlertDialog components and Button from `@tiinno-ui/components`
+    - Import AlertDialog components and Button from `@nim-ui/components`
     - _Requirements: 2.1, 2.3, 5.1, 5.2_
 
   - [x] 5.2 Create alert-dialog.mdx documentation page

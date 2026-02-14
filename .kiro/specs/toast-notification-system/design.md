@@ -1,8 +1,8 @@
-# Design Document: ระบบ Toast/Notification สำหรับ Tiinno UI
+# Design Document: ระบบ Toast/Notification สำหรับ Nim UI
 
 ## Overview
 
-ระบบ Toast/Notification เพิ่ม feedback component ให้กับ Tiinno UI โดยสร้างบน `@radix-ui/react-toast` primitive ที่จัดการ accessibility, swipe dismiss, และ auto-dismiss ให้อัตโนมัติ
+ระบบ Toast/Notification เพิ่ม feedback component ให้กับ Nim UI โดยสร้างบน `@radix-ui/react-toast` primitive ที่จัดการ accessibility, swipe dismiss, และ auto-dismiss ให้อัตโนมัติ
 
 แนวทางหลัก:
 - ใช้ Radix UI Toast primitive เป็น base (เหมือน Modal ใช้ Radix Dialog, Drawer ใช้ Radix Dialog)

@@ -3,7 +3,7 @@ inclusion: fileMatch
 fileMatchPattern: "packages/ui/src/components/**"
 ---
 
-# Tiinno UI — Component Catalog
+# Nim UI — Component Catalog
 
 All components live in `packages/ui/src/components/` as flat kebab-case files.
 Every component must be exported from `packages/ui/src/components/index.ts`.

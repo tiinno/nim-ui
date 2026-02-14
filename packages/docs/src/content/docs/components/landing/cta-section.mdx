@@ -3,7 +3,7 @@ title: CTA Section
 description: Call-to-action section with title, description, and action button for driving conversions
 ---
 
-import { CTA, Button } from '@tiinno-ui/components';
+import { CTA, Button } from '@nim-ui/components';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -12,7 +12,7 @@ The CTA (Call-to-Action) component creates a prominent section designed to encou
 ## Import
 
 ```tsx
-import { CTA } from '@tiinno-ui/components';
+import { CTA } from '@nim-ui/components';
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ import { CTA } from '@tiinno-ui/components';
   <CTA
     client:only="react"
     title="Ready to get started?"
-    description="Start building beautiful interfaces with Tiinno UI today."
+    description="Start building beautiful interfaces with Nim UI today."
     buttonText="Get Started"
     buttonHref="/getting-started/installation/"
   />
@@ -30,7 +30,7 @@ import { CTA } from '@tiinno-ui/components';
 ```tsx
 <CTA
   title="Ready to get started?"
-  description="Start building beautiful interfaces with Tiinno UI today."
+  description="Start building beautiful interfaces with Nim UI today."
   buttonText="Get Started"
   buttonHref="/getting-started/installation/"
 />
@@ -47,7 +47,7 @@ import { CTA } from '@tiinno-ui/components';
     client:only="react"
     variant="default"
     title="Join our community"
-    description="Connect with thousands of developers using Tiinno UI."
+    description="Connect with thousands of developers using Nim UI."
     buttonText="Join Now"
   />
 
@@ -56,7 +56,7 @@ import { CTA } from '@tiinno-ui/components';
 <CTA
   variant="default"
   title="Join our community"
-  description="Connect with thousands of developers using Tiinno UI."
+  description="Connect with thousands of developers using Nim UI."
   buttonText="Join Now"
 />
 ```
@@ -246,12 +246,12 @@ function LandingFooterCTA() {
     <CTA
       variant="gradient"
       title="Ship your next project faster"
-      description="Join 10,000+ developers already building with Tiinno UI. Free and open source."
+      description="Join 10,000+ developers already building with Nim UI. Free and open source."
       buttonText="Get Started"
       buttonHref="/getting-started/installation/"
       secondaryAction={
         <a
-          href="https://github.com/tiinno-ui"
+          href="https://github.com/nim-ui"
           className="text-sm underline opacity-80 hover:opacity-100"
         >
           Star us on GitHub
@@ -298,7 +298,7 @@ function UpgradePrompt() {
     <CTA
       variant="primary"
       title="Unlock all components"
-      description="Upgrade to Tiinno Pro for premium components, custom themes, and dedicated support."
+      description="Upgrade to Nim Pro for premium components, custom themes, and dedicated support."
       buttonText="Upgrade Now"
       buttonHref="/pricing"
       secondaryAction={

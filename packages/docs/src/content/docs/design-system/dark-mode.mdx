@@ -1,15 +1,15 @@
 ---
 title: Dark Mode
-description: Enable and customize dark mode across all Tiinno UI components
+description: Enable and customize dark mode across all Nim UI components
 ---
 
 import ComponentPreview from '../../../components/ComponentPreview.astro';
 
-Tiinno UI has first-class dark mode support built into every component. Dark mode is implemented using the Tailwind CSS `dark:` variant with a class-based strategy, giving you full control over when and how dark mode is applied.
+Nim UI has first-class dark mode support built into every component. Dark mode is implemented using the Tailwind CSS `dark:` variant with a class-based strategy, giving you full control over when and how dark mode is applied.
 
 ## Enabling Dark Mode
 
-Dark mode is activated by adding the `dark` class to your `<html>` element. When this class is present, all Tiinno UI components automatically switch to their dark color scheme.
+Dark mode is activated by adding the `dark` class to your `<html>` element. When this class is present, all Nim UI components automatically switch to their dark color scheme.
 
 ```html
 <!-- Light mode (default) -->
@@ -35,7 +35,7 @@ The simplest approach is a toggle button that adds or removes the `dark` class.
 
 ```tsx
 import { useState, useEffect } from 'react';
-import { Button } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
 
 function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
@@ -164,7 +164,7 @@ Add a script in the `<head>` to set the theme before the page renders. This prev
 
 ## Component Dark Mode Support
 
-All Tiinno UI components automatically adapt to dark mode. Here is how the key color mappings work:
+All Nim UI components automatically adapt to dark mode. Here is how the key color mappings work:
 
 ### Backgrounds
 
@@ -194,7 +194,7 @@ All Tiinno UI components automatically adapt to dark mode. Here is how the key c
 
 ## Using Dark Mode in Custom Components
 
-When building your own components alongside Tiinno UI, follow the same pattern of adding `dark:` variants for each color utility.
+When building your own components alongside Nim UI, follow the same pattern of adding `dark:` variants for each color utility.
 
 <ComponentPreview title="Custom Component with Dark Mode">
   <div className="w-full rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6">
@@ -293,7 +293,7 @@ Usage:
 
 ```tsx
 import { ThemeProvider, useTheme } from './ThemeProvider';
-import { Button } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
 
 function App() {
   return (
@@ -344,7 +344,7 @@ export default {
   darkMode: 'class',
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@tiinno-ui/components/dist/**/*.js',
+    './node_modules/@nim-ui/components/dist/**/*.js',
   ],
   theme: {
     extend: {},

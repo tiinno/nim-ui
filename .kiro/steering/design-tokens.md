@@ -3,7 +3,7 @@ inclusion: fileMatch
 fileMatchPattern: "packages/ui/src/**"
 ---
 
-# Tiinno UI — Design Tokens
+# Nim UI — Design Tokens
 
 Source of truth: `packages/tailwind-config/src/tokens.js`
 

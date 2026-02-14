@@ -1,10 +1,10 @@
-# Tiinno UI - Component Library
+# Nim UI - Component Library
 
 **Modern, accessible, production-ready React components built with TypeScript and Tailwind CSS v4**
 
 ## Project Overview
 
-Tiinno UI is a comprehensive component library designed for building modern web applications. It features 24 carefully crafted components organized into 6 categories, all built with accessibility, performance, and developer experience in mind.
+Nim UI is a comprehensive component library designed for building modern web applications. It features 24 carefully crafted components organized into 6 categories, all built with accessibility, performance, and developer experience in mind.
 
 ### Tech Stack
 
@@ -20,7 +20,7 @@ Tiinno UI is a comprehensive component library designed for building modern web 
 ### Project Structure
 
 ```
-tiinno-ui/
+nim-ui/
 ├── packages/
 │   ├── ui/                    # Main component library
 │   │   ├── src/
@@ -58,7 +58,7 @@ tiinno-ui/
 - `className?: string` - Additional CSS classes
 
 ```tsx
-import { Container } from '@tiinno/ui';
+import { Container } from '@nim/ui';
 
 <Container maxWidth="lg">
   <h1>My Content</h1>
@@ -74,7 +74,7 @@ import { Container } from '@tiinno/ui';
 - `responsive?: boolean` - Auto-responsive behavior (default: true)
 
 ```tsx
-import { Grid } from '@tiinno/ui';
+import { Grid } from '@nim/ui';
 
 <Grid cols={3} gap="lg">
   <div>Item 1</div>
@@ -92,7 +92,7 @@ import { Grid } from '@tiinno/ui';
 - `align?: 'start' | 'center' | 'end' | 'stretch'` - Alignment
 
 ```tsx
-import { Stack } from '@tiinno/ui';
+import { Stack } from '@nim/ui';
 
 <Stack spacing="md">
   <div>Item 1</div>
@@ -110,7 +110,7 @@ import { Stack } from '@tiinno/ui';
 - `wrap?: boolean` - Enable flex-wrap (default: false)
 
 ```tsx
-import { Flex } from '@tiinno/ui';
+import { Flex } from '@nim/ui';
 
 <Flex justify="between" align="center">
   <span>Left</span>
@@ -126,7 +126,7 @@ import { Flex } from '@tiinno/ui';
 - `flex?: boolean` - Use flex: 1 for flexible spacing (default: false)
 
 ```tsx
-import { Flex, Spacer } from '@tiinno/ui';
+import { Flex, Spacer } from '@nim/ui';
 
 <Flex>
   <div>Left</div>
@@ -152,7 +152,7 @@ import { Flex, Spacer } from '@tiinno/ui';
 - `disabled?: boolean`
 
 ```tsx
-import { Button } from '@tiinno/ui';
+import { Button } from '@nim/ui';
 
 <Button variant="primary" size="md" loading={false}>
   Click me
@@ -170,7 +170,7 @@ import { Button } from '@tiinno/ui';
 - `fullWidth?: boolean`
 
 ```tsx
-import { Input } from '@tiinno/ui';
+import { Input } from '@nim/ui';
 
 <Input
   placeholder="Enter email"
@@ -190,7 +190,7 @@ import { Input } from '@tiinno/ui';
 - `resize?: boolean` - Allow resizing (default: true)
 
 ```tsx
-import { Textarea } from '@tiinno/ui';
+import { Textarea } from '@nim/ui';
 
 <Textarea
   rows={6}
@@ -208,7 +208,7 @@ import { Textarea } from '@tiinno/ui';
 - `disabled?: boolean`
 
 ```tsx
-import { Select } from '@tiinno/ui';
+import { Select } from '@nim/ui';
 
 <Select
   options={[
@@ -229,7 +229,7 @@ import { Select } from '@tiinno/ui';
 - `error?: string`
 
 ```tsx
-import { Checkbox } from '@tiinno/ui';
+import { Checkbox } from '@nim/ui';
 
 <Checkbox
   checked={agreed}
@@ -249,7 +249,7 @@ import { Checkbox } from '@tiinno/ui';
 - `disabled?: boolean`
 
 ```tsx
-import { Radio } from '@tiinno/ui';
+import { Radio } from '@nim/ui';
 
 <Radio
   name="plan"
@@ -273,7 +273,7 @@ import { Radio } from '@tiinno/ui';
 - `footer?: ReactNode` - Card footer content
 
 ```tsx
-import { Card } from '@tiinno/ui';
+import { Card } from '@nim/ui';
 
 <Card
   variant="elevated"
@@ -292,7 +292,7 @@ import { Card } from '@tiinno/ui';
 - `size?: 'sm' | 'md' | 'lg'`
 
 ```tsx
-import { Badge } from '@tiinno/ui';
+import { Badge } from '@nim/ui';
 
 <Badge variant="success">Active</Badge>
 ```
@@ -307,7 +307,7 @@ import { Badge } from '@tiinno/ui';
 - `size?: 'sm' | 'md' | 'lg' | 'xl'`
 
 ```tsx
-import { Avatar } from '@tiinno/ui';
+import { Avatar } from '@nim/ui';
 
 <Avatar
   src="/avatar.jpg"
@@ -327,7 +327,7 @@ import { Avatar } from '@tiinno/ui';
 - `hoverable?: boolean` - Hover effect
 
 ```tsx
-import { Table } from '@tiinno/ui';
+import { Table } from '@nim/ui';
 
 <Table
   data={users}
@@ -349,7 +349,7 @@ import { Table } from '@tiinno/ui';
 - `label?: string` - Accessibility label
 
 ```tsx
-import { Spinner } from '@tiinno/ui';
+import { Spinner } from '@nim/ui';
 
 <Spinner size="md" label="Loading..." />
 ```
@@ -369,7 +369,7 @@ import { Spinner } from '@tiinno/ui';
 - `onDismiss?: () => void` - Close callback
 
 ```tsx
-import { Alert } from '@tiinno/ui';
+import { Alert } from '@nim/ui';
 
 <Alert
   variant="success"
@@ -391,7 +391,7 @@ import { Alert } from '@tiinno/ui';
 - `position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'`
 
 ```tsx
-import { Toast, useToast } from '@tiinno/ui';
+import { Toast, useToast } from '@nim/ui';
 
 const { showToast } = useToast();
 
@@ -412,7 +412,7 @@ showToast({
 - `showLabel?: boolean` - Display percentage text
 
 ```tsx
-import { Progress } from '@tiinno/ui';
+import { Progress } from '@nim/ui';
 
 <Progress
   value={75}
@@ -436,7 +436,7 @@ import { Progress } from '@tiinno/ui';
 - `closeOnOverlayClick?: boolean` - Click outside to close
 
 ```tsx
-import { Modal } from '@tiinno/ui';
+import { Modal } from '@nim/ui';
 
 <Modal
   isOpen={isOpen}
@@ -458,7 +458,7 @@ import { Modal } from '@tiinno/ui';
 - `openOn?: 'click' | 'hover'`
 
 ```tsx
-import { Popover } from '@tiinno/ui';
+import { Popover } from '@nim/ui';
 
 <Popover
   trigger={<Button>Show Info</Button>}
@@ -476,7 +476,7 @@ import { Popover } from '@tiinno/ui';
 - `delay?: number` - Show delay (ms)
 
 ```tsx
-import { Tooltip } from '@tiinno/ui';
+import { Tooltip } from '@nim/ui';
 
 <Tooltip content="Click to edit" position="top">
   <button>Edit</button>
@@ -496,7 +496,7 @@ import { Tooltip } from '@tiinno/ui';
 - `variant?: 'line' | 'enclosed' | 'pills'`
 
 ```tsx
-import { Tabs } from '@tiinno/ui';
+import { Tabs } from '@nim/ui';
 
 <Tabs
   tabs={[
@@ -515,7 +515,7 @@ import { Tabs } from '@tiinno/ui';
 - `separator?: ReactNode` - Custom separator (default: '/')
 
 ```tsx
-import { Breadcrumb } from '@tiinno/ui';
+import { Breadcrumb } from '@nim/ui';
 
 <Breadcrumb
   items={[
@@ -807,11 +807,11 @@ describe('Button', () => {
 
 ## MCP Server
 
-The Tiinno UI MCP server provides AI assistants with tools to work with the component library.
+The Nim UI MCP server provides AI assistants with tools to work with the component library.
 
 ### Server Location
 
-**Path**: `/Users/emetworks/Project/HOBBY/utils/tiinno-ui/packages/mcp-server/`
+**Path**: `/Users/emetworks/Project/HOBBY/utils/nim-ui/packages/mcp-server/`
 
 ### Available Tools (5)
 
@@ -838,7 +838,7 @@ The Tiinno UI MCP server provides AI assistants with tools to work with the comp
 ```typescript
 // Usage in MCP
 await use_mcp_tool({
-  server_name: "tiinno-ui",
+  server_name: "nim-ui",
   tool_name: "get-component-info",
   arguments: { componentName: "Button" }
 });
@@ -852,7 +852,7 @@ await use_mcp_tool({
 ```typescript
 // Find all form components
 await use_mcp_tool({
-  server_name: "tiinno-ui",
+  server_name: "nim-ui",
   tool_name: "search-components",
   arguments: { category: "forms" }
 });
@@ -865,7 +865,7 @@ await use_mcp_tool({
 
 ```typescript
 await use_mcp_tool({
-  server_name: "tiinno-ui",
+  server_name: "nim-ui",
   tool_name: "get-design-tokens",
   arguments: { tokenType: "colors" }
 });
@@ -878,7 +878,7 @@ await use_mcp_tool({
 
 ```typescript
 await use_mcp_tool({
-  server_name: "tiinno-ui",
+  server_name: "nim-ui",
   tool_name: "generate-component-code",
   arguments: {
     componentName: "Button",
@@ -894,10 +894,10 @@ Add to Claude Desktop config:
 ```json
 {
   "mcpServers": {
-    "tiinno-ui": {
+    "nim-ui": {
       "command": "node",
       "args": [
-        "/Users/emetworks/Project/HOBBY/utils/tiinno-ui/packages/mcp-server/dist/index.js"
+        "/Users/emetworks/Project/HOBBY/utils/nim-ui/packages/mcp-server/dist/index.js"
       ],
       "env": {}
     }
@@ -914,7 +914,7 @@ Add to Claude Desktop config:
 ```bash
 # Clone repository
 git clone <repo-url>
-cd tiinno-ui
+cd nim-ui
 
 # Install dependencies
 pnpm install
@@ -1029,16 +1029,16 @@ pnpm publish -r
 
 ```
 UI Package:
-/Users/emetworks/Project/HOBBY/utils/tiinno-ui/packages/ui/
+/Users/emetworks/Project/HOBBY/utils/nim-ui/packages/ui/
 
 MCP Server:
-/Users/emetworks/Project/HOBBY/utils/tiinno-ui/packages/mcp-server/
+/Users/emetworks/Project/HOBBY/utils/nim-ui/packages/mcp-server/
 
 Documentation:
-/Users/emetworks/Project/HOBBY/utils/tiinno-ui/apps/docs/
+/Users/emetworks/Project/HOBBY/utils/nim-ui/apps/docs/
 
 Playground:
-/Users/emetworks/Project/HOBBY/utils/tiinno-ui/apps/playground/
+/Users/emetworks/Project/HOBBY/utils/nim-ui/apps/playground/
 ```
 
 ### Configuration Files
@@ -1061,7 +1061,7 @@ UI Package:
 
 All components are exported from:
 ```
-/Users/emetworks/Project/HOBBY/utils/tiinno-ui/packages/ui/src/index.ts
+/Users/emetworks/Project/HOBBY/utils/nim-ui/packages/ui/src/index.ts
 ```
 
 ---
@@ -1171,4 +1171,4 @@ For questions or issues:
 
 **Last Updated**: 2026-02-05
 **Version**: 1.0.0
-**Maintained by**: Tiinno UI Team
+**Maintained by**: Nim UI Team

@@ -4,7 +4,7 @@ import {
   PopoverContent,
   PopoverClose,
   Button,
-} from '@tiinno-ui/components';
+} from '@nim-ui/components';
 
 export function PopoverBasicDemo() {
   return (

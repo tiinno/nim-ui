@@ -1,6 +1,6 @@
-# UI Component Conventions - Tiinno UI
+# UI Component Conventions - Nim UI
 
-**Strict patterns and conventions for Kiro AI when working with Tiinno UI components**
+**Strict patterns and conventions for Kiro AI when working with Nim UI components**
 
 ---
 
@@ -810,7 +810,7 @@ leading-relaxed  // 1.75
 
 ## Kiro AI Instructions
 
-When working with Tiinno UI:
+When working with Nim UI:
 
 1. **ALWAYS read this file first** before creating or modifying components
 2. **NEVER deviate** from the component template pattern

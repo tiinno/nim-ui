@@ -1,5 +1,5 @@
 {
-  "name": "@tiinno-ui/components",
+  "name": "@nim-ui/components",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -58,7 +58,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@tiinno-ui/tailwind-config": "workspace:*",
+    "@nim-ui/tailwind-config": "workspace:*",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^4.7.0",

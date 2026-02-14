@@ -1,7 +1,7 @@
 /**
  * Color Conversion Script: Hex → OKLCH
  *
- * Converts all Hex color values in the Tiinno UI token system to OKLCH format.
+ * Converts all Hex color values in the Nim UI token system to OKLCH format.
  * Uses the `culori` library for accurate color science conversions.
  *
  * Usage:

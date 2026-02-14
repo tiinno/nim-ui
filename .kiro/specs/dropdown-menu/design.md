@@ -1,8 +1,8 @@
-# Design Document: Dropdown Menu Component สำหรับ Tiinno UI
+# Design Document: Dropdown Menu Component สำหรับ Nim UI
 
 ## Overview
 
-Dropdown Menu component เพิ่ม navigation/overlay component ให้กับ Tiinno UI โดยสร้างบน `@radix-ui/react-dropdown-menu` primitive ที่จัดการ accessibility, positioning, keyboard navigation, focus management, และ sub-menu interactions ให้อัตโนมัติ
+Dropdown Menu component เพิ่ม navigation/overlay component ให้กับ Nim UI โดยสร้างบน `@radix-ui/react-dropdown-menu` primitive ที่จัดการ accessibility, positioning, keyboard navigation, focus management, และ sub-menu interactions ให้อัตโนมัติ
 
 แนวทางหลัก:
 - ใช้ Radix UI DropdownMenu primitive เป็น base (เหมือน Tooltip ใช้ Radix Tooltip, Popover ใช้ Radix Popover)

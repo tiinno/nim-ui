@@ -2,8 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(pnpm install:*)",
-      "Bash(pnpm --filter @tiinno-ui/components build:*)",
-      "Bash(pnpm --filter @tiinno-ui/components add -D @tailwindcss/postcss)",
+      "Bash(pnpm --filter @nim-ui/components build:*)",
+      "Bash(pnpm --filter @nim-ui/components add -D @tailwindcss/postcss)",
       "Bash(pnpm run type-check:*)",
       "Bash(pnpm run build:*)",
       "Bash(tree:*)",
@@ -12,15 +12,15 @@
       "Bash(chmod:*)",
       "Bash(pnpm exec tsup:*)",
       "Bash(pnpm exec tsc:*)",
-      "Bash(pnpm --filter @tiinno-ui/components add:*)",
+      "Bash(pnpm --filter @nim-ui/components add:*)",
       "Bash(pnpm test:coverage:*)",
       "Bash(pnpm test:*)",
       "Bash(pnpm test:run:*)",
       "Bash(python3:*)",
       "mcp__plugin_playwright_playwright__browser_take_screenshot",
       "mcp__plugin_playwright_playwright__browser_navigate",
-      "Bash(pnpm --filter @tiinno-ui/components typecheck:*)",
-      "Bash(pnpm --filter @tiinno-ui/components test:*)"
+      "Bash(pnpm --filter @nim-ui/components typecheck:*)",
+      "Bash(pnpm --filter @nim-ui/components test:*)"
     ]
   }
 }

@@ -13,7 +13,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
   Button,
-} from '@tiinno-ui/components';
+} from '@nim-ui/components';
 
 export function DropdownMenuBasicDemo() {
   return (

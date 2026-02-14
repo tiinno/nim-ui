@@ -1,9 +1,9 @@
 ---
 title: Best Practices
-description: Tips and recommendations for building with Tiinno UI
+description: Tips and recommendations for building with Nim UI
 ---
 
-Follow these best practices to build accessible, performant, and maintainable applications with Tiinno UI.
+Follow these best practices to build accessible, performant, and maintainable applications with Nim UI.
 
 ## Component Usage
 
@@ -13,10 +13,10 @@ Tree-shakeable imports reduce bundle size:
 
 ```tsx
 // ✅ Good - imports only Button
-import { Button } from '@tiinno-ui/components';
+import { Button } from '@nim-ui/components';
 
 // ❌ Bad - imports entire library
-import * as TiinnoUI from '@tiinno-ui/components';
+import * as NimUI from '@nim-ui/components';
 ```
 
 ### Use Semantic HTML
@@ -157,7 +157,7 @@ Use React.lazy for code splitting:
 
 ```tsx
 import { lazy, Suspense } from 'react';
-import { Spinner } from '@tiinno-ui/components';
+import { Spinner } from '@nim-ui/components';
 
 const HeavyChart = lazy(() => import('./HeavyChart'));
 

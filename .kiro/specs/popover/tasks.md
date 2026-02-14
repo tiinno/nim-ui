@@ -2,7 +2,7 @@
 
 ## Overview
 
-สร้าง Popover component สำหรับ Tiinno UI โดยใช้ Radix UI Popover primitive, CVA pattern สำหรับ variant styling ไฟล์ทั้งหมดอยู่ใน `packages/ui/src/components/` เป็น flat kebab-case รวมถึง docs page, MCP registry entry, และ sidebar config update
+สร้าง Popover component สำหรับ Nim UI โดยใช้ Radix UI Popover primitive, CVA pattern สำหรับ variant styling ไฟล์ทั้งหมดอยู่ใน `packages/ui/src/components/` เป็น flat kebab-case รวมถึง docs page, MCP registry entry, และ sidebar config update
 
 ## Tasks
 

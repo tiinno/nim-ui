@@ -3,7 +3,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '@tiinno-ui/components';
+} from '@nim-ui/components';
 
 export function AccordionSingleDemo() {
   return (

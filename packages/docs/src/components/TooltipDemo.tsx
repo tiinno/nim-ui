@@ -4,7 +4,7 @@ import {
   TooltipTrigger,
   TooltipContent,
   Button,
-} from '@tiinno-ui/components';
+} from '@nim-ui/components';
 
 export function TooltipBasicDemo() {
   return (

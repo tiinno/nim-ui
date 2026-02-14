@@ -1,6 +1,6 @@
-# @tiinno-ui/docs
+# @nim-ui/docs
 
-Official documentation site for Tiinno UI component library.
+Official documentation site for Nim UI component library.
 
 Built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build).
 
@@ -88,14 +88,14 @@ title: Component Name
 description: Brief description
 ---
 
-import { ComponentName } from '@tiinno-ui/components';
+import { ComponentName } from '@nim-ui/components';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
 ## Import
 
 \`\`\`tsx
-import { ComponentName } from '@tiinno-ui/components';
+import { ComponentName } from '@nim-ui/components';
 \`\`\`
 
 ## Example

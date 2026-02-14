@@ -1,5 +1,5 @@
 /**
- * Design Tokens for Tiinno UI
+ * Design Tokens for Nim UI
  * These tokens define the core design language of the system
  */
 export const tokens = {

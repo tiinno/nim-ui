@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@tiinno-ui/components';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@nim-ui/components';
 
 export function TabsBasic() {
   return (

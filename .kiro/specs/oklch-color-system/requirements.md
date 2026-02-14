@@ -2,7 +2,7 @@
 
 ## บทนำ
 
-ย้ายระบบสี (Color System) ของ Tiinno UI จากรูปแบบ Hex ไปเป็นรูปแบบ OKLCH เพื่อให้ได้สีที่สม่ำเสมอทางการรับรู้ (perceptually uniform) รองรับ P3 wide gamut display และใช้ประโยชน์จาก Tailwind CSS v4 ที่รองรับ OKLCH โดยตรง โดยต้องรักษาความเข้ากันได้กับ component ที่มีอยู่ทั้งหมด
+ย้ายระบบสี (Color System) ของ Nim UI จากรูปแบบ Hex ไปเป็นรูปแบบ OKLCH เพื่อให้ได้สีที่สม่ำเสมอทางการรับรู้ (perceptually uniform) รองรับ P3 wide gamut display และใช้ประโยชน์จาก Tailwind CSS v4 ที่รองรับ OKLCH โดยตรง โดยต้องรักษาความเข้ากันได้กับ component ที่มีอยู่ทั้งหมด
 
 ## อภิธานศัพท์
 

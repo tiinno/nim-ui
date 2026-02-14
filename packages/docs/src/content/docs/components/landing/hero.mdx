@@ -3,7 +3,7 @@ title: Hero
 description: Full-width hero section for landing pages with title, subtitle, and call-to-action buttons
 ---
 
-import { Hero } from '@tiinno-ui/components';
+import { Hero } from '@nim-ui/components';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -12,7 +12,7 @@ The Hero component provides a prominent, full-width section typically placed at 
 ## Import
 
 ```tsx
-import { Hero } from '@tiinno-ui/components';
+import { Hero } from '@nim-ui/components';
 ```
 
 ## Usage
@@ -43,12 +43,12 @@ import { Hero } from '@tiinno-ui/components';
 <ComponentPreview title="Hero with Title Only">
   <Hero
     client:load
-    title="Welcome to Tiinno UI"
+    title="Welcome to Nim UI"
   />
 
   <Fragment slot="code">
 ```tsx
-<Hero title="Welcome to Tiinno UI" />
+<Hero title="Welcome to Nim UI" />
 ```
   </Fragment>
 </ComponentPreview>
@@ -82,7 +82,7 @@ import { Hero } from '@tiinno-ui/components';
   <Hero
     client:load
     title="Ready to get started?"
-    subtitle="Join thousands of developers building with Tiinno UI."
+    subtitle="Join thousands of developers building with Nim UI."
     primaryCta={{ label: "Sign Up Free", onClick: () => alert('Sign up clicked') }}
     secondaryCta={{ label: "Learn More", onClick: () => alert('Learn more clicked') }}
   />
@@ -91,7 +91,7 @@ import { Hero } from '@tiinno-ui/components';
 ```tsx
 <Hero
   title="Ready to get started?"
-  subtitle="Join thousands of developers building with Tiinno UI."
+  subtitle="Join thousands of developers building with Nim UI."
   primaryCta={{
     label: "Sign Up Free",
     onClick: () => navigate('/signup'),
@@ -160,7 +160,7 @@ function LandingPage() {
         }}
         secondaryCta={{
           label: "GitHub",
-          href: "https://github.com/tiinno-ui",
+          href: "https://github.com/nim-ui",
         }}
       />
       {/* Rest of landing page */}
@@ -180,7 +180,7 @@ function ProductLaunch() {
 
   return (
     <Hero
-      title="Introducing Tiinno Pro"
+      title="Introducing Nim Pro"
       subtitle="Advanced components, premium themes, and priority support for teams."
       primaryCta={{
         label: "Start Free Trial",

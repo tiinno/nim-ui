@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "tiinno-ui": {
+    "nim-ui": {
       "command": "node",
-      "args": ["/Users/emetworks/Project/HOBBY/utils/tiinno-ui/packages/mcp-server/dist/index.js"],
+      "args": ["/Users/emetworks/Project/HOBBY/utils/nim-ui/packages/mcp-server/dist/index.js"],
       "disabled": false,
       "autoApprove": [
         "list-components",

@@ -1,13 +1,13 @@
 ---
 title: Accessibility
-description: WCAG compliance, ARIA patterns, keyboard navigation, and screen reader support in Tiinno UI
+description: WCAG compliance, ARIA patterns, keyboard navigation, and screen reader support in Nim UI
 ---
 
-Tiinno UI is built with accessibility as a core requirement, not an afterthought. All components target WCAG 2.1 Level AA compliance and follow WAI-ARIA authoring practices. This guide covers the accessibility features built into the library and how to maintain accessibility in your applications.
+Nim UI is built with accessibility as a core requirement, not an afterthought. All components target WCAG 2.1 Level AA compliance and follow WAI-ARIA authoring practices. This guide covers the accessibility features built into the library and how to maintain accessibility in your applications.
 
 ## WCAG 2.1 AA Compliance
 
-Tiinno UI components are designed to meet the four WCAG principles:
+Nim UI components are designed to meet the four WCAG principles:
 
 ### Perceivable
 
@@ -38,7 +38,7 @@ Tiinno UI components are designed to meet the four WCAG principles:
 
 ## ARIA Attributes by Component
 
-Tiinno UI components include the appropriate ARIA attributes out of the box.
+Nim UI components include the appropriate ARIA attributes out of the box.
 
 ### Button
 
@@ -151,7 +151,7 @@ showToast({
 
 ## Keyboard Navigation
 
-All interactive Tiinno UI components support keyboard navigation. Below is a reference for the keyboard patterns used.
+All interactive Nim UI components support keyboard navigation. Below is a reference for the keyboard patterns used.
 
 ### Global Patterns
 
@@ -208,7 +208,7 @@ All interactive Tiinno UI components support keyboard navigation. Below is a ref
 
 ## Screen Reader Support
 
-Tiinno UI components are tested with popular screen readers including VoiceOver (macOS), NVDA (Windows), and JAWS (Windows).
+Nim UI components are tested with popular screen readers including VoiceOver (macOS), NVDA (Windows), and JAWS (Windows).
 
 ### Announcements
 
@@ -266,7 +266,7 @@ Proper focus management is critical for keyboard and screen reader users.
 
 ### Focus Visible Styles
 
-All Tiinno UI components include visible focus indicators for keyboard navigation. These styles only appear when navigating with the keyboard, not when clicking with a mouse.
+All Nim UI components include visible focus indicators for keyboard navigation. These styles only appear when navigating with the keyboard, not when clicking with a mouse.
 
 ```css
 /* Applied to all interactive components */
@@ -316,7 +316,7 @@ function EditDialog() {
 
 ## Color Contrast Guidelines
 
-All Tiinno UI color combinations meet WCAG AA contrast requirements.
+All Nim UI color combinations meet WCAG AA contrast requirements.
 
 ### Minimum Contrast Ratios
 
@@ -356,10 +356,10 @@ Always pair color with another visual indicator:
 
 ## Reduced Motion
 
-Tiinno UI respects the `prefers-reduced-motion` media query. When enabled, animations and transitions are minimized or removed:
+Nim UI respects the `prefers-reduced-motion` media query. When enabled, animations and transitions are minimized or removed:
 
 ```css
-/* Applied internally by Tiinno UI */
+/* Applied internally by Nim UI */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -396,7 +396,7 @@ function usePrefersReducedMotion() {
 
 ## Accessibility Checklist
 
-Use this checklist when building with Tiinno UI:
+Use this checklist when building with Nim UI:
 
 ### Structure
 
@@ -442,6 +442,6 @@ Use this checklist when building with Tiinno UI:
 
 ## What's Next?
 
-- [Best Practices](/guides/best-practices/) -- General tips for building with Tiinno UI
+- [Best Practices](/guides/best-practices/) -- General tips for building with Nim UI
 - [Customization](/guides/customization/) -- Customizing component styles
 - [Colors](/design-system/colors/) -- Color palette with contrast guidelines

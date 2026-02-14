@@ -1,9 +1,9 @@
 {
   "mcpServers": {
-    "tiinno-ui": {
+    "nim-ui": {
       "command": "node",
       "args": [
-        "/Users/YOUR_USERNAME/Project/HOBBY/utils/tiinno-ui/packages/mcp-server/dist/index.js"
+        "/Users/YOUR_USERNAME/Project/HOBBY/utils/nim-ui/packages/mcp-server/dist/index.js"
       ]
     }
   }
