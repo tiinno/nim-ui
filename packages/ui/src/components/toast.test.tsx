@@ -1,4 +1,5 @@
 import * as fc from 'fast-check';
+import { describe, it, expect, afterEach } from 'vitest';
 import { toastStore, toast } from './toast-store';
 
 // ---------------------------------------------------------------------------

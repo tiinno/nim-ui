@@ -3,7 +3,7 @@ title: Toast
 description: Lightweight notification messages that appear temporarily and dismiss automatically
 ---
 
-import { ToastBasicDemo, ToastVariantsDemo, ToastWithActionDemo } from '../../../../components/ToastDemo';
+import { ToastBasicDemo, ToastVariantsDemo, ToastWithActionDemo, ToastPageToaster } from '../../../../components/ToastDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -305,3 +305,6 @@ Built on Radix UI Toast with full accessibility support:
 
 - [Modal](/components/layout/modal/) — Dialog overlay for focused interactions
 - [Drawer](/components/layout/drawer/) — Side panel overlay
+
+{/* Single Toaster instance for all demos on this page */}
+<ToastPageToaster client:only="react" />

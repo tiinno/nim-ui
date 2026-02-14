@@ -83,7 +83,7 @@ describe('Popover', () => {
       const classes = popoverContentVariants({ variant: 'outline' });
       expect(classes).toContain('bg-white');
       expect(classes).toContain('border-2');
-      expect(classes).toContain('border-neutral-300');
+      expect(classes).toContain('border-primary-500');
     });
 
     it('applies default variant classes when no variant specified', () => {
@@ -335,7 +335,7 @@ describe('Popover', () => {
 
       await waitFor(() => {
         const dialog = getPopoverContent();
-        const arrow = dialog.querySelector('svg');
+        const arrow = dialog.querySelector('[data-popover-arrow]');
         expect(arrow).toBeTruthy();
       });
     });
@@ -348,7 +348,7 @@ describe('Popover', () => {
 
       await waitFor(() => {
         const dialog = getPopoverContent();
-        const arrow = dialog.querySelector('svg');
+        const arrow = dialog.querySelector('[data-popover-arrow]');
         expect(arrow).toBeNull();
       });
     });
@@ -412,8 +412,8 @@ describe('Popover', () => {
           dark: ['dark:border-neutral-700', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
         },
         outline: {
-          light: ['bg-white', 'text-neutral-900', 'border-2', 'border-neutral-300'],
-          dark: ['dark:border-neutral-600', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
+          light: ['bg-white', 'text-neutral-900', 'border-2', 'border-primary-500'],
+          dark: ['dark:border-primary-400', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
         },
       };
 
@@ -460,12 +460,12 @@ describe('Popover', () => {
             );
 
             const dialog = screen.getByRole('dialog');
-            const svg = dialog.querySelector('svg');
+            const arrow = dialog.querySelector('[data-popover-arrow]');
 
             if (showArrow) {
-              expect(svg).toBeTruthy();
+              expect(arrow).toBeTruthy();
             } else {
-              expect(svg).toBeNull();
+              expect(arrow).toBeNull();
             }
 
             cleanup();
@@ -495,14 +495,12 @@ describe('Popover', () => {
 
             const dialogs = screen.getAllByRole('dialog');
             const dialog = dialogs[dialogs.length - 1]!;
-            const svg = dialog.querySelector('svg');
-            expect(svg).toBeTruthy();
+            const arrow = dialog.querySelector('[data-popover-arrow]') as HTMLElement;
+            expect(arrow).toBeTruthy();
 
-            const classes = svg!.getAttribute('class') ?? '';
-
-            // Arrow fill is consistent across all variants
-            expect(classes).toContain('fill-white');
-            expect(classes).toContain('dark:fill-neutral-800');
+            // Arrow uses CSS border trick with inline styles
+            const style = arrow.style;
+            expect(style.borderBottomColor || style.borderTopColor || style.borderLeftColor || style.borderRightColor).toBeTruthy();
 
             cleanup();
           },

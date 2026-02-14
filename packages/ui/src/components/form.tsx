@@ -35,7 +35,7 @@ import { cn } from '../lib/utils';
  */
 
 const formVariants = cva(
-  'w-full',
+  'flex w-full flex-col gap-4',
   {
     variants: {},
     defaultVariants: {},
@@ -47,10 +47,11 @@ export interface FormProps
     VariantProps<typeof formVariants> {}
 
 const Form = React.forwardRef<HTMLFormElement, FormProps>(
-  ({ className, ...props }, ref) => (
+  ({ className, style, ...props }, ref) => (
     <form
       ref={ref}
       className={cn(formVariants(), className)}
+      style={{ display: 'flex', flexDirection: 'column', gap: '1rem', ...style }}
       {...props}
     />
   )

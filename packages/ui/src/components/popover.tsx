@@ -89,9 +89,9 @@ const popoverContentVariants = cva(
     variants: {
       variant: {
         default:
-          'border border-neutral-200 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
+          'border border-neutral-200 bg-white text-neutral-900 shadow-lg dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
         outline:
-          'border-2 border-neutral-300 bg-white text-neutral-900 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100',
+          'border-2 border-primary-500 bg-white text-neutral-900 shadow-lg dark:border-primary-400 dark:bg-neutral-800 dark:text-neutral-100',
       },
     },
     defaultVariants: {
@@ -128,20 +128,78 @@ const PopoverContent = React.forwardRef<
       ...props
     },
     ref
-  ) => (
-    <PopoverPrimitive.Portal>
-      <PopoverPrimitive.Content
-        ref={ref}
-        side={side}
-        sideOffset={sideOffset}
-        className={cn(popoverContentVariants({ variant }), className)}
-        {...props}
-      >
-        {children}
-        {showArrow && <PopoverArrow />}
-      </PopoverPrimitive.Content>
-    </PopoverPrimitive.Portal>
-  )
+  ) => {
+    // Arrow styles using CSS border trick — immune to Starlight CSS resets
+    const arrowSize = 8;
+    const arrowPositionMap: Record<string, React.CSSProperties> = {
+      bottom: {
+        position: 'absolute',
+        top: `-${arrowSize}px`,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 0,
+        height: 0,
+        borderLeft: `${arrowSize}px solid transparent`,
+        borderRight: `${arrowSize}px solid transparent`,
+        borderBottom: `${arrowSize}px solid white`,
+      },
+      top: {
+        position: 'absolute',
+        bottom: `-${arrowSize}px`,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 0,
+        height: 0,
+        borderLeft: `${arrowSize}px solid transparent`,
+        borderRight: `${arrowSize}px solid transparent`,
+        borderTop: `${arrowSize}px solid white`,
+      },
+      left: {
+        position: 'absolute',
+        right: `-${arrowSize}px`,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: 0,
+        height: 0,
+        borderTop: `${arrowSize}px solid transparent`,
+        borderBottom: `${arrowSize}px solid transparent`,
+        borderLeft: `${arrowSize}px solid white`,
+      },
+      right: {
+        position: 'absolute',
+        left: `-${arrowSize}px`,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        width: 0,
+        height: 0,
+        borderTop: `${arrowSize}px solid transparent`,
+        borderBottom: `${arrowSize}px solid transparent`,
+        borderRight: `${arrowSize}px solid white`,
+      },
+    };
+
+    return (
+      <PopoverPrimitive.Portal>
+        <PopoverPrimitive.Content
+          ref={ref}
+          side={side}
+          sideOffset={showArrow ? sideOffset + arrowSize : sideOffset}
+          className={cn(popoverContentVariants({ variant }), className)}
+          style={{ position: 'relative' }}
+          {...props}
+        >
+          {children}
+          {showArrow && (
+            <div
+              data-popover-arrow=""
+              aria-hidden="true"
+              style={arrowPositionMap[side ?? 'bottom']}
+            />
+          )}
+        </PopoverPrimitive.Content>
+      </PopoverPrimitive.Portal>
+    );
+  }
 );
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 
@@ -158,10 +216,13 @@ export interface PopoverArrowProps
 const PopoverArrow = React.forwardRef<
   React.ComponentRef<typeof PopoverPrimitive.Arrow>,
   PopoverArrowProps
->(({ className, variant = 'default', ...props }, ref) => (
+>(({ className, variant = 'default', width = 14, height = 7, ...props }, ref) => (
   <PopoverPrimitive.Arrow
     ref={ref}
+    width={width}
+    height={height}
     className={cn('fill-white dark:fill-neutral-800', className)}
+    style={{ fill: 'white', display: 'block' }}
     {...props}
   />
 ));

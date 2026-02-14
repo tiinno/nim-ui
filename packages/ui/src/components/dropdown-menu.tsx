@@ -163,7 +163,7 @@ const DropdownMenuItem = React.forwardRef<
       'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
       'focus:bg-primary-500 focus:text-white',
       'dark:focus:bg-primary-600 dark:focus:text-white',
-      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'data-disabled:pointer-events-none data-disabled:opacity-50',
       inset && 'pl-8',
       className
     )}
@@ -235,7 +235,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
       'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
       'focus:bg-primary-500 focus:text-white',
       'dark:focus:bg-primary-600 dark:focus:text-white',
-      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'data-disabled:pointer-events-none data-disabled:opacity-50',
       className
     )}
     checked={checked}
@@ -278,7 +278,7 @@ const DropdownMenuRadioItem = React.forwardRef<
       'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
       'focus:bg-primary-500 focus:text-white',
       'dark:focus:bg-primary-600 dark:focus:text-white',
-      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'data-disabled:pointer-events-none data-disabled:opacity-50',
       className
     )}
     {...props}

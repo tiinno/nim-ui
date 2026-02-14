@@ -17,7 +17,7 @@ import { toastStore } from './toast-store';
  * ```
  */
 const viewportVariants = cva(
-  'fixed z-[100] flex flex-col gap-sm p-md max-h-screen',
+  'fixed z-[100] flex w-[380px] max-w-[calc(100vw-2rem)] flex-col gap-3 p-4 max-h-screen',
   {
     variants: {
       position: {
@@ -44,20 +44,20 @@ const viewportVariants = cva(
  * ```
  */
 const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center justify-between gap-md overflow-hidden rounded-lg border p-md shadow-lg transition-all data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-fade-out data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:animate-slide-out-to-right',
+  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-lg border p-4 pr-8 shadow-lg transition-all data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-fade-out data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:animate-slide-out-to-right',
   {
     variants: {
       variant: {
         default:
-          'border-neutral-200 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
+          'border-neutral-200 bg-white text-neutral-900 shadow-lg dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
         success:
-          'border-success-500/30 bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500 dark:border-success-500/20',
+          'border-success-500/30 bg-success-50 text-success-700 shadow-lg dark:bg-success-500/10 dark:text-success-500 dark:border-success-500/20',
         error:
-          'border-error-500/30 bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500 dark:border-error-500/20',
+          'border-error-500/30 bg-error-50 text-error-700 shadow-lg dark:bg-error-500/10 dark:text-error-500 dark:border-error-500/20',
         warning:
-          'border-warning-500/30 bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500 dark:border-warning-500/20',
+          'border-warning-500/30 bg-warning-50 text-warning-700 shadow-lg dark:bg-warning-500/10 dark:text-warning-500 dark:border-warning-500/20',
         info:
-          'border-primary-500/30 bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-500 dark:border-primary-500/20',
+          'border-primary-500/30 bg-primary-50 text-primary-700 shadow-lg dark:bg-primary-500/10 dark:text-primary-500 dark:border-primary-500/20',
       },
     },
     defaultVariants: {
@@ -184,6 +184,7 @@ const Toast = React.forwardRef<
 >(({ className, variant, ...props }, ref) => (
   <ToastPrimitive.Root
     ref={ref}
+    data-variant={variant ?? 'default'}
     className={cn(toastVariants({ variant }), className)}
     {...props}
   />
@@ -258,12 +259,12 @@ const ToastClose = React.forwardRef<
   <ToastPrimitive.Close
     ref={ref}
     className={cn(
-      'absolute right-2 top-2 rounded-md p-1 opacity-0 transition-opacity',
-      'hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2',
-      'group-hover:opacity-100',
+      'absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-md text-neutral-400 transition-colors',
+      'hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-400',
+      'dark:text-neutral-500 dark:hover:text-neutral-100',
       className
     )}
-    aria-label="ปิดการแจ้งเตือน"
+    aria-label="Close notification"
     {...props}
   >
     {children ?? (
@@ -309,15 +310,57 @@ const ToastAction = React.forwardRef<
   <ToastPrimitive.Action
     ref={ref}
     className={cn(
-      'inline-flex items-center justify-center rounded-md text-sm font-medium',
-      'ring-offset-white transition-colors',
-      'hover:bg-neutral-100 focus:outline-none focus:ring-2',
+      'inline-flex shrink-0 items-center justify-center rounded-md border border-neutral-200 bg-transparent px-3 py-1.5 text-sm font-medium transition-colors',
+      'hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-400',
+      'dark:border-neutral-700 dark:hover:bg-neutral-800',
       className
     )}
     {...props}
   />
 ));
 ToastAction.displayName = 'ToastAction';
+
+// ---------------------------------------------------------------------------
+// Variant Icons
+// ---------------------------------------------------------------------------
+
+const SuccessIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+    <polyline points="22 4 12 14.01 9 11.01" />
+  </svg>
+);
+
+const ErrorIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="15" y1="9" x2="9" y2="15" />
+    <line x1="9" y1="9" x2="15" y2="15" />
+  </svg>
+);
+
+const WarningIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
+
+const InfoIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="12" y1="16" x2="12" y2="12" />
+    <line x1="12" y1="8" x2="12.01" y2="8" />
+  </svg>
+);
+
+const variantIcons: Record<string, React.FC> = {
+  success: SuccessIcon,
+  error: ErrorIcon,
+  warning: WarningIcon,
+  info: InfoIcon,
+};
 
 // ---------------------------------------------------------------------------
 // Toaster (convenience component)
@@ -357,25 +400,35 @@ function Toaster({
 
   return (
     <ToastProvider duration={duration} swipeDirection={swipeDirection}>
-      {toasts.map((t) => (
-        <Toast
-          key={t.id}
-          variant={t.variant}
-          duration={t.duration}
-          onOpenChange={(open) => {
-            if (!open) toastStore.dismiss(t.id);
-          }}
-        >
-          {t.title && <ToastTitle>{t.title}</ToastTitle>}
-          {t.description && <ToastDescription>{t.description}</ToastDescription>}
-          {t.action && (
-            <ToastAction altText={t.action.altText} onClick={t.action.onClick}>
-              {t.action.label}
-            </ToastAction>
-          )}
-          <ToastClose />
-        </Toast>
-      ))}
+      {toasts.map((t) => {
+        const Icon = t.variant ? variantIcons[t.variant] : undefined;
+        return (
+          <Toast
+            key={t.id}
+            variant={t.variant}
+            duration={t.duration}
+            onOpenChange={(open) => {
+              if (!open) toastStore.dismiss(t.id);
+            }}
+          >
+            {Icon && (
+              <div className="shrink-0">
+                <Icon />
+              </div>
+            )}
+            <div className="flex flex-1 flex-col gap-1">
+              {t.title && <ToastTitle>{t.title}</ToastTitle>}
+              {t.description && <ToastDescription>{t.description}</ToastDescription>}
+            </div>
+            {t.action && (
+              <ToastAction altText={t.action.altText} onClick={t.action.onClick}>
+                {t.action.label}
+              </ToastAction>
+            )}
+            <ToastClose />
+          </Toast>
+        );
+      })}
       <ToastViewport position={position} />
     </ToastProvider>
   );
