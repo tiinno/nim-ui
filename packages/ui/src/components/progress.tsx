@@ -26,7 +26,7 @@ const progressIndicatorVariants = cva(
         default: 'bg-primary-600 dark:bg-primary-500',
         success: 'bg-success-600 dark:bg-success-500',
         warning: 'bg-warning-500 dark:bg-warning-400',
-        danger: 'bg-error-600 dark:bg-error-500',
+        error: 'bg-error-600 dark:bg-error-500',
         info: 'bg-info-600 dark:bg-info-500',
       },
     },

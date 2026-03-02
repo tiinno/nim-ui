@@ -106,18 +106,33 @@ const CTA = React.forwardRef<HTMLDivElement, CTAProps>(
             </p>
           )}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <a
-              href={buttonHref}
-              onClick={onButtonClick}
-              className={cn(
-                'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-colors',
-                isColoredVariant
-                  ? 'bg-white text-primary-600 hover:bg-neutral-100'
-                  : 'bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600'
-              )}
-            >
-              {buttonText}
-            </a>
+            {buttonHref ? (
+              <a
+                href={buttonHref}
+                onClick={onButtonClick}
+                className={cn(
+                  'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-colors',
+                  isColoredVariant
+                    ? 'bg-white text-primary-600 hover:bg-neutral-100'
+                    : 'bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600'
+                )}
+              >
+                {buttonText}
+              </a>
+            ) : (
+              <button
+                type="button"
+                onClick={onButtonClick}
+                className={cn(
+                  'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-colors',
+                  isColoredVariant
+                    ? 'bg-white text-primary-600 hover:bg-neutral-100'
+                    : 'bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600'
+                )}
+              >
+                {buttonText}
+              </button>
+            )}
             {secondaryAction && <div>{secondaryAction}</div>}
           </div>
         </div>

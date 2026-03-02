@@ -24,8 +24,8 @@ const inputVariants = cva(
     variants: {
       variant: {
         default: 'border-neutral-300 focus-visible:ring-primary-500 dark:border-neutral-600 dark:text-neutral-100',
-        error: 'border-red-500 focus-visible:ring-red-500 text-red-900 dark:border-red-400 dark:text-red-100',
-        success: 'border-green-500 focus-visible:ring-green-500 text-green-900 dark:border-green-400 dark:text-green-100',
+        error: 'border-error-500 focus-visible:ring-error-500 text-error-900 dark:border-error-400 dark:text-error-100',
+        success: 'border-success-500 focus-visible:ring-success-500 text-success-900 dark:border-success-400 dark:text-success-100',
       },
       size: {
         sm: 'h-8 text-sm',

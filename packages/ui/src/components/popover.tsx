@@ -129,7 +129,8 @@ const PopoverContent = React.forwardRef<
     },
     ref
   ) => {
-    // Arrow styles using CSS border trick — immune to Starlight CSS resets
+    // Arrow styles using CSS border trick — immune to Starlight CSS resets.
+    // Uses CSS custom property so dark mode background is applied automatically.
     const arrowSize = 8;
     const arrowPositionMap: Record<string, React.CSSProperties> = {
       bottom: {
@@ -141,7 +142,7 @@ const PopoverContent = React.forwardRef<
         height: 0,
         borderLeft: `${arrowSize}px solid transparent`,
         borderRight: `${arrowSize}px solid transparent`,
-        borderBottom: `${arrowSize}px solid white`,
+        borderBottom: `${arrowSize}px solid var(--popover-arrow-color)`,
       },
       top: {
         position: 'absolute',
@@ -152,7 +153,7 @@ const PopoverContent = React.forwardRef<
         height: 0,
         borderLeft: `${arrowSize}px solid transparent`,
         borderRight: `${arrowSize}px solid transparent`,
-        borderTop: `${arrowSize}px solid white`,
+        borderTop: `${arrowSize}px solid var(--popover-arrow-color)`,
       },
       left: {
         position: 'absolute',
@@ -163,7 +164,7 @@ const PopoverContent = React.forwardRef<
         height: 0,
         borderTop: `${arrowSize}px solid transparent`,
         borderBottom: `${arrowSize}px solid transparent`,
-        borderLeft: `${arrowSize}px solid white`,
+        borderLeft: `${arrowSize}px solid var(--popover-arrow-color)`,
       },
       right: {
         position: 'absolute',
@@ -174,7 +175,7 @@ const PopoverContent = React.forwardRef<
         height: 0,
         borderTop: `${arrowSize}px solid transparent`,
         borderBottom: `${arrowSize}px solid transparent`,
-        borderRight: `${arrowSize}px solid white`,
+        borderRight: `${arrowSize}px solid var(--popover-arrow-color)`,
       },
     };
 
@@ -184,7 +185,7 @@ const PopoverContent = React.forwardRef<
           ref={ref}
           side={side}
           sideOffset={showArrow ? sideOffset + arrowSize : sideOffset}
-          className={cn(popoverContentVariants({ variant }), className)}
+          className={cn(popoverContentVariants({ variant }), '[--popover-arrow-color:white] dark:[--popover-arrow-color:var(--color-neutral-800)]', className)}
           style={{ position: 'relative' }}
           {...props}
         >
@@ -221,8 +222,7 @@ const PopoverArrow = React.forwardRef<
     ref={ref}
     width={width}
     height={height}
-    className={cn('fill-white dark:fill-neutral-800', className)}
-    style={{ fill: 'white', display: 'block' }}
+    className={cn('block fill-white dark:fill-neutral-800', className)}
     {...props}
   />
 ));

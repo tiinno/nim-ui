@@ -22,7 +22,7 @@ describe('Button', () => {
       ['secondary', 'bg-neutral-200'],
       ['outline', 'border'],
       ['ghost', 'bg-transparent'],
-      ['destructive', 'bg-red-600'],
+      ['destructive', 'bg-error-600'],
     ])('renders %s variant with correct styles', (variant, expectedClass) => {
       render(<Button variant={variant as any}>{variant}</Button>);
       expect(screen.getByRole('button')).toHaveClass(expectedClass);
