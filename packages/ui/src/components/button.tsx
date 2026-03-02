@@ -27,7 +27,7 @@ const buttonVariants = cva(
         secondary: 'bg-neutral-200 text-neutral-900 hover:bg-neutral-300 focus-visible:ring-neutral-400 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600',
         outline: 'border border-neutral-300 bg-transparent hover:bg-neutral-100 focus-visible:ring-neutral-400 dark:border-neutral-600 dark:hover:bg-neutral-800 dark:text-neutral-100',
         ghost: 'bg-transparent hover:bg-neutral-100 focus-visible:ring-neutral-400 dark:hover:bg-neutral-800 dark:text-neutral-100',
-        destructive: 'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500 dark:bg-red-700 dark:hover:bg-red-600',
+        destructive: 'bg-error-600 text-white hover:bg-error-700 focus-visible:ring-error-500 dark:bg-error-700 dark:hover:bg-error-600',
       },
       size: {
         sm: 'h-8 px-3 py-1.5 text-sm',
@@ -49,17 +49,25 @@ export interface ButtonProps
   loading?: boolean;
 }
 
+const spinnerSizeMap: Record<string, string> = {
+  sm: 'h-3 w-3',
+  md: 'h-4 w-4',
+  lg: 'h-5 w-5',
+  xl: 'h-6 w-6',
+};
+
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, loading, disabled, children, ...props }, ref) => (
     <button
       className={cn(buttonVariants({ variant, size }), className)}
       ref={ref}
       disabled={loading || disabled}
+      aria-busy={loading || undefined}
       {...props}
     >
       {loading && (
         <svg
-          className="animate-spin -ml-1 mr-2 h-4 w-4"
+          className={cn('animate-spin -ml-1 mr-2', spinnerSizeMap[size ?? 'md'])}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

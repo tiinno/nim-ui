@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test/test-utils';
-import { FormField, formFieldVariants } from './form-field';
+import { FormField } from './form-field';
 import { Input } from './input';
 
 describe('FormField', () => {
@@ -83,7 +83,7 @@ describe('FormField', () => {
 
       const label = screen.getByText('Username');
       expect(label.textContent).toBe('Username');
-      expect(label.querySelector('[class*="text-red"]')).not.toBeInTheDocument();
+      expect(label.querySelector('[class*="text-error"]')).not.toBeInTheDocument();
     });
 
     it('shows red asterisk when required', () => {
@@ -95,7 +95,7 @@ describe('FormField', () => {
 
       const asterisk = screen.getByText('*');
       expect(asterisk).toBeInTheDocument();
-      expect(asterisk).toHaveClass('text-red-600');
+      expect(asterisk).toHaveClass('text-error-600');
       expect(asterisk).toHaveClass('ml-1');
     });
 
@@ -199,8 +199,8 @@ describe('FormField', () => {
 
       const errorText = screen.getByText('Password is too short');
       expect(errorText).toHaveClass('text-sm');
-      expect(errorText).toHaveClass('text-red-600');
-      expect(errorText).toHaveClass('dark:text-red-400');
+      expect(errorText).toHaveClass('text-error-600');
+      expect(errorText).toHaveClass('dark:text-error-400');
     });
 
     it('error takes priority over helper text', () => {
@@ -226,7 +226,7 @@ describe('FormField', () => {
         </FormField>
       );
 
-      const errorTexts = container.querySelectorAll('[class*="text-red-600"]');
+      const errorTexts = container.querySelectorAll('[class*="text-error-600"]');
       expect(errorTexts).toHaveLength(0);
     });
   });
@@ -377,7 +377,7 @@ describe('FormField', () => {
       );
 
       const errorText = screen.getByText('Error message');
-      expect(errorText).toHaveClass('dark:text-red-400');
+      expect(errorText).toHaveClass('dark:text-error-400');
     });
   });
 
@@ -403,17 +403,6 @@ describe('FormField', () => {
 
       expect(ref.current?.tagName).toBe('DIV');
       expect(ref.current?.classList).toBeDefined();
-    });
-  });
-
-  describe('CVA Variants', () => {
-    it('exports formFieldVariants function', () => {
-      expect(typeof formFieldVariants).toBe('function');
-    });
-
-    it('generates correct classes from variants', () => {
-      const classes = formFieldVariants();
-      expect(classes).toContain('space-y-2');
     });
   });
 

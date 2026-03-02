@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, userEvent } from '../test/test-utils';
-import { Form, formVariants } from './form';
+import { Form } from './form';
 import { Input } from './input';
 import { Button } from './button';
 
@@ -241,17 +241,6 @@ describe('Form', () => {
 
       ref.current?.reset();
       expect(input.value).toBe('test'); // Reset restores to defaultValue
-    });
-  });
-
-  describe('CVA Variants', () => {
-    it('exports formVariants function', () => {
-      expect(typeof formVariants).toBe('function');
-    });
-
-    it('generates correct classes from variants', () => {
-      const classes = formVariants();
-      expect(classes).toContain('w-full');
     });
   });
 

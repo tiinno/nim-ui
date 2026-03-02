@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 /**
@@ -34,28 +33,18 @@ import { cn } from '../lib/utils';
  * </Form>
  */
 
-const formVariants = cva(
-  'flex w-full flex-col gap-4',
-  {
-    variants: {},
-    defaultVariants: {},
-  }
-);
-
 export interface FormProps
-  extends React.FormHTMLAttributes<HTMLFormElement>,
-    VariantProps<typeof formVariants> {}
+  extends React.FormHTMLAttributes<HTMLFormElement> {}
 
 const Form = React.forwardRef<HTMLFormElement, FormProps>(
-  ({ className, style, ...props }, ref) => (
+  ({ className, ...props }, ref) => (
     <form
       ref={ref}
-      className={cn(formVariants(), className)}
-      style={{ display: 'flex', flexDirection: 'column', gap: '1rem', ...style }}
+      className={cn('flex w-full flex-col gap-4', className)}
       {...props}
     />
   )
 );
 Form.displayName = 'Form';
 
-export { Form, formVariants };
+export { Form };

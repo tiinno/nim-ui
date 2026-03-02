@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 /**
@@ -33,17 +32,8 @@ import { cn } from '../lib/utils';
  * </FormField>
  */
 
-const formFieldVariants = cva(
-  'space-y-2',
-  {
-    variants: {},
-    defaultVariants: {},
-  }
-);
-
 export interface FormFieldProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof formFieldVariants> {
+  extends React.HTMLAttributes<HTMLDivElement> {
   label: string;
   name: string;
   error?: string;
@@ -55,7 +45,7 @@ const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
   ({ className, label, name, error, helperText, required, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(formFieldVariants(), className)}
+      className={cn('space-y-2', className)}
       {...props}
     >
       <label
@@ -63,16 +53,20 @@ const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
         className="block text-sm font-medium text-neutral-900 dark:text-neutral-100"
       >
         {label}
-        {required && <span className="text-red-600 ml-1">*</span>}
+        {required && <span className="text-error-600 ml-1">*</span>}
       </label>
-      {children}
+      {React.Children.map(children, (child) =>
+        React.isValidElement(child)
+          ? React.cloneElement(child as React.ReactElement<Record<string, unknown>>, { id: name })
+          : child
+      )}
       {helperText && !error && (
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {helperText}
         </p>
       )}
       {error && (
-        <p className="text-sm text-red-600 dark:text-red-400">
+        <p className="text-sm text-error-600 dark:text-error-400">
           {error}
         </p>
       )}
@@ -81,4 +75,4 @@ const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
 );
 FormField.displayName = 'FormField';
 
-export { FormField, formFieldVariants };
+export { FormField };

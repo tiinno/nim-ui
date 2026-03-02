@@ -24,8 +24,8 @@ describe('Input', () => {
   describe('Variants', () => {
     it.each([
       ['default', 'border-neutral-300'],
-      ['error', 'border-red-500'],
-      ['success', 'border-green-500'],
+      ['error', 'border-error-500'],
+      ['success', 'border-success-500'],
     ])('renders %s variant with correct styles', (variant, expectedClass) => {
       render(<Input data-testid="input" variant={variant as any} />);
       expect(screen.getByTestId('input')).toHaveClass(expectedClass);
@@ -34,15 +34,15 @@ describe('Input', () => {
     it('applies error variant styles', () => {
       render(<Input variant="error" data-testid="input" />);
       const input = screen.getByTestId('input');
-      expect(input).toHaveClass('border-red-500');
-      expect(input).toHaveClass('text-red-900');
+      expect(input).toHaveClass('border-error-500');
+      expect(input).toHaveClass('text-error-900');
     });
 
     it('applies success variant styles', () => {
       render(<Input variant="success" data-testid="input" />);
       const input = screen.getByTestId('input');
-      expect(input).toHaveClass('border-green-500');
-      expect(input).toHaveClass('text-green-900');
+      expect(input).toHaveClass('border-success-500');
+      expect(input).toHaveClass('text-success-900');
     });
   });
 
@@ -220,7 +220,7 @@ describe('Input', () => {
 
     it('generates correct classes from variants', () => {
       const classes = inputVariants({ variant: 'error', size: 'lg' });
-      expect(classes).toContain('border-red-500');
+      expect(classes).toContain('border-error-500');
       expect(classes).toContain('h-12');
     });
   });
