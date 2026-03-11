@@ -57,7 +57,9 @@ const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
       </label>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child as React.ReactElement<Record<string, unknown>>, { id: name })
+          ? React.cloneElement(child as React.ReactElement<Record<string, unknown>>, {
+              id: (child.props as Record<string, unknown>).id ?? name,
+            })
           : child
       )}
       {helperText && !error && (

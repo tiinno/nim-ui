@@ -37,7 +37,7 @@ nim-ui/
 - Spacer: Flexible spacing
 
 ### Forms (6)
-- Button: variants (primary, secondary, outline, ghost, danger), sizes (sm, md, lg)
+- Button: variants (primary, secondary, outline, ghost, destructive), sizes (sm, md, lg)
 - Input: Text input with error states
 - Textarea: Multi-line input
 - Select: Dropdown selection
@@ -290,7 +290,7 @@ All must pass.
   <p>Are you sure?</p>
   <Flex justify="end" gap="md">
     <Button variant="ghost" onClick={() => setIsOpen(false)}>Cancel</Button>
-    <Button variant="danger" onClick={handleDelete}>Delete</Button>
+    <Button variant="destructive" onClick={handleDelete}>Delete</Button>
   </Flex>
 </Modal>
 ```

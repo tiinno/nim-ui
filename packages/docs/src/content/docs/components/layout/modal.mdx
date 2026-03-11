@@ -325,7 +325,7 @@ function ConfirmDialog({ onConfirm, title, message }) {
   return (
     <Modal open={open} onOpenChange={setOpen}>
       <ModalTrigger asChild>
-        <Button variant="danger">Delete</Button>
+        <Button variant="destructive">Delete</Button>
       </ModalTrigger>
       <ModalContent>
         <ModalHeader>
@@ -338,7 +338,7 @@ function ConfirmDialog({ onConfirm, title, message }) {
               <Button variant="outline">Cancel</Button>
             </ModalClose>
             <Button
-              variant="danger"
+              variant="destructive"
               onClick={() => {
                 onConfirm();
                 setOpen(false);

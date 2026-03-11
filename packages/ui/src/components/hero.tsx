@@ -59,9 +59,9 @@ export interface HeroProps
 
 function sanitizeImageUrl(url: string): string {
   try {
-    const parsed = new URL(url, window.location.origin);
-    if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'data:') {
-      return parsed.href;
+    const parsed = new URL(url, 'https://placeholder.invalid');
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+      return url;
     }
     return '';
   } catch {
@@ -80,6 +80,16 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     ...props
   }, ref) => {
     const safeImageUrl = backgroundImage ? sanitizeImageUrl(backgroundImage) : '';
+    const hasBg = !!backgroundImage;
+
+    const primaryCtaClasses =
+      'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors dark:bg-primary-700 dark:hover:bg-primary-600';
+    const secondaryCtaClasses = cn(
+      'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-colors',
+      hasBg
+        ? 'text-white border-2 border-white hover:bg-white/10'
+        : 'text-neutral-900 border-2 border-neutral-300 hover:bg-neutral-100 dark:text-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800'
+    );
 
     return (
       <div
@@ -88,7 +98,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         style={
           safeImageUrl
             ? {
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${encodeURI(safeImageUrl)})`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("${safeImageUrl.replace(/"/g, '\\"')}")`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }
@@ -100,9 +110,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
           <h1
             className={cn(
               'text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl',
-              backgroundImage
-                ? 'text-white'
-                : 'text-neutral-900 dark:text-neutral-100'
+              hasBg ? 'text-white' : 'text-neutral-900 dark:text-neutral-100'
             )}
           >
             {title}
@@ -111,9 +119,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             <p
               className={cn(
                 'text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto',
-                backgroundImage
-                  ? 'text-neutral-100'
-                  : 'text-neutral-600 dark:text-neutral-400'
+                hasBg ? 'text-neutral-100' : 'text-neutral-600 dark:text-neutral-400'
               )}
             >
               {subtitle}
@@ -123,47 +129,21 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               {primaryCta &&
                 (primaryCta.href ? (
-                  <a
-                    href={primaryCta.href}
-                    onClick={primaryCta.onClick}
-                    className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors dark:bg-primary-700 dark:hover:bg-primary-600"
-                  >
+                  <a href={primaryCta.href} onClick={primaryCta.onClick} className={primaryCtaClasses}>
                     {primaryCta.label}
                   </a>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={primaryCta.onClick}
-                    className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors dark:bg-primary-700 dark:hover:bg-primary-600"
-                  >
+                  <button type="button" onClick={primaryCta.onClick} className={primaryCtaClasses}>
                     {primaryCta.label}
                   </button>
                 ))}
               {secondaryCta &&
                 (secondaryCta.href ? (
-                  <a
-                    href={secondaryCta.href}
-                    onClick={secondaryCta.onClick}
-                    className={cn(
-                      'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-colors',
-                      backgroundImage
-                        ? 'text-white border-2 border-white hover:bg-white/10'
-                        : 'text-neutral-900 border-2 border-neutral-300 hover:bg-neutral-100 dark:text-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800'
-                    )}
-                  >
+                  <a href={secondaryCta.href} onClick={secondaryCta.onClick} className={secondaryCtaClasses}>
                     {secondaryCta.label}
                   </a>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={secondaryCta.onClick}
-                    className={cn(
-                      'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-colors',
-                      backgroundImage
-                        ? 'text-white border-2 border-white hover:bg-white/10'
-                        : 'text-neutral-900 border-2 border-neutral-300 hover:bg-neutral-100 dark:text-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800'
-                    )}
-                  >
+                  <button type="button" onClick={secondaryCta.onClick} className={secondaryCtaClasses}>
                     {secondaryCta.label}
                   </button>
                 ))}
