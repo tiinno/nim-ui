@@ -32,8 +32,8 @@ Buttons come in five different variants to suit various use cases.
   <Button client:load variant="ghost">
     Ghost
   </Button>
-  <Button client:load variant="danger">
-    Danger
+  <Button client:load variant="destructive">
+    Destructive
   </Button>
 
   <Fragment slot="code">
@@ -42,7 +42,7 @@ Buttons come in five different variants to suit various use cases.
 <Button variant="secondary">Secondary</Button>
 <Button variant="outline">Outline</Button>
 <Button variant="ghost">Ghost</Button>
-<Button variant="danger">Danger</Button>
+<Button variant="destructive">Destructive</Button>
 ```
   </Fragment>
 </ComponentPreview>
@@ -256,7 +256,7 @@ function LoginForm() {
 function DeleteConfirmation({ onConfirm, onCancel }) {
   return (
     <div className="flex gap-3">
-      <Button variant="danger" onClick={onConfirm}>
+      <Button variant="destructive" onClick={onConfirm}>
         Delete
       </Button>
       <Button variant="outline" onClick={onCancel}>

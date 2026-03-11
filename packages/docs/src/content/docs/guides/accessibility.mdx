@@ -75,13 +75,13 @@ Nim UI components include the appropriate ARIA attributes out of the box.
 ### Alert
 
 ```tsx
-<Alert variant="danger" title="Error">
+<Alert variant="destructive" title="Error">
   Your session has expired. Please log in again.
 </Alert>
 
 // Renders with:
 // - role="alert"
-// - aria-live="assertive" (for danger/warning)
+// - aria-live="assertive" (for destructive/warning)
 // - aria-live="polite" (for info/success)
 ```
 
@@ -342,7 +342,7 @@ Always pair color with another visual indicator:
 
 ```tsx
 // Good - icon + color + text
-<Alert variant="danger">
+<Alert variant="destructive">
   <AlertIcon /> {/* Visual icon indicator */}
   Error: File upload failed {/* Descriptive text */}
 </Alert>

@@ -24,8 +24,8 @@ describe('Textarea', () => {
   describe('Variants', () => {
     it.each([
       ['default', 'border-neutral-300'],
-      ['error', 'border-red-500'],
-      ['success', 'border-green-500'],
+      ['error', 'border-error-500'],
+      ['success', 'border-success-500'],
     ])('renders %s variant with correct styles', (variant, expectedClass) => {
       render(<Textarea data-testid="textarea" variant={variant as any} />);
       expect(screen.getByTestId('textarea')).toHaveClass(expectedClass);
@@ -34,15 +34,15 @@ describe('Textarea', () => {
     it('applies error variant styles', () => {
       render(<Textarea variant="error" data-testid="textarea" />);
       const textarea = screen.getByTestId('textarea');
-      expect(textarea).toHaveClass('border-red-500');
-      expect(textarea).toHaveClass('text-red-900');
+      expect(textarea).toHaveClass('border-error-500');
+      expect(textarea).toHaveClass('text-error-900');
     });
 
     it('applies success variant styles', () => {
       render(<Textarea variant="success" data-testid="textarea" />);
       const textarea = screen.getByTestId('textarea');
-      expect(textarea).toHaveClass('border-green-500');
-      expect(textarea).toHaveClass('text-green-900');
+      expect(textarea).toHaveClass('border-success-500');
+      expect(textarea).toHaveClass('text-success-900');
     });
   });
 
@@ -231,7 +231,7 @@ describe('Textarea', () => {
 
     it('generates correct classes from variants', () => {
       const classes = textareaVariants({ variant: 'error', size: 'lg' });
-      expect(classes).toContain('border-red-500');
+      expect(classes).toContain('border-error-500');
       expect(classes).toContain('text-lg');
     });
   });

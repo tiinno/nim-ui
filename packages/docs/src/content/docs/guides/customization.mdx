@@ -263,7 +263,7 @@ function StatCard({ label, value, change, className }: StatCardProps) {
       </p>
       {change !== undefined && (
         <Badge
-          variant={change >= 0 ? 'success' : 'danger'}
+          variant={change >= 0 ? 'success' : 'destructive'}
           className="mt-2"
         >
           {change >= 0 ? '+' : ''}{change}%

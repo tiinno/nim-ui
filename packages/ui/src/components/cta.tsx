@@ -76,6 +76,13 @@ const CTA = React.forwardRef<HTMLDivElement, CTAProps>(
   }, ref) => {
     const isColoredVariant = variant === 'primary' || variant === 'gradient';
 
+    const btnClasses = cn(
+      'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-all duration-fast active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+      isColoredVariant
+        ? 'bg-white text-primary-600 hover:bg-neutral-100'
+        : 'bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600'
+    );
+
     return (
       <div
         ref={ref}
@@ -107,29 +114,11 @@ const CTA = React.forwardRef<HTMLDivElement, CTAProps>(
           )}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             {buttonHref ? (
-              <a
-                href={buttonHref}
-                onClick={onButtonClick}
-                className={cn(
-                  'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-colors',
-                  isColoredVariant
-                    ? 'bg-white text-primary-600 hover:bg-neutral-100'
-                    : 'bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600'
-                )}
-              >
+              <a href={buttonHref} onClick={onButtonClick} className={btnClasses}>
                 {buttonText}
               </a>
             ) : (
-              <button
-                type="button"
-                onClick={onButtonClick}
-                className={cn(
-                  'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-colors',
-                  isColoredVariant
-                    ? 'bg-white text-primary-600 hover:bg-neutral-100'
-                    : 'bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600'
-                )}
-              >
+              <button type="button" onClick={onButtonClick} className={btnClasses}>
                 {buttonText}
               </button>
             )}

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 /**
@@ -38,17 +37,8 @@ import { cn } from '../lib/utils';
  * />
  */
 
-const cartItemVariants = cva(
-  'flex gap-4 p-4 border-b bg-white dark:bg-neutral-900 dark:border-neutral-700',
-  {
-    variants: {},
-    defaultVariants: {},
-  }
-);
-
 export interface CartItemProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cartItemVariants> {
+  extends React.HTMLAttributes<HTMLDivElement> {
   image: string;
   title: string;
   price: string | number;
@@ -74,7 +64,7 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
   }, ref) => (
     <div
       ref={ref}
-      className={cn(cartItemVariants(), className)}
+      className={cn('flex gap-4 p-4 border-b bg-white dark:bg-neutral-900 dark:border-neutral-700', className)}
       {...props}
     >
       <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-neutral-100 dark:bg-neutral-800">
@@ -127,7 +117,7 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
           {onRemove && (
             <button
               onClick={onRemove}
-              className="cursor-pointer text-sm text-red-600 transition-colors hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+              className="cursor-pointer text-sm text-error-600 transition-colors hover:text-error-700 dark:text-error-400 dark:hover:text-error-300"
             >
               Remove
             </button>
@@ -138,5 +128,11 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
   )
 );
 CartItem.displayName = 'CartItem';
+
+/**
+ * @deprecated `cartItemVariants` is kept for backwards compatibility.
+ * Prefer using the `CartItem` component directly.
+ */
+const cartItemVariants = () => 'flex gap-4 p-4 border-b bg-white dark:bg-neutral-900 dark:border-neutral-700';
 
 export { CartItem, cartItemVariants };

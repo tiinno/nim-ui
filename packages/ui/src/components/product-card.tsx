@@ -63,7 +63,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
         <img
           src={image}
           alt={imageAlt || title}
-          className="h-full w-full object-cover transition-transform hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-normal hover:scale-105"
         />
       </div>
       <div className="p-4 space-y-2">
