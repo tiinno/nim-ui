@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test/test-utils';
-import { Stat, statVariants } from './stat';
+import { Stat } from './stat';
 
 describe('Stat', () => {
   describe('Rendering', () => {
@@ -104,19 +104,6 @@ describe('Stat', () => {
       const ref = { current: null as HTMLDivElement | null };
       render(<Stat ref={ref} value="100" label="Score" />);
       expect(ref.current?.classList).toBeDefined();
-    });
-  });
-
-  describe('CVA Variants', () => {
-    it('exports statVariants function', () => {
-      expect(typeof statVariants).toBe('function');
-    });
-
-    it('generates correct base classes', () => {
-      const classes = statVariants();
-      expect(classes).toContain('flex');
-      expect(classes).toContain('flex-col');
-      expect(classes).toContain('space-y-1');
     });
   });
 

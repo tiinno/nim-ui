@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 /**
@@ -24,17 +23,8 @@ import { cn } from '../lib/utils';
  * />
  */
 
-const dataCardVariants = cva(
-  'rounded-lg border bg-white p-6 shadow-sm dark:bg-neutral-900 dark:border-neutral-700',
-  {
-    variants: {},
-    defaultVariants: {},
-  }
-);
-
 export interface DataCardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof dataCardVariants> {
+  extends React.HTMLAttributes<HTMLDivElement> {
   value: string | number;
   label: string;
   description?: string;
@@ -45,15 +35,15 @@ export interface DataCardProps
 const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
   ({ className, value, label, description, trend, trendDirection, ...props }, ref) => {
     const trendColorClass = trendDirection === 'up'
-      ? 'text-green-600 dark:text-green-400'
+      ? 'text-success-600 dark:text-success-400'
       : trendDirection === 'down'
-      ? 'text-red-600 dark:text-red-400'
+      ? 'text-error-600 dark:text-error-400'
       : 'text-neutral-600 dark:text-neutral-400';
 
     return (
       <div
         ref={ref}
-        className={cn(dataCardVariants(), className)}
+        className={cn('rounded-lg border bg-white p-6 shadow-sm dark:bg-neutral-900 dark:border-neutral-700', className)}
         {...props}
       >
         <div className="flex flex-col space-y-2">
@@ -82,4 +72,4 @@ const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
 );
 DataCard.displayName = 'DataCard';
 
-export { DataCard, dataCardVariants };
+export { DataCard };

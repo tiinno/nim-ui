@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test/test-utils';
-import { DataCard, dataCardVariants } from './data-card';
+import { DataCard } from './data-card';
 
 describe('DataCard', () => {
   describe('Rendering', () => {
@@ -145,8 +145,8 @@ describe('DataCard', () => {
         />
       );
       const trend = screen.getByText('+12.5%');
-      expect(trend).toHaveClass('text-green-600');
-      expect(trend).toHaveClass('dark:text-green-400');
+      expect(trend).toHaveClass('text-success-600');
+      expect(trend).toHaveClass('dark:text-success-400');
     });
 
     it('applies red color for down trend', () => {
@@ -159,8 +159,8 @@ describe('DataCard', () => {
         />
       );
       const trend = screen.getByText('-5.2%');
-      expect(trend).toHaveClass('text-red-600');
-      expect(trend).toHaveClass('dark:text-red-400');
+      expect(trend).toHaveClass('text-error-600');
+      expect(trend).toHaveClass('dark:text-error-400');
     });
 
     it('applies neutral color for neutral trend', () => {
@@ -261,19 +261,6 @@ describe('DataCard', () => {
       const ref = { current: null as HTMLDivElement | null };
       render(<DataCard ref={ref} value="100" label="Score" />);
       expect(ref.current?.classList).toBeDefined();
-    });
-  });
-
-  describe('CVA Variants', () => {
-    it('exports dataCardVariants function', () => {
-      expect(typeof dataCardVariants).toBe('function');
-    });
-
-    it('generates correct classes from variants', () => {
-      const classes = dataCardVariants();
-      expect(classes).toContain('rounded-lg');
-      expect(classes).toContain('border');
-      expect(classes).toContain('p-6');
     });
   });
 
@@ -398,7 +385,7 @@ describe('DataCard', () => {
       expect(screen.getByText('1,234')).toBeInTheDocument();
       expect(screen.getByText('Total Users')).toBeInTheDocument();
       const trend = screen.getByText('+20%');
-      expect(trend).toHaveClass('text-green-600');
+      expect(trend).toHaveClass('text-success-600');
     });
 
     it('renders error card with down trend', () => {
@@ -414,7 +401,7 @@ describe('DataCard', () => {
       expect(screen.getByText('5')).toBeInTheDocument();
       expect(screen.getByText('Critical Errors')).toBeInTheDocument();
       const trend = screen.getByText('-60%');
-      expect(trend).toHaveClass('text-red-600');
+      expect(trend).toHaveClass('text-error-600');
     });
 
     it('renders simple metric without extras', () => {

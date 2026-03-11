@@ -63,7 +63,7 @@ const PriceTag = React.forwardRef<HTMLDivElement, PriceTagProps>(
         </span>
       )}
       {discountPercent && (
-        <span className="text-sm font-medium text-green-600 dark:text-green-400">
+        <span className="text-sm font-medium text-success-600 dark:text-success-400">
           Save {discountPercent}
         </span>
       )}

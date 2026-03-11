@@ -116,13 +116,13 @@ describe('PriceTag', () => {
       const discount = screen.getByText('Save 20%');
       expect(discount).toHaveClass('text-sm');
       expect(discount).toHaveClass('font-medium');
-      expect(discount).toHaveClass('text-green-600');
+      expect(discount).toHaveClass('text-success-600');
     });
 
     it('discount has dark mode styles', () => {
       render(<PriceTag price="$79.99" discountPercent="20%" />);
       const discount = screen.getByText('Save 20%');
-      expect(discount).toHaveClass('dark:text-green-400');
+      expect(discount).toHaveClass('dark:text-success-400');
     });
   });
 

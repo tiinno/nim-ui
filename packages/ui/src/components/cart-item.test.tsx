@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, userEvent } from '../test/test-utils';
-import { CartItem, cartItemVariants } from './cart-item';
+import { CartItem } from './cart-item';
 
 describe('CartItem', () => {
   describe('Rendering', () => {
@@ -427,8 +427,8 @@ describe('CartItem', () => {
       );
       const removeBtn = screen.getByText('Remove');
       expect(removeBtn).toHaveClass('text-sm');
-      expect(removeBtn).toHaveClass('text-red-600');
-      expect(removeBtn).toHaveClass('hover:text-red-700');
+      expect(removeBtn).toHaveClass('text-error-600');
+      expect(removeBtn).toHaveClass('hover:text-error-700');
     });
   });
 
@@ -477,20 +477,6 @@ describe('CartItem', () => {
         />
       );
       expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    });
-  });
-
-  describe('CVA Variants', () => {
-    it('exports cartItemVariants function', () => {
-      expect(typeof cartItemVariants).toBe('function');
-    });
-
-    it('generates correct base classes', () => {
-      const classes = cartItemVariants();
-      expect(classes).toContain('flex');
-      expect(classes).toContain('gap-4');
-      expect(classes).toContain('p-4');
-      expect(classes).toContain('border-b');
     });
   });
 

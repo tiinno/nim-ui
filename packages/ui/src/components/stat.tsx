@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 /**
@@ -11,7 +10,7 @@ import { cn } from '../lib/utils';
  *
  * @example
  * // Stat with custom styling
- * <Stat value="98%" label="Success Rate" className="text-green-600" />
+ * <Stat value="98%" label="Success Rate" className="text-success-600" />
  *
  * @example
  * // Multiple stats in a group
@@ -22,17 +21,8 @@ import { cn } from '../lib/utils';
  * </div>
  */
 
-const statVariants = cva(
-  'flex flex-col space-y-1',
-  {
-    variants: {},
-    defaultVariants: {},
-  }
-);
-
 export interface StatProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof statVariants> {
+  extends React.HTMLAttributes<HTMLDivElement> {
   value: string | number;
   label: string;
 }
@@ -41,7 +31,7 @@ const Stat = React.forwardRef<HTMLDivElement, StatProps>(
   ({ className, value, label, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(statVariants(), className)}
+      className={cn('flex flex-col space-y-1', className)}
       {...props}
     >
       <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
@@ -55,4 +45,4 @@ const Stat = React.forwardRef<HTMLDivElement, StatProps>(
 );
 Stat.displayName = 'Stat';
 
-export { Stat, statVariants };
+export { Stat };
