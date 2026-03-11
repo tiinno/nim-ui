@@ -133,6 +133,6 @@ CartItem.displayName = 'CartItem';
  * @deprecated `cartItemVariants` is kept for backwards compatibility.
  * Prefer using the `CartItem` component directly.
  */
-const cartItemVariants = {};
+const cartItemVariants = () => 'flex gap-4 p-4 border-b bg-white dark:bg-neutral-900 dark:border-neutral-700';
 
 export { CartItem, cartItemVariants };

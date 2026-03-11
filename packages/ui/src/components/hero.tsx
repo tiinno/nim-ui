@@ -98,7 +98,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         style={
           safeImageUrl
             ? {
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${safeImageUrl})`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("${safeImageUrl.replace(/"/g, '\\"')}")`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }

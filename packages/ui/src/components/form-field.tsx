@@ -42,34 +42,32 @@ export interface FormFieldProps
 }
 
 const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
-  ({ className, label, name, error, helperText, required, children, ...props }, ref) => (
+  ({ className, label, name, error, helperText, required, children, ...props }, ref) => {
+    const firstChild = React.Children.toArray(children)[0];
+    const fieldId = (React.isValidElement(firstChild)
+      ? ((firstChild.props as Record<string, unknown>).id as string)
+      : undefined) ?? name;
+
+    return (
     <div
       ref={ref}
       className={cn('space-y-2', className)}
       {...props}
     >
-      {React.Children.map(children, (child) => {
-        const childId = React.isValidElement(child)
-          ? ((child.props as Record<string, unknown>).id as string) ?? name
-          : name;
-        const fieldId = childId;
-        return (
-          <>
-            <label
-              htmlFor={fieldId}
-              className="block text-sm font-medium text-neutral-900 dark:text-neutral-100"
-            >
-              {label}
-              {required && <span className="text-error-600 ml-1">*</span>}
-            </label>
-            {React.isValidElement(child)
-              ? React.cloneElement(child as React.ReactElement<Record<string, unknown>>, {
-                  id: fieldId,
-                })
-              : child}
-          </>
-        );
-      })}
+      <label
+        htmlFor={fieldId}
+        className="block text-sm font-medium text-neutral-900 dark:text-neutral-100"
+      >
+        {label}
+        {required && <span className="text-error-600 ml-1">*</span>}
+      </label>
+      {React.Children.map(children, (child) =>
+        React.isValidElement(child)
+          ? React.cloneElement(child as React.ReactElement<Record<string, unknown>>, {
+              id: (child.props as Record<string, unknown>).id ?? name,
+            })
+          : child
+      )}
       {helperText && !error && (
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {helperText}
@@ -96,8 +94,8 @@ const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
         </p>
       )}
     </div>
-  )
-);
+    );
+  });
 FormField.displayName = 'FormField';
 
 export { FormField };

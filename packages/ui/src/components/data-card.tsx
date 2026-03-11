@@ -76,6 +76,6 @@ DataCard.displayName = 'DataCard';
  * @deprecated `dataCardVariants` is kept for backwards compatibility.
  * Prefer using the `DataCard` component directly.
  */
-const dataCardVariants = {};
+const dataCardVariants = () => 'rounded-lg border bg-white p-6 shadow-sm dark:bg-neutral-900 dark:border-neutral-700';
 
 export { DataCard, dataCardVariants };

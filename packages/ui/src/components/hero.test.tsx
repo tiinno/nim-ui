@@ -210,7 +210,7 @@ describe('Hero', () => {
       render(<Hero title="Title" backgroundImage="/hero-bg.jpg" data-testid="hero" />);
       const hero = screen.getByTestId('hero');
       expect(hero).toHaveStyle({
-        backgroundImage: expect.stringContaining('url(/hero-bg.jpg)'),
+        backgroundImage: expect.stringContaining('url("/hero-bg.jpg")'),
       });
     });
 
@@ -348,7 +348,7 @@ describe('Hero', () => {
 
       const hero = screen.getByTestId('hero');
       expect(hero).toHaveStyle({
-        backgroundImage: expect.stringContaining('url(/hero-bg.jpg)'),
+        backgroundImage: expect.stringContaining('url("/hero-bg.jpg")'),
       });
     });
   });
