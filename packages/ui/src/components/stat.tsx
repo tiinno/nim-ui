@@ -45,4 +45,10 @@ const Stat = React.forwardRef<HTMLDivElement, StatProps>(
 );
 Stat.displayName = 'Stat';
 
-export { Stat };
+/**
+ * @deprecated `statVariants` is kept for backwards compatibility.
+ * Prefer using the `Stat` component directly.
+ */
+const statVariants = () => 'flex flex-col space-y-1';
+
+export { Stat, statVariants };

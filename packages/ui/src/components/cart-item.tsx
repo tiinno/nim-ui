@@ -129,4 +129,10 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
 );
 CartItem.displayName = 'CartItem';
 
-export { CartItem };
+/**
+ * @deprecated `cartItemVariants` is kept for backwards compatibility.
+ * Prefer using the `CartItem` component directly.
+ */
+const cartItemVariants = {};
+
+export { CartItem, cartItemVariants };

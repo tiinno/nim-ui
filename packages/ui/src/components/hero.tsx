@@ -80,7 +80,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
     ...props
   }, ref) => {
     const safeImageUrl = backgroundImage ? sanitizeImageUrl(backgroundImage) : '';
-    const hasBg = !!backgroundImage;
+    const hasBg = !!safeImageUrl;
 
     const primaryCtaClasses =
       'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors dark:bg-primary-700 dark:hover:bg-primary-600';
@@ -98,7 +98,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         style={
           safeImageUrl
             ? {
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("${safeImageUrl.replace(/"/g, '\\"')}")`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${safeImageUrl})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }

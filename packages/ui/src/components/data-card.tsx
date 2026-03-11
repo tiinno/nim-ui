@@ -72,4 +72,10 @@ const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
 );
 DataCard.displayName = 'DataCard';
 
-export { DataCard };
+/**
+ * @deprecated `dataCardVariants` is kept for backwards compatibility.
+ * Prefer using the `DataCard` component directly.
+ */
+const dataCardVariants = {};
+
+export { DataCard, dataCardVariants };
