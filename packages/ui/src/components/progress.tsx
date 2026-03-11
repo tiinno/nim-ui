@@ -23,11 +23,11 @@ const progressIndicatorVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary-600 dark:bg-primary-500',
-        success: 'bg-success-600 dark:bg-success-500',
+        default: 'bg-primary-600 dark:bg-primary-400',
+        success: 'bg-success-600 dark:bg-success-400',
         warning: 'bg-warning-500 dark:bg-warning-400',
-        error: 'bg-error-600 dark:bg-error-500',
-        info: 'bg-info-600 dark:bg-info-500',
+        error: 'bg-error-600 dark:bg-error-400',
+        info: 'bg-info-600 dark:bg-info-400',
       },
     },
     defaultVariants: {
