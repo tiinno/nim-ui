@@ -1,0 +1,142 @@
+---
+title: Collapsible
+description: An expandable section for hiding and revealing content, built with Radix UI
+---
+
+import { CollapsibleBasicDemo } from '../../../../components/CollapsibleDemo';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Collapsible component is a single expandable section built on [Radix UI Collapsible](https://www.radix-ui.com/primitives/docs/components/collapsible). Use it for FAQs, "Read more" patterns, disclosure widgets, and any one-off toggleable content. For multiple independently-collapsible sections, use [Accordion](/components/layout/accordion/) instead.
+
+## Import
+
+```tsx
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Collapsible">
+  <CollapsibleBasicDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+<Collapsible>
+  <CollapsibleTrigger>Show more</CollapsibleTrigger>
+  <CollapsibleContent>
+    <p>Hidden content revealed on open.</p>
+  </CollapsibleContent>
+</Collapsible>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Controlled
+
+Manage the open state yourself to drive the component from outside:
+
+```tsx
+const [open, setOpen] = useState(false);
+
+return (
+  <Collapsible open={open} onOpenChange={setOpen}>
+    <CollapsibleTrigger>Toggle FAQ</CollapsibleTrigger>
+    <CollapsibleContent>
+      <p>Answer goes here.</p>
+    </CollapsibleContent>
+  </Collapsible>
+);
+```
+
+## Disabled
+
+```tsx
+<Collapsible disabled>
+  <CollapsibleTrigger>Disabled trigger</CollapsibleTrigger>
+  <CollapsibleContent>This will never open.</CollapsibleContent>
+</Collapsible>
+```
+
+## Props
+
+### Collapsible
+
+<PropsTable
+  props={[
+    {
+      name: 'open',
+      type: 'boolean',
+      description: 'Controlled open state of the collapsible',
+    },
+    {
+      name: 'defaultOpen',
+      type: 'boolean',
+      default: 'false',
+      description: 'Initial open state (uncontrolled)',
+    },
+    {
+      name: 'onOpenChange',
+      type: '(open: boolean) => void',
+      description: 'Callback fired when the open state changes',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Prevent the user from toggling the collapsible',
+    },
+  ]}
+/>
+
+### CollapsibleTrigger
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Trigger content',
+    },
+  ]}
+/>
+
+### CollapsibleContent
+
+<PropsTable
+  props={[
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes on the inner wrapper',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Content revealed when open',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Uses `aria-expanded` on the trigger to communicate open state
+- Content is properly hidden from assistive tech when closed
+- Fully keyboard accessible (Space / Enter to toggle)
+- Works with `prefers-reduced-motion` — animations are disabled for users who request reduced motion
+
+## Related Components
+
+- [Accordion](/components/layout/accordion/) - Multiple collapsibles grouped together
+- [Popover](/components/feedback/popover/) - Floating content panel

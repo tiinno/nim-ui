@@ -1056,6 +1056,138 @@
           "code": "<Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href=\"/\">Home</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>Current Page</BreadcrumbPage></BreadcrumbItem></BreadcrumbList></Breadcrumb>"
         }
       ]
+    },
+    {
+      "name": "Collapsible",
+      "category": "overlay",
+      "description": "An expandable section for hiding and revealing content, built with Radix UI",
+      "keywords": ["collapsible", "disclosure", "expand", "toggle", "faq"],
+      "file": "components/collapsible.tsx",
+      "variants": [],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Collapsible",
+          "code": "<Collapsible><CollapsibleTrigger>Show more</CollapsibleTrigger><CollapsibleContent>Hidden content revealed on open.</CollapsibleContent></Collapsible>"
+        },
+        {
+          "title": "Controlled Collapsible",
+          "code": "<Collapsible open={open} onOpenChange={setOpen}><CollapsibleTrigger>Toggle FAQ</CollapsibleTrigger><CollapsibleContent><p>Answer goes here.</p></CollapsibleContent></Collapsible>"
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "category": "navigation",
+      "description": "Composable pagination building blocks for navigating through pages of content",
+      "keywords": ["pagination", "pages", "navigation", "next", "previous", "paging"],
+      "file": "components/pagination.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Pagination",
+          "code": "<Pagination><PaginationContent><PaginationItem><PaginationPrevious href=\"?page=1\" /></PaginationItem><PaginationItem><PaginationLink href=\"?page=1\">1</PaginationLink></PaginationItem><PaginationItem><PaginationLink href=\"?page=2\" isActive>2</PaginationLink></PaginationItem><PaginationItem><PaginationEllipsis /></PaginationItem><PaginationItem><PaginationNext href=\"?page=3\" /></PaginationItem></PaginationContent></Pagination>"
+        },
+        {
+          "title": "Pagination with usePagination",
+          "code": "const pages = usePagination({ totalPages: 20, currentPage: 5 });\\n<Pagination><PaginationContent>{pages.map((p, i) => <PaginationItem key={i}>{p === 'ellipsis' ? <PaginationEllipsis /> : <PaginationLink isActive={p === 5}>{p}</PaginationLink>}</PaginationItem>)}</PaginationContent></Pagination>"
+        }
+      ]
+    },
+    {
+      "name": "Slider",
+      "category": "forms",
+      "description": "A slider input for selecting a value or range within a bounded interval, built with Radix UI",
+      "keywords": ["slider", "range", "input", "value", "track", "volume"],
+      "file": "components/slider.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": ["sm", "md", "lg"]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Slider",
+          "code": "<Slider defaultValue={[50]} min={0} max={100} step={1} />"
+        },
+        {
+          "title": "Range Slider",
+          "code": "<Slider defaultValue={[20, 80]} min={0} max={100} step={5} />"
+        },
+        {
+          "title": "Controlled Slider",
+          "code": "const [value, setValue] = useState([30]);\\n<Slider value={value} onValueChange={setValue} min={0} max={100} />"
+        }
+      ]
+    },
+    {
+      "name": "Combobox",
+      "category": "forms",
+      "description": "A searchable, filterable dropdown input built on cmdk and Radix Popover",
+      "keywords": ["combobox", "autocomplete", "search", "select", "dropdown", "filter"],
+      "file": "components/combobox.tsx",
+      "variants": [],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic Combobox",
+          "code": "<Combobox><ComboboxTrigger>Select a fruit...</ComboboxTrigger><ComboboxContent><ComboboxInput placeholder=\"Search...\" /><ComboboxList><ComboboxEmpty>No fruits found.</ComboboxEmpty><ComboboxGroup heading=\"Fruits\"><ComboboxItem value=\"apple\">Apple</ComboboxItem><ComboboxItem value=\"banana\">Banana</ComboboxItem></ComboboxGroup></ComboboxList></ComboboxContent></Combobox>"
+        }
+      ]
+    },
+    {
+      "name": "Calendar",
+      "category": "forms",
+      "description": "A calendar component for date selection, built on react-day-picker v9",
+      "keywords": ["calendar", "date", "picker", "day", "month", "schedule"],
+      "file": "components/calendar.tsx",
+      "variants": [
+        {
+          "name": "mode",
+          "values": ["single", "multiple", "range"]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Single Date Selection",
+          "code": "<Calendar mode=\"single\" selected={date} onSelect={setDate} />"
+        },
+        {
+          "title": "Range Selection",
+          "code": "<Calendar mode=\"range\" selected={range} onSelect={setRange} />"
+        },
+        {
+          "title": "Multiple Selection",
+          "code": "<Calendar mode=\"multiple\" selected={dates} onSelect={setDates} />"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker",
+      "category": "forms",
+      "description": "An input trigger with a calendar popover for selecting dates, composing Popover, Calendar, and Button",
+      "keywords": ["datepicker", "date", "picker", "input", "form", "calendar"],
+      "file": "components/date-picker.tsx",
+      "variants": [],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Basic DatePicker",
+          "code": "const [date, setDate] = useState<Date>();\\n<DatePicker value={date} onChange={setDate} placeholder=\"Pick a date\" />"
+        },
+        {
+          "title": "DatePicker with Custom Format",
+          "code": "<DatePicker value={date} onChange={setDate} format=\"yyyy-MM-dd\" />"
+        },
+        {
+          "title": "Date Range Picker",
+          "code": "const [range, setRange] = useState<DateRange>();\\n<DateRangePicker value={range} onChange={setRange} />"
+        }
+      ]
     }
   ]
 }

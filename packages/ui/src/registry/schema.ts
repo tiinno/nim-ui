@@ -7,7 +7,16 @@ export interface ComponentMeta {
   /** Unique component identifier */
   name: string;
   /** Component category for organization */
-  category: 'primitives' | 'layout' | 'data-display' | 'commerce' | 'landing' | 'forms';
+  category:
+    | 'primitives'
+    | 'layout'
+    | 'data-display'
+    | 'commerce'
+    | 'landing'
+    | 'forms'
+    | 'feedback'
+    | 'overlay'
+    | 'navigation';
   /** Brief description of component purpose */
   description: string;
   /** Keywords for search functionality */

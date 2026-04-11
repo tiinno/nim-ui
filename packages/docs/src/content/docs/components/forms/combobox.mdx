@@ -1,0 +1,196 @@
+---
+title: Combobox
+description: A searchable, filterable dropdown input built on cmdk and Radix Popover
+---
+
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Combobox provides a searchable, filterable dropdown input — perfect for selecting from large datasets where a plain `Select` becomes unwieldy. It composes [cmdk](https://cmdk.paco.me/) for keyboard navigation and filtering with Radix Popover for positioning, and inherits nim-ui's OKLCH tokens, focus rings, and dark-mode styling.
+
+## Import
+
+```tsx
+import {
+  Combobox,
+  ComboboxTrigger,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxList,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxItem,
+  ComboboxSeparator,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+Combobox is a controlled component — manage `open` and the selected `value` yourself so you can react to changes (submit a form, sync to URL state, etc.).
+
+```tsx
+import { useState } from 'react';
+import {
+  Combobox,
+  ComboboxTrigger,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxList,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxItem,
+} from '@nim-ui/components';
+
+const frameworks = [
+  { value: 'next', label: 'Next.js' },
+  { value: 'remix', label: 'Remix' },
+  { value: 'astro', label: 'Astro' },
+  { value: 'sveltekit', label: 'SvelteKit' },
+  { value: 'nuxt', label: 'Nuxt' },
+];
+
+export function FrameworkPicker() {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
+  const selected = frameworks.find((f) => f.value === value);
+
+  return (
+    <Combobox open={open} onOpenChange={setOpen}>
+      <ComboboxTrigger className="w-64">
+        {selected?.label ?? 'Select a framework…'}
+      </ComboboxTrigger>
+      <ComboboxContent>
+        <ComboboxInput placeholder="Search frameworks…" />
+        <ComboboxList>
+          <ComboboxEmpty>No framework found.</ComboboxEmpty>
+          <ComboboxGroup heading="Frameworks">
+            {frameworks.map((framework) => (
+              <ComboboxItem
+                key={framework.value}
+                value={framework.value}
+                onSelect={(current) => {
+                  setValue(current === value ? '' : current);
+                  setOpen(false);
+                }}
+              >
+                {framework.label}
+              </ComboboxItem>
+            ))}
+          </ComboboxGroup>
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  );
+}
+```
+
+## With Groups and Separator
+
+Use `ComboboxGroup` with a `heading` prop to label sections. Insert `ComboboxSeparator` between groups for a visual divider.
+
+```tsx
+<Combobox open={open} onOpenChange={setOpen}>
+  <ComboboxTrigger>Select an action…</ComboboxTrigger>
+  <ComboboxContent>
+    <ComboboxInput placeholder="Type a command…" />
+    <ComboboxList>
+      <ComboboxEmpty>No results found.</ComboboxEmpty>
+
+      <ComboboxGroup heading="Suggestions">
+        <ComboboxItem value="calendar">Calendar</ComboboxItem>
+        <ComboboxItem value="search">Search Emoji</ComboboxItem>
+        <ComboboxItem value="calculator">Calculator</ComboboxItem>
+      </ComboboxGroup>
+
+      <ComboboxSeparator />
+
+      <ComboboxGroup heading="Settings">
+        <ComboboxItem value="profile">Profile</ComboboxItem>
+        <ComboboxItem value="billing">Billing</ComboboxItem>
+        <ComboboxItem value="settings">Settings</ComboboxItem>
+      </ComboboxGroup>
+    </ComboboxList>
+  </ComboboxContent>
+</Combobox>
+```
+
+## Disabled Items
+
+Mark individual items as disabled — they remain visible but can't be selected.
+
+```tsx
+<ComboboxItem value="archived" disabled>
+  Archived (coming soon)
+</ComboboxItem>
+```
+
+## Props
+
+### ComboboxContent
+
+<PropsTable
+  props={[
+    {
+      name: 'width',
+      type: "'trigger' | 'auto'",
+      default: "'trigger'",
+      description: 'Width strategy. "trigger" matches the trigger width via --radix-popover-trigger-width, "auto" fits content',
+    },
+    {
+      name: 'sideOffset',
+      type: 'number',
+      default: '4',
+      description: 'Distance in pixels between the trigger and the content',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes for the content container',
+    },
+  ]}
+/>
+
+### ComboboxItem
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      required: true,
+      description: 'Unique value used for filtering and selection',
+    },
+    {
+      name: 'onSelect',
+      type: '(value: string) => void',
+      description: 'Callback fired when the item is selected (click or Enter key)',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Prevent the item from being selected',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Trigger has `role="combobox"` and supports `aria-expanded` via Radix Popover state
+- Full keyboard support through cmdk: Arrow Up/Down to navigate, Enter to select, Escape to close
+- Typing in `ComboboxInput` filters items with fuzzy matching
+- Active item tracked with `aria-activedescendant`, highlighted via `data-[selected=true]`
+- Focus automatically moves to the input when the popover opens
+- Disabled items skipped by keyboard navigation via `data-[disabled=true]`
+- Use `ComboboxEmpty` to announce empty states to screen readers
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Arrow Down | Move focus to next item |
+| Arrow Up | Move focus to previous item |
+| Enter | Select the focused item |
+| Escape | Close the popover |
+| Home | Move to first item |
+| End | Move to last item |

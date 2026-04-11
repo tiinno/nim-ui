@@ -1,0 +1,211 @@
+---
+title: Pagination
+description: Composable pagination building blocks for navigating through pages of content
+---
+
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis } from '@nim-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Pagination component provides composable building blocks for page navigation. It renders semantic `<nav>` with `aria-label="pagination"` and uses anchor elements that work with any routing library. Pair with the `usePagination` helper to generate consistent page ranges with ellipsis.
+
+## Import
+
+```tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+  usePagination,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Basic Pagination">
+  <Pagination client:load>
+    <PaginationContent>
+      <PaginationItem>
+        <PaginationPrevious href="#" />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#">1</PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#" isActive>2</PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#">3</PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationEllipsis />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationNext href="#" />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
+
+  <Fragment slot="code">
+```tsx
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="?page=1" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="?page=1">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="?page=2" isActive>2</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="?page=3">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="?page=3" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+```
+  </Fragment>
+</ComponentPreview>
+
+## With usePagination Helper
+
+The `usePagination` helper computes a page range with ellipsis markers based on the current page, total pages, and a sibling count:
+
+```tsx
+import { usePagination } from '@nim-ui/components';
+
+function MyPagination({ currentPage, totalPages, onPageChange }) {
+  const pages = usePagination({
+    totalPages,
+    currentPage,
+    siblingCount: 1,
+  });
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+          />
+        </PaginationItem>
+        {pages.map((page, i) => (
+          <PaginationItem key={i}>
+            {page === 'ellipsis' ? (
+              <PaginationEllipsis />
+            ) : (
+              <PaginationLink
+                isActive={page === currentPage}
+                onClick={() => onPageChange(page)}
+              >
+                {page}
+              </PaginationLink>
+            )}
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationNext
+            onClick={() =>
+              onPageChange(Math.min(totalPages, currentPage + 1))
+            }
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+}
+```
+
+### Example output
+
+```ts
+usePagination({ totalPages: 20, currentPage: 10, siblingCount: 1 })
+// => [1, 'ellipsis', 9, 10, 11, 'ellipsis', 20]
+
+usePagination({ totalPages: 5, currentPage: 3 })
+// => [1, 2, 3, 4, 5]
+
+usePagination({ totalPages: 20, currentPage: 2 })
+// => [1, 2, 3, 'ellipsis', 20]
+```
+
+## Props
+
+### PaginationLink
+
+<PropsTable
+  props={[
+    {
+      name: 'isActive',
+      type: 'boolean',
+      default: 'false',
+      description: 'Mark this page as the current/active page (sets aria-current="page")',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size variant for the link button',
+    },
+    {
+      name: 'href',
+      type: 'string',
+      description: 'URL for the pagination link',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes',
+    },
+  ]}
+/>
+
+### usePagination
+
+<PropsTable
+  props={[
+    {
+      name: 'totalPages',
+      type: 'number',
+      required: true,
+      description: 'Total number of pages',
+    },
+    {
+      name: 'currentPage',
+      type: 'number',
+      required: true,
+      description: 'Current active page (1-indexed)',
+    },
+    {
+      name: 'siblingCount',
+      type: 'number',
+      default: '1',
+      description: 'Number of sibling pages to show on each side of the current page',
+    },
+    {
+      name: 'showEdges',
+      type: 'boolean',
+      default: 'true',
+      description: 'Always show the first and last page',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Root is a `<nav>` landmark with `aria-label="pagination"`
+- Active page has `aria-current="page"`
+- Previous/Next buttons have descriptive `aria-label`s
+- Ellipsis is `aria-hidden="true"` with a screen-reader-only "More pages" text
+- Focus-visible rings use the primary token for consistent keyboard feedback

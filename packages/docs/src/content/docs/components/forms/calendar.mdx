@@ -1,0 +1,169 @@
+---
+title: Calendar
+description: A date picker calendar built on react-day-picker v9 with OKLCH theming
+---
+
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The Calendar component wraps [react-day-picker v9](https://daypicker.dev/) with nim-ui's OKLCH tokens, dark-mode support, and focus-visible rings. It supports single-date, range, and multiple-date selection, plus full keyboard navigation and i18n through react-day-picker's built-in features.
+
+## Import
+
+```tsx
+import { Calendar } from '@nim-ui/components';
+```
+
+You'll also need to import react-day-picker's styles once in your app's root entry — typically `import 'react-day-picker/style.css';` — so the default layout ships alongside nim-ui's overrides.
+
+## Single Date
+
+```tsx
+import { useState } from 'react';
+import { Calendar } from '@nim-ui/components';
+
+export function SingleDateExample() {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+
+  return (
+    <Calendar
+      mode="single"
+      selected={date}
+      onSelect={setDate}
+    />
+  );
+}
+```
+
+## Range Selection
+
+```tsx
+import { useState } from 'react';
+import { Calendar } from '@nim-ui/components';
+import type { DateRange } from 'react-day-picker';
+
+export function RangeExample() {
+  const [range, setRange] = useState<DateRange | undefined>();
+
+  return (
+    <Calendar
+      mode="range"
+      selected={range}
+      onSelect={setRange}
+      numberOfMonths={2}
+    />
+  );
+}
+```
+
+## Multiple Dates
+
+```tsx
+import { useState } from 'react';
+import { Calendar } from '@nim-ui/components';
+
+export function MultipleExample() {
+  const [dates, setDates] = useState<Date[]>([]);
+
+  return (
+    <Calendar
+      mode="multiple"
+      selected={dates}
+      onSelect={(value) => setDates(value ?? [])}
+    />
+  );
+}
+```
+
+## Disabled Dates
+
+Pass a matcher to disable specific dates — a single date, an array, a range, or a predicate function.
+
+```tsx
+<Calendar
+  mode="single"
+  selected={date}
+  onSelect={setDate}
+  disabled={[
+    { before: new Date() }, // disable past dates
+    { dayOfWeek: [0, 6] },   // disable weekends
+  ]}
+/>
+```
+
+## Props
+
+Calendar passes through all [react-day-picker props](https://daypicker.dev/api/interfaces/DayPickerProps). The most common are listed below.
+
+<PropsTable
+  props={[
+    {
+      name: 'mode',
+      type: "'single' | 'multiple' | 'range'",
+      default: "'single'",
+      description: 'Selection mode',
+    },
+    {
+      name: 'selected',
+      type: 'Date | Date[] | DateRange | undefined',
+      description: 'Currently selected date(s). Shape depends on mode',
+    },
+    {
+      name: 'onSelect',
+      type: '(selected) => void',
+      description: 'Callback fired when selection changes. Signature depends on mode',
+    },
+    {
+      name: 'numberOfMonths',
+      type: 'number',
+      default: '1',
+      description: 'Number of months to display side by side',
+    },
+    {
+      name: 'showOutsideDays',
+      type: 'boolean',
+      default: 'true',
+      description: 'Show days from the previous/next month at the edges of the grid',
+    },
+    {
+      name: 'disabled',
+      type: 'Matcher | Matcher[]',
+      description: 'Dates that cannot be selected (see react-day-picker Matcher docs)',
+    },
+    {
+      name: 'autoFocus',
+      type: 'boolean',
+      default: 'false',
+      description: 'Focus the first day of the calendar on mount',
+    },
+    {
+      name: 'classNames',
+      type: 'Partial<ClassNames>',
+      description: 'Override individual element class names (merged with the default nim-ui theme)',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Implements the [ARIA date picker pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog.html) via react-day-picker
+- Full keyboard navigation: arrow keys move day-by-day, Page Up/Down move month-by-month, Home/End jump to the start/end of the week
+- Today cell gets a visual indicator (neutral background) and the selected cell uses the `primary-600` token
+- Outside days (from prev/next month) dimmed with `opacity-50` and can be hidden via `showOutsideDays={false}`
+- Focus-visible rings from `buttonVariants` apply to day buttons and nav arrows
+- `aria-selected` reflects selection state; `aria-disabled` reflects disabled dates
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Arrow Left / Right | Move one day |
+| Arrow Up / Down | Move one week |
+| Page Up / Down | Move one month |
+| Shift + Page Up / Down | Move one year |
+| Home | Start of the week |
+| End | End of the week |
+| Enter / Space | Select the focused day |
+
+## Related Components
+
+- [DatePicker](/components/forms/date-picker/) — Calendar composed with Popover for form inputs
