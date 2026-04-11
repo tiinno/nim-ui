@@ -5,7 +5,7 @@ description: A date input with a calendar popover, plus a range variant
 
 import PropsTable from '../../../../components/PropsTable.astro';
 
-DatePicker composes [Popover](/components/overlay/popover/), [Calendar](/components/forms/calendar/), and a button-styled trigger into a ready-to-use date input. Two variants ship: `DatePicker` for a single date and `DateRangePicker` for a start–end range with a two-month preview.
+DatePicker composes [Popover](/components/feedback/popover/), [Calendar](/components/forms/calendar/), and a button-styled trigger into a ready-to-use date input. Two variants ship: `DatePicker` for a single date and `DateRangePicker` for a start–end range with a two-month preview.
 
 ## Import
 
@@ -210,5 +210,5 @@ Skip `value` / `onChange` and pass `defaultValue` to let the component manage it
 ## Related Components
 
 - [Calendar](/components/forms/calendar/) — standalone calendar used inside the popover
-- [Popover](/components/overlay/popover/) — the underlying floating layer
+- [Popover](/components/feedback/popover/) — the underlying floating layer
 - [FormField](/components/forms/form-field/) — wrap DatePicker with label + help text + error state

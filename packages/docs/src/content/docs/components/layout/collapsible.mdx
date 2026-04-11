@@ -3,11 +3,11 @@ title: Collapsible
 description: An expandable section for hiding and revealing content, built with Radix UI
 ---
 
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@nim-ui/components';
+import { CollapsibleBasicDemo } from '../../../../components/CollapsibleDemo';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
-The Collapsible component is a single expandable section built on [Radix UI Collapsible](https://www.radix-ui.com/primitives/docs/components/collapsible). Use it for FAQs, "Read more" patterns, disclosure widgets, and any one-off toggleable content. For multiple independently-collapsible sections, use [Accordion](/components/overlay/accordion/) instead.
+The Collapsible component is a single expandable section built on [Radix UI Collapsible](https://www.radix-ui.com/primitives/docs/components/collapsible). Use it for FAQs, "Read more" patterns, disclosure widgets, and any one-off toggleable content. For multiple independently-collapsible sections, use [Accordion](/components/layout/accordion/) instead.
 
 ## Import
 
@@ -22,12 +22,7 @@ import {
 ## Basic Usage
 
 <ComponentPreview title="Basic Collapsible">
-  <Collapsible client:load>
-    <CollapsibleTrigger>Show more</CollapsibleTrigger>
-    <CollapsibleContent>
-      <p className="text-sm text-neutral-600 dark:text-neutral-300">Hidden content revealed on open.</p>
-    </CollapsibleContent>
-  </Collapsible>
+  <CollapsibleBasicDemo client:only="react" />
 
   <Fragment slot="code">
 ```tsx
@@ -143,5 +138,5 @@ return (
 
 ## Related Components
 
-- [Accordion](/components/overlay/accordion/) - Multiple collapsibles grouped together
-- [Popover](/components/overlay/popover/) - Floating content panel
+- [Accordion](/components/layout/accordion/) - Multiple collapsibles grouped together
+- [Popover](/components/feedback/popover/) - Floating content panel
