@@ -40,6 +40,10 @@ export * from './form-field';
 export * from './select';
 export * from './checkbox';
 export * from './radio';
+export * from './slider';
+export * from './combobox';
+export * from './calendar';
+export * from './date-picker';
 
 // Feedback
 export * from './toast';
@@ -55,7 +59,9 @@ export * from './popover';
 export * from './dropdown-menu';
 export * from './alert-dialog';
 export * from './accordion';
+export * from './collapsible';
 export * from './separator';
 
 // Navigation
 export * from './breadcrumb';
+export * from './pagination';
