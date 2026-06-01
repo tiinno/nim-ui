@@ -5,16 +5,33 @@
       "name": "Button",
       "category": "primitives",
       "description": "A versatile button component with multiple variants and sizes for different use cases",
-      "keywords": ["button", "click", "action", "cta", "interactive"],
+      "keywords": [
+        "button",
+        "click",
+        "action",
+        "cta",
+        "interactive"
+      ],
       "file": "components/button.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "secondary", "outline", "ghost", "destructive"]
+          "values": [
+            "default",
+            "secondary",
+            "outline",
+            "ghost",
+            "destructive"
+          ]
         },
         {
           "name": "size",
-          "values": ["sm", "md", "lg", "xl"]
+          "values": [
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -33,16 +50,30 @@
       "name": "Input",
       "category": "primitives",
       "description": "A flexible input field component with validation states and multiple sizes",
-      "keywords": ["input", "text", "field", "form", "textbox"],
+      "keywords": [
+        "input",
+        "text",
+        "field",
+        "form",
+        "textbox"
+      ],
       "file": "components/input.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "error", "success"]
+          "values": [
+            "default",
+            "error",
+            "success"
+          ]
         },
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -59,18 +90,33 @@
     },
     {
       "name": "Badge",
-      "category": "primitives",
+      "category": "data-display",
       "description": "A small badge component for displaying status, counts, or labels",
-      "keywords": ["badge", "label", "tag", "status", "pill"],
+      "keywords": [
+        "badge",
+        "label",
+        "tag",
+        "status",
+        "pill"
+      ],
       "file": "components/badge.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "secondary", "outline", "destructive"]
+          "values": [
+            "default",
+            "secondary",
+            "outline",
+            "destructive"
+          ]
         },
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -86,15 +132,98 @@
       ]
     },
     {
+      "name": "StatusPill",
+      "category": "data-display",
+      "description": "A compact operational state pill for admin tables, orders, payments, and user workflows",
+      "keywords": [
+        "status",
+        "state",
+        "operations",
+        "orders",
+        "payments"
+      ],
+      "file": "components/status-pill.tsx",
+      "variants": [
+        {
+          "name": "status",
+          "values": [
+            "active",
+            "pending",
+            "processing",
+            "success",
+            "warning",
+            "failed",
+            "blocked",
+            "archived"
+          ]
+        },
+        {
+          "name": "size",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Order Status",
+          "code": "<StatusPill status=\"processing\" pulse>Picking</StatusPill>"
+        },
+        {
+          "title": "Compact Status",
+          "code": "<StatusPill status=\"success\" showDot={false} size=\"sm\">Fulfilled</StatusPill>"
+        }
+      ]
+    },
+    {
+      "name": "FilterSummary",
+      "category": "data-display",
+      "description": "A compact active-filter summary with removable chips and clear-all behavior for search-heavy admin screens",
+      "keywords": [
+        "filters",
+        "summary",
+        "chips",
+        "search",
+        "tables"
+      ],
+      "file": "components/filter-summary.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Active Filters",
+          "code": "<FilterSummary aria-label=\"Active order filters\"><FilterSummaryList><FilterSummaryItem label=\"Status\" value=\"Open\" onRemove={removeStatus} /></FilterSummaryList><FilterSummaryClear onClear={clearFilters} /></FilterSummary>"
+        },
+        {
+          "title": "Empty Filters",
+          "code": "<FilterSummary aria-label=\"Active filters\"><FilterSummaryList emptyText=\"No filters applied\" /></FilterSummary>"
+        }
+      ]
+    },
+    {
       "name": "Avatar",
-      "category": "primitives",
+      "category": "data-display",
       "description": "A user avatar component with image fallback and initials support, built with Radix UI",
-      "keywords": ["avatar", "profile", "image", "user", "picture"],
+      "keywords": [
+        "avatar",
+        "profile",
+        "image",
+        "user",
+        "picture"
+      ],
       "file": "components/avatar.tsx",
       "variants": [
         {
           "name": "size",
-          "values": ["sm", "md", "lg", "xl"]
+          "values": [
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -113,12 +242,21 @@
       "name": "Card",
       "category": "layout",
       "description": "A container component for grouping related content with header, body, and footer sections",
-      "keywords": ["card", "container", "panel", "box", "section"],
+      "keywords": [
+        "card",
+        "container",
+        "panel",
+        "box",
+        "section"
+      ],
       "file": "components/card.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "outline"]
+          "values": [
+            "default",
+            "outline"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -134,15 +272,75 @@
       ]
     },
     {
+      "name": "AdminShell",
+      "category": "layout",
+      "description": "A backoffice application frame with sidebar, topbar, panel, and main content landmarks",
+      "keywords": [
+        "admin",
+        "shell",
+        "layout",
+        "sidebar",
+        "backoffice"
+      ],
+      "file": "components/admin-shell.tsx",
+      "variants": [
+        {
+          "name": "density",
+          "values": [
+            "comfortable",
+            "compact"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Backoffice Shell",
+          "code": "<AdminShell><AdminShellBody><AdminShellSidebar aria-label=\"Backoffice navigation\">Navigation</AdminShellSidebar><AdminShellPanel><AdminShellHeader>Workspace</AdminShellHeader><AdminShellMain>Content</AdminShellMain></AdminShellPanel></AdminShellBody></AdminShell>"
+        }
+      ]
+    },
+    {
+      "name": "PageHeader",
+      "category": "layout",
+      "description": "A backoffice page header with title, description, metadata, and grouped actions",
+      "keywords": [
+        "page",
+        "header",
+        "admin",
+        "dashboard",
+        "actions"
+      ],
+      "file": "components/page-header.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Backoffice Header",
+          "code": "<PageHeader><PageHeaderTitle>Orders</PageHeaderTitle><PageHeaderActions><Button>Export</Button></PageHeaderActions></PageHeader>"
+        }
+      ]
+    },
+    {
       "name": "Modal",
       "category": "layout",
       "description": "A dialog/modal component for displaying content in an overlay, built with Radix UI",
-      "keywords": ["modal", "dialog", "overlay", "popup", "lightbox"],
+      "keywords": [
+        "modal",
+        "dialog",
+        "overlay",
+        "popup",
+        "lightbox"
+      ],
       "file": "components/modal.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "center", "fullscreen"]
+          "values": [
+            "default",
+            "center",
+            "fullscreen"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -161,12 +359,21 @@
       "name": "Drawer",
       "category": "layout",
       "description": "A slide-out panel component for side navigation or additional content, built with Radix UI",
-      "keywords": ["drawer", "sidebar", "panel", "sheet", "slide"],
+      "keywords": [
+        "drawer",
+        "sidebar",
+        "panel",
+        "sheet",
+        "slide"
+      ],
       "file": "components/drawer.tsx",
       "variants": [
         {
           "name": "side",
-          "values": ["left", "right"]
+          "values": [
+            "left",
+            "right"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -185,12 +392,21 @@
       "name": "Tabs",
       "category": "layout",
       "description": "A tabbed interface component for organizing content into separate views, built with Radix UI",
-      "keywords": ["tabs", "tablist", "navigation", "switcher", "panels"],
+      "keywords": [
+        "tabs",
+        "tablist",
+        "navigation",
+        "switcher",
+        "panels"
+      ],
       "file": "components/tabs.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "pills"]
+          "values": [
+            "default",
+            "pills"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -209,12 +425,21 @@
       "name": "DataCard",
       "category": "data-display",
       "description": "A specialized card for displaying data with labels, values, and optional trends",
-      "keywords": ["data", "card", "metric", "display", "information"],
+      "keywords": [
+        "data",
+        "card",
+        "metric",
+        "display",
+        "information"
+      ],
       "file": "components/data-card.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "outline"]
+          "values": [
+            "default",
+            "outline"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -230,15 +455,63 @@
       ]
     },
     {
+      "name": "MetricCard",
+      "category": "data-display",
+      "description": "A dashboard KPI card with value, trend, tone, supporting text, visual slot, and footer metadata",
+      "keywords": [
+        "metric",
+        "kpi",
+        "dashboard",
+        "trend",
+        "analytics"
+      ],
+      "file": "components/metric-card.tsx",
+      "variants": [
+        {
+          "name": "tone",
+          "values": [
+            "neutral",
+            "success",
+            "warning",
+            "danger",
+            "info"
+          ]
+        },
+        {
+          "name": "density",
+          "values": [
+            "comfortable",
+            "compact"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Revenue KPI",
+          "code": "<MetricCard tone=\"success\" aria-label=\"Revenue metric\"><MetricCardHeader><MetricCardLabel>Revenue</MetricCardLabel><MetricCardDelta>+12.4%</MetricCardDelta></MetricCardHeader><MetricCardValue>$84.2K</MetricCardValue></MetricCard>"
+        }
+      ]
+    },
+    {
       "name": "DataTable",
       "category": "data-display",
       "description": "A table component for displaying structured data with sorting and styling options",
-      "keywords": ["table", "data", "grid", "list", "rows"],
+      "keywords": [
+        "table",
+        "data",
+        "grid",
+        "list",
+        "rows"
+      ],
       "file": "components/data-table.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "striped"]
+          "values": [
+            "default",
+            "striped"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -254,15 +527,200 @@
       ]
     },
     {
+      "name": "DataToolbar",
+      "category": "data-display",
+      "description": "A table and list toolbar for search, filters, result metadata, and actions",
+      "keywords": [
+        "toolbar",
+        "table",
+        "search",
+        "filters",
+        "actions"
+      ],
+      "file": "components/data-toolbar.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Table Toolbar",
+          "code": "<DataToolbar aria-label=\"Order table controls\"><DataToolbarSearch><Input aria-label=\"Search orders\" /></DataToolbarSearch><DataToolbarActions><Button>Export</Button></DataToolbarActions></DataToolbar>"
+        }
+      ]
+    },
+    {
+      "name": "BulkActionBar",
+      "category": "data-display",
+      "description": "A sticky selected-row action bar for admin tables and bulk workflows",
+      "keywords": [
+        "bulk",
+        "selection",
+        "toolbar",
+        "table",
+        "actions"
+      ],
+      "file": "components/bulk-action-bar.tsx",
+      "variants": [
+        {
+          "name": "tone",
+          "values": [
+            "default",
+            "elevated"
+          ]
+        },
+        {
+          "name": "actions variant",
+          "values": [
+            "default",
+            "destructive"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Selected Row Actions",
+          "code": "<BulkActionBar aria-label=\"Selected order actions\"><BulkActionBarSelection count={3} label=\"orders selected\" /><BulkActionBarActions aria-label=\"Bulk order actions\"><Button>Assign</Button></BulkActionBarActions><BulkActionBarClear onClear={clearSelection} /></BulkActionBar>"
+        }
+      ]
+    },
+    {
+      "name": "EmptyState",
+      "category": "data-display",
+      "description": "An empty table and list state with title, description, decorative icon, and recovery actions",
+      "keywords": [
+        "empty",
+        "blank",
+        "no results",
+        "table",
+        "filters"
+      ],
+      "file": "components/empty-state.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "No Results",
+          "code": "<EmptyState aria-label=\"No orders found\"><EmptyStateTitle>No orders found</EmptyStateTitle><EmptyStateDescription>Adjust filters or create the first order.</EmptyStateDescription></EmptyState>"
+        }
+      ]
+    },
+    {
+      "name": "Timeline",
+      "category": "data-display",
+      "description": "A semantic activity history component for audit trails, order events, and status changes",
+      "keywords": [
+        "timeline",
+        "activity",
+        "audit",
+        "history",
+        "events"
+      ],
+      "file": "components/timeline.tsx",
+      "variants": [
+        {
+          "name": "marker variant",
+          "values": [
+            "default",
+            "success",
+            "warning",
+            "destructive",
+            "info"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Order Activity",
+          "code": "<Timeline aria-label=\"Order activity\"><TimelineItem><TimelineMarker variant=\"success\" /><TimelineContent><TimelineTitle>Order packed</TimelineTitle><TimelineDescription>Warehouse team completed final scan.</TimelineDescription></TimelineContent></TimelineItem></Timeline>"
+        }
+      ]
+    },
+    {
+      "name": "DescriptionList",
+      "category": "data-display",
+      "description": "A semantic label-value metadata component for detail panels, drawers, and record pages",
+      "keywords": [
+        "description",
+        "details",
+        "metadata",
+        "label",
+        "value"
+      ],
+      "file": "components/description-list.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": [
+            "default",
+            "inline"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Order Details",
+          "code": "<DescriptionList aria-label=\"Order details\"><DescriptionListItem><DescriptionListTerm>Order ID</DescriptionListTerm><DescriptionListDescription>ORD-4821</DescriptionListDescription></DescriptionListItem></DescriptionList>"
+        }
+      ]
+    },
+    {
+      "name": "RecordInspector",
+      "category": "data-display",
+      "description": "A compact record detail panel for backoffice review, metadata, actions, and activity",
+      "keywords": [
+        "record",
+        "inspector",
+        "details",
+        "review",
+        "backoffice"
+      ],
+      "file": "components/record-inspector.tsx",
+      "variants": [
+        {
+          "name": "density",
+          "values": [
+            "comfortable",
+            "compact"
+          ]
+        },
+        {
+          "name": "metadata columns",
+          "values": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Order Inspector",
+          "code": "<RecordInspector aria-label=\"Order inspector\"><RecordInspectorHeader><RecordInspectorHeading><RecordInspectorTitle>ORD-4821</RecordInspectorTitle></RecordInspectorHeading></RecordInspectorHeader></RecordInspector>"
+        }
+      ]
+    },
+    {
       "name": "Stat",
       "category": "data-display",
       "description": "A component for displaying statistics with labels, values, and optional trend indicators",
-      "keywords": ["stat", "statistic", "metric", "number", "kpi"],
+      "keywords": [
+        "stat",
+        "statistic",
+        "metric",
+        "number",
+        "kpi"
+      ],
       "file": "components/stat.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "card"]
+          "values": [
+            "default",
+            "card"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -281,12 +739,21 @@
       "name": "ProductCard",
       "category": "commerce",
       "description": "A card component optimized for displaying product information including images, titles, and prices",
-      "keywords": ["product", "card", "ecommerce", "shop", "item"],
+      "keywords": [
+        "product",
+        "card",
+        "ecommerce",
+        "shop",
+        "item"
+      ],
       "file": "components/product-card.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "compact"]
+          "values": [
+            "default",
+            "compact"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -305,12 +772,21 @@
       "name": "CartItem",
       "category": "commerce",
       "description": "A component for displaying shopping cart items with quantity controls and removal options",
-      "keywords": ["cart", "item", "shopping", "checkout", "product"],
+      "keywords": [
+        "cart",
+        "item",
+        "shopping",
+        "checkout",
+        "product"
+      ],
       "file": "components/cart-item.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "compact"]
+          "values": [
+            "default",
+            "compact"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -329,12 +805,21 @@
       "name": "PriceTag",
       "category": "commerce",
       "description": "A component for displaying prices with optional original price and discount information",
-      "keywords": ["price", "tag", "cost", "discount", "sale"],
+      "keywords": [
+        "price",
+        "tag",
+        "cost",
+        "discount",
+        "sale"
+      ],
       "file": "components/price-tag.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "large"]
+          "values": [
+            "default",
+            "large"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -353,12 +838,22 @@
       "name": "QuantitySelector",
       "category": "commerce",
       "description": "A component for selecting quantities with increment and decrement buttons",
-      "keywords": ["quantity", "selector", "counter", "stepper", "amount"],
+      "keywords": [
+        "quantity",
+        "selector",
+        "counter",
+        "stepper",
+        "amount"
+      ],
       "file": "components/quantity-selector.tsx",
       "variants": [
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -377,12 +872,21 @@
       "name": "Hero",
       "category": "landing",
       "description": "A hero section component for landing pages with headline, description, and call-to-action",
-      "keywords": ["hero", "banner", "header", "landing", "section"],
+      "keywords": [
+        "hero",
+        "banner",
+        "header",
+        "landing",
+        "section"
+      ],
       "file": "components/hero.tsx",
       "variants": [
         {
           "name": "alignment",
-          "values": ["left", "center"]
+          "values": [
+            "left",
+            "center"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -401,12 +905,22 @@
       "name": "FeatureGrid",
       "category": "landing",
       "description": "A grid layout component for displaying features with icons, titles, and descriptions",
-      "keywords": ["features", "grid", "layout", "benefits", "highlights"],
+      "keywords": [
+        "features",
+        "grid",
+        "layout",
+        "benefits",
+        "highlights"
+      ],
       "file": "components/feature-grid.tsx",
       "variants": [
         {
           "name": "columns",
-          "values": ["2", "3", "4"]
+          "values": [
+            "2",
+            "3",
+            "4"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -425,16 +939,28 @@
       "name": "CTA",
       "category": "landing",
       "description": "A call-to-action component for encouraging user actions with headlines and buttons",
-      "keywords": ["cta", "call-to-action", "banner", "conversion", "action"],
+      "keywords": [
+        "cta",
+        "call-to-action",
+        "banner",
+        "conversion",
+        "action"
+      ],
       "file": "components/cta.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "card"]
+          "values": [
+            "default",
+            "card"
+          ]
         },
         {
           "name": "alignment",
-          "values": ["left", "center"]
+          "values": [
+            "left",
+            "center"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -453,12 +979,21 @@
       "name": "Testimonial",
       "category": "landing",
       "description": "A component for displaying customer testimonials with quotes, names, and avatars",
-      "keywords": ["testimonial", "review", "quote", "feedback", "social-proof"],
+      "keywords": [
+        "testimonial",
+        "review",
+        "quote",
+        "feedback",
+        "social-proof"
+      ],
       "file": "components/testimonial.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "card"]
+          "values": [
+            "default",
+            "card"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -474,10 +1009,53 @@
       ]
     },
     {
+      "name": "FormLayout",
+      "category": "forms",
+      "description": "Sectioned CRUD form layout primitives for backoffice create and edit workflows",
+      "keywords": [
+        "form-layout",
+        "crud",
+        "admin",
+        "edit",
+        "validation"
+      ],
+      "file": "components/form-layout.tsx",
+      "variants": [
+        {
+          "name": "density",
+          "values": [
+            "comfortable",
+            "compact"
+          ]
+        },
+        {
+          "name": "columns",
+          "values": [
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Edit Form Layout",
+          "code": "<FormLayout><FormLayoutValidationSummary errors={errors} /><FormLayoutSection aria-labelledby=\"details\"><FormLayoutSectionHeader><FormLayoutSectionTitle id=\"details\">Details</FormLayoutSectionTitle></FormLayoutSectionHeader><FormLayoutGrid columns={2}>{fields}</FormLayoutGrid></FormLayoutSection><FormLayoutActions><Button>Save</Button></FormLayoutActions></FormLayout>"
+        }
+      ]
+    },
+    {
       "name": "Form",
       "category": "forms",
       "description": "A form wrapper component with built-in validation and submission handling",
-      "keywords": ["form", "submit", "validation", "input", "fields"],
+      "keywords": [
+        "form",
+        "submit",
+        "validation",
+        "input",
+        "fields"
+      ],
       "file": "components/form.tsx",
       "variants": [],
       "hasRadixPrimitive": false,
@@ -496,12 +1074,21 @@
       "name": "FormField",
       "category": "forms",
       "description": "A form field component with label, input, error message, and helper text support",
-      "keywords": ["form-field", "input", "label", "validation", "error"],
+      "keywords": [
+        "form-field",
+        "input",
+        "label",
+        "validation",
+        "error"
+      ],
       "file": "components/form-field.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "inline"]
+          "values": [
+            "default",
+            "inline"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -518,14 +1105,24 @@
     },
     {
       "name": "Select",
-      "category": "forms",
+      "category": "primitives",
       "description": "A dropdown select component with search and multi-select capabilities, built with Radix UI",
-      "keywords": ["select", "dropdown", "picker", "menu", "options"],
+      "keywords": [
+        "select",
+        "dropdown",
+        "picker",
+        "menu",
+        "options"
+      ],
       "file": "components/select.tsx",
       "variants": [
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -542,14 +1139,24 @@
     },
     {
       "name": "Checkbox",
-      "category": "forms",
+      "category": "primitives",
       "description": "A checkbox input component with label and indeterminate state support, built with Radix UI",
-      "keywords": ["checkbox", "check", "toggle", "input", "boolean"],
+      "keywords": [
+        "checkbox",
+        "check",
+        "toggle",
+        "input",
+        "boolean"
+      ],
       "file": "components/checkbox.tsx",
       "variants": [
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -566,14 +1173,24 @@
     },
     {
       "name": "Radio",
-      "category": "forms",
+      "category": "primitives",
       "description": "A radio button component for selecting a single option from a group, built with Radix UI",
-      "keywords": ["radio", "option", "choice", "select", "input"],
+      "keywords": [
+        "radio",
+        "option",
+        "choice",
+        "select",
+        "input"
+      ],
       "file": "components/radio.tsx",
       "variants": [
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -590,18 +1207,32 @@
     },
     {
       "name": "Popover",
-      "category": "overlay",
+      "category": "feedback",
       "description": "Displays rich content in a floating panel triggered by a click, built with Radix UI",
-      "keywords": ["popover", "popup", "dropdown", "floating", "panel"],
+      "keywords": [
+        "popover",
+        "popup",
+        "dropdown",
+        "floating",
+        "panel"
+      ],
       "file": "components/popover.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "outline"]
+          "values": [
+            "default",
+            "outline"
+          ]
         },
         {
           "name": "side",
-          "values": ["top", "bottom", "left", "right"]
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -618,18 +1249,32 @@
     },
     {
       "name": "Tooltip",
-      "category": "overlay",
+      "category": "feedback",
       "description": "Displays informational text when hovering or focusing on an element, built with Radix UI",
-      "keywords": ["tooltip", "hover", "popover", "hint", "info"],
+      "keywords": [
+        "tooltip",
+        "hover",
+        "popover",
+        "hint",
+        "info"
+      ],
       "file": "components/tooltip.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "light"]
+          "values": [
+            "default",
+            "light"
+          ]
         },
         {
           "name": "side",
-          "values": ["top", "bottom", "left", "right"]
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -648,16 +1293,30 @@
       "name": "Textarea",
       "category": "primitives",
       "description": "A textarea component with validation states and sizes for multi-line text input",
-      "keywords": ["textarea", "text", "multiline", "input", "form"],
+      "keywords": [
+        "textarea",
+        "text",
+        "multiline",
+        "input",
+        "form"
+      ],
       "file": "components/textarea.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "error", "success"]
+          "values": [
+            "default",
+            "error",
+            "success"
+          ]
         },
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -676,12 +1335,22 @@
       "name": "Switch",
       "category": "primitives",
       "description": "A toggle switch component for boolean on/off states, built with Radix UI",
-      "keywords": ["switch", "toggle", "on", "off", "boolean"],
+      "keywords": [
+        "switch",
+        "toggle",
+        "on",
+        "off",
+        "boolean"
+      ],
       "file": "components/switch.tsx",
       "variants": [
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -700,16 +1369,32 @@
       "name": "Container",
       "category": "layout",
       "description": "A responsive container component with max-width constraints and optional padding",
-      "keywords": ["container", "wrapper", "layout", "responsive", "max-width"],
+      "keywords": [
+        "container",
+        "wrapper",
+        "layout",
+        "responsive",
+        "max-width"
+      ],
       "file": "components/container.tsx",
       "variants": [
         {
           "name": "maxWidth",
-          "values": ["sm", "md", "lg", "xl", "2xl", "full"]
+          "values": [
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl",
+            "full"
+          ]
         },
         {
           "name": "padding",
-          "values": ["true", "false"]
+          "values": [
+            "true",
+            "false"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -728,16 +1413,36 @@
       "name": "Grid",
       "category": "layout",
       "description": "A responsive CSS Grid layout component with configurable columns and gap",
-      "keywords": ["grid", "layout", "columns", "responsive", "css-grid"],
+      "keywords": [
+        "grid",
+        "layout",
+        "columns",
+        "responsive",
+        "css-grid"
+      ],
       "file": "components/grid.tsx",
       "variants": [
         {
           "name": "cols",
-          "values": ["1", "2", "3", "4", "5", "6", "12"]
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "12"
+          ]
         },
         {
           "name": "gap",
-          "values": ["none", "sm", "md", "lg", "xl"]
+          "values": [
+            "none",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -756,20 +1461,41 @@
       "name": "Stack",
       "category": "layout",
       "description": "A stack component for vertical or horizontal stacking with consistent spacing",
-      "keywords": ["stack", "layout", "vertical", "horizontal", "spacing"],
+      "keywords": [
+        "stack",
+        "layout",
+        "vertical",
+        "horizontal",
+        "spacing"
+      ],
       "file": "components/stack.tsx",
       "variants": [
         {
           "name": "direction",
-          "values": ["vertical", "horizontal"]
+          "values": [
+            "vertical",
+            "horizontal"
+          ]
         },
         {
           "name": "spacing",
-          "values": ["none", "xs", "sm", "md", "lg", "xl"]
+          "values": [
+            "none",
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         },
         {
           "name": "align",
-          "values": ["start", "center", "end", "stretch"]
+          "values": [
+            "start",
+            "center",
+            "end",
+            "stretch"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -788,24 +1514,55 @@
       "name": "Flex",
       "category": "layout",
       "description": "A flexible flexbox layout component for common alignment and distribution patterns",
-      "keywords": ["flex", "flexbox", "layout", "align", "justify"],
+      "keywords": [
+        "flex",
+        "flexbox",
+        "layout",
+        "align",
+        "justify"
+      ],
       "file": "components/flex.tsx",
       "variants": [
         {
           "name": "direction",
-          "values": ["row", "column", "row-reverse", "column-reverse"]
+          "values": [
+            "row",
+            "column",
+            "row-reverse",
+            "column-reverse"
+          ]
         },
         {
           "name": "justify",
-          "values": ["start", "center", "end", "between", "around", "evenly"]
+          "values": [
+            "start",
+            "center",
+            "end",
+            "between",
+            "around",
+            "evenly"
+          ]
         },
         {
           "name": "align",
-          "values": ["start", "center", "end", "stretch", "baseline"]
+          "values": [
+            "start",
+            "center",
+            "end",
+            "stretch",
+            "baseline"
+          ]
         },
         {
           "name": "gap",
-          "values": ["none", "xs", "sm", "md", "lg", "xl"]
+          "values": [
+            "none",
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -824,16 +1581,32 @@
       "name": "Spacer",
       "category": "layout",
       "description": "A spacer component for adding fixed or flexible spacing between elements",
-      "keywords": ["spacer", "space", "gap", "divider", "layout"],
+      "keywords": [
+        "spacer",
+        "space",
+        "gap",
+        "divider",
+        "layout"
+      ],
       "file": "components/spacer.tsx",
       "variants": [
         {
           "name": "size",
-          "values": ["xs", "sm", "md", "lg", "xl", "2xl"]
+          "values": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl"
+          ]
         },
         {
           "name": "flex",
-          "values": ["true", "false"]
+          "values": [
+            "true",
+            "false"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -850,14 +1623,24 @@
     },
     {
       "name": "DropdownMenu",
-      "category": "overlay",
+      "category": "feedback",
       "description": "A dropdown menu component for displaying actions or options triggered by a button click, built with Radix UI",
-      "keywords": ["dropdown", "menu", "context", "actions", "options", "navigation"],
+      "keywords": [
+        "dropdown",
+        "menu",
+        "context",
+        "actions",
+        "options",
+        "navigation"
+      ],
       "file": "components/dropdown-menu.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "outline"]
+          "values": [
+            "default",
+            "outline"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -874,14 +1657,24 @@
     },
     {
       "name": "AlertDialog",
-      "category": "overlay",
+      "category": "feedback",
       "description": "A modal dialog for confirming destructive or important actions that requires explicit user response, built with Radix UI",
-      "keywords": ["alert", "dialog", "confirm", "modal", "destructive", "warning"],
+      "keywords": [
+        "alert",
+        "dialog",
+        "confirm",
+        "modal",
+        "destructive",
+        "warning"
+      ],
       "file": "components/alert-dialog.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "destructive"]
+          "values": [
+            "default",
+            "destructive"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -897,15 +1690,74 @@
       ]
     },
     {
+      "name": "Toast",
+      "category": "feedback",
+      "description": "Lightweight notification messages with declarative components and an imperative toast API",
+      "keywords": [
+        "toast",
+        "notification",
+        "feedback",
+        "message",
+        "alert"
+      ],
+      "file": "components/toast.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": [
+            "default",
+            "success",
+            "error",
+            "warning",
+            "info"
+          ]
+        },
+        {
+          "name": "position",
+          "values": [
+            "top-right",
+            "top-left",
+            "top-center",
+            "bottom-right",
+            "bottom-left",
+            "bottom-center"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Imperative Toast",
+          "code": "<Toaster />\ntoast.success('Changes saved successfully')"
+        },
+        {
+          "title": "Declarative Toast",
+          "code": "<ToastProvider><Toast variant=\"success\"><ToastTitle>Saved</ToastTitle><ToastDescription>Your changes have been saved.</ToastDescription></Toast><ToastViewport /></ToastProvider>"
+        }
+      ]
+    },
+    {
       "name": "Alert",
       "category": "feedback",
       "description": "An inline feedback message component for displaying contextual alerts with dismiss support",
-      "keywords": ["alert", "message", "notification", "feedback", "warning", "info"],
+      "keywords": [
+        "alert",
+        "message",
+        "notification",
+        "feedback",
+        "warning",
+        "info"
+      ],
       "file": "components/alert.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["info", "success", "warning", "destructive"]
+          "values": [
+            "info",
+            "success",
+            "warning",
+            "destructive"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -924,16 +1776,32 @@
       "name": "Progress",
       "category": "feedback",
       "description": "A progress bar component for displaying completion percentage with multiple variants",
-      "keywords": ["progress", "bar", "loading", "percentage", "completion"],
+      "keywords": [
+        "progress",
+        "bar",
+        "loading",
+        "percentage",
+        "completion"
+      ],
       "file": "components/progress.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "success", "warning", "danger", "info"]
+          "values": [
+            "default",
+            "success",
+            "warning",
+            "danger",
+            "info"
+          ]
         },
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -952,16 +1820,33 @@
       "name": "Spinner",
       "category": "feedback",
       "description": "An animated loading spinner indicator with multiple sizes and color variants",
-      "keywords": ["spinner", "loading", "indicator", "busy", "wait"],
+      "keywords": [
+        "spinner",
+        "loading",
+        "indicator",
+        "busy",
+        "wait"
+      ],
       "file": "components/spinner.tsx",
       "variants": [
         {
           "name": "variant",
-          "values": ["default", "secondary", "success", "destructive", "info"]
+          "values": [
+            "default",
+            "secondary",
+            "success",
+            "destructive",
+            "info"
+          ]
         },
         {
           "name": "size",
-          "values": ["sm", "md", "lg", "xl"]
+          "values": [
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -980,7 +1865,13 @@
       "name": "Skeleton",
       "category": "feedback",
       "description": "A placeholder loading component with pulse animation for content that is loading",
-      "keywords": ["skeleton", "loading", "placeholder", "shimmer", "pulse"],
+      "keywords": [
+        "skeleton",
+        "loading",
+        "placeholder",
+        "shimmer",
+        "pulse"
+      ],
       "file": "components/skeleton.tsx",
       "variants": [],
       "hasRadixPrimitive": false,
@@ -999,7 +1890,14 @@
       "name": "Accordion",
       "category": "layout",
       "description": "A collapsible content component for organizing information into expandable sections, built with Radix UI",
-      "keywords": ["accordion", "collapse", "expand", "toggle", "faq", "sections"],
+      "keywords": [
+        "accordion",
+        "collapse",
+        "expand",
+        "toggle",
+        "faq",
+        "sections"
+      ],
       "file": "components/accordion.tsx",
       "variants": [],
       "hasRadixPrimitive": true,
@@ -1018,12 +1916,21 @@
       "name": "Separator",
       "category": "layout",
       "description": "A visual divider component for separating content sections, built with Radix UI",
-      "keywords": ["separator", "divider", "line", "hr", "border"],
+      "keywords": [
+        "separator",
+        "divider",
+        "line",
+        "hr",
+        "border"
+      ],
       "file": "components/separator.tsx",
       "variants": [
         {
           "name": "orientation",
-          "values": ["horizontal", "vertical"]
+          "values": [
+            "horizontal",
+            "vertical"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -1042,7 +1949,13 @@
       "name": "Breadcrumb",
       "category": "navigation",
       "description": "A navigation component for displaying the current page location within a hierarchical structure",
-      "keywords": ["breadcrumb", "navigation", "path", "trail", "hierarchy"],
+      "keywords": [
+        "breadcrumb",
+        "navigation",
+        "path",
+        "trail",
+        "hierarchy"
+      ],
       "file": "components/breadcrumb.tsx",
       "variants": [],
       "hasRadixPrimitive": false,
@@ -1058,10 +1971,95 @@
       ]
     },
     {
+      "name": "CommandMenu",
+      "category": "navigation",
+      "description": "Searchable command surface for backoffice navigation, record lookup, and operator actions",
+      "keywords": [
+        "command",
+        "search",
+        "palette",
+        "actions",
+        "backoffice"
+      ],
+      "file": "components/command-menu.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Operations Command Menu",
+          "code": "<CommandMenu label=\"Operations command menu\"><CommandMenuInput placeholder=\"Search orders or actions...\" /><CommandMenuList><CommandMenuGroup heading=\"Orders\"><CommandMenuItem value=\"open order 4821\" meta=\"Northwind Supply\" badge=\"Review\" shortcut=\"O 1\">Open ORD-4821</CommandMenuItem></CommandMenuGroup></CommandMenuList></CommandMenu>"
+        }
+      ]
+    },
+    {
+      "name": "ViewSwitcher",
+      "category": "navigation",
+      "description": "A saved-view and operational-queue switcher for backoffice tables and dashboards",
+      "keywords": [
+        "views",
+        "queues",
+        "tabs",
+        "filters",
+        "backoffice"
+      ],
+      "file": "components/view-switcher.tsx",
+      "variants": [
+        {
+          "name": "density",
+          "values": [
+            "comfortable",
+            "compact"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Order Queues",
+          "code": "<ViewSwitcher aria-label=\"Order views\"><ViewSwitcherItem value=\"all\" selected count={128}>All orders</ViewSwitcherItem><ViewSwitcherItem value=\"review\" count={12}>Needs review</ViewSwitcherItem></ViewSwitcher>"
+        }
+      ]
+    },
+    {
+      "name": "SidebarNav",
+      "category": "navigation",
+      "description": "Grouped sidebar navigation with active states, badges, and icon slots for admin workspaces",
+      "keywords": [
+        "sidebar",
+        "navigation",
+        "admin",
+        "menu",
+        "workspace"
+      ],
+      "file": "components/sidebar-nav.tsx",
+      "variants": [
+        {
+          "name": "active",
+          "values": [
+            "true",
+            "false"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Grouped Sidebar",
+          "code": "<SidebarNav aria-label=\"Backoffice navigation\"><SidebarNavSection><SidebarNavSectionTitle>Operate</SidebarNavSectionTitle><SidebarNavList><SidebarNavItem href=\"/orders\" active badge=\"18\">Orders</SidebarNavItem></SidebarNavList></SidebarNavSection></SidebarNav>"
+        }
+      ]
+    },
+    {
       "name": "Collapsible",
-      "category": "overlay",
+      "category": "layout",
       "description": "An expandable section for hiding and revealing content, built with Radix UI",
-      "keywords": ["collapsible", "disclosure", "expand", "toggle", "faq"],
+      "keywords": [
+        "collapsible",
+        "disclosure",
+        "expand",
+        "toggle",
+        "faq"
+      ],
       "file": "components/collapsible.tsx",
       "variants": [],
       "hasRadixPrimitive": true,
@@ -1080,7 +2078,14 @@
       "name": "Pagination",
       "category": "navigation",
       "description": "Composable pagination building blocks for navigating through pages of content",
-      "keywords": ["pagination", "pages", "navigation", "next", "previous", "paging"],
+      "keywords": [
+        "pagination",
+        "pages",
+        "navigation",
+        "next",
+        "previous",
+        "paging"
+      ],
       "file": "components/pagination.tsx",
       "variants": [],
       "hasRadixPrimitive": false,
@@ -1099,12 +2104,23 @@
       "name": "Slider",
       "category": "forms",
       "description": "A slider input for selecting a value or range within a bounded interval, built with Radix UI",
-      "keywords": ["slider", "range", "input", "value", "track", "volume"],
+      "keywords": [
+        "slider",
+        "range",
+        "input",
+        "value",
+        "track",
+        "volume"
+      ],
       "file": "components/slider.tsx",
       "variants": [
         {
           "name": "size",
-          "values": ["sm", "md", "lg"]
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
         }
       ],
       "hasRadixPrimitive": true,
@@ -1127,7 +2143,14 @@
       "name": "Combobox",
       "category": "forms",
       "description": "A searchable, filterable dropdown input built on cmdk and Radix Popover",
-      "keywords": ["combobox", "autocomplete", "search", "select", "dropdown", "filter"],
+      "keywords": [
+        "combobox",
+        "autocomplete",
+        "search",
+        "select",
+        "dropdown",
+        "filter"
+      ],
       "file": "components/combobox.tsx",
       "variants": [],
       "hasRadixPrimitive": true,
@@ -1142,12 +2165,23 @@
       "name": "Calendar",
       "category": "forms",
       "description": "A calendar component for date selection, built on react-day-picker v9",
-      "keywords": ["calendar", "date", "picker", "day", "month", "schedule"],
+      "keywords": [
+        "calendar",
+        "date",
+        "picker",
+        "day",
+        "month",
+        "schedule"
+      ],
       "file": "components/calendar.tsx",
       "variants": [
         {
           "name": "mode",
-          "values": ["single", "multiple", "range"]
+          "values": [
+            "single",
+            "multiple",
+            "range"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -1170,7 +2204,14 @@
       "name": "DatePicker",
       "category": "forms",
       "description": "An input trigger with a calendar popover for selecting dates, composing Popover, Calendar, and Button",
-      "keywords": ["datepicker", "date", "picker", "input", "form", "calendar"],
+      "keywords": [
+        "datepicker",
+        "date",
+        "picker",
+        "input",
+        "form",
+        "calendar"
+      ],
       "file": "components/date-picker.tsx",
       "variants": [],
       "hasRadixPrimitive": true,

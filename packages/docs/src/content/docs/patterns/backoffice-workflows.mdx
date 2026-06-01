@@ -1,0 +1,338 @@
+---
+title: Backoffice Workflows
+description: Workflow-first examples for orders, users, inventory, and audit logs
+---
+
+import {
+  Badge,
+  BulkActionBar,
+  BulkActionBarActions,
+  BulkActionBarClear,
+  BulkActionBarMeta,
+  BulkActionBarSelection,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  DataTable,
+  DataTableBody,
+  DataTableCell,
+  DataTableHead,
+  DataTableHeader,
+  DataTableRow,
+  DataToolbar,
+  DataToolbarActions,
+  DataToolbarFilters,
+  DataToolbarMeta,
+  DataToolbarSearch,
+  DescriptionList,
+  DescriptionListDescription,
+  DescriptionListItem,
+  DescriptionListTerm,
+  EmptyState,
+  EmptyStateActions,
+  EmptyStateDescription,
+  EmptyStateTitle,
+  FilterSummary,
+  FilterSummaryClear,
+  FilterSummaryItem,
+  FilterSummaryList,
+  Input,
+  PageHeader,
+  PageHeaderActions,
+  PageHeaderDescription,
+  PageHeaderMeta,
+  PageHeaderTitle,
+  StatusPill,
+  Timeline,
+  TimelineContent,
+  TimelineDescription,
+  TimelineItem,
+  TimelineMarker,
+  TimelineTime,
+  TimelineTitle,
+} from '@nim-ui/components';
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+
+These examples show how to assemble Nim UI primitives around the operator's next decision. Keep the page quiet, keep controls close to the data they affect, and make recovery actions visible when a workflow has no rows.
+
+## Orders Exception Queue
+
+Use this pattern when a shift lead needs to triage a filtered queue, act on selected rows, and keep current filters visible.
+
+<ComponentPreview title="Orders Workflow" className="block">
+  <div className="w-full space-y-4 rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-800 dark:bg-neutral-950">
+    <PageHeader>
+      <div className="space-y-2">
+        <PageHeaderMeta>Orders</PageHeaderMeta>
+        <PageHeaderTitle>Exception queue</PageHeaderTitle>
+        <PageHeaderDescription>Review SLA risk and approve the next batch before warehouse cutoff.</PageHeaderDescription>
+      </div>
+      <PageHeaderActions aria-label="Order actions">
+        <Button variant="outline" size="sm">Export</Button>
+        <Button variant="primary" size="sm">Create order</Button>
+      </PageHeaderActions>
+    </PageHeader>
+    <Card>
+      <CardContent className="space-y-4">
+        <DataToolbar aria-label="Order table controls">
+          <DataToolbarSearch>
+            <Input className="w-full sm:w-72" placeholder="Search orders" aria-label="Search orders" />
+            <DataToolbarMeta>184 results</DataToolbarMeta>
+          </DataToolbarSearch>
+          <DataToolbarFilters aria-label="Order filters">
+            <Button variant="outline" size="sm">Open only</Button>
+            <Button variant="outline" size="sm">High risk</Button>
+          </DataToolbarFilters>
+        </DataToolbar>
+        <FilterSummary aria-label="Active order filters">
+          <FilterSummaryList>
+            <FilterSummaryItem label="Status" value="Open" onRemove={() => undefined} />
+            <FilterSummaryItem label="Risk" value="High" onRemove={() => undefined} />
+          </FilterSummaryList>
+          <FilterSummaryClear onClear={() => undefined} />
+        </FilterSummary>
+        <BulkActionBar aria-label="Selected order actions">
+          <div className="flex flex-col gap-1">
+            <BulkActionBarSelection count={3} label="orders selected" />
+            <BulkActionBarMeta>Apply after checking payment and stock holds.</BulkActionBarMeta>
+          </div>
+          <BulkActionBarActions aria-label="Bulk order actions">
+            <Button variant="outline" size="sm">Assign</Button>
+            <Button variant="primary" size="sm">Approve</Button>
+          </BulkActionBarActions>
+          <BulkActionBarClear onClear={() => undefined} />
+        </BulkActionBar>
+        <DataTable>
+          <DataTableHeader>
+            <DataTableRow>
+              <DataTableHead>Order</DataTableHead>
+              <DataTableHead>Customer</DataTableHead>
+              <DataTableHead>Status</DataTableHead>
+              <DataTableHead>Risk</DataTableHead>
+            </DataTableRow>
+          </DataTableHeader>
+          <DataTableBody>
+            <DataTableRow>
+              <DataTableCell className="font-medium">ORD-4821</DataTableCell>
+              <DataTableCell>Northwind Supply</DataTableCell>
+              <DataTableCell><StatusPill status="warning">Review</StatusPill></DataTableCell>
+              <DataTableCell><Badge variant="destructive">High</Badge></DataTableCell>
+            </DataTableRow>
+            <DataTableRow>
+              <DataTableCell className="font-medium">ORD-4819</DataTableCell>
+              <DataTableCell>Atlas Retail</DataTableCell>
+              <DataTableCell><StatusPill status="processing" pulse>Picking</StatusPill></DataTableCell>
+              <DataTableCell><Badge variant="success">Low</Badge></DataTableCell>
+            </DataTableRow>
+          </DataTableBody>
+        </DataTable>
+      </CardContent>
+    </Card>
+  </div>
+</ComponentPreview>
+
+## Users Review
+
+Use `DescriptionList` for the selected record and `Timeline` for the recent account trail so reviewers do not jump between pages.
+
+<ComponentPreview title="Users Workflow" className="block">
+  <div className="w-full space-y-4 rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-800 dark:bg-neutral-950">
+    <PageHeader>
+      <div className="space-y-2">
+        <PageHeaderMeta>Users</PageHeaderMeta>
+        <PageHeaderTitle>Account review</PageHeaderTitle>
+        <PageHeaderDescription>Confirm identity, role, and recent access before changing privileges.</PageHeaderDescription>
+      </div>
+      <PageHeaderActions aria-label="User actions">
+        <Button variant="outline" size="sm">Suspend</Button>
+        <Button variant="primary" size="sm">Approve access</Button>
+      </PageHeaderActions>
+    </PageHeader>
+    <DataToolbar aria-label="User review controls">
+      <DataToolbarSearch>
+        <Input className="w-full sm:w-72" placeholder="Search users" aria-label="Search users" />
+        <DataToolbarMeta>12 pending reviews</DataToolbarMeta>
+      </DataToolbarSearch>
+      <DataToolbarActions aria-label="User table actions">
+        <Button variant="outline" size="sm">Export CSV</Button>
+      </DataToolbarActions>
+    </DataToolbar>
+    <div className="grid gap-4 lg:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <h2 className="text-base font-semibold text-neutral-950 dark:text-neutral-50">Selected user</h2>
+        </CardHeader>
+        <CardContent>
+          <DescriptionList variant="inline" aria-label="Selected user details">
+            <DescriptionListItem>
+              <DescriptionListTerm>Name</DescriptionListTerm>
+              <DescriptionListDescription>Maya Chen</DescriptionListDescription>
+            </DescriptionListItem>
+            <DescriptionListItem>
+              <DescriptionListTerm>Role</DescriptionListTerm>
+              <DescriptionListDescription>Inventory manager</DescriptionListDescription>
+            </DescriptionListItem>
+            <DescriptionListItem>
+              <DescriptionListTerm>Status</DescriptionListTerm>
+              <DescriptionListDescription><StatusPill status="active">Active</StatusPill></DescriptionListDescription>
+            </DescriptionListItem>
+          </DescriptionList>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <h2 className="text-base font-semibold text-neutral-950 dark:text-neutral-50">Recent activity</h2>
+        </CardHeader>
+        <CardContent>
+          <Timeline aria-label="User activity">
+            <TimelineItem>
+              <TimelineMarker variant="success" />
+              <TimelineContent>
+                <TimelineTime dateTime="2026-05-24T10:20:00Z">10:20</TimelineTime>
+                <TimelineTitle>Role request submitted</TimelineTitle>
+                <TimelineDescription>Manager requested inventory approval access.</TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineMarker variant="info" />
+              <TimelineContent>
+                <TimelineTime dateTime="2026-05-24T09:54:00Z">09:54</TimelineTime>
+                <TimelineTitle>Signed in from known device</TimelineTitle>
+                <TimelineDescription>Device matched the previous Bangkok office login.</TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+          </Timeline>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</ComponentPreview>
+
+## Inventory Replenishment
+
+Use `EmptyState` inside the same table surface when filters remove every row. This keeps the recovery action next to the controls that caused the empty result.
+
+<ComponentPreview title="Inventory Workflow" className="block">
+  <div className="w-full space-y-4 rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-800 dark:bg-neutral-950">
+    <PageHeader>
+      <div className="space-y-2">
+        <PageHeaderMeta>Inventory</PageHeaderMeta>
+        <PageHeaderTitle>Replenishment plan</PageHeaderTitle>
+        <PageHeaderDescription>Review low-stock SKUs and release purchase orders for approved suppliers.</PageHeaderDescription>
+      </div>
+      <PageHeaderActions aria-label="Inventory actions">
+        <Button variant="outline" size="sm">Import stock</Button>
+        <Button variant="primary" size="sm">Create purchase order</Button>
+      </PageHeaderActions>
+    </PageHeader>
+    <Card>
+      <CardContent className="space-y-4">
+        <DataToolbar aria-label="Inventory controls">
+          <DataToolbarSearch>
+            <Input className="w-full sm:w-72" placeholder="Search SKUs" aria-label="Search SKUs" />
+            <DataToolbarMeta>0 urgent rows</DataToolbarMeta>
+          </DataToolbarSearch>
+          <DataToolbarFilters aria-label="Inventory filters">
+            <Button variant="outline" size="sm">Warehouse BKK</Button>
+            <Button variant="outline" size="sm">Urgent only</Button>
+          </DataToolbarFilters>
+        </DataToolbar>
+        <EmptyState aria-label="No urgent inventory rows">
+          <EmptyStateTitle>No urgent stock gaps</EmptyStateTitle>
+          <EmptyStateDescription>Relax the urgency filter or switch warehouses to review the next replenishment batch.</EmptyStateDescription>
+          <EmptyStateActions aria-label="Inventory empty state actions">
+            <Button variant="outline" size="sm">Clear urgent filter</Button>
+            <Button variant="primary" size="sm">View all low stock</Button>
+          </EmptyStateActions>
+        </EmptyState>
+      </CardContent>
+    </Card>
+  </div>
+</ComponentPreview>
+
+## Audit Log Investigation
+
+Use `Timeline` for the event path and `DescriptionList` for the selected event payload. Keep export and retention actions in the toolbar, not in the event detail.
+
+<ComponentPreview title="Audit Log Workflow" className="block">
+  <div className="w-full space-y-4 rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-800 dark:bg-neutral-950">
+    <PageHeader>
+      <div className="space-y-2">
+        <PageHeaderMeta>Audit log</PageHeaderMeta>
+        <PageHeaderTitle>Permission change trail</PageHeaderTitle>
+        <PageHeaderDescription>Follow role changes across users, services, and automated policy checks.</PageHeaderDescription>
+      </div>
+      <PageHeaderActions aria-label="Audit actions">
+        <Button variant="outline" size="sm">Export</Button>
+        <Button variant="primary" size="sm">Create case</Button>
+      </PageHeaderActions>
+    </PageHeader>
+    <DataToolbar aria-label="Audit controls">
+      <DataToolbarSearch>
+        <Input className="w-full sm:w-72" placeholder="Search actor or event" aria-label="Search audit log" />
+        <DataToolbarMeta>42 events</DataToolbarMeta>
+      </DataToolbarSearch>
+      <DataToolbarFilters aria-label="Audit filters">
+        <Button variant="outline" size="sm">Role changes</Button>
+        <Button variant="outline" size="sm">Last 24 hours</Button>
+      </DataToolbarFilters>
+    </DataToolbar>
+    <div className="grid gap-4 lg:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <h2 className="text-base font-semibold text-neutral-950 dark:text-neutral-50">Event path</h2>
+        </CardHeader>
+        <CardContent>
+          <Timeline aria-label="Audit event path">
+            <TimelineItem>
+              <TimelineMarker variant="warning" />
+              <TimelineContent>
+                <TimelineTime dateTime="2026-05-24T08:42:00Z">08:42</TimelineTime>
+                <TimelineTitle>Role changed</TimelineTitle>
+                <TimelineDescription>Support admin granted refund approval to Maya Chen.</TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+              <TimelineMarker variant="success" />
+              <TimelineContent>
+                <TimelineTime dateTime="2026-05-24T08:43:00Z">08:43</TimelineTime>
+                <TimelineTitle>Policy check passed</TimelineTitle>
+                <TimelineDescription>Change matched the approved escalation policy.</TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+          </Timeline>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <h2 className="text-base font-semibold text-neutral-950 dark:text-neutral-50">Selected event</h2>
+        </CardHeader>
+        <CardContent>
+          <DescriptionList variant="inline" aria-label="Selected audit event">
+            <DescriptionListItem>
+              <DescriptionListTerm>Actor</DescriptionListTerm>
+              <DescriptionListDescription>support-admin@nim.local</DescriptionListDescription>
+            </DescriptionListItem>
+            <DescriptionListItem>
+              <DescriptionListTerm>Target</DescriptionListTerm>
+              <DescriptionListDescription>maya.chen@nim.local</DescriptionListDescription>
+            </DescriptionListItem>
+            <DescriptionListItem>
+              <DescriptionListTerm>Outcome</DescriptionListTerm>
+              <DescriptionListDescription><StatusPill status="success">Policy passed</StatusPill></DescriptionListDescription>
+            </DescriptionListItem>
+          </DescriptionList>
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+</ComponentPreview>
+
+## Composition Notes
+
+- Put the main workflow noun in `PageHeaderTitle`: Exception queue, Account review, Replenishment plan, or Permission change trail.
+- Pair `DataToolbar` with `FilterSummary` when filters persist after menus close.
+- Use `BulkActionBar` only when selection changes the available actions.
+- Use `EmptyState` as a recovery surface, not as a dead end.
+- Use `Timeline` for event order and `DescriptionList` for selected-record detail.

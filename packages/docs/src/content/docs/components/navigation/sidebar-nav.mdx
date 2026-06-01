@@ -1,0 +1,109 @@
+---
+title: SidebarNav
+description: Grouped sidebar navigation for admin and backoffice workspaces
+---
+
+import {
+  SidebarNav,
+  SidebarNavFooter,
+  SidebarNavItem,
+  SidebarNavList,
+  SidebarNavSection,
+  SidebarNavSectionTitle,
+} from '@nim-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+SidebarNav structures backoffice navigation into predictable groups with active states, badges, and optional icon slots.
+
+## Import
+
+```tsx
+import {
+  SidebarNav,
+  SidebarNavFooter,
+  SidebarNavItem,
+  SidebarNavList,
+  SidebarNavSection,
+  SidebarNavSectionTitle,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Workspace Navigation" className="block">
+  <div className="w-full max-w-72 rounded-md border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950">
+    <SidebarNav client:only="react" aria-label="Backoffice navigation">
+      <SidebarNavSection>
+        <SidebarNavSectionTitle>Operate</SidebarNavSectionTitle>
+        <SidebarNavList>
+          <SidebarNavItem href="#orders" active badge="18">Orders</SidebarNavItem>
+          <SidebarNavItem href="#inventory" badge="4">Inventory</SidebarNavItem>
+          <SidebarNavItem href="#fulfillment">Fulfillment</SidebarNavItem>
+        </SidebarNavList>
+      </SidebarNavSection>
+      <SidebarNavSection>
+        <SidebarNavSectionTitle>Review</SidebarNavSectionTitle>
+        <SidebarNavList>
+          <SidebarNavItem href="#users">Users</SidebarNavItem>
+          <SidebarNavItem href="#audit">Audit log</SidebarNavItem>
+        </SidebarNavList>
+      </SidebarNavSection>
+      <SidebarNavFooter>
+        <p className="text-xs font-medium text-neutral-700 dark:text-neutral-300">BKK Warehouse</p>
+        <p className="text-xs text-neutral-500 dark:text-neutral-400">Live operations</p>
+      </SidebarNavFooter>
+    </SidebarNav>
+  </div>
+
+  <Fragment slot="code">
+```tsx
+<SidebarNav aria-label="Backoffice navigation">
+  <SidebarNavSection>
+    <SidebarNavSectionTitle>Operate</SidebarNavSectionTitle>
+    <SidebarNavList>
+      <SidebarNavItem href="/orders" active badge="18">Orders</SidebarNavItem>
+      <SidebarNavItem href="/inventory" badge="4">Inventory</SidebarNavItem>
+    </SidebarNavList>
+  </SidebarNavSection>
+  <SidebarNavFooter>Workspace metadata</SidebarNavFooter>
+</SidebarNav>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+### SidebarNavItem
+
+<PropsTable
+  props={[
+    {
+      name: 'active',
+      type: 'boolean',
+      default: 'false',
+      description: 'Applies active styling and sets aria-current=\"page\".',
+    },
+    {
+      name: 'badge',
+      type: 'ReactNode',
+      description: 'Optional count or status marker aligned to the end of the item.',
+    },
+    {
+      name: 'icon',
+      type: 'ReactNode',
+      description: 'Optional decorative icon slot rendered before the label.',
+    },
+    {
+      name: 'href',
+      type: 'string',
+      description: 'Navigation target for the rendered anchor.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Keep section titles operational: Operate, Review, Configure, Report.
+- Use badges for work counts that change operator behavior, not decoration.
+- Pair with `AdminShellSidebar` for full app-frame layouts.

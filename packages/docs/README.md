@@ -8,8 +8,8 @@ Built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.
 
 ### Prerequisites
 
-- Node.js 18.0 or later
-- pnpm 10.0 or later
+- Node.js 22.0 or later
+- pnpm 9.0 or later
 
 ### Installation
 

@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Nim UI',
-      description: 'Modern, accessible, production-ready React component library',
+      description: 'Quiet, accessible React UI kit for dashboards, backoffice, and commerce operations',
       logo: {
         src: './src/assets/logo.svg',
         replacesTitle: true,
@@ -55,6 +55,8 @@ export default defineConfig({
                 { label: 'Flex', slug: 'components/layout/flex' },
                 { label: 'Spacer', slug: 'components/layout/spacer' },
                 { label: 'Card', slug: 'components/layout/card' },
+                { label: 'AdminShell', slug: 'components/layout/admin-shell' },
+                { label: 'PageHeader', slug: 'components/layout/page-header' },
                 { label: 'Modal', slug: 'components/layout/modal' },
                 { label: 'Drawer', slug: 'components/layout/drawer' },
                 { label: 'Tabs', slug: 'components/layout/tabs' },
@@ -69,7 +71,16 @@ export default defineConfig({
                 { label: 'Badge', slug: 'components/data-display/badge' },
                 { label: 'Avatar', slug: 'components/data-display/avatar' },
                 { label: 'DataTable', slug: 'components/data-display/data-table' },
+                { label: 'DataToolbar', slug: 'components/data-display/data-toolbar' },
+                { label: 'StatusPill', slug: 'components/data-display/status-pill' },
+                { label: 'FilterSummary', slug: 'components/data-display/filter-summary' },
+                { label: 'BulkActionBar', slug: 'components/data-display/bulk-action-bar' },
+                { label: 'EmptyState', slug: 'components/data-display/empty-state' },
+                { label: 'Timeline', slug: 'components/data-display/timeline' },
+                { label: 'DescriptionList', slug: 'components/data-display/description-list' },
+                { label: 'RecordInspector', slug: 'components/data-display/record-inspector' },
                 { label: 'DataCard', slug: 'components/data-display/data-card' },
+                { label: 'MetricCard', slug: 'components/data-display/metric-card' },
                 { label: 'Stat', slug: 'components/data-display/stat' },
               ],
             },
@@ -113,6 +124,7 @@ export default defineConfig({
               collapsed: false,
               items: [
                 { label: 'Form', slug: 'components/forms/form' },
+                { label: 'FormLayout', slug: 'components/forms/form-layout' },
                 { label: 'FormField', slug: 'components/forms/form-field' },
               ],
             },
@@ -121,8 +133,20 @@ export default defineConfig({
               collapsed: false,
               items: [
                 { label: 'Breadcrumb', slug: 'components/navigation/breadcrumb' },
+                { label: 'SidebarNav', slug: 'components/navigation/sidebar-nav' },
+                { label: 'CommandMenu', slug: 'components/navigation/command-menu' },
+                { label: 'ViewSwitcher', slug: 'components/navigation/view-switcher' },
+                { label: 'Pagination', slug: 'components/navigation/pagination' },
               ],
             },
+          ],
+        },
+        {
+          label: 'Patterns',
+          items: [
+            { label: 'Backoffice Operations Template', slug: 'patterns/backoffice-operations-template' },
+            { label: 'Backoffice Dashboard', slug: 'patterns/backoffice-dashboard' },
+            { label: 'Backoffice Workflows', slug: 'patterns/backoffice-workflows' },
           ],
         },
         {

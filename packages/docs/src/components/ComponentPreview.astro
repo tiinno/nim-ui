@@ -21,7 +21,7 @@ interface Props {
 const { title, description, className = '' } = Astro.props;
 ---
 
-<div class="not-content my-8">
+<div class="not-content my-8 max-w-full overflow-hidden">
   {title && (
     <div class="mb-4">
       <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -35,16 +35,16 @@ const { title, description, className = '' } = Astro.props;
     </div>
   )}
 
-  <div class="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+  <div class="min-w-0 max-w-full overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
     <!-- Preview Area -->
-    <div class={`p-8 bg-white dark:bg-gray-950 ${className}`}>
-      <div class="flex flex-wrap items-center gap-4">
+    <div class={`p-4 bg-white dark:bg-gray-950 sm:p-8 ${className}`}>
+      <div class="flex min-w-0 max-w-full flex-wrap items-center gap-4">
         <slot />
       </div>
     </div>
 
     <!-- Code Area (collapsible) -->
-    <details class="group">
+    <details class="group min-w-0 max-w-full">
       <summary class="cursor-pointer px-4 py-2 bg-gray-50 dark:bg-gray-900 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-t border-gray-200 dark:border-gray-800">
         <span class="inline-flex items-center gap-2">
           <svg
@@ -63,7 +63,7 @@ const { title, description, className = '' } = Astro.props;
           View Code
         </span>
       </summary>
-      <div class="p-4 bg-gray-900 dark:bg-black">
+      <div class="max-w-full overflow-x-auto p-4 bg-gray-900 dark:bg-black">
         <slot name="code" />
       </div>
     </details>
@@ -74,6 +74,8 @@ const { title, description, className = '' } = Astro.props;
   /* Ensure code blocks inside preview don't get double styled */
   .not-content :global(pre) {
     margin: 0;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   /* Hide summary marker */

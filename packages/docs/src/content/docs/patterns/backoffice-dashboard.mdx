@@ -1,0 +1,143 @@
+---
+title: Backoffice Dashboard
+description: Compose Nim UI components into a dense operations screen
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+import { BackofficeDashboardDemo } from '../../../components/BackofficeDashboardDemo';
+
+Backoffice screens should make the next operational decision obvious. Use Nim UI primitives to create a quiet, dense workspace with page context, metric cards, filtering, and a table that can be scanned repeatedly.
+
+## Recipe
+
+<ComponentPreview title="Operations Dashboard" className="block">
+  <BackofficeDashboardDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+import {
+  Badge,
+  BulkActionBar,
+  BulkActionBarActions,
+  BulkActionBarClear,
+  BulkActionBarMeta,
+  BulkActionBarSelection,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  DataCard,
+  DataTable,
+  DataTableBody,
+  DataTableCell,
+  DataTableHead,
+  DataTableHeader,
+  DataTableRow,
+  DataToolbar,
+  DataToolbarActions,
+  DataToolbarFilters,
+  DataToolbarMeta,
+  DataToolbarSearch,
+  FilterSummary,
+  FilterSummaryClear,
+  FilterSummaryItem,
+  FilterSummaryList,
+  Input,
+  PageHeader,
+  PageHeaderActions,
+  PageHeaderDescription,
+  PageHeaderMeta,
+  PageHeaderTitle,
+  StatusPill,
+} from '@nim-ui/components';
+
+export function OrdersDashboard() {
+  return (
+    <div className="space-y-5">
+      <PageHeader>
+        <div className="space-y-2">
+          <PageHeaderMeta>Operations cockpit</PageHeaderMeta>
+          <PageHeaderTitle>Order exceptions</PageHeaderTitle>
+          <PageHeaderDescription>
+            Triage fulfillment risk, export the queue, and push urgent orders to the floor.
+          </PageHeaderDescription>
+        </div>
+        <PageHeaderActions aria-label="Order actions">
+          <Button variant="outline" size="sm">Export</Button>
+          <Button variant="primary" size="sm">Create order</Button>
+        </PageHeaderActions>
+      </PageHeader>
+
+      <div className="grid gap-3 md:grid-cols-3">
+        <DataCard value="184" label="Open orders" description="Across all warehouses" />
+        <DataCard value="17" label="Need review" description="SLA risk within 4 hours" />
+        <DataCard value="96.4%" label="On-time rate" description="Rolling 7 days" />
+      </div>
+
+      <Card>
+        <CardContent>
+          <DataToolbar aria-label="Order table controls">
+            <DataToolbarSearch>
+              <Input placeholder="Search orders" aria-label="Search orders" />
+              <DataToolbarMeta>184 results</DataToolbarMeta>
+            </DataToolbarSearch>
+            <DataToolbarFilters aria-label="Order filters">
+              <Button variant="outline" size="sm">Open only</Button>
+            </DataToolbarFilters>
+            <DataToolbarActions aria-label="Order table actions">
+              <Button variant="outline" size="sm">Bulk assign</Button>
+            </DataToolbarActions>
+          </DataToolbar>
+          <FilterSummary aria-label="Active order filters">
+            <FilterSummaryList>
+              <FilterSummaryItem label="Status" value="Open" onRemove={() => undefined} />
+              <FilterSummaryItem label="Risk" value="High" onRemove={() => undefined} />
+            </FilterSummaryList>
+            <FilterSummaryClear onClear={() => undefined} />
+          </FilterSummary>
+          <BulkActionBar aria-label="Selected order actions">
+            <div className="flex flex-col gap-1">
+              <BulkActionBarSelection count={3} label="orders selected" />
+              <BulkActionBarMeta>High-risk review queue</BulkActionBarMeta>
+            </div>
+            <BulkActionBarActions aria-label="Bulk order actions">
+              <Button variant="outline" size="sm">Assign</Button>
+              <Button variant="primary" size="sm">Approve</Button>
+            </BulkActionBarActions>
+            <BulkActionBarClear onClear={() => undefined} />
+          </BulkActionBar>
+          <DataTable>
+            <DataTableHeader>
+              <DataTableRow>
+                <DataTableHead>Order</DataTableHead>
+                <DataTableHead>Status</DataTableHead>
+                <DataTableHead>Risk</DataTableHead>
+              </DataTableRow>
+            </DataTableHeader>
+            <DataTableBody>
+              <DataTableRow>
+                <DataTableCell>ORD-4821</DataTableCell>
+                <DataTableCell><StatusPill status="warning">Review</StatusPill></DataTableCell>
+                <DataTableCell><Badge variant="destructive">High</Badge></DataTableCell>
+              </DataTableRow>
+            </DataTableBody>
+          </DataTable>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+```
+  </Fragment>
+</ComponentPreview>
+
+## Composition Rules
+
+- Start with `PageHeader` so the page has a clear operational scope and action model.
+- Use `DataCard` for a small number of metrics that affect the decision on this page.
+- Keep table actions and filters close to the table, not in a distant hero section.
+- Use `FilterSummary` below `DataToolbar` when operators need to remove active filters without reopening filter menus.
+- Use `BulkActionBar` for selected-row workflows instead of hiding bulk actions in menus.
+- Use `StatusPill` for operational states such as order, payment, and fulfillment status.
+- Use `EmptyState` when filters remove every row, with one clear recovery action.
+- Prefer compact copy and stable row height so operators can scan the same screen all day.

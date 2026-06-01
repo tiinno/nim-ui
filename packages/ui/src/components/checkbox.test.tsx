@@ -17,7 +17,7 @@ describe('Checkbox', () => {
     });
 
     it('renders with data-state attribute', () => {
-      const { rerender } = render(<Checkbox data-testid="checkbox" />);
+      const { rerender } = render(<Checkbox checked={false} data-testid="checkbox" />);
       expect(screen.getByTestId('checkbox')).toHaveAttribute('data-state', 'unchecked');
 
       rerender(<Checkbox checked data-testid="checkbox" />);
@@ -80,7 +80,7 @@ describe('Checkbox', () => {
   describe('Keyboard Navigation', () => {
     it('can be focused with Tab', async () => {
       const user = userEvent.setup();
-      render(<Checkbox />);
+      render(<Checkbox checked={false} />);
 
       await user.tab();
       expect(screen.getByRole('checkbox')).toHaveFocus();
@@ -100,7 +100,7 @@ describe('Checkbox', () => {
 
     it('maintains focus after toggling', async () => {
       const user = userEvent.setup();
-      render(<Checkbox />);
+      render(<Checkbox checked={false} />);
 
       const checkbox = screen.getByRole('checkbox');
       await user.click(checkbox);
@@ -111,7 +111,7 @@ describe('Checkbox', () => {
 
   describe('Accessibility', () => {
     it('has correct checkbox role', () => {
-      render(<Checkbox />);
+      render(<Checkbox checked={false} />);
       expect(screen.getByRole('checkbox')).toBeInTheDocument();
     });
 
@@ -131,7 +131,7 @@ describe('Checkbox', () => {
     });
 
     it('indicates checked state with aria-checked', () => {
-      const { rerender } = render(<Checkbox />);
+      const { rerender } = render(<Checkbox checked={false} />);
       expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'false');
 
       rerender(<Checkbox checked />);
@@ -144,7 +144,7 @@ describe('Checkbox', () => {
     });
 
     it('applies focus-visible ring styles', () => {
-      render(<Checkbox data-testid="checkbox" />);
+      render(<Checkbox checked={false} data-testid="checkbox" />);
       expect(screen.getByTestId('checkbox')).toHaveClass('focus-visible:ring-2');
     });
   });
@@ -241,28 +241,28 @@ describe('Checkbox', () => {
     });
 
     it('applies border styles', () => {
-      render(<Checkbox data-testid="checkbox" />);
+      render(<Checkbox checked={false} data-testid="checkbox" />);
       const checkbox = screen.getByTestId('checkbox');
       expect(checkbox).toHaveClass('border');
       expect(checkbox).toHaveClass('border-neutral-300');
     });
 
     it('has fixed size dimensions', () => {
-      render(<Checkbox data-testid="checkbox" />);
+      render(<Checkbox checked={false} data-testid="checkbox" />);
       const checkbox = screen.getByTestId('checkbox');
       expect(checkbox).toHaveClass('h-5');
       expect(checkbox).toHaveClass('w-5');
     });
 
     it('has rounded corners', () => {
-      render(<Checkbox data-testid="checkbox" />);
+      render(<Checkbox checked={false} data-testid="checkbox" />);
       expect(screen.getByTestId('checkbox')).toHaveClass('rounded-sm');
     });
   });
 
   describe('Dark Mode', () => {
     it('applies dark mode border styles', () => {
-      render(<Checkbox data-testid="checkbox" />);
+      render(<Checkbox checked={false} data-testid="checkbox" />);
       expect(screen.getByTestId('checkbox')).toHaveClass('dark:border-neutral-600');
     });
 

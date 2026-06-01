@@ -13,13 +13,24 @@ export * from './stack';
 export * from './flex';
 export * from './spacer';
 export * from './card';
+export * from './admin-shell';
+export * from './page-header';
 export * from './modal';
 export * from './drawer';
 export * from './tabs';
 
 // Data Display
 export * from './data-card';
+export * from './metric-card';
 export * from './data-table';
+export * from './data-toolbar';
+export * from './status-pill';
+export * from './bulk-action-bar';
+export * from './filter-summary';
+export * from './description-list';
+export * from './record-inspector';
+export * from './empty-state';
+export * from './timeline';
 export * from './stat';
 
 // Commerce
@@ -36,6 +47,7 @@ export * from './testimonial';
 
 // Forms
 export * from './form';
+export * from './form-layout';
 export * from './form-field';
 export * from './select';
 export * from './checkbox';
@@ -64,4 +76,7 @@ export * from './separator';
 
 // Navigation
 export * from './breadcrumb';
+export * from './sidebar-nav';
+export * from './command-menu';
+export * from './view-switcher';
 export * from './pagination';

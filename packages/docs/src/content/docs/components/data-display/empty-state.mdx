@@ -1,0 +1,96 @@
+---
+title: EmptyState
+description: Empty table and list state with title, description, icon, and recovery actions
+---
+
+import {
+  Button,
+  EmptyState,
+  EmptyStateActions,
+  EmptyStateDescription,
+  EmptyStateIcon,
+  EmptyStateTitle,
+} from '@nim-ui/components';
+import ComponentPreview from '../../../../components/ComponentPreview.astro';
+import PropsTable from '../../../../components/PropsTable.astro';
+
+The EmptyState component gives admin screens a consistent recovery moment when a table, report, or filtered list has no rows.
+
+## Import
+
+```tsx
+import {
+  EmptyState,
+  EmptyStateActions,
+  EmptyStateDescription,
+  EmptyStateIcon,
+  EmptyStateTitle,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Filtered Table Empty State" className="block">
+  <EmptyState client:only="react" aria-label="No orders found" className="w-full">
+    <EmptyStateIcon>
+      <span className="text-sm font-semibold">0</span>
+    </EmptyStateIcon>
+    <EmptyStateTitle>No orders found</EmptyStateTitle>
+    <EmptyStateDescription>
+      Adjust filters or create the first order for this warehouse.
+    </EmptyStateDescription>
+    <EmptyStateActions aria-label="Empty orders actions">
+      <Button variant="outline" size="sm">Clear filters</Button>
+      <Button variant="primary" size="sm">Create order</Button>
+    </EmptyStateActions>
+  </EmptyState>
+
+  <Fragment slot="code">
+```tsx
+<EmptyState aria-label="No orders found">
+  <EmptyStateIcon>
+    <span className="text-sm font-semibold">0</span>
+  </EmptyStateIcon>
+  <EmptyStateTitle>No orders found</EmptyStateTitle>
+  <EmptyStateDescription>
+    Adjust filters or create the first order for this warehouse.
+  </EmptyStateDescription>
+  <EmptyStateActions aria-label="Empty orders actions">
+    <Button variant="outline" size="sm">Clear filters</Button>
+    <Button variant="primary" size="sm">Create order</Button>
+  </EmptyStateActions>
+</EmptyState>
+```
+  </Fragment>
+</ComponentPreview>
+
+## Props
+
+### EmptyState
+
+<PropsTable
+  props={[
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Accessible label for the empty status region.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional classes for spacing, size, or alignment.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Empty state content, usually icon, title, description, and actions.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- State what is empty, not that something went wrong.
+- Put one recovery action first: clear filters, import data, or create an item.
+- Keep decorative icons in `EmptyStateIcon` so they stay hidden from assistive technology.

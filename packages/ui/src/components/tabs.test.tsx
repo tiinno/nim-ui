@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen, userEvent } from '../test/test-utils';
+import { act, render, screen, userEvent, waitFor } from '../test/test-utils';
 import {
   Tabs,
   TabsList,
@@ -316,10 +316,14 @@ describe('Tabs', () => {
       const tab1 = screen.getByRole('tab', { name: 'Tab 1' });
       const tab2 = screen.getByRole('tab', { name: 'Tab 2' });
 
-      tab1.focus();
+      act(() => {
+        tab1.focus();
+      });
       await user.keyboard('{ArrowRight}');
 
-      expect(tab2).toHaveFocus();
+      await waitFor(() => {
+        expect(tab2).toHaveFocus();
+      });
     });
   });
 

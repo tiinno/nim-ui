@@ -19,6 +19,7 @@ describe('Button', () => {
   describe('Variants', () => {
     it.each([
       ['default', 'bg-primary-600'],
+      ['primary', 'bg-primary-600'],
       ['secondary', 'bg-neutral-200'],
       ['outline', 'border'],
       ['ghost', 'bg-transparent'],
@@ -26,6 +27,11 @@ describe('Button', () => {
     ])('renders %s variant with correct styles', (variant, expectedClass) => {
       render(<Button variant={variant as any}>{variant}</Button>);
       expect(screen.getByRole('button')).toHaveClass(expectedClass);
+    });
+
+    it('renders full width when requested', () => {
+      render(<Button fullWidth>Full width</Button>);
+      expect(screen.getByRole('button')).toHaveClass('w-full');
     });
   });
 

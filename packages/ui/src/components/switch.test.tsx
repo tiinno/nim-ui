@@ -17,7 +17,7 @@ describe('Switch', () => {
     });
 
     it('renders with data-state attribute', () => {
-      const { rerender } = render(<Switch data-testid="switch" />);
+      const { rerender } = render(<Switch checked={false} data-testid="switch" />);
       expect(screen.getByTestId('switch')).toHaveAttribute('data-state', 'unchecked');
 
       rerender(<Switch checked data-testid="switch" />);
@@ -25,14 +25,14 @@ describe('Switch', () => {
     });
 
     it('renders thumb element', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       const switchEl = screen.getByTestId('switch');
       const thumb = switchEl.querySelector('[class*="rounded-full"]');
       expect(thumb).toBeInTheDocument();
     });
 
     it('renders with default size', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       expect(screen.getByTestId('switch')).toHaveClass('h-6');
       expect(screen.getByTestId('switch')).toHaveClass('w-11');
     });
@@ -84,7 +84,7 @@ describe('Switch', () => {
   describe('Keyboard Navigation', () => {
     it('can be focused with Tab', async () => {
       const user = userEvent.setup();
-      render(<Switch />);
+      render(<Switch checked={false} />);
 
       await user.tab();
       expect(screen.getByRole('switch')).toHaveFocus();
@@ -116,7 +116,7 @@ describe('Switch', () => {
 
     it('maintains focus after toggling', async () => {
       const user = userEvent.setup();
-      render(<Switch />);
+      render(<Switch checked={false} />);
 
       const switchEl = screen.getByRole('switch');
       await user.click(switchEl);
@@ -127,7 +127,7 @@ describe('Switch', () => {
 
   describe('Accessibility', () => {
     it('has correct switch role', () => {
-      render(<Switch />);
+      render(<Switch checked={false} />);
       expect(screen.getByRole('switch')).toBeInTheDocument();
     });
 
@@ -147,7 +147,7 @@ describe('Switch', () => {
     });
 
     it('indicates checked state with aria-checked', () => {
-      const { rerender } = render(<Switch />);
+      const { rerender } = render(<Switch checked={false} />);
       expect(screen.getByRole('switch')).toHaveAttribute('aria-checked', 'false');
 
       rerender(<Switch checked />);
@@ -160,7 +160,7 @@ describe('Switch', () => {
     });
 
     it('applies focus-visible ring styles', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       expect(screen.getByTestId('switch')).toHaveClass('focus-visible:ring-2');
     });
   });
@@ -213,7 +213,7 @@ describe('Switch', () => {
     });
 
     it('applies default md size when size prop is omitted', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       const switchEl = screen.getByTestId('switch');
       expect(switchEl).toHaveClass('h-6');
       expect(switchEl).toHaveClass('w-11');
@@ -276,25 +276,25 @@ describe('Switch', () => {
     });
 
     it('applies unchecked background color via data-state', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       const switchEl = screen.getByTestId('switch');
       expect(switchEl).toHaveClass('data-[state=unchecked]:bg-neutral-200');
     });
 
     it('has rounded-full shape', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       expect(screen.getByTestId('switch')).toHaveClass('rounded-full');
     });
 
     it('has inline-flex display', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       expect(screen.getByTestId('switch')).toHaveClass('inline-flex');
     });
   });
 
   describe('Thumb Component', () => {
     it('renders thumb with rounded-full shape', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       const switchEl = screen.getByTestId('switch');
       const thumb = switchEl.querySelector('[class*="rounded-full"]');
       expect(thumb).toBeInTheDocument();
@@ -302,7 +302,7 @@ describe('Switch', () => {
     });
 
     it('thumb has white background', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       const switchEl = screen.getByTestId('switch');
       const thumb = switchEl.querySelector('[class*="bg-white"]');
       expect(thumb).toBeInTheDocument();
@@ -331,7 +331,7 @@ describe('Switch', () => {
     });
 
     it('thumb stays at zero position when unchecked', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       const switchEl = screen.getByTestId('switch');
       const thumb = switchEl.querySelector('[class*="translate-x"]');
       expect(thumb).toHaveClass('data-[state=unchecked]:translate-x-0');
@@ -345,12 +345,12 @@ describe('Switch', () => {
     });
 
     it('applies dark mode unchecked background', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       expect(screen.getByTestId('switch')).toHaveClass('dark:data-[state=unchecked]:bg-neutral-700');
     });
 
     it('applies dark mode thumb background', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       const switchEl = screen.getByTestId('switch');
       const thumb = switchEl.querySelector('[class*="bg-white"]');
       expect(thumb).toHaveClass('dark:bg-neutral-100');
@@ -398,12 +398,12 @@ describe('Switch', () => {
 
   describe('Transitions', () => {
     it('applies transition classes to switch', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       expect(screen.getByTestId('switch')).toHaveClass('transition-colors');
     });
 
     it('applies transition classes to thumb', () => {
-      render(<Switch data-testid="switch" />);
+      render(<Switch checked={false} data-testid="switch" />);
       const switchEl = screen.getByTestId('switch');
       const thumb = switchEl.querySelector('[class*="transition"]');
       expect(thumb).toHaveClass('transition-transform');

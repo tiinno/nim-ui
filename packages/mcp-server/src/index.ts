@@ -42,7 +42,7 @@ interface RegistryData {
 // Zod schemas for validation
 const ListComponentsSchema = z.object({
   category: z
-    .enum(['primitives', 'layout', 'data-display', 'commerce', 'landing', 'forms'])
+    .enum(['primitives', 'layout', 'data-display', 'commerce', 'landing', 'feedback', 'forms', 'navigation'])
     .optional(),
 });
 
@@ -119,7 +119,7 @@ class NimMCPServer {
             properties: {
               category: {
                 type: 'string',
-                enum: ['primitives', 'layout', 'data-display', 'commerce', 'landing', 'forms'],
+                enum: ['primitives', 'layout', 'data-display', 'commerce', 'landing', 'feedback', 'forms', 'navigation'],
                 description: 'Optional category to filter components',
               },
             },

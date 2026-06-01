@@ -217,7 +217,7 @@ export interface PopoverArrowProps
 const PopoverArrow = React.forwardRef<
   React.ComponentRef<typeof PopoverPrimitive.Arrow>,
   PopoverArrowProps
->(({ className, variant = 'default', width = 14, height = 7, ...props }, ref) => (
+>(({ className, variant: _variant = 'default', width = 14, height = 7, ...props }, ref) => (
   <PopoverPrimitive.Arrow
     ref={ref}
     width={width}

@@ -23,6 +23,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        primary: 'bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500 dark:bg-primary-700 dark:hover:bg-primary-600',
         default: 'bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500 dark:bg-primary-700 dark:hover:bg-primary-600',
         secondary: 'bg-neutral-200 text-neutral-900 hover:bg-neutral-300 focus-visible:ring-neutral-400 dark:bg-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-600',
         outline: 'border border-neutral-300 bg-transparent hover:bg-neutral-100 focus-visible:ring-neutral-400 dark:border-neutral-600 dark:hover:bg-neutral-800 dark:text-neutral-100',
@@ -47,6 +48,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   loading?: boolean;
+  fullWidth?: boolean;
 }
 
 const spinnerSizeMap: Record<string, string> = {
@@ -57,9 +59,9 @@ const spinnerSizeMap: Record<string, string> = {
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, loading, disabled, children, ...props }, ref) => (
+  ({ className, variant, size, loading, disabled, fullWidth, children, ...props }, ref) => (
     <button
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={cn(buttonVariants({ variant, size }), fullWidth && 'w-full', className)}
       ref={ref}
       disabled={loading || disabled}
       aria-busy={loading || undefined}

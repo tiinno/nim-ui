@@ -1,0 +1,70 @@
+---
+title: Backoffice Operations Template
+description: A full admin workspace composition using the backoffice UI kit primitives
+---
+
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+import { BackofficeOperationsTemplateDemo } from '../../../components/BackofficeOperationsTemplateDemo';
+
+Use this template when an internal team needs one screen for navigation, KPIs, saved queues, filters, selected-row actions, table scanning, and record review. It is intentionally dense: the operator should be able to assess the queue, select a record, and decide the next action without moving to a separate detail page.
+
+## Template
+
+<ComponentPreview title="Operations Workspace" className="block p-0 sm:p-0">
+  <BackofficeOperationsTemplateDemo client:only="react" />
+
+  <Fragment slot="code">
+```tsx
+import {
+  AdminShell,
+  AdminShellBody,
+  AdminShellHeader,
+  AdminShellMain,
+  AdminShellPanel,
+  AdminShellSidebar,
+  MetricCard,
+  PageHeader,
+  RecordInspector,
+  SidebarNav,
+  ViewSwitcher,
+} from '@nim-ui/components';
+
+export function OperationsWorkspace() {
+  return (
+    <AdminShell density="compact">
+      <AdminShellBody>
+        <AdminShellSidebar aria-label="Operations navigation">
+          <SidebarNav aria-label="Primary navigation">{/* nav groups */}</SidebarNav>
+        </AdminShellSidebar>
+        <AdminShellPanel>
+          <AdminShellHeader>{/* global actions */}</AdminShellHeader>
+          <AdminShellMain>
+            <PageHeader>{/* page context and primary actions */}</PageHeader>
+            <div className="grid gap-3 md:grid-cols-3">
+              <MetricCard>{/* queue KPI */}</MetricCard>
+              <MetricCard>{/* performance KPI */}</MetricCard>
+              <MetricCard>{/* capacity KPI */}</MetricCard>
+            </div>
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
+              <section>{/* ViewSwitcher, DataToolbar, FilterSummary, BulkActionBar, DataTable */}</section>
+              <RecordInspector>{/* selected record detail and actions */}</RecordInspector>
+            </div>
+          </AdminShellMain>
+        </AdminShellPanel>
+      </AdminShellBody>
+    </AdminShell>
+  );
+}
+```
+  </Fragment>
+</ComponentPreview>
+
+## Composition Notes
+
+- Use `AdminShell` and `SidebarNav` when the page belongs to a persistent internal app, not a standalone report.
+- Put `MetricCard` above the queue only when the metrics change the operator's immediate decision.
+- Use `ViewSwitcher` for saved queues and `DataToolbar` for search, filters, and table commands.
+- Keep `FilterSummary` visible while filters affect the table result set.
+- Show `BulkActionBar` only when selected rows have available actions.
+- Pair a dense table with `RecordInspector` when row selection needs approval, escalation, metadata, or audit context.
+- On mobile, allow the queue and table to scroll horizontally inside their own surfaces rather than widening the document.

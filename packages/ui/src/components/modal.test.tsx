@@ -17,7 +17,7 @@ describe('Modal', () => {
       render(
         <Modal>
           <ModalTrigger>Open</ModalTrigger>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -29,7 +29,7 @@ describe('Modal', () => {
     it('renders content when defaultOpen is true', () => {
       render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -45,7 +45,7 @@ describe('Modal', () => {
       render(
         <Modal>
           <ModalTrigger>Open Modal</ModalTrigger>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Modal Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -63,7 +63,7 @@ describe('Modal', () => {
       render(
         <Modal>
           <ModalTrigger>Open</ModalTrigger>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
             <ModalClose>Close</ModalClose>
           </ModalContent>
@@ -85,7 +85,7 @@ describe('Modal', () => {
       const user = userEvent.setup();
       render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -104,7 +104,7 @@ describe('Modal', () => {
       const user = userEvent.setup();
       render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
             <button>Button 1</button>
             <button>Button 2</button>
@@ -130,7 +130,7 @@ describe('Modal', () => {
     it('has correct dialog role', () => {
       render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -142,7 +142,7 @@ describe('Modal', () => {
     it('links title to dialog with aria-labelledby', async () => {
       render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Accessible Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -177,7 +177,7 @@ describe('Modal', () => {
     it('renders modal content outside root container', () => {
       const { container } = render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Portal Test</ModalTitle>
           </ModalContent>
         </Modal>
@@ -195,7 +195,7 @@ describe('Modal', () => {
     it('supports controlled open state', () => {
       const { rerender } = render(
         <Modal open={false}>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Controlled</ModalTitle>
           </ModalContent>
         </Modal>
@@ -205,7 +205,7 @@ describe('Modal', () => {
 
       rerender(
         <Modal open={true}>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Controlled</ModalTitle>
           </ModalContent>
         </Modal>
@@ -221,7 +221,7 @@ describe('Modal', () => {
       render(
         <Modal onOpenChange={handleOpenChange}>
           <ModalTrigger>Open</ModalTrigger>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -236,7 +236,7 @@ describe('Modal', () => {
     it('renders ModalHeader correctly', () => {
       render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalHeader data-testid="header">
               <ModalTitle>Header Title</ModalTitle>
             </ModalHeader>
@@ -251,7 +251,7 @@ describe('Modal', () => {
     it('renders ModalBody correctly', () => {
       render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
             <ModalBody data-testid="body">Body content</ModalBody>
           </ModalContent>
@@ -267,7 +267,7 @@ describe('Modal', () => {
     it('renders overlay backdrop when open', () => {
       render(
         <Modal defaultOpen>
-          <ModalContent>
+          <ModalContent aria-describedby={undefined}>
             <ModalTitle>Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -283,7 +283,7 @@ describe('Modal', () => {
     it('merges custom className with default classes', () => {
       render(
         <Modal defaultOpen>
-          <ModalContent className="custom-modal">
+          <ModalContent aria-describedby={undefined} className="custom-modal">
             <ModalTitle>Title</ModalTitle>
           </ModalContent>
         </Modal>
@@ -299,7 +299,7 @@ describe('Modal', () => {
       const ref = { current: null };
       render(
         <Modal defaultOpen>
-          <ModalContent ref={ref}>
+          <ModalContent aria-describedby={undefined} ref={ref}>
             <ModalTitle>Title</ModalTitle>
           </ModalContent>
         </Modal>

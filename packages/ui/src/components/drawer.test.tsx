@@ -17,7 +17,7 @@ describe('Drawer', () => {
       render(
         <Drawer>
           <DrawerTrigger>Open</DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -29,7 +29,7 @@ describe('Drawer', () => {
     it('renders content when defaultOpen is true', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -45,7 +45,7 @@ describe('Drawer', () => {
       render(
         <Drawer>
           <DrawerTrigger>Open Drawer</DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Drawer Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -63,7 +63,7 @@ describe('Drawer', () => {
       render(
         <Drawer>
           <DrawerTrigger>Open</DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
             <DrawerClose>Close</DrawerClose>
           </DrawerContent>
@@ -84,7 +84,7 @@ describe('Drawer', () => {
     it('renders drawer on right side by default', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -97,7 +97,7 @@ describe('Drawer', () => {
     it('renders drawer on left side when specified', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent side="left">
+          <DrawerContent aria-describedby={undefined} side="left">
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -110,7 +110,7 @@ describe('Drawer', () => {
     it('applies correct slide animation for left side', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent side="left">
+          <DrawerContent aria-describedby={undefined} side="left">
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -124,7 +124,7 @@ describe('Drawer', () => {
     it('applies correct slide animation for right side', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent side="right">
+          <DrawerContent aria-describedby={undefined} side="right">
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -141,7 +141,7 @@ describe('Drawer', () => {
       const user = userEvent.setup();
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -160,7 +160,7 @@ describe('Drawer', () => {
       const user = userEvent.setup();
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
             <button>Button 1</button>
             <button>Button 2</button>
@@ -186,7 +186,7 @@ describe('Drawer', () => {
     it('has correct dialog role', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -198,7 +198,7 @@ describe('Drawer', () => {
     it('links title to dialog with aria-labelledby', async () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Accessible Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -233,7 +233,7 @@ describe('Drawer', () => {
     it('renders drawer content outside root container', () => {
       const { container } = render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Portal Test</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -251,7 +251,7 @@ describe('Drawer', () => {
     it('supports controlled open state', () => {
       const { rerender } = render(
         <Drawer open={false}>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Controlled</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -261,7 +261,7 @@ describe('Drawer', () => {
 
       rerender(
         <Drawer open={true}>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Controlled</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -277,7 +277,7 @@ describe('Drawer', () => {
       render(
         <Drawer onOpenChange={handleOpenChange}>
           <DrawerTrigger>Open</DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -292,7 +292,7 @@ describe('Drawer', () => {
     it('renders DrawerHeader correctly', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerHeader data-testid="header">
               <DrawerTitle>Header Title</DrawerTitle>
             </DrawerHeader>
@@ -307,7 +307,7 @@ describe('Drawer', () => {
     it('renders DrawerBody correctly', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
             <DrawerBody data-testid="body">Body content</DrawerBody>
           </DrawerContent>
@@ -323,7 +323,7 @@ describe('Drawer', () => {
     it('renders overlay backdrop when open', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent>
+          <DrawerContent aria-describedby={undefined}>
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -339,7 +339,7 @@ describe('Drawer', () => {
     it('merges custom className with default classes', () => {
       render(
         <Drawer defaultOpen>
-          <DrawerContent className="custom-drawer">
+          <DrawerContent aria-describedby={undefined} className="custom-drawer">
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>
@@ -355,7 +355,7 @@ describe('Drawer', () => {
       const ref = { current: null };
       render(
         <Drawer defaultOpen>
-          <DrawerContent ref={ref}>
+          <DrawerContent aria-describedby={undefined} ref={ref}>
             <DrawerTitle>Title</DrawerTitle>
           </DrawerContent>
         </Drawer>

@@ -127,7 +127,7 @@
 @layer utilities {
   /* Utility for not-content (prevent Starlight content styles) */
   .not-content {
-    all: revert;
+    max-width: 100%;
   }
 
   /* Smooth transitions */
