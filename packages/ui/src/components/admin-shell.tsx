@@ -42,7 +42,7 @@ const AdminShellSidebar = React.forwardRef<HTMLElement, AdminShellSidebarProps>(
     <aside
       ref={ref}
       className={cn(
-        'hidden w-[var(--admin-shell-sidebar)] shrink-0 border-r border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 lg:flex lg:flex-col',
+        'hidden w-[var(--admin-shell-sidebar)] shrink-0 border-r border-neutral-200 bg-white/95 shadow-[8px_0_30px_rgba(15,23,42,0.04)] dark:border-neutral-800 dark:bg-neutral-950/95 lg:flex lg:flex-col',
         sticky && 'lg:sticky lg:top-0 lg:h-screen',
         className
       )}
@@ -82,7 +82,7 @@ const AdminShellHeader = React.forwardRef<HTMLElement, AdminShellHeaderProps>(
     <header
       ref={ref}
       className={cn(
-        'z-20 flex min-h-[var(--admin-shell-topbar)] items-center gap-3 border-b border-neutral-200 bg-white/95 px-4 backdrop-blur dark:border-neutral-800 dark:bg-neutral-950/95 sm:px-6',
+        'z-20 flex min-h-[var(--admin-shell-topbar)] items-center gap-3 border-b border-neutral-200 bg-white/88 px-4 shadow-[0_8px_24px_rgba(15,23,42,0.04)] backdrop-blur-xl dark:border-neutral-800 dark:bg-neutral-950/88 sm:px-6',
         sticky && 'sticky top-0',
         className
       )}

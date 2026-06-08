@@ -34,17 +34,17 @@ import { cn } from '../lib/utils';
  */
 
 const cardVariants = cva(
-  'rounded-lg transition-[box-shadow,transform,border-color] duration-fast ease-out',
+  'rounded-md transition-[box-shadow,transform,border-color,background-color] duration-fast ease-out',
   {
     variants: {
       variant: {
-        default: 'border bg-white shadow-sm dark:bg-neutral-900 dark:border-neutral-700',
-        outlined: 'border-2 border-neutral-300 bg-white dark:border-neutral-600 dark:bg-neutral-900',
-        elevated: 'border border-transparent bg-white shadow-lg dark:bg-neutral-900',
+        default: 'border border-neutral-200 bg-white shadow-soft dark:border-neutral-800 dark:bg-neutral-950',
+        outlined: 'border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950',
+        elevated: 'border border-neutral-100 bg-white shadow-panel dark:border-neutral-900 dark:bg-neutral-950',
         ghost: 'border border-transparent bg-transparent',
       },
       hoverable: {
-        true: 'hover:-translate-y-0.5 hover:shadow-md cursor-pointer',
+        true: 'cursor-pointer hover:-translate-y-0.5 hover:shadow-panel',
         false: '',
       },
     },
@@ -76,7 +76,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex flex-col space-y-1.5 p-6', className)}
+    className={cn('flex flex-col space-y-1.5 p-5', className)}
     {...props}
   />
 ));
@@ -86,7 +86,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+  <div ref={ref} className={cn('p-5 pt-0', className)} {...props} />
 ));
 CardContent.displayName = 'CardContent';
 
@@ -96,7 +96,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex items-center p-6 pt-0', className)}
+    className={cn('flex items-center p-5 pt-0', className)}
     {...props}
   />
 ));

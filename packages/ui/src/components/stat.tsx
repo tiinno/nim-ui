@@ -34,7 +34,7 @@ const Stat = React.forwardRef<HTMLDivElement, StatProps>(
       className={cn('flex flex-col space-y-1', className)}
       {...props}
     >
-      <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+      <p className="text-2xl font-semibold tabular-nums tracking-normal text-neutral-900 dark:text-neutral-100">
         {value}
       </p>
       <p className="text-sm text-neutral-600 dark:text-neutral-400">

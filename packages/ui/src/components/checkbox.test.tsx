@@ -130,6 +130,21 @@ describe('Checkbox', () => {
       expect(screen.getByLabelText('Accept terms')).toBeInTheDocument();
     });
 
+    it('renders a built-in label row with description and spacing', () => {
+      render(
+        <Checkbox
+          label="Accept terms"
+          description="Required before checkout can continue."
+        />
+      );
+
+      const checkbox = screen.getByLabelText('Accept terms');
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox).toHaveAccessibleDescription('Required before checkout can continue.');
+      expect(screen.getByText('Accept terms').closest('div')).toHaveClass('gap-3');
+      expect(screen.getByText('Required before checkout can continue.')).toHaveClass('text-neutral-500');
+    });
+
     it('indicates checked state with aria-checked', () => {
       const { rerender } = render(<Checkbox checked={false} />);
       expect(screen.getByRole('checkbox')).toHaveAttribute('aria-checked', 'false');
@@ -252,6 +267,20 @@ describe('Checkbox', () => {
       const checkbox = screen.getByTestId('checkbox');
       expect(checkbox).toHaveClass('h-5');
       expect(checkbox).toHaveClass('w-5');
+    });
+
+    it('supports small size dimensions', () => {
+      render(<Checkbox checked={false} size="sm" data-testid="checkbox" />);
+      const checkbox = screen.getByTestId('checkbox');
+      expect(checkbox).toHaveClass('h-4');
+      expect(checkbox).toHaveClass('w-4');
+    });
+
+    it('supports large size dimensions', () => {
+      render(<Checkbox checked={false} size="lg" data-testid="checkbox" />);
+      const checkbox = screen.getByTestId('checkbox');
+      expect(checkbox).toHaveClass('h-6');
+      expect(checkbox).toHaveClass('w-6');
     });
 
     it('has rounded corners', () => {

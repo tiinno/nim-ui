@@ -62,7 +62,7 @@ const FeatureGrid = React.forwardRef<HTMLDivElement, FeatureGridProps>(
 FeatureGrid.displayName = 'FeatureGrid';
 
 const featureCardVariants = cva(
-  'flex flex-col items-center text-center space-y-4 p-6 rounded-lg bg-white border border-neutral-200 dark:bg-neutral-900 dark:border-neutral-700',
+  'flex flex-col items-center text-center space-y-4 p-6 rounded-lg bg-white border border-neutral-200 dark:bg-neutral-950 dark:border-neutral-800',
   {
     variants: {},
     defaultVariants: {},

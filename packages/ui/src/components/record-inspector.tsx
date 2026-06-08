@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 const recordInspectorVariants = cva(
-  'flex min-w-0 flex-col overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-950 shadow-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
+  'flex min-w-0 flex-col overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-950 shadow-soft dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
   {
     variants: {
       density: {

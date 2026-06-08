@@ -40,7 +40,7 @@ const CollapsibleTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       'inline-flex cursor-pointer items-center justify-center gap-2 text-sm font-medium transition-colors duration-fast',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
       'disabled:pointer-events-none disabled:opacity-50',
       className
     )}

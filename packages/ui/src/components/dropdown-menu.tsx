@@ -100,14 +100,14 @@ DropdownMenuTrigger.displayName = 'DropdownMenuTrigger';
 // ---------------------------------------------------------------------------
 
 const dropdownMenuContentVariants = cva(
-  'z-50 min-w-[8rem] overflow-hidden rounded-md p-1 shadow-md outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+  'z-50 min-w-[8rem] overflow-hidden rounded-md p-1 shadow-panel outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
   {
     variants: {
       variant: {
         default:
-          'border border-neutral-200 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
+          'border border-neutral-200 bg-white text-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
         outline:
-          'border-2 border-neutral-300 bg-white text-neutral-900 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-100',
+          'border-2 border-neutral-300 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100',
       },
     },
     defaultVariants: {
@@ -186,7 +186,7 @@ const DropdownMenuSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1 my-1 h-px bg-neutral-200 dark:bg-neutral-700', className)}
+    className={cn('-mx-1 my-1 h-px bg-neutral-200 dark:bg-neutral-800', className)}
     {...props}
   />
 ));
@@ -322,7 +322,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     className={cn(
       'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors duration-fast',
       'focus-visible:bg-primary-500 focus-visible:text-white',
-      'data-[state=open]:bg-neutral-100 dark:data-[state=open]:bg-neutral-700',
+      'data-[state=open]:bg-neutral-100 dark:data-[state=open]:bg-neutral-800',
       'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',
       inset && 'pl-8',
       className

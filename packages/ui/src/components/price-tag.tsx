@@ -54,11 +54,11 @@ const PriceTag = React.forwardRef<HTMLDivElement, PriceTagProps>(
       className={cn(priceTagVariants({ size }), className)}
       {...props}
     >
-      <span className="font-bold text-neutral-900 dark:text-neutral-100">
+      <span className="font-semibold tabular-nums tracking-normal text-neutral-900 dark:text-neutral-100">
         {price}
       </span>
       {originalPrice && (
-        <span className="text-sm line-through text-neutral-500 dark:text-neutral-400">
+        <span className="text-sm tabular-nums line-through text-neutral-500 dark:text-neutral-400">
           {originalPrice}
         </span>
       )}

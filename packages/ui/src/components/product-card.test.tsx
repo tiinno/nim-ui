@@ -39,11 +39,11 @@ describe('ProductCard', () => {
         />
       );
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('rounded-lg');
+      expect(card).toHaveClass('rounded-md');
       expect(card).toHaveClass('border');
       expect(card).toHaveClass('bg-white');
       expect(card).toHaveClass('overflow-hidden');
-      expect(card).toHaveClass('shadow-sm');
+      expect(card).toHaveClass('shadow-soft');
     });
 
     it('applies hover shadow transition', () => {
@@ -57,7 +57,7 @@ describe('ProductCard', () => {
       );
       const card = screen.getByTestId('card');
       expect(card).toHaveClass('transition-[box-shadow,transform]');
-      expect(card).toHaveClass('hover:shadow-md');
+      expect(card).toHaveClass('hover:shadow-panel');
     });
   });
 
@@ -333,8 +333,8 @@ describe('ProductCard', () => {
         />
       );
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('dark:bg-neutral-900');
-      expect(card).toHaveClass('dark:border-neutral-700');
+      expect(card).toHaveClass('dark:bg-neutral-950');
+      expect(card).toHaveClass('dark:border-neutral-800');
     });
 
     it('image container has dark mode background', () => {
@@ -374,10 +374,10 @@ describe('ProductCard', () => {
 
     it('generates correct base classes', () => {
       const classes = productCardVariants();
-      expect(classes).toContain('rounded-lg');
+      expect(classes).toContain('rounded-md');
       expect(classes).toContain('border');
       expect(classes).toContain('overflow-hidden');
-      expect(classes).toContain('shadow-sm');
+      expect(classes).toContain('shadow-soft');
     });
   });
 
@@ -394,7 +394,7 @@ describe('ProductCard', () => {
       );
       const card = screen.getByTestId('card');
       expect(card).toHaveClass('max-w-sm');
-      expect(card).toHaveClass('rounded-lg');
+      expect(card).toHaveClass('rounded-md');
     });
   });
 

@@ -43,7 +43,7 @@ const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
     return (
       <div
         ref={ref}
-        className={cn('rounded-lg border bg-white p-6 shadow-sm dark:bg-neutral-900 dark:border-neutral-700', className)}
+        className={cn('rounded-md border border-neutral-200 bg-white p-4 shadow-soft dark:border-neutral-800 dark:bg-neutral-950 sm:p-5', className)}
         {...props}
       >
         <div className="flex flex-col space-y-2">
@@ -51,7 +51,7 @@ const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             {label}
           </p>
           <div className="flex items-baseline gap-2">
-            <p className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+            <p className="text-2xl font-semibold tabular-nums tracking-normal text-neutral-900 dark:text-neutral-100">
               {value}
             </p>
             {trend && (
@@ -76,6 +76,6 @@ DataCard.displayName = 'DataCard';
  * @deprecated `dataCardVariants` is kept for backwards compatibility.
  * Prefer using the `DataCard` component directly.
  */
-const dataCardVariants = () => 'rounded-lg border bg-white p-6 shadow-sm dark:bg-neutral-900 dark:border-neutral-700';
+const dataCardVariants = () => 'rounded-md border border-neutral-200 bg-white p-4 shadow-soft dark:border-neutral-800 dark:bg-neutral-950 sm:p-5';
 
 export { DataCard, dataCardVariants };

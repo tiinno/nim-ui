@@ -20,14 +20,14 @@ import { Switch } from '@nim-ui/components';
 ### Default
 
 <ComponentPreview title="Default Switch">
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load id="default-switch" />
-    <label htmlFor="default-switch" className="text-sm font-medium">Toggle me</label>
+    <label for="default-switch" className="text-sm font-medium">Toggle me</label>
   </div>
 
   <Fragment slot="code">
 ```tsx
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch id="default-switch" />
   <label htmlFor="default-switch">Toggle me</label>
 </div>
@@ -40,30 +40,30 @@ import { Switch } from '@nim-ui/components';
 The recommended usage is to pair the Switch with a `<label>` element using matching `id` and `htmlFor` attributes.
 
 <ComponentPreview title="Switch with Labels">
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load id="airplane-mode" />
-    <label htmlFor="airplane-mode" className="text-sm font-medium">Airplane Mode</label>
+    <label for="airplane-mode" className="text-sm font-medium">Airplane Mode</label>
   </div>
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load id="dark-mode" />
-    <label htmlFor="dark-mode" className="text-sm font-medium">Dark Mode</label>
+    <label for="dark-mode" className="text-sm font-medium">Dark Mode</label>
   </div>
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load id="notifications" />
-    <label htmlFor="notifications" className="text-sm font-medium">Notifications</label>
+    <label for="notifications" className="text-sm font-medium">Notifications</label>
   </div>
 
   <Fragment slot="code">
 ```tsx
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch id="airplane-mode" />
   <label htmlFor="airplane-mode">Airplane Mode</label>
 </div>
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch id="dark-mode" />
   <label htmlFor="dark-mode">Dark Mode</label>
 </div>
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch id="notifications" />
   <label htmlFor="notifications">Notifications</label>
 </div>
@@ -76,30 +76,30 @@ The recommended usage is to pair the Switch with a `<label>` element using match
 Three size options are available: small, medium (default), and large.
 
 <ComponentPreview title="Switch Sizes">
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load size="sm" id="switch-sm" />
-    <label htmlFor="switch-sm" className="text-sm font-medium">Small</label>
+    <label for="switch-sm" className="text-sm font-medium">Small</label>
   </div>
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load size="md" id="switch-md" />
-    <label htmlFor="switch-md" className="text-sm font-medium">Medium</label>
+    <label for="switch-md" className="text-sm font-medium">Medium</label>
   </div>
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load size="lg" id="switch-lg" />
-    <label htmlFor="switch-lg" className="text-sm font-medium">Large</label>
+    <label for="switch-lg" className="text-sm font-medium">Large</label>
   </div>
 
   <Fragment slot="code">
 ```tsx
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch size="sm" id="switch-sm" />
   <label htmlFor="switch-sm">Small</label>
 </div>
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch size="md" id="switch-md" />
   <label htmlFor="switch-md">Medium</label>
 </div>
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch size="lg" id="switch-lg" />
   <label htmlFor="switch-lg">Large</label>
 </div>
@@ -112,22 +112,22 @@ Three size options are available: small, medium (default), and large.
 ### Disabled
 
 <ComponentPreview title="Disabled State">
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load id="disabled-off" disabled />
-    <label htmlFor="disabled-off" className="text-sm font-medium text-gray-400">Disabled (off)</label>
+    <label for="disabled-off" className="text-sm font-medium text-gray-400">Disabled (off)</label>
   </div>
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center gap-3">
     <Switch client:load id="disabled-on" disabled checked={true} />
-    <label htmlFor="disabled-on" className="text-sm font-medium text-gray-400">Disabled (on)</label>
+    <label for="disabled-on" className="text-sm font-medium text-gray-400">Disabled (on)</label>
   </div>
 
   <Fragment slot="code">
 ```tsx
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch id="disabled-off" disabled />
   <label htmlFor="disabled-off">Disabled (off)</label>
 </div>
-<div className="flex items-center space-x-2">
+<div className="flex items-center gap-3">
   <Switch id="disabled-on" disabled checked />
   <label htmlFor="disabled-on">Disabled (on)</label>
 </div>

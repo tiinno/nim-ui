@@ -84,14 +84,14 @@ PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName;
 // ---------------------------------------------------------------------------
 
 const popoverContentVariants = cva(
-  'z-50 w-72 rounded-md p-4 shadow-md outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+  'z-50 w-72 rounded-md p-4 outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
   {
     variants: {
       variant: {
         default:
-          'border border-neutral-200 bg-white text-neutral-900 shadow-lg dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
+          'border border-neutral-200 bg-white text-neutral-900 shadow-panel dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
         outline:
-          'border-2 border-primary-500 bg-white text-neutral-900 shadow-lg dark:border-primary-400 dark:bg-neutral-800 dark:text-neutral-100',
+          'border-2 border-primary-500 bg-white text-neutral-900 shadow-panel dark:border-primary-400 dark:bg-neutral-900 dark:text-neutral-100',
       },
     },
     defaultVariants: {
@@ -185,7 +185,7 @@ const PopoverContent = React.forwardRef<
           ref={ref}
           side={side}
           sideOffset={showArrow ? sideOffset + arrowSize : sideOffset}
-          className={cn(popoverContentVariants({ variant }), '[--popover-arrow-color:white] dark:[--popover-arrow-color:var(--color-neutral-800)]', className)}
+          className={cn(popoverContentVariants({ variant }), '[--popover-arrow-color:white] dark:[--popover-arrow-color:var(--color-neutral-900)]', className)}
           style={{ position: 'relative' }}
           {...props}
         >
@@ -222,7 +222,7 @@ const PopoverArrow = React.forwardRef<
     ref={ref}
     width={width}
     height={height}
-    className={cn('block fill-white dark:fill-neutral-800', className)}
+    className={cn('block fill-white dark:fill-neutral-900', className)}
     {...props}
   />
 ));

@@ -1163,11 +1163,11 @@
       "examples": [
         {
           "title": "Simple Checkbox",
-          "code": "<Checkbox id=\"terms\" label=\"Accept terms and conditions\" />"
+          "code": "<Checkbox id=\"terms\" label=\"Accept terms and conditions\" description=\"Required before checkout can continue.\" />"
         },
         {
           "title": "Large Checkbox",
-          "code": "<Checkbox id=\"newsletter\" label=\"Subscribe to newsletter\" size=\"lg\" />"
+          "code": "<Checkbox id=\"newsletter\" label=\"Subscribe to release updates\" size=\"lg\" />"
         }
       ]
     },
@@ -1197,11 +1197,11 @@
       "examples": [
         {
           "title": "Radio Group",
-          "code": "<RadioGroup><Radio value=\"1\" label=\"Option 1\" /><Radio value=\"2\" label=\"Option 2\" /></RadioGroup>"
+          "code": "<RadioGroup><Radio value=\"standard\" label=\"Standard review\" description=\"Route to the normal operations queue.\" /><Radio value=\"priority\" label=\"Priority queue\" description=\"Surface this item for same-day review.\" /></RadioGroup>"
         },
         {
           "title": "Large Radio Buttons",
-          "code": "<RadioGroup><Radio value=\"a\" label=\"Choice A\" size=\"lg\" /><Radio value=\"b\" label=\"Choice B\" size=\"lg\" /></RadioGroup>"
+          "code": "<RadioGroup><Radio value=\"compact\" label=\"Compact\" size=\"sm\" /><Radio value=\"balanced\" label=\"Balanced\" size=\"md\" /><Radio value=\"spacious\" label=\"Spacious\" size=\"lg\" /></RadioGroup>"
         }
       ]
     },
@@ -1361,7 +1361,7 @@
         },
         {
           "title": "Switch with Label",
-          "code": "<div className=\"flex items-center space-x-2\"><Switch id=\"notifications\" /><label htmlFor=\"notifications\">Enable notifications</label></div>"
+          "code": "<div className=\"flex items-center gap-3\"><Switch id=\"notifications\" /><label htmlFor=\"notifications\">Enable notifications</label></div>"
         }
       ]
     },

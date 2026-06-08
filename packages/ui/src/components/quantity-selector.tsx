@@ -28,7 +28,7 @@ import { cn } from '../lib/utils';
  */
 
 const quantitySelectorVariants = cva(
-  'inline-flex items-center border rounded-md bg-white dark:bg-neutral-900 dark:border-neutral-700',
+  'inline-flex items-center rounded-md border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-neutral-900',
   {
     variants: {
       size: {
@@ -72,14 +72,14 @@ const QuantitySelector = React.forwardRef<HTMLDivElement, QuantitySelectorProps>
     };
 
     const buttonClass = cn(
-      'cursor-pointer px-3 font-medium transition-colors duration-fast active:scale-[0.97] hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-neutral-800 dark:text-neutral-100',
+      'cursor-pointer px-3 font-medium transition-colors duration-fast active:scale-[0.97] hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:hover:bg-neutral-800 dark:text-neutral-100',
       size === 'sm' && 'text-sm',
       size === 'md' && 'text-base',
       size === 'lg' && 'text-lg'
     );
 
     const inputClass = cn(
-      'w-12 text-center border-x bg-transparent font-medium text-neutral-900 dark:text-neutral-100 dark:border-neutral-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
+      'w-12 border-x border-neutral-300 bg-transparent text-center font-medium tabular-nums text-neutral-900 dark:border-neutral-700 dark:text-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
       size === 'sm' && 'text-sm',
       size === 'md' && 'text-base',
       size === 'lg' && 'text-lg'

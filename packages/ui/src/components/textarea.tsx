@@ -23,7 +23,7 @@ const textareaVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-neutral-300 focus-visible:ring-primary-500 dark:border-neutral-600 dark:text-neutral-100',
+        default: 'border-neutral-300 focus-visible:border-primary-400 focus-visible:ring-primary-400 dark:border-neutral-600 dark:text-neutral-100',
         error: 'border-error-500 focus-visible:ring-error-500 text-error-900 dark:border-error-400 dark:text-error-100',
         success: 'border-success-500 focus-visible:ring-success-500 text-success-900 dark:border-success-400 dark:text-success-100',
       },

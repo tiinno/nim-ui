@@ -47,7 +47,7 @@ import { cn } from '../lib/utils';
  */
 
 const dataTableVariants = cva(
-  'w-full caption-bottom text-sm border-collapse',
+  'w-full caption-bottom border-collapse text-sm tabular-nums',
   {
     variants: {},
     defaultVariants: {},
@@ -97,7 +97,7 @@ const DataTableFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
-    className={cn('border-t bg-neutral-50 font-medium dark:bg-neutral-800', className)}
+    className={cn('border-t border-neutral-200 bg-neutral-50 font-medium dark:border-neutral-800 dark:bg-neutral-900', className)}
     {...props}
   />
 ));
@@ -110,7 +110,7 @@ const DataTableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      'border-b border-neutral-200 transition-colors hover:bg-neutral-50 data-[state=selected]:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800 dark:data-[state=selected]:bg-neutral-800',
+      'border-b border-neutral-200 transition-colors hover:bg-neutral-50 data-[state=selected]:bg-neutral-100 dark:border-neutral-800 dark:hover:bg-neutral-900 dark:data-[state=selected]:bg-neutral-800',
       className
     )}
     {...props}

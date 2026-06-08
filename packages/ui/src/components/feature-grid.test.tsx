@@ -290,8 +290,8 @@ describe('FeatureCard', () => {
         />
       );
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('dark:bg-neutral-900');
-      expect(card).toHaveClass('dark:border-neutral-700');
+      expect(card).toHaveClass('dark:bg-neutral-950');
+      expect(card).toHaveClass('dark:border-neutral-800');
     });
 
     it('icon container has dark mode styles', () => {

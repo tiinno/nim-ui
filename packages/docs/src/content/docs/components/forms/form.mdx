@@ -3,7 +3,19 @@ title: Form
 description: Styled form wrapper component for consistent form layouts and structure
 ---
 
-import { Form, Input, Textarea, Select, Checkbox, Button } from '@nim-ui/components';
+import {
+  Form,
+  FormField,
+  Input,
+  Textarea,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  Checkbox,
+  Button,
+} from '@nim-ui/components';
 import ComponentPreview from '../../../../components/ComponentPreview.astro';
 import PropsTable from '../../../../components/PropsTable.astro';
 
@@ -18,9 +30,13 @@ import { Form } from '@nim-ui/components';
 ## Usage
 
 <ComponentPreview title="Basic Form">
-  <Form client:only="react" onSubmit={(e) => { e.preventDefault(); alert('Form submitted!'); }}>
-    <Input placeholder="Enter your name" />
-    <Input type="email" placeholder="Enter your email" />
+  <Form client:only="react" className="mx-auto max-w-sm gap-5" onSubmit={(e) => { e.preventDefault(); alert('Form submitted!'); }}>
+    <FormField label="Name" name="basic-name">
+      <Input placeholder="Operations lead" />
+    </FormField>
+    <FormField label="Email" name="basic-email">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
     <Button type="submit" variant="primary">
       Submit
     </Button>
@@ -29,8 +45,12 @@ import { Form } from '@nim-ui/components';
   <Fragment slot="code">
 ```tsx
 <Form onSubmit={handleSubmit}>
-  <Input placeholder="Enter your name" />
-  <Input type="email" placeholder="Enter your email" />
+  <FormField label="Name" name="name">
+    <Input placeholder="Operations lead" />
+  </FormField>
+  <FormField label="Email" name="email">
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
   <Button type="submit" variant="primary">
     Submit
   </Button>
@@ -44,11 +64,21 @@ import { Form } from '@nim-ui/components';
 ### Vertical Layout (Default)
 
 <ComponentPreview title="Vertical Form Layout">
-  <Form client:only="react">
-    <Input placeholder="First name" />
-    <Input placeholder="Last name" />
-    <Input type="email" placeholder="Email address" />
-    <Textarea placeholder="Your message" rows={4} />
+  <Form client:only="react" className="mx-auto max-w-md gap-5">
+    <div className="grid gap-4 sm:grid-cols-2">
+      <FormField label="First name" name="vertical-first-name">
+        <Input placeholder="Nim" />
+      </FormField>
+      <FormField label="Last name" name="vertical-last-name">
+        <Input placeholder="Team" />
+      </FormField>
+    </div>
+    <FormField label="Email" name="vertical-email">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
+    <FormField label="Message" name="vertical-message">
+      <Textarea placeholder="Share the operational context..." rows={4} />
+    </FormField>
     <Button type="submit" variant="primary">
       Send Message
     </Button>
@@ -57,10 +87,20 @@ import { Form } from '@nim-ui/components';
   <Fragment slot="code">
 ```tsx
 <Form onSubmit={handleSubmit}>
-  <Input placeholder="First name" />
-  <Input placeholder="Last name" />
-  <Input type="email" placeholder="Email address" />
-  <Textarea placeholder="Your message" rows={4} />
+  <div className="grid gap-4 sm:grid-cols-2">
+    <FormField label="First name" name="firstName">
+      <Input placeholder="Nim" />
+    </FormField>
+    <FormField label="Last name" name="lastName">
+      <Input placeholder="Team" />
+    </FormField>
+  </div>
+  <FormField label="Email" name="email">
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
+  <FormField label="Message" name="message">
+    <Textarea placeholder="Share the operational context..." rows={4} />
+  </FormField>
   <Button type="submit" variant="primary">
     Send Message
   </Button>
@@ -72,12 +112,18 @@ import { Form } from '@nim-ui/components';
 ### Inline Fields
 
 <ComponentPreview title="Form with Inline Fields">
-  <Form client:only="react">
-    <div className="flex gap-4">
-      <Input placeholder="First name" />
-      <Input placeholder="Last name" />
+  <Form client:only="react" className="mx-auto max-w-md gap-5">
+    <div className="grid gap-4 sm:grid-cols-2">
+      <FormField label="First name" name="inline-first-name">
+        <Input placeholder="Nim" />
+      </FormField>
+      <FormField label="Last name" name="inline-last-name">
+        <Input placeholder="Team" />
+      </FormField>
     </div>
-    <Input type="email" placeholder="Email address" />
+    <FormField label="Email" name="inline-email">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
     <Button type="submit" variant="primary">
       Create Account
     </Button>
@@ -86,11 +132,17 @@ import { Form } from '@nim-ui/components';
   <Fragment slot="code">
 ```tsx
 <Form onSubmit={handleSubmit}>
-  <div className="flex gap-4">
-    <Input placeholder="First name" />
-    <Input placeholder="Last name" />
+  <div className="grid gap-4 sm:grid-cols-2">
+    <FormField label="First name" name="firstName">
+      <Input placeholder="Nim" />
+    </FormField>
+    <FormField label="Last name" name="lastName">
+      <Input placeholder="Team" />
+    </FormField>
   </div>
-  <Input type="email" placeholder="Email address" />
+  <FormField label="Email" name="email">
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
   <Button type="submit" variant="primary">
     Create Account
   </Button>
@@ -102,18 +154,29 @@ import { Form } from '@nim-ui/components';
 ## With Select and Checkbox
 
 <ComponentPreview title="Complete Form">
-  <Form client:only="react">
-    <Input placeholder="Full name" />
-    <Input type="email" placeholder="Email" />
-    <Select
-      options={[
-        { value: 'personal', label: 'Personal' },
-        { value: 'business', label: 'Business' },
-        { value: 'enterprise', label: 'Enterprise' },
-      ]}
-      placeholder="Select plan"
-    />
-    <Checkbox label="I agree to the terms and conditions" />
+  <Form client:only="react" className="mx-auto max-w-md gap-5">
+    <FormField label="Full name" name="signup-name">
+      <Input placeholder="Nim Operations" />
+    </FormField>
+    <FormField label="Work email" name="signup-email">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
+    <div className="space-y-2">
+      <label htmlFor="signup-plan" className="block text-sm font-medium text-neutral-900 dark:text-neutral-100">
+        Plan
+      </label>
+      <Select>
+        <SelectTrigger id="signup-plan" className="w-full">
+          <SelectValue placeholder="Select plan" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="personal">Personal</SelectItem>
+          <SelectItem value="business">Business</SelectItem>
+          <SelectItem value="enterprise">Enterprise</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
+    <Checkbox id="signup-terms" label="I agree to the terms and conditions" />
     <Button type="submit" variant="primary" fullWidth>
       Sign Up
     </Button>
@@ -122,17 +185,28 @@ import { Form } from '@nim-ui/components';
   <Fragment slot="code">
 ```tsx
 <Form onSubmit={handleSubmit}>
-  <Input placeholder="Full name" />
-  <Input type="email" placeholder="Email" />
-  <Select
-    options={[
-      { value: 'personal', label: 'Personal' },
-      { value: 'business', label: 'Business' },
-      { value: 'enterprise', label: 'Enterprise' },
-    ]}
-    placeholder="Select plan"
-  />
-  <Checkbox label="I agree to the terms and conditions" />
+  <FormField label="Full name" name="name">
+    <Input placeholder="Nim Operations" />
+  </FormField>
+  <FormField label="Work email" name="email">
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
+  <div className="space-y-2">
+    <label htmlFor="plan" className="block text-sm font-medium">
+      Plan
+    </label>
+    <Select>
+      <SelectTrigger id="plan" className="w-full">
+        <SelectValue placeholder="Select plan" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="personal">Personal</SelectItem>
+        <SelectItem value="business">Business</SelectItem>
+        <SelectItem value="enterprise">Enterprise</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+  <Checkbox id="terms" label="I agree to the terms and conditions" />
   <Button type="submit" variant="primary" fullWidth>
     Sign Up
   </Button>
@@ -144,9 +218,13 @@ import { Form } from '@nim-ui/components';
 ## With Validation Errors
 
 <ComponentPreview title="Form with Errors">
-  <Form client:only="react">
-    <Input placeholder="Email" type="email" error="Please enter a valid email address" />
-    <Input placeholder="Password" type="password" error="Password must be at least 8 characters" />
+  <Form client:only="react" className="mx-auto max-w-sm gap-5">
+    <FormField label="Email" name="error-email" error="Please enter a valid email address">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
+    <FormField label="Password" name="error-password" error="Password must be at least 8 characters">
+      <Input type="password" placeholder="Password" />
+    </FormField>
     <Button type="submit" variant="primary" fullWidth>
       Log In
     </Button>
@@ -155,16 +233,12 @@ import { Form } from '@nim-ui/components';
   <Fragment slot="code">
 ```tsx
 <Form onSubmit={handleSubmit}>
-  <Input
-    placeholder="Email"
-    type="email"
-    error={errors.email}
-  />
-  <Input
-    placeholder="Password"
-    type="password"
-    error={errors.password}
-  />
+  <FormField label="Email" name="email" error={errors.email}>
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
+  <FormField label="Password" name="password" error={errors.password}>
+    <Input type="password" placeholder="Password" />
+  </FormField>
   <Button type="submit" variant="primary" fullWidth>
     Log In
   </Button>
@@ -212,9 +286,42 @@ The Form component extends `React.FormHTMLAttributes<HTMLFormElement>`, so it ac
 
 ### Login Form
 
+<ComponentPreview title="Login Form Example">
+  <div className="mx-auto w-full max-w-sm rounded-md border border-neutral-200 bg-white p-5 shadow-soft dark:border-neutral-800 dark:bg-neutral-950 sm:p-6">
+    <div className="mb-5">
+      <p className="text-xs font-medium uppercase text-neutral-500 dark:text-neutral-400">
+        Operator console
+      </p>
+      <h3 className="mt-1 text-xl font-semibold text-neutral-950 dark:text-neutral-50">
+        Sign in
+      </h3>
+      <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+        Use your workspace email to continue.
+      </p>
+    </div>
+    <Form client:only="react" className="gap-5">
+      <FormField label="Email" name="login-email">
+        <Input name="email" type="email" placeholder="ops@example.com" autoComplete="email" />
+      </FormField>
+      <FormField label="Password" name="login-password" helperText="Use at least 8 characters.">
+        <Input name="password" type="password" placeholder="Password" autoComplete="current-password" />
+      </FormField>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Checkbox id="remember-login" name="remember" label="Keep me signed in" />
+        <a href="#" className="text-sm font-medium text-primary-700 hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200">
+          Forgot password?
+        </a>
+      </div>
+      <Button type="submit" variant="primary" fullWidth>
+        Sign in
+      </Button>
+    </Form>
+  </div>
+
+  <Fragment slot="code">
 ```tsx
 import { useState } from 'react';
-import { Form, Input, Button, Checkbox } from '@nim-ui/components';
+import { Form, FormField, Input, Button, Checkbox } from '@nim-ui/components';
 
 function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -238,32 +345,68 @@ function LoginForm() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Input
-        name="email"
-        type="email"
-        placeholder="Email"
-        error={errors.email}
-      />
-      <Input
-        name="password"
-        type="password"
-        placeholder="Password"
-        error={errors.password}
-      />
-      <Checkbox label="Remember me" name="remember" />
-      <Button type="submit" variant="primary" fullWidth loading={loading}>
-        Sign In
-      </Button>
-    </Form>
+    <div className="w-full max-w-sm rounded-md border border-neutral-200 bg-white p-6 shadow-soft">
+      <div className="mb-5">
+        <p className="text-xs font-medium uppercase text-neutral-500">
+          Operator console
+        </p>
+        <h3 className="mt-1 text-xl font-semibold text-neutral-950">
+          Sign in
+        </h3>
+        <p className="mt-1 text-sm text-neutral-600">
+          Use your workspace email to continue.
+        </p>
+      </div>
+      <Form onSubmit={handleSubmit} className="gap-5">
+        <FormField label="Email" name="email" error={errors.email}>
+          <Input
+            name="email"
+            type="email"
+            placeholder="ops@example.com"
+            autoComplete="email"
+          />
+        </FormField>
+        <FormField label="Password" name="password" error={errors.password}>
+          <Input
+            name="password"
+            type="password"
+            placeholder="Password"
+            autoComplete="current-password"
+          />
+        </FormField>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Checkbox id="remember" label="Keep me signed in" name="remember" />
+          <a href="#" className="text-sm font-medium text-primary-700">
+            Forgot password?
+          </a>
+        </div>
+        <Button type="submit" variant="primary" fullWidth loading={loading}>
+          Sign in
+        </Button>
+      </Form>
+    </div>
   );
 }
 ```
+  </Fragment>
+</ComponentPreview>
+
 
 ### Contact Form
 
 ```tsx
-import { Form, Input, Textarea, Select, Button } from '@nim-ui/components';
+import {
+  Form,
+  FormField,
+  Input,
+  Textarea,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  Button,
+} from '@nim-ui/components';
 
 function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
@@ -273,27 +416,37 @@ function ContactForm() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <div className="flex gap-4">
-        <Input name="firstName" placeholder="First name" />
-        <Input name="lastName" placeholder="Last name" />
+    <Form onSubmit={handleSubmit} className="gap-5">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <FormField label="First name" name="firstName">
+          <Input name="firstName" placeholder="Nim" />
+        </FormField>
+        <FormField label="Last name" name="lastName">
+          <Input name="lastName" placeholder="Team" />
+        </FormField>
       </div>
-      <Input name="email" type="email" placeholder="Email address" />
-      <Select
-        name="subject"
-        placeholder="What is this about?"
-        options={[
-          { value: 'general', label: 'General Inquiry' },
-          { value: 'support', label: 'Technical Support' },
-          { value: 'billing', label: 'Billing' },
-          { value: 'feedback', label: 'Feedback' },
-        ]}
-      />
-      <Textarea
-        name="message"
-        placeholder="Your message..."
-        rows={6}
-      />
+      <FormField label="Email" name="email">
+        <Input name="email" type="email" placeholder="ops@example.com" />
+      </FormField>
+      <div className="space-y-2">
+        <label htmlFor="subject" className="block text-sm font-medium">
+          Subject
+        </label>
+        <Select name="subject">
+          <SelectTrigger id="subject" className="w-full">
+            <SelectValue placeholder="What is this about?" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="general">General Inquiry</SelectItem>
+            <SelectItem value="support">Technical Support</SelectItem>
+            <SelectItem value="billing">Billing</SelectItem>
+            <SelectItem value="feedback">Feedback</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <FormField label="Message" name="message">
+        <Textarea name="message" placeholder="Your message..." rows={6} />
+      </FormField>
       <Button type="submit" variant="primary">
         Send Message
       </Button>
@@ -306,17 +459,21 @@ function ContactForm() {
 
 ```tsx
 import { useState } from 'react';
-import { Form, Input, Button } from '@nim-ui/components';
+import { Form, FormField, Input, Button } from '@nim-ui/components';
 
 function MultiStepForm() {
   const [step, setStep] = useState(1);
 
   return (
-    <Form onSubmit={handleFinalSubmit}>
+    <Form onSubmit={handleFinalSubmit} className="gap-5">
       {step === 1 && (
         <>
-          <Input name="name" placeholder="Full name" />
-          <Input name="email" type="email" placeholder="Email" />
+          <FormField label="Full name" name="name">
+            <Input name="name" placeholder="Nim Operations" />
+          </FormField>
+          <FormField label="Email" name="email">
+            <Input name="email" type="email" placeholder="ops@example.com" />
+          </FormField>
           <Button variant="primary" onClick={() => setStep(2)}>
             Next
           </Button>
@@ -324,8 +481,12 @@ function MultiStepForm() {
       )}
       {step === 2 && (
         <>
-          <Input name="company" placeholder="Company" />
-          <Input name="role" placeholder="Your role" />
+          <FormField label="Company" name="company">
+            <Input name="company" placeholder="Nim UI" />
+          </FormField>
+          <FormField label="Role" name="role">
+            <Input name="role" placeholder="Operations lead" />
+          </FormField>
           <div className="flex gap-4">
             <Button variant="outline" onClick={() => setStep(1)}>
               Back

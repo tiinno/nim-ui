@@ -444,8 +444,8 @@ describe('CartItem', () => {
         />
       );
       const item = screen.getByTestId('cart-item');
-      expect(item).toHaveClass('dark:bg-neutral-900');
-      expect(item).toHaveClass('dark:border-neutral-700');
+      expect(item).toHaveClass('dark:bg-neutral-950');
+      expect(item).toHaveClass('dark:border-neutral-800');
     });
 
     it('image container has dark mode background', () => {

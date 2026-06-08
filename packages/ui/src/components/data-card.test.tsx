@@ -24,11 +24,11 @@ describe('DataCard', () => {
     it('applies default card styles', () => {
       render(<DataCard value="100" label="Score" data-testid="card" />);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('rounded-lg');
+      expect(card).toHaveClass('rounded-md');
       expect(card).toHaveClass('border');
       expect(card).toHaveClass('bg-white');
-      expect(card).toHaveClass('shadow-sm');
-      expect(card).toHaveClass('p-6');
+      expect(card).toHaveClass('shadow-soft');
+      expect(card).toHaveClass('p-4');
     });
   });
 
@@ -46,8 +46,8 @@ describe('DataCard', () => {
     it('value has large bold styling', () => {
       render(<DataCard value="789" label="Items" />);
       const value = screen.getByText('789');
-      expect(value).toHaveClass('text-3xl');
-      expect(value).toHaveClass('font-bold');
+      expect(value).toHaveClass('text-2xl');
+      expect(value).toHaveClass('font-semibold');
       expect(value).toHaveClass('text-neutral-900');
     });
 
@@ -221,8 +221,8 @@ describe('DataCard', () => {
     it('applies dark mode card styles', () => {
       render(<DataCard value="100" label="Score" data-testid="card" />);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('dark:bg-neutral-900');
-      expect(card).toHaveClass('dark:border-neutral-700');
+      expect(card).toHaveClass('dark:bg-neutral-950');
+      expect(card).toHaveClass('dark:border-neutral-800');
     });
 
     it('applies dark mode label styles', () => {
@@ -276,7 +276,7 @@ describe('DataCard', () => {
       );
       const card = screen.getByTestId('card');
       expect(card).toHaveClass('max-w-sm');
-      expect(card).toHaveClass('rounded-lg');
+      expect(card).toHaveClass('rounded-md');
     });
 
     it('allows additional styling', () => {

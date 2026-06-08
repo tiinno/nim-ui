@@ -379,7 +379,7 @@ describe('Tooltip', () => {
         },
         light: {
           light: ['bg-white', 'text-neutral-900', 'border'],
-          dark: ['dark:border-neutral-700', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
+          dark: ['dark:border-neutral-800', 'dark:bg-neutral-900', 'dark:text-neutral-100'],
         },
       };
 
@@ -458,7 +458,7 @@ describe('Tooltip', () => {
         },
         light: {
           light: ['fill-white'],
-          dark: ['dark:fill-neutral-800'],
+          dark: ['dark:fill-neutral-900'],
         },
       };
 

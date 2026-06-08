@@ -12,18 +12,18 @@ describe('Button', () => {
     it('renders with default variant', () => {
       render(<Button>Default</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-primary-600');
+      expect(button).toHaveClass('bg-neutral-950');
     });
   });
 
   describe('Variants', () => {
     it.each([
-      ['default', 'bg-primary-600'],
-      ['primary', 'bg-primary-600'],
-      ['secondary', 'bg-neutral-200'],
+      ['default', 'bg-neutral-950'],
+      ['primary', 'bg-neutral-950'],
+      ['secondary', 'bg-neutral-100'],
       ['outline', 'border'],
       ['ghost', 'bg-transparent'],
-      ['destructive', 'bg-error-600'],
+      ['destructive', 'bg-error-700'],
     ])('renders %s variant with correct styles', (variant, expectedClass) => {
       render(<Button variant={variant as any}>{variant}</Button>);
       expect(screen.getByRole('button')).toHaveClass(expectedClass);
@@ -97,7 +97,7 @@ describe('Button', () => {
       render(<Button className="custom-class">Custom</Button>);
       const button = screen.getByRole('button');
       expect(button).toHaveClass('custom-class');
-      expect(button).toHaveClass('bg-primary-600');
+      expect(button).toHaveClass('bg-neutral-950');
     });
   });
 });

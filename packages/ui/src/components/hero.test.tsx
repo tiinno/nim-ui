@@ -46,7 +46,7 @@ describe('Hero', () => {
       const title = screen.getByText('Title');
       expect(title).toHaveClass('text-4xl');
       expect(title).toHaveClass('font-bold');
-      expect(title).toHaveClass('tracking-tight');
+      expect(title).toHaveClass('tracking-normal');
     });
 
     it('title has responsive text sizes', () => {

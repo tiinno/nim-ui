@@ -23,7 +23,7 @@ describe('Testimonial', () => {
       expect(testimonial).toHaveClass('border');
       expect(testimonial).toHaveClass('bg-white');
       expect(testimonial).toHaveClass('p-6');
-      expect(testimonial).toHaveClass('shadow-sm');
+      expect(testimonial).toHaveClass('shadow-soft');
     });
 
     it('renders quote icon', () => {
@@ -224,8 +224,8 @@ describe('Testimonial', () => {
         />
       );
       const testimonial = screen.getByTestId('testimonial');
-      expect(testimonial).toHaveClass('dark:bg-neutral-900');
-      expect(testimonial).toHaveClass('dark:border-neutral-700');
+      expect(testimonial).toHaveClass('dark:bg-neutral-950');
+      expect(testimonial).toHaveClass('dark:border-neutral-800');
     });
 
     it('applies dark mode to role/company', () => {
@@ -271,7 +271,7 @@ describe('Testimonial', () => {
       expect(classes).toContain('rounded-lg');
       expect(classes).toContain('border');
       expect(classes).toContain('bg-white');
-      expect(classes).toContain('shadow-sm');
+      expect(classes).toContain('shadow-soft');
     });
   });
 

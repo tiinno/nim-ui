@@ -51,7 +51,7 @@ describe('CTA', () => {
       const title = screen.getByText('Title');
       expect(title).toHaveClass('text-3xl');
       expect(title).toHaveClass('font-bold');
-      expect(title).toHaveClass('tracking-tight');
+      expect(title).toHaveClass('tracking-normal');
       expect(title).toHaveClass('sm:text-4xl');
     });
 

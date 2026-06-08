@@ -100,7 +100,7 @@ const tooltipContentVariants = cva(
         default:
           'bg-neutral-900 text-neutral-50 dark:bg-neutral-50 dark:text-neutral-900',
         light:
-          'border border-neutral-200 bg-white text-neutral-900 shadow-md dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
+          'border border-neutral-200 bg-white text-neutral-900 shadow-soft dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
       },
     },
     defaultVariants: {
@@ -173,7 +173,7 @@ const TooltipArrow = React.forwardRef<
     className={cn(
       variant === 'default'
         ? 'fill-neutral-900 dark:fill-neutral-50'
-        : 'fill-white dark:fill-neutral-800',
+        : 'fill-white dark:fill-neutral-900',
       className
     )}
     {...props}

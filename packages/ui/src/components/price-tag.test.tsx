@@ -27,7 +27,7 @@ describe('PriceTag', () => {
     it('applies bold styling to current price', () => {
       render(<PriceTag price="$99.99" />);
       const price = screen.getByText('$99.99');
-      expect(price).toHaveClass('font-bold');
+      expect(price).toHaveClass('font-semibold');
       expect(price).toHaveClass('text-neutral-900');
     });
 

@@ -1,0 +1,679 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#_top"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Nim UI" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]: Nim UI
+        - button "Search" [ref=e11] [cursor=pointer]:
+          - img [ref=e12]
+          - generic [ref=e14]: Search
+          - generic [ref=e15]:
+            - generic [ref=e16]: Ctrl
+            - generic [ref=e17]: K
+        - generic [ref=e18]:
+          - link "GitHub" [ref=e20] [cursor=pointer]:
+            - /url: https://github.com/tiinno/nim-ui
+            - generic [ref=e21]: GitHub
+            - img [ref=e22]
+          - generic [ref=e25]:
+            - generic [ref=e26]: Select theme
+            - img
+            - combobox "Select theme" [ref=e27] [cursor=pointer]:
+              - option "Dark"
+              - option "Light"
+              - option "Auto" [selected]
+            - img
+    - navigation "Main":
+      - list [ref=e31]:
+        - listitem [ref=e32]:
+          - group [ref=e33]:
+            - generic "Getting Started" [ref=e34] [cursor=pointer]:
+              - generic [ref=e35]: Getting Started
+              - img [ref=e36]
+            - list [ref=e38]:
+              - listitem [ref=e39]:
+                - link "Introduction" [ref=e40] [cursor=pointer]:
+                  - /url: /
+              - listitem [ref=e41]:
+                - link "Installation" [ref=e42] [cursor=pointer]:
+                  - /url: /getting-started/installation
+              - listitem [ref=e43]:
+                - link "Quick Start" [ref=e44] [cursor=pointer]:
+                  - /url: /getting-started/quick-start
+              - listitem [ref=e45]:
+                - link "Configuration" [ref=e46] [cursor=pointer]:
+                  - /url: /getting-started/configuration
+        - listitem [ref=e47]:
+          - group [ref=e48]:
+            - generic "Components" [ref=e49] [cursor=pointer]:
+              - generic [ref=e50]: Components
+              - img [ref=e51]
+            - list [ref=e53]:
+              - listitem [ref=e54]:
+                - group [ref=e55]:
+                  - generic "Primitives" [ref=e56] [cursor=pointer]:
+                    - generic [ref=e57]: Primitives
+                    - img [ref=e58]
+                  - list [ref=e60]:
+                    - listitem [ref=e61]:
+                      - link "Button" [ref=e62] [cursor=pointer]:
+                        - /url: /components/primitives/button
+                    - listitem [ref=e63]:
+                      - link "Input" [ref=e64] [cursor=pointer]:
+                        - /url: /components/primitives/input
+                    - listitem [ref=e65]:
+                      - link "Textarea" [ref=e66] [cursor=pointer]:
+                        - /url: /components/primitives/textarea
+                    - listitem [ref=e67]:
+                      - link "Checkbox" [ref=e68] [cursor=pointer]:
+                        - /url: /components/primitives/checkbox
+                    - listitem [ref=e69]:
+                      - link "Radio" [ref=e70] [cursor=pointer]:
+                        - /url: /components/primitives/radio
+                    - listitem [ref=e71]:
+                      - link "Select" [ref=e72] [cursor=pointer]:
+                        - /url: /components/primitives/select
+                    - listitem [ref=e73]:
+                      - link "Switch" [ref=e74] [cursor=pointer]:
+                        - /url: /components/primitives/switch
+              - listitem [ref=e75]:
+                - group [ref=e76]:
+                  - generic "Layout" [ref=e77] [cursor=pointer]:
+                    - generic [ref=e78]: Layout
+                    - img [ref=e79]
+                  - list [ref=e81]:
+                    - listitem [ref=e82]:
+                      - link "Container" [ref=e83] [cursor=pointer]:
+                        - /url: /components/layout/container
+                    - listitem [ref=e84]:
+                      - link "Grid" [ref=e85] [cursor=pointer]:
+                        - /url: /components/layout/grid
+                    - listitem [ref=e86]:
+                      - link "Stack" [ref=e87] [cursor=pointer]:
+                        - /url: /components/layout/stack
+                    - listitem [ref=e88]:
+                      - link "Flex" [ref=e89] [cursor=pointer]:
+                        - /url: /components/layout/flex
+                    - listitem [ref=e90]:
+                      - link "Spacer" [ref=e91] [cursor=pointer]:
+                        - /url: /components/layout/spacer
+                    - listitem [ref=e92]:
+                      - link "Card" [ref=e93] [cursor=pointer]:
+                        - /url: /components/layout/card
+                    - listitem [ref=e94]:
+                      - link "AdminShell" [ref=e95] [cursor=pointer]:
+                        - /url: /components/layout/admin-shell
+                    - listitem [ref=e96]:
+                      - link "PageHeader" [ref=e97] [cursor=pointer]:
+                        - /url: /components/layout/page-header
+                    - listitem [ref=e98]:
+                      - link "Modal" [ref=e99] [cursor=pointer]:
+                        - /url: /components/layout/modal
+                    - listitem [ref=e100]:
+                      - link "Drawer" [ref=e101] [cursor=pointer]:
+                        - /url: /components/layout/drawer
+                    - listitem [ref=e102]:
+                      - link "Tabs" [ref=e103] [cursor=pointer]:
+                        - /url: /components/layout/tabs
+                    - listitem [ref=e104]:
+                      - link "Accordion" [ref=e105] [cursor=pointer]:
+                        - /url: /components/layout/accordion
+                    - listitem [ref=e106]:
+                      - link "Separator" [ref=e107] [cursor=pointer]:
+                        - /url: /components/layout/separator
+              - listitem [ref=e108]:
+                - group [ref=e109]:
+                  - generic "Data Display" [ref=e110] [cursor=pointer]:
+                    - generic [ref=e111]: Data Display
+                    - img [ref=e112]
+                  - list [ref=e114]:
+                    - listitem [ref=e115]:
+                      - link "Badge" [ref=e116] [cursor=pointer]:
+                        - /url: /components/data-display/badge
+                    - listitem [ref=e117]:
+                      - link "Avatar" [ref=e118] [cursor=pointer]:
+                        - /url: /components/data-display/avatar
+                    - listitem [ref=e119]:
+                      - link "DataTable" [ref=e120] [cursor=pointer]:
+                        - /url: /components/data-display/data-table
+                    - listitem [ref=e121]:
+                      - link "DataToolbar" [ref=e122] [cursor=pointer]:
+                        - /url: /components/data-display/data-toolbar
+                    - listitem [ref=e123]:
+                      - link "StatusPill" [ref=e124] [cursor=pointer]:
+                        - /url: /components/data-display/status-pill
+                    - listitem [ref=e125]:
+                      - link "FilterSummary" [ref=e126] [cursor=pointer]:
+                        - /url: /components/data-display/filter-summary
+                    - listitem [ref=e127]:
+                      - link "BulkActionBar" [ref=e128] [cursor=pointer]:
+                        - /url: /components/data-display/bulk-action-bar
+                    - listitem [ref=e129]:
+                      - link "EmptyState" [ref=e130] [cursor=pointer]:
+                        - /url: /components/data-display/empty-state
+                    - listitem [ref=e131]:
+                      - link "Timeline" [ref=e132] [cursor=pointer]:
+                        - /url: /components/data-display/timeline
+                    - listitem [ref=e133]:
+                      - link "DescriptionList" [ref=e134] [cursor=pointer]:
+                        - /url: /components/data-display/description-list
+                    - listitem [ref=e135]:
+                      - link "RecordInspector" [ref=e136] [cursor=pointer]:
+                        - /url: /components/data-display/record-inspector
+                    - listitem [ref=e137]:
+                      - link "DataCard" [ref=e138] [cursor=pointer]:
+                        - /url: /components/data-display/data-card
+                    - listitem [ref=e139]:
+                      - link "MetricCard" [ref=e140] [cursor=pointer]:
+                        - /url: /components/data-display/metric-card
+                    - listitem [ref=e141]:
+                      - link "Stat" [ref=e142] [cursor=pointer]:
+                        - /url: /components/data-display/stat
+              - listitem [ref=e143]:
+                - group [ref=e144]:
+                  - generic "Commerce" [ref=e145] [cursor=pointer]:
+                    - generic [ref=e146]: Commerce
+                    - img [ref=e147]
+                  - list [ref=e149]:
+                    - listitem [ref=e150]:
+                      - link "ProductCard" [ref=e151] [cursor=pointer]:
+                        - /url: /components/commerce/product-card
+                    - listitem [ref=e152]:
+                      - link "CartItem" [ref=e153] [cursor=pointer]:
+                        - /url: /components/commerce/cart-item
+                    - listitem [ref=e154]:
+                      - link "PriceTag" [ref=e155] [cursor=pointer]:
+                        - /url: /components/commerce/price-tag
+                    - listitem [ref=e156]:
+                      - link "QuantitySelector" [ref=e157] [cursor=pointer]:
+                        - /url: /components/commerce/quantity-selector
+              - listitem [ref=e158]:
+                - group [ref=e159]:
+                  - generic "Landing" [ref=e160] [cursor=pointer]:
+                    - generic [ref=e161]: Landing
+                    - img [ref=e162]
+                  - list [ref=e164]:
+                    - listitem [ref=e165]:
+                      - link "Hero" [ref=e166] [cursor=pointer]:
+                        - /url: /components/landing/hero
+                    - listitem [ref=e167]:
+                      - link "FeatureGrid" [ref=e168] [cursor=pointer]:
+                        - /url: /components/landing/feature
+                    - listitem [ref=e169]:
+                      - link "Testimonial" [ref=e170] [cursor=pointer]:
+                        - /url: /components/landing/testimonial
+                    - listitem [ref=e171]:
+                      - link "CTA" [ref=e172] [cursor=pointer]:
+                        - /url: /components/landing/cta-section
+              - listitem [ref=e173]:
+                - group [ref=e174]:
+                  - generic "Feedback" [ref=e175] [cursor=pointer]:
+                    - generic [ref=e176]: Feedback
+                    - img [ref=e177]
+                  - list [ref=e179]:
+                    - listitem [ref=e180]:
+                      - link "Toast" [ref=e181] [cursor=pointer]:
+                        - /url: /components/feedback/toast
+                    - listitem [ref=e182]:
+                      - link "Tooltip" [ref=e183] [cursor=pointer]:
+                        - /url: /components/feedback/tooltip
+                    - listitem [ref=e184]:
+                      - link "Popover" [ref=e185] [cursor=pointer]:
+                        - /url: /components/feedback/popover
+                    - listitem [ref=e186]:
+                      - link "Dropdown Menu" [ref=e187] [cursor=pointer]:
+                        - /url: /components/feedback/dropdown-menu
+                    - listitem [ref=e188]:
+                      - link "Alert Dialog" [ref=e189] [cursor=pointer]:
+                        - /url: /components/feedback/alert-dialog
+                    - listitem [ref=e190]:
+                      - link "Alert" [ref=e191] [cursor=pointer]:
+                        - /url: /components/feedback/alert
+                    - listitem [ref=e192]:
+                      - link "Progress" [ref=e193] [cursor=pointer]:
+                        - /url: /components/feedback/progress
+                    - listitem [ref=e194]:
+                      - link "Spinner" [ref=e195] [cursor=pointer]:
+                        - /url: /components/feedback/spinner
+                    - listitem [ref=e196]:
+                      - link "Skeleton" [ref=e197] [cursor=pointer]:
+                        - /url: /components/feedback/skeleton
+              - listitem [ref=e198]:
+                - group [ref=e199]:
+                  - generic "Forms" [ref=e200] [cursor=pointer]:
+                    - generic [ref=e201]: Forms
+                    - img [ref=e202]
+                  - list [ref=e204]:
+                    - listitem [ref=e205]:
+                      - link "Form" [ref=e206] [cursor=pointer]:
+                        - /url: /components/forms/form
+                    - listitem [ref=e207]:
+                      - link "FormLayout" [ref=e208] [cursor=pointer]:
+                        - /url: /components/forms/form-layout
+                    - listitem [ref=e209]:
+                      - link "FormField" [ref=e210] [cursor=pointer]:
+                        - /url: /components/forms/form-field
+              - listitem [ref=e211]:
+                - group [ref=e212]:
+                  - generic "Navigation" [ref=e213] [cursor=pointer]:
+                    - generic [ref=e214]: Navigation
+                    - img [ref=e215]
+                  - list [ref=e217]:
+                    - listitem [ref=e218]:
+                      - link "Breadcrumb" [ref=e219] [cursor=pointer]:
+                        - /url: /components/navigation/breadcrumb
+                    - listitem [ref=e220]:
+                      - link "SidebarNav" [ref=e221] [cursor=pointer]:
+                        - /url: /components/navigation/sidebar-nav
+                    - listitem [ref=e222]:
+                      - link "CommandMenu" [ref=e223] [cursor=pointer]:
+                        - /url: /components/navigation/command-menu
+                    - listitem [ref=e224]:
+                      - link "ViewSwitcher" [ref=e225] [cursor=pointer]:
+                        - /url: /components/navigation/view-switcher
+                    - listitem [ref=e226]:
+                      - link "Pagination" [ref=e227] [cursor=pointer]:
+                        - /url: /components/navigation/pagination
+        - listitem [ref=e228]:
+          - group [ref=e229]:
+            - generic "Patterns" [ref=e230] [cursor=pointer]:
+              - generic [ref=e231]: Patterns
+              - img [ref=e232]
+            - list [ref=e234]:
+              - listitem [ref=e235]:
+                - link "Backoffice Operations Template" [ref=e236] [cursor=pointer]:
+                  - /url: /patterns/backoffice-operations-template
+              - listitem [ref=e237]:
+                - link "Backoffice Dashboard" [ref=e238] [cursor=pointer]:
+                  - /url: /patterns/backoffice-dashboard
+              - listitem [ref=e239]:
+                - link "Backoffice Workflows" [ref=e240] [cursor=pointer]:
+                  - /url: /patterns/backoffice-workflows
+        - listitem [ref=e241]:
+          - group [ref=e242]:
+            - generic "Design System" [ref=e243] [cursor=pointer]:
+              - generic [ref=e244]: Design System
+              - img [ref=e245]
+            - list [ref=e247]:
+              - listitem [ref=e248]:
+                - link "Colors" [ref=e249] [cursor=pointer]:
+                  - /url: /design-system/colors
+              - listitem [ref=e250]:
+                - link "Typography" [ref=e251] [cursor=pointer]:
+                  - /url: /design-system/typography
+              - listitem [ref=e252]:
+                - link "Spacing" [ref=e253] [cursor=pointer]:
+                  - /url: /design-system/spacing
+              - listitem [ref=e254]:
+                - link "Dark Mode" [ref=e255] [cursor=pointer]:
+                  - /url: /design-system/dark-mode
+        - listitem [ref=e256]:
+          - group [ref=e257]:
+            - generic "Guides" [ref=e258] [cursor=pointer]:
+              - generic [ref=e259]: Guides
+              - img [ref=e260]
+            - list [ref=e262]:
+              - listitem [ref=e263]:
+                - link "Customization" [ref=e264] [cursor=pointer]:
+                  - /url: /guides/customization
+              - listitem [ref=e265]:
+                - link "Theming" [ref=e266] [cursor=pointer]:
+                  - /url: /guides/theming
+              - listitem [ref=e267]:
+                - link "Best Practices" [ref=e268] [cursor=pointer]:
+                  - /url: /guides/best-practices
+              - listitem [ref=e269]:
+                - link "Accessibility" [ref=e270] [cursor=pointer]:
+                  - /url: /guides/accessibility
+              - listitem [ref=e271]:
+                - link "MCP Server" [ref=e272] [cursor=pointer]:
+                  - /url: /guides/mcp
+    - generic [ref=e274]:
+      - complementary [ref=e275]:
+        - navigation "On this page" [ref=e280]:
+          - heading "On this page" [level=2] [ref=e281]
+          - list [ref=e282]:
+            - listitem [ref=e283]:
+              - link "Overview" [ref=e284] [cursor=pointer]:
+                - /url: "#_top"
+            - listitem [ref=e285]:
+              - link "Import" [ref=e286] [cursor=pointer]:
+                - /url: "#import"
+            - listitem [ref=e287]:
+              - link "Usage" [ref=e288] [cursor=pointer]:
+                - /url: "#usage"
+            - listitem [ref=e289]:
+              - link "Form Layouts" [ref=e290] [cursor=pointer]:
+                - /url: "#form-layouts"
+              - list [ref=e291]:
+                - listitem [ref=e292]:
+                  - link "Vertical Layout (Default)" [ref=e293] [cursor=pointer]:
+                    - /url: "#vertical-layout-default"
+                - listitem [ref=e294]:
+                  - link "Inline Fields" [ref=e295] [cursor=pointer]:
+                    - /url: "#inline-fields"
+            - listitem [ref=e296]:
+              - link "With Select and Checkbox" [ref=e297] [cursor=pointer]:
+                - /url: "#with-select-and-checkbox"
+            - listitem [ref=e298]:
+              - link "With Validation Errors" [ref=e299] [cursor=pointer]:
+                - /url: "#with-validation-errors"
+            - listitem [ref=e300]:
+              - link "Props" [ref=e301] [cursor=pointer]:
+                - /url: "#props"
+            - listitem [ref=e302]:
+              - link "Usage Examples" [ref=e303] [cursor=pointer]:
+                - /url: "#usage-examples"
+              - list [ref=e304]:
+                - listitem [ref=e305]:
+                  - link "Login Form" [ref=e306] [cursor=pointer]:
+                    - /url: "#login-form"
+                - listitem [ref=e307]:
+                  - link "Contact Form" [ref=e308] [cursor=pointer]:
+                    - /url: "#contact-form"
+                - listitem [ref=e309]:
+                  - link "Multi-step Form" [ref=e310] [cursor=pointer]:
+                    - /url: "#multi-step-form"
+            - listitem [ref=e311]:
+              - link "Accessibility" [ref=e312] [cursor=pointer]:
+                - /url: "#accessibility"
+            - listitem [ref=e313]:
+              - link "Related Components" [ref=e314] [cursor=pointer]:
+                - /url: "#related-components"
+      - main [ref=e316]:
+        - heading "Form" [level=1] [ref=e319]
+        - generic [ref=e321]:
+          - generic [ref=e322]:
+            - paragraph [ref=e323]:
+              - text: The Form component is a lightweight wrapper around the native HTML
+              - code [ref=e324]: <form>
+              - text: element. It provides consistent styling, spacing, and structure for building forms. It extends all standard form attributes, so you can attach
+              - code [ref=e325]: onSubmit
+              - text: ","
+              - code [ref=e326]: action
+              - text: ","
+              - code [ref=e327]: method
+              - text: ", and any other native form props."
+            - heading "Import" [level=2] [ref=e328]
+            - figure [ref=e330]:
+              - code [ref=e332]:
+                - generic [ref=e334]: "import { Form } from '@nim-ui/components';"
+              - button "Copy to clipboard" [ref=e336] [cursor=pointer]
+            - heading "Usage" [level=2] [ref=e338]
+            - generic [ref=e339]:
+              - heading "Basic Form" [level=3] [ref=e341]
+              - group [ref=e344]:
+                - generic "View Code" [ref=e345] [cursor=pointer]:
+                  - generic [ref=e346]:
+                    - img [ref=e347]
+                    - text: View Code
+            - heading "Form Layouts" [level=2] [ref=e349]
+            - heading "Vertical Layout (Default)" [level=3] [ref=e350]
+            - generic [ref=e351]:
+              - heading "Vertical Form Layout" [level=3] [ref=e353]
+              - group [ref=e356]:
+                - generic "View Code" [ref=e357] [cursor=pointer]:
+                  - generic [ref=e358]:
+                    - img [ref=e359]
+                    - text: View Code
+            - heading "Inline Fields" [level=3] [ref=e361]
+            - generic [ref=e362]:
+              - heading "Form with Inline Fields" [level=3] [ref=e364]
+              - group [ref=e367]:
+                - generic "View Code" [ref=e368] [cursor=pointer]:
+                  - generic [ref=e369]:
+                    - img [ref=e370]
+                    - text: View Code
+            - heading "With Select and Checkbox" [level=2] [ref=e372]
+            - generic [ref=e373]:
+              - heading "Complete Form" [level=3] [ref=e375]
+              - group [ref=e378]:
+                - generic "View Code" [ref=e379] [cursor=pointer]:
+                  - generic [ref=e380]:
+                    - img [ref=e381]
+                    - text: View Code
+            - heading "With Validation Errors" [level=2] [ref=e383]
+            - generic [ref=e384]:
+              - heading "Form with Errors" [level=3] [ref=e386]
+              - group [ref=e389]:
+                - generic "View Code" [ref=e390] [cursor=pointer]:
+                  - generic [ref=e391]:
+                    - img [ref=e392]
+                    - text: View Code
+            - heading "Props" [level=2] [ref=e394]
+            - paragraph [ref=e395]:
+              - text: The Form component extends
+              - code [ref=e396]: React.FormHTMLAttributes<HTMLFormElement>
+              - text: ", so it accepts all standard HTML form attributes in addition to the following:"
+            - table [ref=e398]:
+              - rowgroup [ref=e399]:
+                - row "Name Type Default Description" [ref=e400]:
+                  - columnheader "Name" [ref=e401]
+                  - columnheader "Type" [ref=e402]
+                  - columnheader "Default" [ref=e403]
+                  - columnheader "Description" [ref=e404]
+              - rowgroup [ref=e405]:
+                - 'row "onSubmit (event: React.FormEvent<HTMLFormElement>) => void - Submit event handler. Call event.preventDefault() to handle submission in JavaScript." [ref=e406]':
+                  - cell "onSubmit" [ref=e407]:
+                    - code [ref=e408]: onSubmit
+                  - 'cell "(event: React.FormEvent<HTMLFormElement>) => void" [ref=e409]':
+                    - code [ref=e410]: "(event: React.FormEvent<HTMLFormElement>) => void"
+                  - cell "-" [ref=e411]
+                  - cell "Submit event handler. Call event.preventDefault() to handle submission in JavaScript." [ref=e412]
+                - row "action string - URL to submit the form to when using native form submission" [ref=e413]:
+                  - cell "action" [ref=e414]:
+                    - code [ref=e415]: action
+                  - cell "string" [ref=e416]:
+                    - code [ref=e417]: string
+                  - cell "-" [ref=e418]
+                  - cell "URL to submit the form to when using native form submission" [ref=e419]
+                - row "method 'get' | 'post' - HTTP method for native form submission" [ref=e420]:
+                  - cell "method" [ref=e421]:
+                    - code [ref=e422]: method
+                  - cell "'get' | 'post'" [ref=e423]:
+                    - code [ref=e424]: "'get' | 'post'"
+                  - cell "-" [ref=e425]
+                  - cell "HTTP method for native form submission" [ref=e426]
+                - row "className string - Additional CSS classes to apply to the form element" [ref=e427]:
+                  - cell "className" [ref=e428]:
+                    - code [ref=e429]: className
+                  - cell "string" [ref=e430]:
+                    - code [ref=e431]: string
+                  - cell "-" [ref=e432]
+                  - cell "Additional CSS classes to apply to the form element" [ref=e433]
+                - row "children * ReactNode - Form content including inputs, selects, buttons, and other form elements" [ref=e434]:
+                  - cell "children *" [ref=e435]:
+                    - code [ref=e436]: children *
+                  - cell "ReactNode" [ref=e437]:
+                    - code [ref=e438]: ReactNode
+                  - cell "-" [ref=e439]
+                  - cell "Form content including inputs, selects, buttons, and other form elements" [ref=e440]
+            - heading "Usage Examples" [level=2] [ref=e441]
+            - heading "Login Form" [level=3] [ref=e442]
+            - figure [ref=e444]:
+              - code [ref=e446]:
+                - generic [ref=e448]: "import { useState } from 'react';"
+                - generic [ref=e450]: "import { Form, Input, Button, Checkbox } from '@nim-ui/components';"
+                - generic [ref=e454]: "function LoginForm() {"
+                - generic [ref=e456]: const [loading, setLoading] = useState(false);
+                - generic [ref=e458]: "const [errors, setErrors] = useState<Record<string, string>>({});"
+                - generic [ref=e462]: "const handleSubmit = async (e: React.FormEvent) => {"
+                - generic [ref=e464]: e.preventDefault();
+                - generic [ref=e467]: setLoading(true);
+                - generic [ref=e471]: const formData = new FormData(e.currentTarget as HTMLFormElement);
+                - generic [ref=e473]: const email = formData.get('email') as string;
+                - generic [ref=e475]: const password = formData.get('password') as string;
+                - generic [ref=e479]: "try {"
+                - generic [ref=e481]: await login(email, password);
+                - generic [ref=e483]: "} catch (err) {"
+                - generic [ref=e486]: "setErrors({ email: 'Invalid email or password' });"
+                - generic [ref=e488]: "} finally {"
+                - generic [ref=e491]: setLoading(false);
+                - generic [ref=e493]: "}"
+                - generic [ref=e496]: "};"
+                - generic [ref=e501]: return (
+                - generic [ref=e503]: "<Form onSubmit={handleSubmit}>"
+                - generic [ref=e506]: <Input
+                - generic [ref=e509]: name="email"
+                - generic [ref=e511]: type="email"
+                - generic [ref=e513]: placeholder="Email"
+                - generic [ref=e515]: "error={errors.email}"
+                - generic [ref=e517]: />
+                - generic [ref=e520]: <Input
+                - generic [ref=e523]: name="password"
+                - generic [ref=e525]: type="password"
+                - generic [ref=e527]: placeholder="Password"
+                - generic [ref=e529]: "error={errors.password}"
+                - generic [ref=e531]: />
+                - generic [ref=e534]: <Checkbox label="Remember me" name="remember" />
+                - generic [ref=e537]: "<Button type=\"submit\" variant=\"primary\" fullWidth loading={loading}>"
+                - generic [ref=e540]: Sign In
+                - generic [ref=e543]: </Button>
+                - generic [ref=e546]: </Form>
+                - generic [ref=e549]: );
+                - generic [ref=e552]: "}"
+              - button "Copy to clipboard" [ref=e554] [cursor=pointer]
+            - heading "Contact Form" [level=3] [ref=e556]
+            - figure [ref=e558]:
+              - code [ref=e560]:
+                - generic [ref=e562]: "import { Form, Input, Textarea, Select, Button } from '@nim-ui/components';"
+                - generic [ref=e566]: "function ContactForm() {"
+                - generic [ref=e568]: "const handleSubmit = async (e: React.FormEvent) => {"
+                - generic [ref=e570]: e.preventDefault();
+                - generic [ref=e573]: const formData = new FormData(e.currentTarget as HTMLFormElement);
+                - generic [ref=e575]: await sendContactMessage(Object.fromEntries(formData));
+                - generic [ref=e577]: "};"
+                - generic [ref=e582]: return (
+                - generic [ref=e584]: "<Form onSubmit={handleSubmit}>"
+                - generic [ref=e587]: <div className="flex gap-4">
+                - generic [ref=e590]: <Input name="firstName" placeholder="First name" />
+                - generic [ref=e593]: <Input name="lastName" placeholder="Last name" />
+                - generic [ref=e596]: </div>
+                - generic [ref=e599]: <Input name="email" type="email" placeholder="Email address" />
+                - generic [ref=e602]: <Select
+                - generic [ref=e605]: name="subject"
+                - generic [ref=e607]: placeholder="What is this about?"
+                - generic [ref=e609]: "options={["
+                - generic [ref=e611]: "{ value: 'general', label: 'General Inquiry' },"
+                - generic [ref=e614]: "{ value: 'support', label: 'Technical Support' },"
+                - generic [ref=e617]: "{ value: 'billing', label: 'Billing' },"
+                - generic [ref=e620]: "{ value: 'feedback', label: 'Feedback' },"
+                - generic [ref=e623]: "]}"
+                - generic [ref=e626]: />
+                - generic [ref=e629]: <Textarea
+                - generic [ref=e632]: name="message"
+                - generic [ref=e634]: placeholder="Your message..."
+                - generic [ref=e636]: "rows={6}"
+                - generic [ref=e638]: />
+                - generic [ref=e641]: <Button type="submit" variant="primary">
+                - generic [ref=e644]: Send Message
+                - generic [ref=e647]: </Button>
+                - generic [ref=e650]: </Form>
+                - generic [ref=e653]: );
+                - generic [ref=e656]: "}"
+              - button "Copy to clipboard" [ref=e658] [cursor=pointer]
+            - heading "Multi-step Form" [level=3] [ref=e660]
+            - figure [ref=e662]:
+              - code [ref=e664]:
+                - generic [ref=e666]: "import { useState } from 'react';"
+                - generic [ref=e668]: "import { Form, Input, Button } from '@nim-ui/components';"
+                - generic [ref=e672]: "function MultiStepForm() {"
+                - generic [ref=e674]: const [step, setStep] = useState(1);
+                - generic [ref=e678]: return (
+                - generic [ref=e680]: "<Form onSubmit={handleFinalSubmit}>"
+                - generic [ref=e683]: "{step === 1 && ("
+                - generic [ref=e686]: <>
+                - generic [ref=e689]: <Input name="name" placeholder="Full name" />
+                - generic [ref=e692]: <Input name="email" type="email" placeholder="Email" />
+                - generic [ref=e695]: "<Button variant=\"primary\" onClick={() => setStep(2)}>"
+                - generic [ref=e698]: Next
+                - generic [ref=e701]: </Button>
+                - generic [ref=e704]: </>
+                - generic [ref=e707]: ")}"
+                - generic [ref=e710]: "{step === 2 && ("
+                - generic [ref=e713]: <>
+                - generic [ref=e716]: <Input name="company" placeholder="Company" />
+                - generic [ref=e719]: <Input name="role" placeholder="Your role" />
+                - generic [ref=e722]: <div className="flex gap-4">
+                - generic [ref=e725]: "<Button variant=\"outline\" onClick={() => setStep(1)}>"
+                - generic [ref=e728]: Back
+                - generic [ref=e731]: </Button>
+                - generic [ref=e734]: <Button type="submit" variant="primary">
+                - generic [ref=e737]: Submit
+                - generic [ref=e740]: </Button>
+                - generic [ref=e743]: </div>
+                - generic [ref=e746]: </>
+                - generic [ref=e749]: ")}"
+                - generic [ref=e752]: </Form>
+                - generic [ref=e755]: );
+                - generic [ref=e758]: "}"
+              - button "Copy to clipboard" [ref=e760] [cursor=pointer]
+            - heading "Accessibility" [level=2] [ref=e762]
+            - paragraph [ref=e763]: "The Form component follows accessibility best practices:"
+            - list [ref=e764]:
+              - listitem [ref=e765]:
+                - text: Uses the semantic
+                - code [ref=e766]: <form>
+                - text: HTML element
+              - listitem [ref=e767]: Supports native form validation attributes on child inputs
+              - listitem [ref=e768]: Works with screen readers by maintaining proper form landmark semantics
+              - listitem [ref=e769]:
+                - text: All child form elements should include associated labels (see
+                - link "FormField" [ref=e770] [cursor=pointer]:
+                  - /url: /components/forms/form-field/
+                - text: )
+              - listitem [ref=e771]:
+                - text: Error messages are announced to screen readers via
+                - code [ref=e772]: aria-live
+                - text: regions
+            - heading "Related Components" [level=2] [ref=e773]
+            - list [ref=e774]:
+              - listitem [ref=e775]:
+                - link "FormField" [ref=e776] [cursor=pointer]:
+                  - /url: /components/forms/form-field/
+                - text: "- Labeled field wrapper with error and helper text"
+              - listitem [ref=e777]:
+                - link "Input" [ref=e778] [cursor=pointer]:
+                  - /url: /components/primitives/input/
+                - text: "- Text input field"
+              - listitem [ref=e779]:
+                - link "Select" [ref=e780] [cursor=pointer]:
+                  - /url: /components/primitives/select/
+                - text: "- Dropdown selection"
+              - listitem [ref=e781]:
+                - link "Textarea" [ref=e782] [cursor=pointer]:
+                  - /url: /components/primitives/textarea/
+                - text: "- Multi-line text input"
+              - listitem [ref=e783]:
+                - link "Checkbox" [ref=e784] [cursor=pointer]:
+                  - /url: /components/primitives/checkbox/
+                - text: "- Boolean checkbox input"
+              - listitem [ref=e785]:
+                - link "Button" [ref=e786] [cursor=pointer]:
+                  - /url: /components/primitives/button/
+                - text: "- Form submit button"
+          - generic [ref=e787]:
+            - generic [ref=e788]:
+              - link "Edit page" [ref=e789] [cursor=pointer]:
+                - /url: https://github.com/tiinno/nim-ui/edit/main/packages/docs/src/content/docs/components/forms/form.mdx
+                - img [ref=e790]
+                - text: Edit page
+              - paragraph [ref=e792]:
+                - text: "Last updated:"
+                - time [ref=e793]: Feb 14, 2026
+            - generic [ref=e794]:
+              - link "Previous Skeleton" [ref=e795] [cursor=pointer]:
+                - /url: /components/feedback/skeleton
+                - img [ref=e796]
+                - generic [ref=e798]:
+                  - text: Previous
+                  - text: Skeleton
+              - link "Next FormLayout" [ref=e799] [cursor=pointer]:
+                - /url: /components/forms/form-layout
+                - img [ref=e800]
+                - generic [ref=e802]:
+                  - text: Next
+                  - text: FormLayout

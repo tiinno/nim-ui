@@ -17,17 +17,17 @@ describe('Card', () => {
     it('applies default card styles', () => {
       render(<Card data-testid="card">Content</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('rounded-lg');
+      expect(card).toHaveClass('rounded-md');
       expect(card).toHaveClass('border');
       expect(card).toHaveClass('bg-white');
-      expect(card).toHaveClass('shadow-sm');
+      expect(card).toHaveClass('shadow-soft');
     });
 
     it('applies dark mode styles', () => {
       render(<Card data-testid="card">Content</Card>);
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('dark:bg-neutral-900');
-      expect(card).toHaveClass('dark:border-neutral-700');
+      expect(card).toHaveClass('dark:bg-neutral-950');
+      expect(card).toHaveClass('dark:border-neutral-800');
     });
   });
 
@@ -62,7 +62,7 @@ describe('Card', () => {
       expect(header).toHaveClass('flex');
       expect(header).toHaveClass('flex-col');
       expect(header).toHaveClass('space-y-1.5');
-      expect(header).toHaveClass('p-6');
+      expect(header).toHaveClass('p-5');
     });
 
     it('supports complex header content', () => {
@@ -107,7 +107,7 @@ describe('Card', () => {
         </Card>
       );
       const content = screen.getByTestId('content');
-      expect(content).toHaveClass('p-6');
+      expect(content).toHaveClass('p-5');
       expect(content).toHaveClass('pt-0');
     });
 
@@ -157,7 +157,7 @@ describe('Card', () => {
       const footer = screen.getByTestId('footer');
       expect(footer).toHaveClass('flex');
       expect(footer).toHaveClass('items-center');
-      expect(footer).toHaveClass('p-6');
+      expect(footer).toHaveClass('p-5');
       expect(footer).toHaveClass('pt-0');
     });
 
@@ -245,9 +245,9 @@ describe('Card', () => {
       const content = screen.getByTestId('content');
       const footer = screen.getByTestId('footer');
 
-      expect(header).toHaveClass('p-6');
-      expect(content).toHaveClass('p-6', 'pt-0');
-      expect(footer).toHaveClass('p-6', 'pt-0');
+      expect(header).toHaveClass('p-5');
+      expect(content).toHaveClass('p-5', 'pt-0');
+      expect(footer).toHaveClass('p-5', 'pt-0');
     });
   });
 
@@ -296,10 +296,10 @@ describe('Card', () => {
 
     it('generates correct classes from variants', () => {
       const classes = cardVariants();
-      expect(classes).toContain('rounded-lg');
+      expect(classes).toContain('rounded-md');
       expect(classes).toContain('border');
       expect(classes).toContain('bg-white');
-      expect(classes).toContain('shadow-sm');
+      expect(classes).toContain('shadow-soft');
     });
   });
 
@@ -308,7 +308,7 @@ describe('Card', () => {
       render(<Card className="max-w-md" data-testid="card">Content</Card>);
       const card = screen.getByTestId('card');
       expect(card).toHaveClass('max-w-md');
-      expect(card).toHaveClass('rounded-lg');
+      expect(card).toHaveClass('rounded-md');
     });
 
     it('merges custom className on CardHeader', () => {
@@ -321,7 +321,7 @@ describe('Card', () => {
       );
       const header = screen.getByTestId('header');
       expect(header).toHaveClass('border-b');
-      expect(header).toHaveClass('p-6');
+      expect(header).toHaveClass('p-5');
     });
 
     it('merges custom className on CardContent', () => {
@@ -334,7 +334,7 @@ describe('Card', () => {
       );
       const content = screen.getByTestId('content');
       expect(content).toHaveClass('text-center');
-      expect(content).toHaveClass('p-6');
+      expect(content).toHaveClass('p-5');
     });
 
     it('merges custom className on CardFooter', () => {

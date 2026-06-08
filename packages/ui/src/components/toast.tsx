@@ -44,20 +44,20 @@ const viewportVariants = cva(
  * ```
  */
 const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-lg border p-4 pr-8 shadow-lg transition-all data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-fade-out data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:animate-slide-out-to-right',
+  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-lg border p-4 pr-8 shadow-panel transition-all data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-fade-out data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:animate-slide-out-to-right',
   {
     variants: {
       variant: {
         default:
-          'border-neutral-200 bg-white text-neutral-900 shadow-lg dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
+          'border-neutral-200 bg-white text-neutral-900 shadow-panel dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
         success:
-          'border-success-500/30 bg-success-50 text-success-700 shadow-lg dark:bg-success-500/10 dark:text-success-500 dark:border-success-500/20',
+          'border-success-500/30 bg-success-50 text-success-700 shadow-panel dark:bg-success-500/10 dark:text-success-500 dark:border-success-500/20',
         error:
-          'border-error-500/30 bg-error-50 text-error-700 shadow-lg dark:bg-error-500/10 dark:text-error-500 dark:border-error-500/20',
+          'border-error-500/30 bg-error-50 text-error-700 shadow-panel dark:bg-error-500/10 dark:text-error-500 dark:border-error-500/20',
         warning:
-          'border-warning-500/30 bg-warning-50 text-warning-700 shadow-lg dark:bg-warning-500/10 dark:text-warning-500 dark:border-warning-500/20',
+          'border-warning-500/30 bg-warning-50 text-warning-700 shadow-panel dark:bg-warning-500/10 dark:text-warning-500 dark:border-warning-500/20',
         info:
-          'border-primary-500/30 bg-primary-50 text-primary-700 shadow-lg dark:bg-primary-500/10 dark:text-primary-500 dark:border-primary-500/20',
+          'border-primary-500/30 bg-primary-50 text-primary-700 shadow-panel dark:bg-primary-500/10 dark:text-primary-500 dark:border-primary-500/20',
       },
     },
     defaultVariants: {
@@ -260,7 +260,7 @@ const ToastClose = React.forwardRef<
     ref={ref}
     className={cn(
       'absolute right-2 top-2 inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-neutral-400 transition-colors duration-fast active:scale-[0.97]',
-      'hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
+      'hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
       'dark:text-neutral-500 dark:hover:text-neutral-100',
       className
     )}
@@ -311,7 +311,7 @@ const ToastAction = React.forwardRef<
     ref={ref}
     className={cn(
       'inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-transparent px-3 py-1.5 text-sm font-medium transition-all duration-fast active:scale-[0.97]',
-      'hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
+      'hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
       'dark:border-neutral-700 dark:hover:bg-neutral-800',
       className
     )}

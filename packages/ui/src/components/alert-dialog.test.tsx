@@ -471,11 +471,11 @@ describe('AlertDialog', () => {
       const expectedClasses: Record<string, { light: string[]; dark: string[] }> = {
         default: {
           light: ['bg-white', 'text-neutral-900', 'border', 'border-neutral-200'],
-          dark: ['dark:border-neutral-700', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
+          dark: ['dark:border-neutral-800', 'dark:bg-neutral-900', 'dark:text-neutral-100'],
         },
         destructive: {
           light: ['bg-white', 'text-neutral-900', 'border-t-4', 'border-t-error-500'],
-          dark: ['dark:border-neutral-700', 'dark:border-t-error-500', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
+          dark: ['dark:border-neutral-800', 'dark:border-t-error-500', 'dark:bg-neutral-900', 'dark:text-neutral-100'],
         },
       };
 

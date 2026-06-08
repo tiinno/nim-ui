@@ -136,8 +136,8 @@ describe('Avatar', () => {
         </Avatar>
       );
       const fallback = screen.getByTestId('fallback');
-      expect(fallback).toHaveClass('bg-neutral-200');
-      expect(fallback).toHaveClass('text-neutral-900');
+      expect(fallback).toHaveClass('bg-neutral-100');
+      expect(fallback).toHaveClass('text-neutral-700');
     });
 
     it('renders single character initials', () => {
@@ -233,8 +233,8 @@ describe('Avatar', () => {
         </Avatar>
       );
       const fallback = screen.getByTestId('fallback');
-      expect(fallback).toHaveClass('dark:bg-neutral-700');
-      expect(fallback).toHaveClass('dark:text-neutral-100');
+      expect(fallback).toHaveClass('dark:bg-neutral-800');
+      expect(fallback).toHaveClass('dark:text-neutral-300');
     });
   });
 
@@ -301,7 +301,7 @@ describe('Avatar', () => {
       );
       const fallback = screen.getByTestId('fallback');
       expect(fallback).toHaveClass('text-lg');
-      expect(fallback).toHaveClass('bg-neutral-200');
+      expect(fallback).toHaveClass('bg-neutral-100');
     });
   });
 

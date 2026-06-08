@@ -54,7 +54,7 @@ const ComboboxTrigger = React.forwardRef<
     className={cn(
       'flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 shadow-sm transition-colors duration-fast',
       'hover:bg-neutral-50',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
       'disabled:cursor-not-allowed disabled:opacity-50',
       'dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800',
       className
@@ -105,7 +105,7 @@ const ComboboxContent = React.forwardRef<
         ref={ref}
         sideOffset={sideOffset}
         className={cn(
-          'z-50 overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-900 shadow-md data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
+          'z-50 overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-900 shadow-panel data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
           width === 'trigger' && 'w-[var(--radix-popover-trigger-width)]',
           className
         )}
@@ -135,7 +135,7 @@ const ComboboxInput = React.forwardRef<
   ComboboxInputProps
 >(({ className, ...props }, ref) => (
   <div
-    className="flex items-center border-b border-neutral-200 px-3 dark:border-neutral-700"
+    className="flex items-center border-b border-neutral-200 px-3 dark:border-neutral-800"
     cmdk-input-wrapper=""
   >
     <svg

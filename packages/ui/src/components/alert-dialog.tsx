@@ -108,14 +108,14 @@ AlertDialogOverlay.displayName = 'AlertDialogOverlay';
 // ---------------------------------------------------------------------------
 
 const alertDialogContentVariants = cva(
-  'fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg p-6 shadow-lg outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+  'fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg p-6 shadow-panel outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
   {
     variants: {
       variant: {
         default:
-          'border border-neutral-200 bg-white text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100',
+          'border border-neutral-200 bg-white text-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
         destructive:
-          'border border-neutral-200 border-t-4 border-t-error-500 bg-white text-neutral-900 dark:border-neutral-700 dark:border-t-error-500 dark:bg-neutral-800 dark:text-neutral-100',
+          'border border-neutral-200 border-t-4 border-t-error-500 bg-white text-neutral-900 dark:border-neutral-800 dark:border-t-error-500 dark:bg-neutral-900 dark:text-neutral-100',
       },
     },
     defaultVariants: {

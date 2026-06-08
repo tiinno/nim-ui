@@ -1,0 +1,187 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#_top"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Nim UI" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e8]: Nim UI
+        - button "Search" [ref=e11] [cursor=pointer]:
+          - img [ref=e12]
+          - generic [ref=e14]: Search
+          - generic [ref=e15]:
+            - generic [ref=e16]: Ctrl
+            - generic [ref=e17]: K
+        - generic [ref=e18]:
+          - link "GitHub" [ref=e20] [cursor=pointer]:
+            - /url: https://github.com/tiinno/nim-ui
+            - generic [ref=e21]: GitHub
+            - img [ref=e22]
+          - generic [ref=e25]:
+            - generic [ref=e26]: Select theme
+            - img
+            - combobox "Select theme" [ref=e27] [cursor=pointer]:
+              - option "Dark"
+              - option "Light"
+              - option "Auto" [selected]
+            - img
+    - main [ref=e31]:
+      - generic [ref=e33]:
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - heading "Build faster with Nim UI" [level=1] [ref=e37]
+            - generic [ref=e38]: A quiet React UI kit for admin dashboards, backoffice workflows, and commerce operations. Built with TypeScript and Tailwind CSS v4.
+          - generic [ref=e39]:
+            - link "Get Started" [ref=e40] [cursor=pointer]:
+              - /url: /getting-started/installation/
+              - text: Get Started
+              - img [ref=e41]
+            - link "View Components" [ref=e43] [cursor=pointer]:
+              - /url: /components/primitives/button/
+              - text: View Components
+              - img [ref=e44]
+        - generic [ref=e47]:
+          - heading "Features" [level=2] [ref=e48]
+          - generic [ref=e49]:
+            - article [ref=e50]:
+              - paragraph [ref=e51]:
+                - img [ref=e52]
+                - generic [ref=e54]: 64 Components
+              - paragraph [ref=e56]: "Backoffice-ready components organized into 8 categories: Primitives, Layout, Data Display, Commerce, Landing, Feedback, Forms, and Navigation."
+            - article [ref=e57]:
+              - paragraph [ref=e58]:
+                - img [ref=e59]
+                - generic [ref=e60]: Fully Typed
+              - paragraph [ref=e62]: Built with TypeScript 5.9+ in strict mode. Complete type safety and IntelliSense support.
+            - article [ref=e63]:
+              - paragraph [ref=e64]:
+                - img [ref=e65]
+                - generic [ref=e67]: Accessible
+              - paragraph [ref=e69]: WCAG 2.1 AA compliant with proper ARIA attributes, keyboard navigation, and screen reader support.
+            - article [ref=e70]:
+              - paragraph [ref=e71]:
+                - img [ref=e72]
+                - generic [ref=e74]: Tailwind CSS v4
+              - paragraph [ref=e76]: Styled with the latest Tailwind CSS v4, fully customizable with your theme.
+            - article [ref=e77]:
+              - paragraph [ref=e78]:
+                - img [ref=e79]
+                - generic [ref=e81]: Dark Mode
+              - paragraph [ref=e83]: Built-in dark mode support with smooth transitions and proper color contrast.
+            - article [ref=e84]:
+              - paragraph [ref=e85]:
+                - img [ref=e86]
+                - generic [ref=e89]: Tree-Shakeable
+              - paragraph [ref=e91]: Import only what you need. Optimized bundle sizes with ESM exports.
+          - heading "Quick Example" [level=2] [ref=e92]
+          - generic [ref=e93]:
+            - heading "Get started in seconds" [level=3] [ref=e95]
+            - generic [ref=e96]:
+              - generic [ref=e98]:
+                - button "Primary Button" [ref=e100]:
+                  - paragraph [ref=e102]: Primary Button
+                - button "Secondary" [ref=e104]:
+                  - paragraph [ref=e106]: Secondary
+                - button "Outline" [ref=e108]:
+                  - paragraph [ref=e110]: Outline
+              - group [ref=e111]:
+                - generic "View Code" [ref=e112] [cursor=pointer]:
+                  - generic [ref=e113]:
+                    - img [ref=e114]
+                    - text: View Code
+          - heading "Why Nim UI?" [level=2] [ref=e116]
+          - heading "Production Ready" [level=3] [ref=e117]
+          - paragraph [ref=e118]: Use the package-installed components to build admin dashboards, backoffice screens, and commerce workflows with consistent accessibility and styling defaults.
+          - heading "Developer Experience" [level=3] [ref=e119]
+          - list [ref=e120]:
+            - listitem [ref=e121]:
+              - strong [ref=e122]: TypeScript-first
+              - text: ": Full type safety and autocomplete"
+            - listitem [ref=e123]:
+              - strong [ref=e124]: Well documented
+              - text: ": Every prop is documented with examples"
+            - listitem [ref=e125]:
+              - strong [ref=e126]: Package-first
+              - text: ": Install the components package and import only what you need"
+            - listitem [ref=e127]:
+              - strong [ref=e128]: Workflow-ready
+              - text: ": Compose primitives into admin and commerce interfaces"
+          - heading "Modern Stack" [level=3] [ref=e129]
+          - paragraph [ref=e130]: "Built with the latest tools and best practices:"
+          - list [ref=e131]:
+            - listitem [ref=e132]: React 19.2+
+            - listitem [ref=e133]: TypeScript 5.9+
+            - listitem [ref=e134]: Tailwind CSS v4
+            - listitem [ref=e135]: Radix UI primitives
+            - listitem [ref=e136]: Class Variance Authority
+          - heading "Component Categories" [level=2] [ref=e137]
+          - heading "Primitives" [level=3] [ref=e138]
+          - paragraph [ref=e139]: "Essential form controls: Button, Input, Textarea, Checkbox, Radio, Select, Switch"
+          - heading "Layout" [level=3] [ref=e140]
+          - paragraph [ref=e141]: "Backoffice layout components: Container, Grid, Stack, Flex, Spacer, Card, AdminShell, PageHeader, Modal, Drawer, Tabs, Accordion, Collapsible, Separator"
+          - heading "Data Display" [level=3] [ref=e142]
+          - paragraph [ref=e143]: "Present operational data: Badge, Avatar, DataTable, DataToolbar, StatusPill, FilterSummary, BulkActionBar, EmptyState, Timeline, DescriptionList, RecordInspector, DataCard, MetricCard, Stat"
+          - heading "Commerce" [level=3] [ref=e144]
+          - paragraph [ref=e145]: "Secondary e-commerce support: ProductCard, CartItem, PriceTag, QuantitySelector"
+          - heading "Landing" [level=3] [ref=e146]
+          - paragraph [ref=e147]: "Support product pages and lightweight landing surfaces: Hero, FeatureGrid, Testimonial, CTA"
+          - heading "Forms" [level=3] [ref=e148]
+          - paragraph [ref=e149]: "Complete form system: Form, FormLayout, FormField, Combobox, Calendar, DatePicker, Slider"
+          - heading "Feedback" [level=3] [ref=e150]
+          - paragraph [ref=e151]: "Operational feedback surfaces: Toast, Tooltip, Popover, DropdownMenu, AlertDialog, Alert, Progress, Spinner, Skeleton"
+          - heading "Navigation" [level=3] [ref=e152]
+          - paragraph [ref=e153]: "Backoffice navigation components: Breadcrumb, SidebarNav, CommandMenu, ViewSwitcher, Pagination"
+          - heading "Next Steps" [level=2] [ref=e154]
+          - generic [ref=e155]:
+            - article [ref=e156]:
+              - paragraph [ref=e157]:
+                - img [ref=e158]
+                - generic [ref=e161]: Installation
+              - generic [ref=e162]:
+                - paragraph [ref=e163]: Install Nim UI in your project and start building.
+                - paragraph [ref=e164]:
+                  - link "Get Started →" [ref=e165] [cursor=pointer]:
+                    - /url: /getting-started/installation/
+            - article [ref=e166]:
+              - paragraph [ref=e167]:
+                - img [ref=e168]
+                - generic [ref=e170]: Browse Components
+              - generic [ref=e171]:
+                - paragraph [ref=e172]: Explore all 64 components with live examples and code.
+                - paragraph [ref=e173]:
+                  - link "View Components →" [ref=e174] [cursor=pointer]:
+                    - /url: /components/primitives/button/
+            - article [ref=e175]:
+              - paragraph [ref=e176]:
+                - img [ref=e177]
+                - generic [ref=e178]: Design System
+              - generic [ref=e179]:
+                - paragraph [ref=e180]: Learn about colors, typography, and design tokens.
+                - paragraph [ref=e181]:
+                  - link "Design System →" [ref=e182] [cursor=pointer]:
+                    - /url: /design-system/colors/
+            - article [ref=e183]:
+              - paragraph [ref=e184]:
+                - img [ref=e185]
+                - generic [ref=e187]: Best Practices
+              - generic [ref=e188]:
+                - paragraph [ref=e189]: Tips for building accessible, performant applications.
+                - paragraph [ref=e190]:
+                  - link "Read Guide →" [ref=e191] [cursor=pointer]:
+                    - /url: /guides/best-practices/
+        - generic [ref=e192]:
+          - generic [ref=e193]:
+            - link "Edit page" [ref=e194] [cursor=pointer]:
+              - /url: https://github.com/tiinno/nim-ui/edit/main/packages/docs/src/content/docs/index.mdx
+              - img [ref=e195]
+              - text: Edit page
+            - paragraph [ref=e197]:
+              - text: "Last updated:"
+              - time [ref=e198]: Jun 1, 2026
+          - link "Next Installation" [ref=e200] [cursor=pointer]:
+            - /url: /getting-started/installation
+            - img [ref=e201]
+            - generic [ref=e203]:
+              - text: Next
+              - text: Installation

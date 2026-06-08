@@ -35,7 +35,7 @@ describe('Stat', () => {
       render(<Stat value="789" label="Items" />);
       const value = screen.getByText('789');
       expect(value).toHaveClass('text-2xl');
-      expect(value).toHaveClass('font-bold');
+      expect(value).toHaveClass('font-semibold');
       expect(value).toHaveClass('text-neutral-900');
     });
 

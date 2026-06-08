@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border p-4 transition-opacity duration-normal',
+  'relative w-full rounded-md border p-4 transition-opacity duration-normal',
   {
     variants: {
       variant: {
@@ -42,7 +42,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         <button
           type="button"
           onClick={onDismiss}
-          className="absolute right-2 top-2 inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md opacity-70 transition-opacity duration-fast active:scale-[0.97] hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          className="absolute right-2 top-2 inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md opacity-70 transition-opacity duration-fast active:scale-[0.97] hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2"
           aria-label="Dismiss alert"
         >
           <svg
@@ -73,7 +73,7 @@ const AlertTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h5
     ref={ref}
-    className={cn('mb-1 font-semibold leading-none tracking-tight', className)}
+    className={cn('mb-1 font-semibold leading-none tracking-normal', className)}
     {...props}
   />
 ));

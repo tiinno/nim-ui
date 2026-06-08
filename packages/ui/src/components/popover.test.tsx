@@ -409,11 +409,11 @@ describe('Popover', () => {
       const expectedClasses: Record<string, { light: string[]; dark: string[] }> = {
         default: {
           light: ['bg-white', 'text-neutral-900', 'border', 'border-neutral-200'],
-          dark: ['dark:border-neutral-700', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
+          dark: ['dark:border-neutral-800', 'dark:bg-neutral-900', 'dark:text-neutral-100'],
         },
         outline: {
           light: ['bg-white', 'text-neutral-900', 'border-2', 'border-primary-500'],
-          dark: ['dark:border-primary-400', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
+          dark: ['dark:border-primary-400', 'dark:bg-neutral-900', 'dark:text-neutral-100'],
         },
       };
 

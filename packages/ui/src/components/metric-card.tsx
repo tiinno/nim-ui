@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 const metricCardVariants = cva(
-  'min-w-0 overflow-hidden rounded-md border bg-white text-neutral-950 shadow-sm dark:bg-neutral-950 dark:text-neutral-50',
+  'min-w-0 overflow-hidden rounded-md border bg-white text-neutral-950 shadow-soft dark:bg-neutral-950 dark:text-neutral-50',
   {
     variants: {
       tone: {
@@ -28,11 +28,11 @@ const metricCardVariants = cva(
 const metricCardAccentVariants = cva('h-1 w-full', {
   variants: {
     tone: {
-      neutral: 'bg-neutral-300 dark:bg-neutral-700',
-      success: 'bg-success-500',
-      warning: 'bg-warning-500',
-      danger: 'bg-error-500',
-      info: 'bg-info-500',
+      neutral: 'bg-primary-300 dark:bg-primary-700',
+      success: 'bg-success-400',
+      warning: 'bg-warning-400',
+      danger: 'bg-error-400',
+      info: 'bg-primary-400',
     },
   },
   defaultVariants: {
@@ -120,7 +120,7 @@ const MetricCardValue = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn('mt-2 text-3xl font-semibold leading-none tracking-normal text-neutral-950 dark:text-neutral-50', className)}
+    className={cn('mt-2 text-2xl font-semibold leading-none tracking-normal text-neutral-950 dark:text-neutral-50', className)}
     {...props}
   />
 ));

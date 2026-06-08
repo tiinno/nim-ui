@@ -136,14 +136,14 @@ describe('DropdownMenu', () => {
       const classes = dropdownMenuContentVariants({ variant: 'default' });
       expect(classes).toContain('bg-white');
       expect(classes).toContain('border-neutral-200');
-      expect(classes).toContain('dark:bg-neutral-800');
+      expect(classes).toContain('dark:bg-neutral-900');
     });
 
     it('CVA returns correct classes for outline variant', () => {
       const classes = dropdownMenuContentVariants({ variant: 'outline' });
       expect(classes).toContain('border-2');
       expect(classes).toContain('border-neutral-300');
-      expect(classes).toContain('dark:border-neutral-600');
+      expect(classes).toContain('dark:border-neutral-700');
     });
   });
 
@@ -507,11 +507,11 @@ describe('DropdownMenu', () => {
       const expectedClasses: Record<string, { light: string[]; dark: string[] }> = {
         default: {
           light: ['bg-white', 'text-neutral-900', 'border', 'border-neutral-200'],
-          dark: ['dark:border-neutral-700', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
+          dark: ['dark:border-neutral-800', 'dark:bg-neutral-900', 'dark:text-neutral-100'],
         },
         outline: {
           light: ['bg-white', 'text-neutral-900', 'border-2', 'border-neutral-300'],
-          dark: ['dark:border-neutral-600', 'dark:bg-neutral-800', 'dark:text-neutral-100'],
+          dark: ['dark:border-neutral-700', 'dark:bg-neutral-900', 'dark:text-neutral-100'],
         },
       };
 

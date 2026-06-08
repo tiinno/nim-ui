@@ -41,7 +41,7 @@ const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
 const selectTriggerVariants = cva(
-  'flex h-10 w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm transition-colors duration-fast placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100 dark:placeholder:text-neutral-400',
+  'flex h-10 w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm transition-colors duration-fast placeholder:text-neutral-500 focus-visible:outline-none focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-100 dark:placeholder:text-neutral-400',
   {
     variants: {},
     defaultVariants: {},
@@ -82,7 +82,7 @@ const SelectTrigger = React.forwardRef<
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const selectContentVariants = cva(
-  'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-white shadow-md data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out dark:border-neutral-700 dark:bg-neutral-900',
+  'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-neutral-200 bg-white shadow-panel data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out dark:border-neutral-800 dark:bg-neutral-900',
   {
     variants: {},
     defaultVariants: {},

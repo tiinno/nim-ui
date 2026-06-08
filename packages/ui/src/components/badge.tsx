@@ -23,13 +23,13 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary-600 text-white dark:bg-primary-700',
-        secondary: 'bg-neutral-200 text-neutral-900 dark:bg-neutral-700 dark:text-neutral-100',
-        outline: 'border border-neutral-300 bg-transparent text-neutral-900 dark:border-neutral-600 dark:text-neutral-100',
-        destructive: 'bg-error-600 text-white dark:bg-error-700',
-        success: 'bg-success-600 text-white dark:bg-success-700',
-        warning: 'bg-warning-500 text-warning-950 dark:bg-warning-600 dark:text-warning-50',
-        info: 'bg-info-600 text-white dark:bg-info-700',
+        default: 'border border-neutral-200 bg-neutral-100 text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300',
+        secondary: 'border border-neutral-200 bg-white text-neutral-600 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-400',
+        outline: 'border border-neutral-300 bg-transparent text-neutral-700 dark:border-neutral-700 dark:text-neutral-300',
+        destructive: 'border border-error-200 bg-error-50 text-error-700 dark:border-error-900/60 dark:bg-error-950/40 dark:text-error-300',
+        success: 'border border-success-200 bg-success-50 text-success-700 dark:border-success-900/60 dark:bg-success-950/40 dark:text-success-300',
+        warning: 'border border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-900/60 dark:bg-warning-950/40 dark:text-warning-300',
+        info: 'border border-info-200 bg-info-50 text-info-700 dark:border-info-900/60 dark:bg-info-950/40 dark:text-info-300',
       },
       size: {
         sm: 'px-2 py-0.5 text-xs',

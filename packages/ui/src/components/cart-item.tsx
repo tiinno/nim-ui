@@ -64,7 +64,7 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
   }, ref) => (
     <div
       ref={ref}
-      className={cn('flex gap-4 p-4 border-b bg-white dark:bg-neutral-900 dark:border-neutral-700', className)}
+      className={cn('flex gap-4 p-4 border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950', className)}
       {...props}
     >
       <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-neutral-100 dark:bg-neutral-800">
@@ -133,6 +133,6 @@ CartItem.displayName = 'CartItem';
  * @deprecated `cartItemVariants` is kept for backwards compatibility.
  * Prefer using the `CartItem` component directly.
  */
-const cartItemVariants = () => 'flex gap-4 p-4 border-b bg-white dark:bg-neutral-900 dark:border-neutral-700';
+const cartItemVariants = () => 'flex gap-4 p-4 border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950';
 
 export { CartItem, cartItemVariants };

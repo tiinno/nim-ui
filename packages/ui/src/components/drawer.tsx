@@ -55,12 +55,12 @@ const DrawerOverlay = React.forwardRef<
 DrawerOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const drawerContentVariants = cva(
-  'fixed z-50 gap-4 bg-white p-6 shadow-lg dark:bg-neutral-900',
+  'fixed z-50 gap-4 bg-white p-6 shadow-panel dark:bg-neutral-900',
   {
     variants: {
       side: {
-        left: 'inset-y-0 left-0 h-full w-3/4 max-w-sm border-r data-[state=open]:animate-slide-in-from-left data-[state=closed]:animate-slide-out-to-left sm:max-w-md dark:border-neutral-700',
-        right: 'inset-y-0 right-0 h-full w-3/4 max-w-sm border-l data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-slide-out-to-right sm:max-w-md dark:border-neutral-700',
+        left: 'inset-y-0 left-0 h-full w-3/4 max-w-sm border-r border-neutral-200 data-[state=open]:animate-slide-in-from-left data-[state=closed]:animate-slide-out-to-left sm:max-w-md dark:border-neutral-800',
+        right: 'inset-y-0 right-0 h-full w-3/4 max-w-sm border-l border-neutral-200 data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-slide-out-to-right sm:max-w-md dark:border-neutral-800',
       },
     },
     defaultVariants: {

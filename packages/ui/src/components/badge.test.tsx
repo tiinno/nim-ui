@@ -11,7 +11,7 @@ describe('Badge', () => {
 
     it('renders with default variant', () => {
       render(<Badge data-testid="badge">Default</Badge>);
-      expect(screen.getByTestId('badge')).toHaveClass('bg-primary-600');
+      expect(screen.getByTestId('badge')).toHaveClass('bg-neutral-100');
     });
 
     it('applies base styles', () => {
@@ -36,10 +36,10 @@ describe('Badge', () => {
 
   describe('Variants', () => {
     it.each([
-      ['default', 'bg-primary-600', 'text-white'],
-      ['secondary', 'bg-neutral-200', 'text-neutral-900'],
+      ['default', 'bg-neutral-100', 'text-neutral-700'],
+      ['secondary', 'bg-white', 'text-neutral-600'],
       ['outline', 'border', 'bg-transparent'],
-      ['destructive', 'bg-error-600', 'text-white'],
+      ['destructive', 'bg-error-50', 'text-error-700'],
     ])('renders %s variant with correct styles', (variant, bgClass, textClass) => {
       render(
         <Badge data-testid="badge" variant={variant as any}>
@@ -53,7 +53,7 @@ describe('Badge', () => {
 
     it('applies default variant background', () => {
       render(<Badge data-testid="badge">Default</Badge>);
-      expect(screen.getByTestId('badge')).toHaveClass('bg-primary-600');
+      expect(screen.getByTestId('badge')).toHaveClass('bg-neutral-100');
     });
 
     it('applies secondary variant background', () => {
@@ -62,7 +62,7 @@ describe('Badge', () => {
           Secondary
         </Badge>
       );
-      expect(screen.getByTestId('badge')).toHaveClass('bg-neutral-200');
+      expect(screen.getByTestId('badge')).toHaveClass('bg-white');
     });
 
     it('applies outline variant border', () => {
@@ -83,7 +83,7 @@ describe('Badge', () => {
           Destructive
         </Badge>
       );
-      expect(screen.getByTestId('badge')).toHaveClass('bg-error-600');
+      expect(screen.getByTestId('badge')).toHaveClass('bg-error-50');
     });
   });
 
@@ -134,7 +134,7 @@ describe('Badge', () => {
           Default
         </Badge>
       );
-      expect(screen.getByTestId('badge')).toHaveClass('dark:bg-primary-700');
+      expect(screen.getByTestId('badge')).toHaveClass('dark:bg-neutral-900');
     });
 
     it('applies dark mode to secondary variant', () => {
@@ -144,8 +144,8 @@ describe('Badge', () => {
         </Badge>
       );
       const badge = screen.getByTestId('badge');
-      expect(badge).toHaveClass('dark:bg-neutral-700');
-      expect(badge).toHaveClass('dark:text-neutral-100');
+      expect(badge).toHaveClass('dark:bg-neutral-950');
+      expect(badge).toHaveClass('dark:text-neutral-400');
     });
 
     it('applies dark mode to outline variant', () => {
@@ -155,8 +155,8 @@ describe('Badge', () => {
         </Badge>
       );
       const badge = screen.getByTestId('badge');
-      expect(badge).toHaveClass('dark:border-neutral-600');
-      expect(badge).toHaveClass('dark:text-neutral-100');
+      expect(badge).toHaveClass('dark:border-neutral-700');
+      expect(badge).toHaveClass('dark:text-neutral-300');
     });
 
     it('applies dark mode to destructive variant', () => {
@@ -165,7 +165,7 @@ describe('Badge', () => {
           Destructive
         </Badge>
       );
-      expect(screen.getByTestId('badge')).toHaveClass('dark:bg-error-700');
+      expect(screen.getByTestId('badge')).toHaveClass('dark:bg-error-950/40');
     });
   });
 
@@ -190,13 +190,13 @@ describe('Badge', () => {
 
     it('generates correct classes for default variant', () => {
       const classes = badgeVariants({ variant: 'default', size: 'md' });
-      expect(classes).toContain('bg-primary-600');
+      expect(classes).toContain('bg-neutral-100');
       expect(classes).toContain('px-2.5');
     });
 
     it('generates correct classes for custom combination', () => {
       const classes = badgeVariants({ variant: 'destructive', size: 'lg' });
-      expect(classes).toContain('bg-error-600');
+      expect(classes).toContain('bg-error-50');
       expect(classes).toContain('px-3');
       expect(classes).toContain('text-base');
     });
@@ -211,7 +211,7 @@ describe('Badge', () => {
       );
       const badge = screen.getByTestId('badge');
       expect(badge).toHaveClass('custom-badge');
-      expect(badge).toHaveClass('bg-primary-600');
+      expect(badge).toHaveClass('bg-neutral-100');
     });
 
     it('allows overriding default classes', () => {
@@ -357,7 +357,7 @@ describe('Badge', () => {
         </Badge>
       );
       const badge = screen.getByTestId('badge');
-      expect(badge).toHaveClass('bg-primary-600');
+      expect(badge).toHaveClass('bg-neutral-100');
       expect(badge).toHaveClass('px-2');
       expect(badge).toHaveClass('text-xs');
     });
@@ -369,7 +369,7 @@ describe('Badge', () => {
         </Badge>
       );
       const badge = screen.getByTestId('badge');
-      expect(badge).toHaveClass('bg-neutral-200');
+      expect(badge).toHaveClass('bg-white');
       expect(badge).toHaveClass('px-3');
       expect(badge).toHaveClass('text-base');
     });
@@ -392,7 +392,7 @@ describe('Badge', () => {
         </Badge>
       );
       const badge = screen.getByTestId('badge');
-      expect(badge).toHaveClass('bg-error-600');
+      expect(badge).toHaveClass('bg-error-50');
       expect(badge).toHaveClass('text-xs');
     });
   });

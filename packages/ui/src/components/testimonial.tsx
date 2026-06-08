@@ -33,7 +33,7 @@ import { cn } from '../lib/utils';
  */
 
 const testimonialVariants = cva(
-  'rounded-lg border bg-white p-6 shadow-sm dark:bg-neutral-900 dark:border-neutral-700',
+  'rounded-lg border border-neutral-200 bg-white p-6 shadow-soft dark:border-neutral-800 dark:bg-neutral-950',
   {
     variants: {},
     defaultVariants: {},

@@ -43,7 +43,7 @@ const sliderTrackVariants = cva(
 );
 
 const sliderThumbVariants = cva(
-  'block cursor-pointer rounded-full border-2 border-primary-600 bg-white shadow-sm transition-colors duration-fast dark:border-primary-400 dark:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'block cursor-pointer rounded-full border-2 border-primary-600 bg-white shadow-sm transition-colors duration-fast dark:border-primary-400 dark:bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       size: {

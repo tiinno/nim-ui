@@ -9,7 +9,7 @@ const CommandMenu = React.forwardRef<
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'flex min-w-0 flex-col overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-950 shadow-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
+      'flex min-w-0 flex-col overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-950 shadow-panel dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-50',
       className
     )}
     {...props}

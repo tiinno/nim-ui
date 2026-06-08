@@ -56,7 +56,7 @@ const ModalOverlay = React.forwardRef<
 ModalOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const modalContentVariants = cva(
-  'fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-white p-6 shadow-lg data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out rounded-lg dark:bg-neutral-900 dark:border-neutral-700',
+  'fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-neutral-200 bg-white p-6 shadow-panel data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out dark:border-neutral-800 dark:bg-neutral-900',
   {
     variants: {},
     defaultVariants: {},
@@ -114,7 +114,7 @@ const ModalTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('text-lg font-semibold leading-none tracking-tight text-neutral-900 dark:text-neutral-100', className)}
+    className={cn('text-lg font-semibold leading-none tracking-normal text-neutral-900 dark:text-neutral-100', className)}
     {...props}
   />
 ));

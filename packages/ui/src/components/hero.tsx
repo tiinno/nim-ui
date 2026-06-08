@@ -109,7 +109,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         <div className="max-w-4xl space-y-6">
           <h1
             className={cn(
-              'text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl',
+              'text-4xl font-bold tracking-normal sm:text-5xl md:text-6xl',
               hasBg ? 'text-white' : 'text-neutral-900 dark:text-neutral-100'
             )}
           >

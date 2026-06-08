@@ -92,7 +92,7 @@ const CTA = React.forwardRef<HTMLDivElement, CTAProps>(
         <div className="mx-auto max-w-2xl space-y-6">
           <h2
             className={cn(
-              'text-3xl font-bold tracking-tight sm:text-4xl',
+              'text-3xl font-bold tracking-normal sm:text-4xl',
               isColoredVariant
                 ? 'text-white'
                 : 'text-neutral-900 dark:text-neutral-100'

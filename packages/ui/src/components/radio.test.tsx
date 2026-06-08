@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, userEvent, waitFor } from '../test/test-utils';
 import {
+  Radio,
   RadioGroup,
   RadioGroupItem,
   radioGroupVariants,
@@ -66,7 +67,20 @@ describe('Radio', () => {
       );
 
       expect(screen.getByTestId('radiogroup')).toHaveClass('grid');
-      expect(screen.getByTestId('radiogroup')).toHaveClass('gap-2');
+      expect(screen.getByTestId('radiogroup')).toHaveClass('gap-2.5');
+    });
+
+    it('allows custom layout classes to replace the default grid layout', () => {
+      render(
+        <RadioGroup className="flex flex-wrap gap-5" data-testid="radiogroup">
+          <RadioGroupItem value="option1" />
+        </RadioGroup>
+      );
+
+      const group = screen.getByTestId('radiogroup');
+      expect(group).toHaveClass('flex');
+      expect(group).toHaveClass('gap-5');
+      expect(group).not.toHaveClass('grid');
     });
   });
 
@@ -103,6 +117,18 @@ describe('Radio', () => {
       expect(radio).toHaveClass('w-5');
     });
 
+    it('supports small size dimensions', () => {
+      render(
+        <RadioGroup>
+          <RadioGroupItem value="option1" size="sm" data-testid="radio" />
+        </RadioGroup>
+      );
+
+      const radio = screen.getByTestId('radio');
+      expect(radio).toHaveClass('h-4');
+      expect(radio).toHaveClass('w-4');
+    });
+
     it('renders indicator when selected', () => {
       render(
         <RadioGroup defaultValue="option1">
@@ -124,6 +150,35 @@ describe('Radio', () => {
       );
 
       expect(screen.getByLabelText('Option 1')).toBeInTheDocument();
+    });
+
+    it('renders the labeled Radio wrapper with comfortable row spacing', () => {
+      render(
+        <RadioGroup>
+          <Radio
+            value="review"
+            label="Needs review"
+            description="Route this order to the operations queue."
+          />
+        </RadioGroup>
+      );
+
+      const radio = screen.getByLabelText('Needs review');
+      expect(radio).toBeInTheDocument();
+      expect(radio).toHaveAccessibleDescription('Route this order to the operations queue.');
+      expect(screen.getByText('Needs review').closest('div')).toHaveClass('gap-3');
+      expect(screen.getByText('Route this order to the operations queue.')).toHaveClass('text-neutral-500');
+    });
+
+    it('supports large labeled radio controls', () => {
+      render(
+        <RadioGroup>
+          <Radio value="priority" label="Priority lane" size="lg" />
+        </RadioGroup>
+      );
+
+      expect(screen.getByRole('radio')).toHaveClass('h-6');
+      expect(screen.getByRole('radio')).toHaveClass('w-6');
     });
   });
 
@@ -602,7 +657,7 @@ describe('Radio', () => {
     it('generates correct classes for group', () => {
       const classes = radioGroupVariants();
       expect(classes).toContain('grid');
-      expect(classes).toContain('gap-2');
+      expect(classes).toContain('gap-2.5');
     });
 
     it('generates correct classes for item', () => {

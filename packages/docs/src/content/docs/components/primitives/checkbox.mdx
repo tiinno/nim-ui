@@ -20,85 +20,72 @@ import { Checkbox } from '@nim-ui/components';
 ### Default
 
 <ComponentPreview title="Default Checkbox">
-  <div className="flex items-center space-x-2">
-    <Checkbox client:load id="default-check" />
-    <label htmlFor="default-check" className="text-sm font-medium">Default checkbox</label>
-  </div>
+  <Checkbox client:load id="default-check" label="Default checkbox" />
 
   <Fragment slot="code">
 ```tsx
-<div className="flex items-center space-x-2">
-  <Checkbox id="default-check" />
-  <label htmlFor="default-check">Default checkbox</label>
-</div>
+<Checkbox id="default-check" label="Default checkbox" />
 ```
   </Fragment>
 </ComponentPreview>
 
 ### With Label Pattern
 
-The recommended usage is to pair the Checkbox with a `<label>` element using matching `id` and `htmlFor` attributes.
+The recommended usage is to pass `label` directly. The component generates a comfortable option row and keeps the label associated with the control.
 
 <ComponentPreview title="Checkbox with Labels">
-  <div className="flex items-center space-x-2">
-    <Checkbox client:load id="terms" />
-    <label htmlFor="terms" className="text-sm font-medium">Accept terms and conditions</label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <Checkbox client:load id="newsletter" />
-    <label htmlFor="newsletter" className="text-sm font-medium">Subscribe to newsletter</label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <Checkbox client:load id="notifications" />
-    <label htmlFor="notifications" className="text-sm font-medium">Enable notifications</label>
-  </div>
+  <Checkbox client:load id="terms" label="Accept terms and conditions" />
+  <Checkbox client:load id="newsletter" label="Subscribe to newsletter" />
+  <Checkbox
+    client:load
+    id="notifications"
+    label="Enable notifications"
+    description="Receive operational alerts for assigned queues."
+  />
 
   <Fragment slot="code">
 ```tsx
-<div className="flex items-center space-x-2">
-  <Checkbox id="terms" />
-  <label htmlFor="terms">Accept terms and conditions</label>
-</div>
-<div className="flex items-center space-x-2">
-  <Checkbox id="newsletter" />
-  <label htmlFor="newsletter">Subscribe to newsletter</label>
-</div>
-<div className="flex items-center space-x-2">
-  <Checkbox id="notifications" />
-  <label htmlFor="notifications">Enable notifications</label>
-</div>
+<Checkbox id="terms" label="Accept terms and conditions" />
+<Checkbox id="newsletter" label="Subscribe to newsletter" />
+<Checkbox
+  id="notifications"
+  label="Enable notifications"
+  description="Receive operational alerts for assigned queues."
+/>
 ```
   </Fragment>
 </ComponentPreview>
 
 ## Sizes
 
-The Checkbox does not have built-in size variants. Sizing is controlled through className.
+Use `size="sm"` for dense lists and `size="lg"` when the checkbox sits in a prominent mobile or settings row.
+
+<ComponentPreview title="Checkbox Sizes">
+  <Checkbox client:load id="compact-check" size="sm" label="Compact row" />
+  <Checkbox client:load id="default-size-check" size="md" label="Balanced row" />
+  <Checkbox client:load id="large-check" size="lg" label="Prominent row" />
+
+  <Fragment slot="code">
+```tsx
+<Checkbox id="compact-check" size="sm" label="Compact row" />
+<Checkbox id="default-size-check" size="md" label="Balanced row" />
+<Checkbox id="large-check" size="lg" label="Prominent row" />
+```
+  </Fragment>
+</ComponentPreview>
 
 ## States
 
 ### Disabled
 
 <ComponentPreview title="Disabled State">
-  <div className="flex items-center space-x-2">
-    <Checkbox client:load id="disabled-unchecked" disabled />
-    <label htmlFor="disabled-unchecked" className="text-sm font-medium text-gray-400">Disabled unchecked</label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <Checkbox client:load id="disabled-checked" disabled checked={true} />
-    <label htmlFor="disabled-checked" className="text-sm font-medium text-gray-400">Disabled checked</label>
-  </div>
+  <Checkbox client:load id="disabled-unchecked" disabled label="Disabled unchecked" />
+  <Checkbox client:load id="disabled-checked" disabled checked={true} label="Disabled checked" />
 
   <Fragment slot="code">
 ```tsx
-<div className="flex items-center space-x-2">
-  <Checkbox id="disabled-unchecked" disabled />
-  <label htmlFor="disabled-unchecked">Disabled unchecked</label>
-</div>
-<div className="flex items-center space-x-2">
-  <Checkbox id="disabled-checked" disabled checked />
-  <label htmlFor="disabled-checked">Disabled checked</label>
-</div>
+<Checkbox id="disabled-unchecked" disabled label="Disabled unchecked" />
+<Checkbox id="disabled-checked" disabled checked label="Disabled checked" />
 ```
   </Fragment>
 </ComponentPreview>
@@ -134,6 +121,27 @@ The Checkbox does not have built-in size variants. Sizing is controlled through 
       description: 'HTML id attribute, used to associate with a label',
     },
     {
+      name: 'label',
+      type: 'React.ReactNode',
+      description: 'Visible label rendered with comfortable spacing from the checkbox',
+    },
+    {
+      name: 'description',
+      type: 'React.ReactNode',
+      description: 'Optional secondary copy linked through aria-describedby',
+    },
+    {
+      name: 'size',
+      type: '"sm" | "md" | "lg"',
+      default: '"md"',
+      description: 'Control size for denser or more prominent rows',
+    },
+    {
+      name: 'wrapperClassName',
+      type: 'string',
+      description: 'Additional classes for the generated checkbox row',
+    },
+    {
       name: 'className',
       type: 'string',
       description: 'Additional CSS classes to apply',
@@ -151,23 +159,12 @@ function TermsAgreement() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="terms"
-          checked={agreed}
-          onCheckedChange={(checked) => setAgreed(checked === true)}
-        />
-        <label htmlFor="terms" className="text-sm">
-          I agree to the{' '}
-          <a href="/terms" className="text-blue-500 underline">
-            Terms of Service
-          </a>{' '}
-          and{' '}
-          <a href="/privacy" className="text-blue-500 underline">
-            Privacy Policy
-          </a>
-        </label>
-      </div>
+      <Checkbox
+        id="terms"
+        checked={agreed}
+        onCheckedChange={(checked) => setAgreed(checked === true)}
+        label="I agree to the Terms of Service and Privacy Policy"
+      />
       <Button disabled={!agreed}>Continue</Button>
     </div>
   );
@@ -191,30 +188,24 @@ function NotificationSettings() {
   return (
     <div className="space-y-3">
       <h3 className="text-lg font-semibold">Notifications</h3>
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="email-notif"
-          checked={settings.email}
-          onCheckedChange={() => toggle('email')}
-        />
-        <label htmlFor="email-notif">Email notifications</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="push-notif"
-          checked={settings.push}
-          onCheckedChange={() => toggle('push')}
-        />
-        <label htmlFor="push-notif">Push notifications</label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="sms-notif"
-          checked={settings.sms}
-          onCheckedChange={() => toggle('sms')}
-        />
-        <label htmlFor="sms-notif">SMS notifications</label>
-      </div>
+      <Checkbox
+        id="email-notif"
+        checked={settings.email}
+        onCheckedChange={() => toggle('email')}
+        label="Email notifications"
+      />
+      <Checkbox
+        id="push-notif"
+        checked={settings.push}
+        onCheckedChange={() => toggle('push')}
+        label="Push notifications"
+      />
+      <Checkbox
+        id="sms-notif"
+        checked={settings.sms}
+        onCheckedChange={() => toggle('sms')}
+        label="SMS notifications"
+      />
     </div>
   );
 }
@@ -228,22 +219,19 @@ function CategoryFilter({ categories, selected, onChange }) {
     <div className="space-y-2">
       <h4 className="text-sm font-medium text-gray-700">Categories</h4>
       {categories.map((category) => (
-        <div key={category.id} className="flex items-center space-x-2">
-          <Checkbox
-            id={`cat-${category.id}`}
-            checked={selected.includes(category.id)}
-            onCheckedChange={(checked) => {
-              if (checked) {
-                onChange([...selected, category.id]);
-              } else {
-                onChange(selected.filter((id) => id !== category.id));
-              }
-            }}
-          />
-          <label htmlFor={`cat-${category.id}`} className="text-sm">
-            {category.name}
-          </label>
-        </div>
+        <Checkbox
+          key={category.id}
+          id={`cat-${category.id}`}
+          checked={selected.includes(category.id)}
+          label={category.name}
+          onCheckedChange={(checked) => {
+            if (checked) {
+              onChange([...selected, category.id]);
+            } else {
+              onChange(selected.filter((id) => id !== category.id));
+            }
+          }}
+        />
       ))}
     </div>
   );
@@ -270,7 +258,7 @@ The Checkbox component is built on Radix UI and follows WAI-ARIA best practices:
 
 ### Best Practices
 
-- Always pair checkboxes with visible labels using `id` and `htmlFor`
+- Prefer the built-in `label` prop, or pair custom layouts with visible labels using `id` and `htmlFor`
 - Use `aria-describedby` to link additional descriptive text
 - Group related checkboxes with a heading or `fieldset`/`legend`
 - Avoid using checkboxes for actions; use a Switch for on/off toggles
