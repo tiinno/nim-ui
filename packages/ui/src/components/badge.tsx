@@ -32,9 +32,9 @@ const badgeVariants = cva(
         info: 'border border-info-200 bg-info-50 text-info-700 dark:border-info-900/60 dark:bg-info-950/40 dark:text-info-300',
       },
       size: {
-        sm: 'px-2 py-0.5 text-xs',
-        md: 'px-2.5 py-1 text-sm',
-        lg: 'px-3 py-1.5 text-base',
+        sm: 'px-2 py-px text-xs',
+        md: 'px-2.5 py-0.5 text-xs',
+        lg: 'px-3 py-1 text-sm',
       },
       animate: {
         true: 'animate-scale-in',

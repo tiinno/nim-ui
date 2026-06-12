@@ -49,8 +49,8 @@ describe('Input', () => {
   describe('Sizes', () => {
     it.each([
       ['sm', 'h-8'],
-      ['md', 'h-10'],
-      ['lg', 'h-12'],
+      ['md', 'h-9'],
+      ['lg', 'h-10'],
     ])('renders %s size with correct height', (size, expectedClass) => {
       render(<Input data-testid="input" size={size as any} />);
       expect(screen.getByTestId('input')).toHaveClass(expectedClass);
@@ -63,7 +63,7 @@ describe('Input', () => {
 
     it('applies correct text size for lg', () => {
       render(<Input size="lg" data-testid="input" />);
-      expect(screen.getByTestId('input')).toHaveClass('text-lg');
+      expect(screen.getByTestId('input')).toHaveClass('text-base');
     });
   });
 
@@ -221,7 +221,7 @@ describe('Input', () => {
     it('generates correct classes from variants', () => {
       const classes = inputVariants({ variant: 'error', size: 'lg' });
       expect(classes).toContain('border-error-500');
-      expect(classes).toContain('h-12');
+      expect(classes).toContain('h-10');
     });
   });
 

@@ -49,8 +49,8 @@ describe('Textarea', () => {
   describe('Sizes', () => {
     it.each([
       ['sm', 'text-sm'],
-      ['md', 'text-base'],
-      ['lg', 'text-lg'],
+      ['md', 'text-sm'],
+      ['lg', 'text-base'],
     ])('renders %s size with correct text size', (size, expectedClass) => {
       render(<Textarea data-testid="textarea" size={size as any} />);
       expect(screen.getByTestId('textarea')).toHaveClass(expectedClass);
@@ -232,7 +232,7 @@ describe('Textarea', () => {
     it('generates correct classes from variants', () => {
       const classes = textareaVariants({ variant: 'error', size: 'lg' });
       expect(classes).toContain('border-error-500');
-      expect(classes).toContain('text-lg');
+      expect(classes).toContain('text-base');
     });
   });
 

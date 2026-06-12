@@ -75,7 +75,7 @@ const DataTableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn('[&_tr]:border-b', className)} {...props} />
+  <thead ref={ref} className={cn('bg-neutral-50 dark:bg-neutral-900/50 [&_tr]:border-b', className)} {...props} />
 ));
 DataTableHeader.displayName = 'DataTableHeader';
 
@@ -125,7 +125,7 @@ const DataTableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'h-12 px-4 text-left align-middle font-medium text-neutral-600 dark:text-neutral-400 [&:has([role=checkbox])]:pr-0',
+      'h-9 px-3 text-left align-middle text-xs font-semibold text-neutral-600 dark:text-neutral-400 [&:has([role=checkbox])]:pr-0',
       className
     )}
     {...props}
@@ -139,7 +139,7 @@ const DataTableCell = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <td
     ref={ref}
-    className={cn('p-4 align-middle text-neutral-900 dark:text-neutral-100 [&:has([role=checkbox])]:pr-0', className)}
+    className={cn('px-3 py-2.5 align-middle text-neutral-900 dark:text-neutral-100 [&:has([role=checkbox])]:pr-0', className)}
     {...props}
   />
 ));

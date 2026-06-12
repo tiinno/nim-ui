@@ -19,7 +19,7 @@ import { cn } from '../lib/utils';
  */
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-md font-medium shadow-[0_1px_1px_rgba(15,23,42,0.04)] transition-all duration-fast active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-md font-medium shadow-control transition-all duration-fast active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -27,14 +27,14 @@ const buttonVariants = cva(
         default: 'bg-neutral-950 text-white hover:bg-neutral-800 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white',
         secondary: 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200 focus-visible:ring-primary-300 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700',
         outline: 'border border-neutral-200 bg-white/70 text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50 focus-visible:ring-primary-300 dark:border-neutral-800 dark:bg-neutral-950/60 dark:text-neutral-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900',
-        ghost: 'bg-transparent text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 focus-visible:ring-primary-300 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-neutral-50',
+        ghost: 'bg-transparent shadow-none text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 focus-visible:ring-primary-300 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-neutral-50',
         destructive: 'bg-error-700 text-white hover:bg-error-800 focus-visible:ring-error-400 dark:bg-error-300 dark:text-error-950 dark:hover:bg-error-200',
       },
       size: {
-        sm: 'h-8 px-3 py-1.5 text-sm',
-        md: 'h-10 px-4 py-2 text-base',
-        lg: 'h-12 px-6 py-3 text-lg',
-        xl: 'h-14 px-8 py-4 text-xl',
+        sm: 'h-8 px-3 text-sm',
+        md: 'h-9 px-3.5 text-sm',
+        lg: 'h-10 px-4 text-base',
+        xl: 'h-11 px-5 text-base',
       },
     },
     defaultVariants: {

@@ -52,7 +52,7 @@ const ComboboxTrigger = React.forwardRef<
     ref={ref}
     role="combobox"
     className={cn(
-      'flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 shadow-sm transition-colors duration-fast',
+      'flex h-9 w-full cursor-pointer items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 shadow-control transition-colors duration-fast',
       'hover:bg-neutral-50',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
       'disabled:cursor-not-allowed disabled:opacity-50',

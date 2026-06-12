@@ -38,9 +38,9 @@ describe('Button', () => {
   describe('Sizes', () => {
     it.each([
       ['sm', 'h-8'],
-      ['md', 'h-10'],
-      ['lg', 'h-12'],
-      ['xl', 'h-14'],
+      ['md', 'h-9'],
+      ['lg', 'h-10'],
+      ['xl', 'h-11'],
     ])('renders %s size with correct height', (size, expectedClass) => {
       render(<Button size={size as any}>Size {size}</Button>);
       expect(screen.getByRole('button')).toHaveClass(expectedClass);

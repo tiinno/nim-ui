@@ -29,8 +29,8 @@ describe('Badge', () => {
       render(<Badge data-testid="badge">Medium</Badge>);
       const badge = screen.getByTestId('badge');
       expect(badge).toHaveClass('px-2.5');
-      expect(badge).toHaveClass('py-1');
-      expect(badge).toHaveClass('text-sm');
+      expect(badge).toHaveClass('py-0.5');
+      expect(badge).toHaveClass('text-xs');
     });
   });
 
@@ -89,9 +89,9 @@ describe('Badge', () => {
 
   describe('Sizes', () => {
     it.each([
-      ['sm', 'px-2', 'py-0.5', 'text-xs'],
-      ['md', 'px-2.5', 'py-1', 'text-sm'],
-      ['lg', 'px-3', 'py-1.5', 'text-base'],
+      ['sm', 'px-2', 'py-px', 'text-xs'],
+      ['md', 'px-2.5', 'py-0.5', 'text-xs'],
+      ['lg', 'px-3', 'py-1', 'text-sm'],
     ])('renders %s size with correct padding and text', (size, px, py, textSize) => {
       render(
         <Badge data-testid="badge" size={size as any}>
@@ -123,7 +123,7 @@ describe('Badge', () => {
       );
       const badge = screen.getByTestId('badge');
       expect(badge).toHaveClass('px-3');
-      expect(badge).toHaveClass('text-base');
+      expect(badge).toHaveClass('text-sm');
     });
   });
 
@@ -198,7 +198,7 @@ describe('Badge', () => {
       const classes = badgeVariants({ variant: 'destructive', size: 'lg' });
       expect(classes).toContain('bg-error-50');
       expect(classes).toContain('px-3');
-      expect(classes).toContain('text-base');
+      expect(classes).toContain('text-sm');
     });
   });
 
@@ -371,7 +371,7 @@ describe('Badge', () => {
       const badge = screen.getByTestId('badge');
       expect(badge).toHaveClass('bg-white');
       expect(badge).toHaveClass('px-3');
-      expect(badge).toHaveClass('text-base');
+      expect(badge).toHaveClass('text-sm');
     });
 
     it('combines outline variant with medium size', () => {

@@ -27,6 +27,20 @@
   --color-primary-800: oklch(0.254 0.020 249.4);
   --color-primary-900: oklch(0.200 0.018 250.0);
   --color-primary-950: oklch(0.145 0.015 250.2);
+
+  /* Status colors used by docs callouts (mirror @nim-ui tokens) */
+  --color-info-50: oklch(0.974 0.006 248.0);
+  --color-info-500: oklch(0.545 0.058 248.0);
+  --color-info-950: oklch(0.205 0.025 248.0);
+  --color-success-50: oklch(0.976 0.010 158.0);
+  --color-success-500: oklch(0.590 0.090 156.0);
+  --color-success-950: oklch(0.220 0.030 156.0);
+  --color-warning-50: oklch(0.980 0.012 82.0);
+  --color-warning-500: oklch(0.650 0.096 82.0);
+  --color-warning-950: oklch(0.230 0.032 82.0);
+  --color-error-50: oklch(0.974 0.010 25.0);
+  --color-error-500: oklch(0.560 0.120 25.0);
+  --color-error-950: oklch(0.215 0.040 25.0);
 }
 
 /* Custom documentation styles */
@@ -127,19 +141,19 @@
   }
 
   .starlight-aside--note {
-    @apply border-blue-500 bg-blue-50 dark:bg-blue-950;
+    @apply border-info-500 bg-info-50 dark:bg-info-950;
   }
 
   .starlight-aside--tip {
-    @apply border-green-500 bg-green-50 dark:bg-green-950;
+    @apply border-success-500 bg-success-50 dark:bg-success-950;
   }
 
   .starlight-aside--caution {
-    @apply border-yellow-500 bg-yellow-50 dark:bg-yellow-950;
+    @apply border-warning-500 bg-warning-50 dark:bg-warning-950;
   }
 
   .starlight-aside--danger {
-    @apply border-red-500 bg-red-50 dark:bg-red-950;
+    @apply border-error-500 bg-error-50 dark:bg-error-950;
   }
 }
 
