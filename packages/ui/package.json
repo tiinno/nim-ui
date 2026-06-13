@@ -11,11 +11,13 @@
       "import": "./dist/index.js"
     },
     "./registry": "./src/registry/index.json",
-    "./styles": "./dist/styles.css"
+    "./styles": "./dist/styles.css",
+    "./tokens.css": "./src/tokens.css"
   },
   "files": [
     "dist",
-    "src/registry"
+    "src/registry",
+    "src/tokens.css"
   ],
   "scripts": {
     "build": "tsup && postcss ./src/styles.css -o ./dist/styles.css",

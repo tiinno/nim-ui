@@ -12,16 +12,26 @@ const animationTokens = tokens.animation as {
   easing: Record<string, string>;
 };
 
-// Read styles.css once for all tests
+// Read the component-library CSS once for all tests. Design tokens + keyframes
+// now live in tokens.css (the single source of truth, imported by styles.css);
+// read both so the suite tracks wherever the tokens are authored.
 const stylesPath = resolve(__dirname, '../../styles.css');
-const stylesCss = readFileSync(stylesPath, 'utf-8');
+const tokensPath = resolve(__dirname, '../../tokens.css');
+const stylesCss =
+  readFileSync(stylesPath, 'utf-8') + '\n' + readFileSync(tokensPath, 'utf-8');
 
 /**
- * Extract the @theme block content from styles.css
+ * Extract and concatenate the body of every @theme block in the CSS.
  */
 function extractThemeBlock(css: string): string {
-  const match = css.match(/@theme\s*\{([\s\S]*?)\n\}/);
-  return match && match[1] ? match[1] : '';
+  const regex = /@theme[^{]*\{([\s\S]*?)\n\}/g;
+  let block = '';
+  let m: RegExpExecArray | null = regex.exec(css);
+  while (m !== null) {
+    block += (m[1] ?? '') + '\n';
+    m = regex.exec(css);
+  }
+  return block;
 }
 
 /**

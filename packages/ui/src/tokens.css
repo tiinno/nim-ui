@@ -1,0 +1,249 @@
+/*
+ * Nim UI design tokens — the single source of truth.
+ *
+ * Pure tokens only: @theme variables, keyframes, and base semantic vars.
+ * NO `@import "tailwindcss"`, NO `@custom-variant`, NO fonts (those differ per
+ * consumer). This file is imported by BOTH:
+ *   - packages/ui/src/styles.css        (the component library stylesheet)
+ *   - packages/docs/app/global.css      (the documentation site)
+ * so the two can never drift. Safe to import into any Tailwind v4 context
+ * because it declares no utility classes (unlike the compiled dist/styles.css).
+ */
+
+@theme {
+  /* Component radius — 8px per Compact Premium Density */
+  --radius-md: 0.5rem;
+
+  /* Primary colors (OKLCH) — Ink + Muted Steel */
+  --color-primary-50: oklch(0.982 0.003 247.8);
+  --color-primary-100: oklch(0.956 0.006 247.8);
+  --color-primary-200: oklch(0.902 0.011 247.9);
+  --color-primary-300: oklch(0.812 0.018 247.7);
+  --color-primary-400: oklch(0.682 0.025 248.0);
+  --color-primary-500: oklch(0.534 0.030 248.2);
+  --color-primary-600: oklch(0.424 0.028 248.5);
+  --color-primary-700: oklch(0.326 0.024 249.0);
+  --color-primary-800: oklch(0.254 0.020 249.4);
+  --color-primary-900: oklch(0.200 0.018 250.0);
+  --color-primary-950: oklch(0.145 0.015 250.2);
+
+  /* Neutral colors (OKLCH) */
+  --color-neutral-50: oklch(0.985 0.000 0);
+  --color-neutral-100: oklch(0.970 0.000 0);
+  --color-neutral-200: oklch(0.922 0.000 0);
+  --color-neutral-300: oklch(0.869 0.000 0);
+  --color-neutral-400: oklch(0.708 0.000 0);
+  --color-neutral-500: oklch(0.551 0.000 0);
+  --color-neutral-600: oklch(0.432 0.000 0);
+  --color-neutral-700: oklch(0.371 0.000 0);
+  --color-neutral-800: oklch(0.278 0.000 0);
+  --color-neutral-900: oklch(0.214 0.000 0);
+  --color-neutral-950: oklch(0.145 0.000 0);
+
+  /* Success colors (OKLCH) — green */
+  --color-success-50: oklch(0.976 0.010 158.0);
+  --color-success-100: oklch(0.945 0.026 158.0);
+  --color-success-200: oklch(0.890 0.050 157.5);
+  --color-success-300: oklch(0.805 0.075 157.0);
+  --color-success-400: oklch(0.700 0.090 156.5);
+  --color-success-500: oklch(0.590 0.090 156.0);
+  --color-success-600: oklch(0.505 0.080 156.0);
+  --color-success-700: oklch(0.430 0.066 156.0);
+  --color-success-800: oklch(0.360 0.052 156.0);
+  --color-success-900: oklch(0.305 0.040 156.0);
+  --color-success-950: oklch(0.220 0.030 156.0);
+
+  /* Error colors (OKLCH) — red */
+  --color-error-50: oklch(0.974 0.010 25.0);
+  --color-error-100: oklch(0.940 0.025 25.0);
+  --color-error-200: oklch(0.880 0.050 25.0);
+  --color-error-300: oklch(0.790 0.080 25.0);
+  --color-error-400: oklch(0.680 0.110 25.0);
+  --color-error-500: oklch(0.560 0.120 25.0);
+  --color-error-600: oklch(0.500 0.110 25.0);
+  --color-error-700: oklch(0.435 0.092 25.0);
+  --color-error-800: oklch(0.365 0.072 25.0);
+  --color-error-900: oklch(0.305 0.055 25.0);
+  --color-error-950: oklch(0.215 0.040 25.0);
+
+  /* Warning colors (OKLCH) — amber */
+  --color-warning-50: oklch(0.980 0.012 82.0);
+  --color-warning-100: oklch(0.948 0.028 82.0);
+  --color-warning-200: oklch(0.902 0.052 82.0);
+  --color-warning-300: oklch(0.830 0.075 82.0);
+  --color-warning-400: oklch(0.740 0.092 82.0);
+  --color-warning-500: oklch(0.650 0.096 82.0);
+  --color-warning-600: oklch(0.555 0.086 82.0);
+  --color-warning-700: oklch(0.465 0.072 82.0);
+  --color-warning-800: oklch(0.385 0.056 82.0);
+  --color-warning-900: oklch(0.320 0.044 82.0);
+  --color-warning-950: oklch(0.230 0.032 82.0);
+
+  /* Info colors (OKLCH) — blue */
+  --color-info-50: oklch(0.974 0.006 248.0);
+  --color-info-100: oklch(0.944 0.014 248.0);
+  --color-info-200: oklch(0.888 0.025 248.0);
+  --color-info-300: oklch(0.800 0.038 248.0);
+  --color-info-400: oklch(0.690 0.050 248.0);
+  --color-info-500: oklch(0.545 0.058 248.0);
+  --color-info-600: oklch(0.455 0.055 248.0);
+  --color-info-700: oklch(0.380 0.048 248.0);
+  --color-info-800: oklch(0.315 0.040 248.0);
+  --color-info-900: oklch(0.260 0.032 248.0);
+  --color-info-950: oklch(0.205 0.025 248.0);
+
+  /* Animation duration + easing tokens */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* Animation keyframe references for Tailwind utility generation */
+  --animate-fade-in: fade-in var(--duration-normal) var(--ease-out);
+  --animate-fade-out: fade-out var(--duration-normal) var(--ease-in);
+  --animate-scale-in: scale-in var(--duration-normal) var(--ease-out);
+  --animate-scale-out: scale-out var(--duration-normal) var(--ease-in);
+  --animate-slide-in-from-top: slide-in-from-top var(--duration-normal) var(--ease-out);
+  --animate-slide-in-from-bottom: slide-in-from-bottom var(--duration-normal) var(--ease-out);
+  --animate-slide-in-from-left: slide-in-from-left var(--duration-slow) var(--ease-out);
+  --animate-slide-in-from-right: slide-in-from-right var(--duration-slow) var(--ease-out);
+  --animate-slide-out-to-top: slide-out-to-top var(--duration-normal) var(--ease-in);
+  --animate-slide-out-to-bottom: slide-out-to-bottom var(--duration-normal) var(--ease-in);
+  --animate-slide-out-to-left: slide-out-to-left var(--duration-slow) var(--ease-in);
+  --animate-slide-out-to-right: slide-out-to-right var(--duration-slow) var(--ease-in);
+  --animate-accordion-down: accordion-down var(--duration-normal) var(--ease-out);
+  --animate-accordion-up: accordion-up var(--duration-normal) var(--ease-in);
+
+  /* Elevation tokens — soft, layered graphite shadows */
+  --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 30px rgba(15, 23, 42, 0.06);
+  --shadow-panel: 0 1px 2px rgba(15, 23, 42, 0.04), 0 18px 48px rgba(15, 23, 42, 0.10);
+  --shadow-control: 0 1px 1px rgba(15, 23, 42, 0.04);
+}
+
+/* Fade */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Scale */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+
+/* Slide from directions */
+@keyframes slide-in-from-top {
+  from { opacity: 0; transform: translateY(-0.5rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-from-bottom {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-from-left {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes slide-in-from-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Slide out to directions */
+@keyframes slide-out-to-top {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-0.5rem); }
+}
+@keyframes slide-out-to-bottom {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(0.5rem); }
+}
+@keyframes slide-out-to-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+@keyframes slide-out-to-right {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+/* Accordion */
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+/* Reduced motion: disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer base {
+  :root {
+    /* Light mode semantic colors (OKLCH) */
+    --background: oklch(1.000 0.000 0);
+    --foreground: oklch(0.145 0.000 0);
+    --primary: oklch(0.200 0.018 250.0);
+    --primary-foreground: oklch(0.985 0.000 0);
+    --secondary: oklch(0.970 0.000 0);
+    --secondary-foreground: oklch(0.214 0.000 0);
+    --muted: oklch(0.970 0.000 0);
+    --muted-foreground: oklch(0.551 0.000 0);
+    --accent: oklch(0.970 0.000 0);
+    --accent-foreground: oklch(0.214 0.000 0);
+    --border: oklch(0.922 0.000 0);
+    --destructive: oklch(0.560 0.120 25.0);
+    --destructive-foreground: oklch(0.985 0.000 0);
+    --info: oklch(0.545 0.058 248.0);
+    --info-foreground: oklch(0.985 0.000 0);
+    --success: oklch(0.590 0.090 156.0);
+    --success-foreground: oklch(0.985 0.000 0);
+    --warning: oklch(0.650 0.096 82.0);
+    --warning-foreground: oklch(0.214 0.000 0);
+    --ring: oklch(0.682 0.025 248.0);
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark mode semantic colors (OKLCH) */
+    --background: oklch(0.145 0.000 0);
+    --foreground: oklch(0.985 0.000 0);
+    --primary: oklch(0.812 0.018 247.7);
+    --primary-foreground: oklch(0.145 0.015 250.2);
+    --secondary: oklch(0.278 0.000 0);
+    --secondary-foreground: oklch(0.985 0.000 0);
+    --muted: oklch(0.278 0.000 0);
+    --muted-foreground: oklch(0.708 0.000 0);
+    --accent: oklch(0.278 0.000 0);
+    --accent-foreground: oklch(0.985 0.000 0);
+    --border: oklch(0.278 0.000 0);
+    --destructive: oklch(0.500 0.110 25.0);
+    --destructive-foreground: oklch(0.985 0.000 0);
+    --info: oklch(0.455 0.055 248.0);
+    --info-foreground: oklch(0.985 0.000 0);
+    --success: oklch(0.505 0.080 156.0);
+    --success-foreground: oklch(0.985 0.000 0);
+    --warning: oklch(0.740 0.092 82.0);
+    --warning-foreground: oklch(0.214 0.000 0);
+    --ring: oklch(0.682 0.025 248.0);
+  }
+}
