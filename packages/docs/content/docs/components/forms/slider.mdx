@@ -1,0 +1,164 @@
+---
+title: Slider
+description: A slider input for selecting a value or range within a bounded interval
+---
+
+import { Slider } from '@/components/nim';
+
+The Slider component lets users select a single value or a range from a bounded interval. Built on [Radix UI Slider](https://www.radix-ui.com/primitives/docs/components/slider) with OKLCH-themed tokens, it supports single/range modes, keyboard navigation, and vertical orientation.
+
+## Import
+
+```tsx
+import { Slider } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Single Value">
+  <div className="w-64">
+    <Slider defaultValue={[50]} min={0} max={100} step={1} />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Slider defaultValue={[50]} min={0} max={100} step={1} />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Range Slider
+
+Pass two values in `defaultValue` to enable range selection:
+
+<ComponentPreview title="Range Selection">
+  <div className="w-64">
+    <Slider defaultValue={[20, 80]} min={0} max={100} step={5} />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Slider defaultValue={[20, 80]} min={0} max={100} step={5} />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview title="Size Variants">
+  <div className="flex flex-col gap-6 w-64">
+    <Slider defaultValue={[50]} size="sm" />
+    <Slider defaultValue={[50]} size="md" />
+    <Slider defaultValue={[50]} size="lg" />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Slider defaultValue={[50]} size="sm" />
+<Slider defaultValue={[50]} size="md" />
+<Slider defaultValue={[50]} size="lg" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Controlled
+
+```tsx
+const [value, setValue] = useState([30]);
+
+return (
+  <Slider
+    value={value}
+    onValueChange={setValue}
+    min={0}
+    max={100}
+  />
+);
+```
+
+## Vertical
+
+```tsx
+<Slider
+  defaultValue={[50]}
+  orientation="vertical"
+  className="h-32"
+/>
+```
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'number[]',
+      description: 'Controlled value(s). Provide [value] for single, [min, max] for range',
+    },
+    {
+      name: 'defaultValue',
+      type: 'number[]',
+      description: 'Uncontrolled initial value',
+    },
+    {
+      name: 'onValueChange',
+      type: '(value: number[]) => void',
+      description: 'Callback fired when the value changes',
+    },
+    {
+      name: 'min',
+      type: 'number',
+      default: '0',
+      description: 'Minimum value',
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: '100',
+      description: 'Maximum value',
+    },
+    {
+      name: 'step',
+      type: 'number',
+      default: '1',
+      description: 'Step increment',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Size variant for track and thumb',
+    },
+    {
+      name: 'orientation',
+      type: "'horizontal' | 'vertical'",
+      default: "'horizontal'",
+      description: 'Slider orientation',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Disable the slider',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Thumbs have `role="slider"` with `aria-valuemin`, `aria-valuemax`, `aria-valuenow`
+- Range sliders label thumbs as "Minimum value" and "Maximum value" by default
+- Override with the standard `aria-label` prop on the root when you need a custom label like "Volume"
+- Full keyboard support: Arrow keys, Page Up/Down, Home/End
+- Respects `prefers-reduced-motion`
+
+### Keyboard Support
+
+| Key | Action |
+|-----|--------|
+| Arrow Right / Up | Increase value by one step |
+| Arrow Left / Down | Decrease value by one step |
+| Page Up | Increase by larger step |
+| Page Down | Decrease by larger step |
+| Home | Go to minimum |
+| End | Go to maximum |

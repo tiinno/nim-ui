@@ -1,0 +1,192 @@
+---
+title: FilterSummary
+description: Active filter chips with removable values and clear-all behavior for admin tables
+---
+
+import { noop } from '@/components/demo-handlers';
+
+import {
+  Button,
+  DataToolbar,
+  DataToolbarActions,
+  DataToolbarMeta,
+  DataToolbarSearch,
+  FilterSummary,
+  FilterSummaryClear,
+  FilterSummaryItem,
+  FilterSummaryList,
+  Input,
+} from '@/components/nim';
+
+The FilterSummary component keeps active search and table filters visible after the filter menu closes. Use it below `DataToolbar` so operators can remove individual constraints without losing table context.
+
+## Import
+
+```tsx
+import {
+  FilterSummary,
+  FilterSummaryClear,
+  FilterSummaryItem,
+  FilterSummaryList,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Active Filters" className="block">
+  <FilterSummary aria-label="Active order filters" className="w-full">
+    <FilterSummaryList>
+      <FilterSummaryItem label="Status" value="Open" onRemove={noop} />
+      <FilterSummaryItem label="Risk" value="High" onRemove={noop} />
+      <FilterSummaryItem label="Warehouse" value="BKK-02" onRemove={noop} />
+    </FilterSummaryList>
+    <FilterSummaryClear onClear={noop} />
+  </FilterSummary>
+
+  <PreviewCode>
+```tsx
+<FilterSummary aria-label="Active order filters">
+  <FilterSummaryList>
+    <FilterSummaryItem label="Status" value="Open" onRemove={removeStatus} />
+    <FilterSummaryItem label="Risk" value="High" onRemove={removeRisk} />
+    <FilterSummaryItem label="Warehouse" value="BKK-02" onRemove={removeWarehouse} />
+  </FilterSummaryList>
+  <FilterSummaryClear onClear={clearFilters} />
+</FilterSummary>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## DataToolbar Integration
+
+<ComponentPreview title="Search and Active Filters" className="block">
+  <div className="w-full space-y-3">
+    <DataToolbar aria-label="Order table controls">
+      <DataToolbarSearch>
+        <Input className="w-full sm:w-72" placeholder="Search orders" aria-label="Search orders" />
+        <DataToolbarMeta>184 results</DataToolbarMeta>
+      </DataToolbarSearch>
+      <DataToolbarActions aria-label="Order actions">
+        <Button variant="outline" size="sm">Export</Button>
+      </DataToolbarActions>
+    </DataToolbar>
+    <FilterSummary aria-label="Active order filters">
+      <FilterSummaryList>
+        <FilterSummaryItem label="Status" value="Open" onRemove={noop} />
+        <FilterSummaryItem label="Risk" value="High" onRemove={noop} />
+      </FilterSummaryList>
+      <FilterSummaryClear onClear={noop} />
+    </FilterSummary>
+  </div>
+
+  <PreviewCode>
+```tsx
+<DataToolbar aria-label="Order table controls">
+  <DataToolbarSearch>
+    <Input placeholder="Search orders" aria-label="Search orders" />
+    <DataToolbarMeta>184 results</DataToolbarMeta>
+  </DataToolbarSearch>
+  <DataToolbarActions aria-label="Order actions">
+    <Button variant="outline" size="sm">Export</Button>
+  </DataToolbarActions>
+</DataToolbar>
+<FilterSummary aria-label="Active order filters">
+  <FilterSummaryList>
+    <FilterSummaryItem label="Status" value="Open" onRemove={removeStatus} />
+    <FilterSummaryItem label="Risk" value="High" onRemove={removeRisk} />
+  </FilterSummaryList>
+  <FilterSummaryClear onClear={clearFilters} />
+</FilterSummary>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Empty State
+
+<ComponentPreview title="No Active Filters">
+  <FilterSummary aria-label="Active filters">
+    <FilterSummaryList emptyText="No filters applied" />
+  </FilterSummary>
+
+  <PreviewCode>
+```tsx
+<FilterSummary aria-label="Active filters">
+  <FilterSummaryList emptyText="No filters applied" />
+</FilterSummary>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### FilterSummary
+
+<PropsTable
+  props={[
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Accessible label for the active filter region.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional classes for spacing, width, or layout integration.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'FilterSummaryList and optional FilterSummaryClear.',
+    },
+  ]}
+/>
+
+### FilterSummaryItem
+
+<PropsTable
+  props={[
+    {
+      name: 'label',
+      type: 'ReactNode',
+      required: true,
+      description: 'Filter field label such as Status, Risk, or Warehouse.',
+    },
+    {
+      name: 'value',
+      type: 'ReactNode',
+      required: true,
+      description: 'Visible active value for the filter.',
+    },
+    {
+      name: 'onRemove',
+      type: 'MouseEventHandler<HTMLButtonElement>',
+      description: 'Called when the remove button is pressed.',
+    },
+    {
+      name: 'removeLabel',
+      type: 'string',
+      description: 'Custom accessible label for non-text labels or values.',
+    },
+  ]}
+/>
+
+### FilterSummaryList
+
+<PropsTable
+  props={[
+    {
+      name: 'emptyText',
+      type: 'ReactNode',
+      default: "'No active filters'",
+      description: 'Compact empty copy shown when no filter chips are rendered.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Place `FilterSummary` below `DataToolbar`, not inside search inputs or menus.
+- Keep filter labels short and values scannable.
+- Always provide either per-filter remove callbacks or a clear-all action when filters are active.
+- Use `removeLabel` when label or value content is not plain text.

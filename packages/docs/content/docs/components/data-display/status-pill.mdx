@@ -1,0 +1,105 @@
+---
+title: StatusPill
+description: Compact operational state pill for admin tables, orders, payments, and user workflows
+---
+
+import { StatusPill } from '@/components/nim';
+
+The StatusPill component communicates operational state in dense admin screens. Use it for order state, payment status, fulfillment progress, user state, and system review outcomes.
+
+## Import
+
+```tsx
+import { StatusPill } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Operational States">
+  <StatusPill status="active">Active</StatusPill>
+  <StatusPill status="pending">Pending</StatusPill>
+  <StatusPill status="processing" pulse>Picking</StatusPill>
+  <StatusPill status="success">Paid</StatusPill>
+  <StatusPill status="warning">Needs review</StatusPill>
+  <StatusPill status="failed">Failed</StatusPill>
+  <StatusPill status="blocked">Blocked</StatusPill>
+  <StatusPill status="archived">Archived</StatusPill>
+
+  <PreviewCode>
+```tsx
+<StatusPill status="active">Active</StatusPill>
+<StatusPill status="pending">Pending</StatusPill>
+<StatusPill status="processing" pulse>Picking</StatusPill>
+<StatusPill status="success">Paid</StatusPill>
+<StatusPill status="warning">Needs review</StatusPill>
+<StatusPill status="failed">Failed</StatusPill>
+<StatusPill status="blocked">Blocked</StatusPill>
+<StatusPill status="archived">Archived</StatusPill>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Compact Table Cell
+
+<ComponentPreview title="Without Dot">
+  <StatusPill status="success" showDot={false} size="sm">Fulfilled</StatusPill>
+  <StatusPill status="warning" showDot={false} size="sm">Review</StatusPill>
+  <StatusPill status="failed" showDot={false} size="sm">Payment failed</StatusPill>
+
+  <PreviewCode>
+```tsx
+<StatusPill status="success" showDot={false} size="sm">Fulfilled</StatusPill>
+<StatusPill status="warning" showDot={false} size="sm">Review</StatusPill>
+<StatusPill status="failed" showDot={false} size="sm">Payment failed</StatusPill>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'status',
+      type: "'active' | 'pending' | 'processing' | 'success' | 'warning' | 'failed' | 'blocked' | 'archived'",
+      default: "'pending'",
+      description: 'Operational state mapped to a semantic color treatment.',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Compact sizing for table cells or larger sizing for detail panels.',
+    },
+    {
+      name: 'showDot',
+      type: 'boolean',
+      default: 'true',
+      description: 'Show or hide the decorative state dot.',
+    },
+    {
+      name: 'pulse',
+      type: 'boolean',
+      default: 'false',
+      description: 'Adds a subtle pulse to the dot for in-progress states.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional classes for spacing or layout integration.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Visible status label.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Use `StatusPill` for workflow state, not arbitrary tags.
+- Use `processing` with `pulse` only for live work that is actively moving.
+- Use `blocked` for states that require human action before work can continue.
+- Hide the dot in extremely tight tables, but keep the visible label.

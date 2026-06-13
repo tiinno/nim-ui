@@ -1,0 +1,13 @@
+{
+  "title": "Components",
+  "pages": [
+    "primitives",
+    "layout",
+    "data-display",
+    "commerce",
+    "landing",
+    "feedback",
+    "forms",
+    "navigation"
+  ]
+}

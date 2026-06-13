@@ -1,0 +1,93 @@
+---
+title: DescriptionList
+description: Semantic label-value metadata for detail panels, drawers, and record pages
+---
+
+import {
+  Button,
+  DescriptionList,
+  DescriptionListActions,
+  DescriptionListDescription,
+  DescriptionListItem,
+  DescriptionListTerm,
+} from '@/components/nim';
+
+The DescriptionList component presents record metadata with semantic `dl`, `dt`, and `dd` elements for detail panels and backoffice review screens.
+
+## Import
+
+```tsx
+import {
+  DescriptionList,
+  DescriptionListActions,
+  DescriptionListDescription,
+  DescriptionListItem,
+  DescriptionListTerm,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Order Details" className="block">
+  <DescriptionList aria-label="Order details" variant="inline" className="w-full">
+    <DescriptionListItem>
+      <DescriptionListTerm>Order ID</DescriptionListTerm>
+      <DescriptionListDescription>ORD-4821</DescriptionListDescription>
+    </DescriptionListItem>
+    <DescriptionListItem>
+      <DescriptionListTerm>Warehouse</DescriptionListTerm>
+      <DescriptionListDescription>Bangkok 02</DescriptionListDescription>
+    </DescriptionListItem>
+    <DescriptionListItem>
+      <DescriptionListTerm>Customer</DescriptionListTerm>
+      <DescriptionListDescription>Northwind Supply</DescriptionListDescription>
+      <DescriptionListActions aria-label="Customer detail actions">
+        <Button variant="outline" size="sm">Open profile</Button>
+      </DescriptionListActions>
+    </DescriptionListItem>
+  </DescriptionList>
+
+  <PreviewCode>
+```tsx
+<DescriptionList aria-label="Order details" variant="inline">
+  <DescriptionListItem>
+    <DescriptionListTerm>Order ID</DescriptionListTerm>
+    <DescriptionListDescription>ORD-4821</DescriptionListDescription>
+  </DescriptionListItem>
+  <DescriptionListItem>
+    <DescriptionListTerm>Customer</DescriptionListTerm>
+    <DescriptionListDescription>Northwind Supply</DescriptionListDescription>
+    <DescriptionListActions aria-label="Customer detail actions">
+      <Button variant="outline" size="sm">Open profile</Button>
+    </DescriptionListActions>
+  </DescriptionListItem>
+</DescriptionList>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### DescriptionList
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: '"default" | "inline"',
+      default: '"default"',
+      description: 'Layout style for the metadata rows.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional classes for spacing or container constraints.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Use `DescriptionList` for facts about one record, not tabular collections.
+- Use `variant="inline"` in side panels and drawers where label alignment matters.
+- Keep row actions contextual and grouped with `DescriptionListActions`.

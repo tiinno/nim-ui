@@ -1,0 +1,204 @@
+---
+title: RecordInspector
+description: Compact record detail panel for backoffice review, metadata, actions, and activity
+---
+
+import {
+  Button,
+  RecordInspector,
+  RecordInspectorActions,
+  RecordInspectorBody,
+  RecordInspectorDescription,
+  RecordInspectorFooter,
+  RecordInspectorHeader,
+  RecordInspectorHeading,
+  RecordInspectorMetadata,
+  RecordInspectorMetadataItem,
+  RecordInspectorMetadataLabel,
+  RecordInspectorMetadataValue,
+  RecordInspectorSection,
+  RecordInspectorSectionDescription,
+  RecordInspectorSectionHeader,
+  RecordInspectorSectionTitle,
+  RecordInspectorStatus,
+  RecordInspectorTitle,
+  StatusPill,
+  Timeline,
+  TimelineContent,
+  TimelineDescription,
+  TimelineItem,
+  TimelineMarker,
+  TimelineTime,
+  TimelineTitle,
+} from '@/components/nim';
+
+RecordInspector gives operators a dense detail surface for reviewing the selected record without losing table context.
+
+## Import
+
+```tsx
+import {
+  RecordInspector,
+  RecordInspectorHeader,
+  RecordInspectorHeading,
+  RecordInspectorTitle,
+  RecordInspectorDescription,
+  RecordInspectorStatus,
+  RecordInspectorActions,
+  RecordInspectorBody,
+  RecordInspectorSection,
+  RecordInspectorSectionHeader,
+  RecordInspectorSectionTitle,
+  RecordInspectorMetadata,
+  RecordInspectorMetadataItem,
+  RecordInspectorMetadataLabel,
+  RecordInspectorMetadataValue,
+  RecordInspectorFooter,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Order Record Inspector" className="block">
+  <RecordInspector aria-label="Order inspector" className="max-w-3xl">
+    <RecordInspectorHeader>
+      <RecordInspectorHeading>
+        <RecordInspectorTitle>ORD-4821</RecordInspectorTitle>
+        <RecordInspectorDescription>
+          Northwind Supply order awaiting risk review.
+        </RecordInspectorDescription>
+      </RecordInspectorHeading>
+      <div className="flex flex-wrap items-center gap-2">
+        <RecordInspectorStatus>
+          <StatusPill status="warning">Needs review</StatusPill>
+        </RecordInspectorStatus>
+        <RecordInspectorActions aria-label="Inspector actions">
+          <Button variant="outline" size="sm">Assign</Button>
+          <Button size="sm">Approve</Button>
+        </RecordInspectorActions>
+      </div>
+    </RecordInspectorHeader>
+    <RecordInspectorBody>
+      <RecordInspectorSection aria-labelledby="summary-title">
+        <RecordInspectorSectionHeader>
+          <RecordInspectorSectionTitle id="summary-title">Summary</RecordInspectorSectionTitle>
+          <RecordInspectorSectionDescription>
+            Critical details operators need before changing fulfilment state.
+          </RecordInspectorSectionDescription>
+        </RecordInspectorSectionHeader>
+        <RecordInspectorMetadata columns={3} aria-label="Order metadata">
+          <RecordInspectorMetadataItem>
+            <RecordInspectorMetadataLabel>Customer</RecordInspectorMetadataLabel>
+            <RecordInspectorMetadataValue>Northwind Supply</RecordInspectorMetadataValue>
+          </RecordInspectorMetadataItem>
+          <RecordInspectorMetadataItem>
+            <RecordInspectorMetadataLabel>Total</RecordInspectorMetadataLabel>
+            <RecordInspectorMetadataValue>$12,840.00</RecordInspectorMetadataValue>
+          </RecordInspectorMetadataItem>
+          <RecordInspectorMetadataItem>
+            <RecordInspectorMetadataLabel>Warehouse</RecordInspectorMetadataLabel>
+            <RecordInspectorMetadataValue>Bangkok 02</RecordInspectorMetadataValue>
+          </RecordInspectorMetadataItem>
+        </RecordInspectorMetadata>
+      </RecordInspectorSection>
+      <RecordInspectorSection aria-labelledby="activity-title">
+        <RecordInspectorSectionHeader>
+          <RecordInspectorSectionTitle id="activity-title">Activity</RecordInspectorSectionTitle>
+        </RecordInspectorSectionHeader>
+        <Timeline aria-label="Order activity">
+          <TimelineItem>
+            <TimelineMarker variant="warning" />
+            <TimelineContent>
+              <TimelineTime dateTime="2026-05-25T01:20:00+07:00">01:20</TimelineTime>
+              <TimelineTitle>Risk review requested</TimelineTitle>
+              <TimelineDescription>Payment pattern requires supervisor approval.</TimelineDescription>
+            </TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineMarker variant="success" />
+            <TimelineContent>
+              <TimelineTime dateTime="2026-05-25T00:48:00+07:00">00:48</TimelineTime>
+              <TimelineTitle>Inventory reserved</TimelineTitle>
+              <TimelineDescription>All line items reserved at Bangkok 02.</TimelineDescription>
+            </TimelineContent>
+          </TimelineItem>
+        </Timeline>
+      </RecordInspectorSection>
+    </RecordInspectorBody>
+    <RecordInspectorFooter aria-label="Review actions">
+      <Button variant="outline">Escalate</Button>
+      <Button>Approve order</Button>
+    </RecordInspectorFooter>
+  </RecordInspector>
+
+  <PreviewCode>
+```tsx
+<RecordInspector aria-label="Order inspector">
+  <RecordInspectorHeader>
+    <RecordInspectorHeading>
+      <RecordInspectorTitle>ORD-4821</RecordInspectorTitle>
+      <RecordInspectorDescription>
+        Northwind Supply order awaiting risk review.
+      </RecordInspectorDescription>
+    </RecordInspectorHeading>
+    <RecordInspectorStatus>
+      <StatusPill status="warning">Needs review</StatusPill>
+    </RecordInspectorStatus>
+  </RecordInspectorHeader>
+  <RecordInspectorBody>
+    <RecordInspectorSection aria-labelledby="summary-title">
+      <RecordInspectorSectionHeader>
+        <RecordInspectorSectionTitle id="summary-title">Summary</RecordInspectorSectionTitle>
+      </RecordInspectorSectionHeader>
+      <RecordInspectorMetadata columns={3}>
+        <RecordInspectorMetadataItem>
+          <RecordInspectorMetadataLabel>Customer</RecordInspectorMetadataLabel>
+          <RecordInspectorMetadataValue>Northwind Supply</RecordInspectorMetadataValue>
+        </RecordInspectorMetadataItem>
+      </RecordInspectorMetadata>
+    </RecordInspectorSection>
+  </RecordInspectorBody>
+</RecordInspector>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### RecordInspector
+
+<PropsTable
+  props={[
+    {
+      name: 'density',
+      type: "'comfortable' | 'compact'",
+      default: "'comfortable'",
+      description: 'Adjusts panel spacing for full-page detail views or tighter side panels.',
+    },
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Provides the accessible region name for the selected record detail surface.',
+    },
+  ]}
+/>
+
+### RecordInspectorMetadata
+
+<PropsTable
+  props={[
+    {
+      name: 'columns',
+      type: '1 | 2 | 3',
+      default: '2',
+      description: 'Responsive metadata column count. It collapses to one column on narrow screens.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Use RecordInspector beside a table, inside a Drawer, or as the detail column in a split view.
+- Keep the header focused on identity, state, and immediate actions.
+- Use metadata for stable facts and Timeline for events that changed over time.
+- Prefer compact density when the inspector sits in a side panel next to a data table.

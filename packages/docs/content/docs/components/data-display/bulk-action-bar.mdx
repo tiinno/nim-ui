@@ -1,0 +1,144 @@
+---
+title: BulkActionBar
+description: Sticky selected-row action bar for admin tables and bulk workflows
+---
+
+import { noop } from '@/components/demo-handlers';
+
+import {
+  BulkActionBar,
+  BulkActionBarActions,
+  BulkActionBarClear,
+  BulkActionBarMeta,
+  BulkActionBarSelection,
+  Button,
+} from '@/components/nim';
+
+The BulkActionBar component gives selected rows a visible action surface for admin workflows like assigning orders, exporting filtered rows, or applying destructive state changes.
+
+## Import
+
+```tsx
+import {
+  BulkActionBar,
+  BulkActionBarActions,
+  BulkActionBarClear,
+  BulkActionBarMeta,
+  BulkActionBarSelection,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Selected Rows" className="block">
+  <BulkActionBar aria-label="Selected order actions" className="w-full">
+    <div className="flex flex-col gap-1">
+      <BulkActionBarSelection count={3} label="orders selected" />
+      <BulkActionBarMeta>High-risk review queue</BulkActionBarMeta>
+    </div>
+    <BulkActionBarActions aria-label="Bulk order actions">
+      <Button variant="outline" size="sm">Assign</Button>
+      <Button variant="outline" size="sm">Export</Button>
+      <Button variant="primary" size="sm">Approve</Button>
+    </BulkActionBarActions>
+    <BulkActionBarActions aria-label="Danger actions" variant="destructive">
+      <Button variant="destructive" size="sm">Cancel</Button>
+    </BulkActionBarActions>
+    <BulkActionBarClear onClear={noop} />
+  </BulkActionBar>
+
+  <PreviewCode>
+```tsx
+<BulkActionBar aria-label="Selected order actions">
+  <div className="flex flex-col gap-1">
+    <BulkActionBarSelection count={3} label="orders selected" />
+    <BulkActionBarMeta>High-risk review queue</BulkActionBarMeta>
+  </div>
+  <BulkActionBarActions aria-label="Bulk order actions">
+    <Button variant="outline" size="sm">Assign</Button>
+    <Button variant="outline" size="sm">Export</Button>
+    <Button variant="primary" size="sm">Approve</Button>
+  </BulkActionBarActions>
+  <BulkActionBarActions aria-label="Danger actions" variant="destructive">
+    <Button variant="destructive" size="sm">Cancel</Button>
+  </BulkActionBarActions>
+  <BulkActionBarClear onClear={clearSelection} />
+</BulkActionBar>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### BulkActionBar
+
+<PropsTable
+  props={[
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Accessible label for the selected-row toolbar.',
+    },
+    {
+      name: 'tone',
+      type: "'default' | 'elevated'",
+      default: "'default'",
+      description: 'Visual emphasis for the sticky container.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional classes for layout and positioning.',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Selection summary, action groups, and optional clear control.',
+    },
+  ]}
+/>
+
+### BulkActionBarSelection
+
+<PropsTable
+  props={[
+    {
+      name: 'count',
+      type: 'number',
+      required: true,
+      description: 'Number of selected records.',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: "'selected'",
+      description: 'Label rendered after the selected count.',
+    },
+  ]}
+/>
+
+### BulkActionBarActions
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: "'default' | 'destructive'",
+      default: "'default'",
+      description: 'Groups standard and destructive actions separately.',
+    },
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Accessible label for this action group.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Render `BulkActionBar` only after at least one row is selected.
+- Keep the selected count visible while operators scan the table.
+- Put destructive actions in a separate `BulkActionBarActions variant="destructive"` group.
+- Provide `BulkActionBarClear` so users can exit bulk mode without losing table context.

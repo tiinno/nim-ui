@@ -8,6 +8,13 @@ dist
 build
 .next
 .turbo
+out
+.source
+next-env.d.ts
+.astro
+
+# Tooling artifacts
+.playwright-mcp
 
 # Environment
 .env

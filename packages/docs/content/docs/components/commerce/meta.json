@@ -1,0 +1,4 @@
+{
+  "title": "Commerce",
+  "pages": ["product-card", "cart-item", "price-tag", "quantity-selector", "..."]
+}

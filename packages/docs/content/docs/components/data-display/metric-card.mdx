@@ -1,0 +1,170 @@
+---
+title: MetricCard
+description: Dashboard KPI card with trend, tone, visual slot, and footer metadata
+---
+
+import {
+  MetricCard,
+  MetricCardDelta,
+  MetricCardDescription,
+  MetricCardFooter,
+  MetricCardHeader,
+  MetricCardLabel,
+  MetricCardValue,
+  MetricCardVisual,
+} from '@/components/nim';
+
+MetricCard gives dashboards a structured KPI surface for operational health, revenue, queue load, and SLA signals.
+
+## Import
+
+```tsx
+import {
+  MetricCard,
+  MetricCardHeader,
+  MetricCardLabel,
+  MetricCardValue,
+  MetricCardDelta,
+  MetricCardDescription,
+  MetricCardVisual,
+  MetricCardFooter,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Dashboard Metrics" className="block">
+  <div className="grid max-w-5xl gap-4 md:grid-cols-3">
+    <MetricCard aria-label="Revenue metric" tone="success">
+      <MetricCardHeader>
+        <MetricCardLabel>Revenue</MetricCardLabel>
+        <MetricCardDelta>+12.4%</MetricCardDelta>
+      </MetricCardHeader>
+      <MetricCardValue>$84.2K</MetricCardValue>
+      <MetricCardDescription>Compared with the previous 7 days.</MetricCardDescription>
+      <MetricCardVisual aria-hidden="true" className="flex items-end gap-1 p-2">
+        <span className="h-4 flex-1 rounded-sm bg-success-200 dark:bg-success-900" />
+        <span className="h-6 flex-1 rounded-sm bg-success-300 dark:bg-success-800" />
+        <span className="h-5 flex-1 rounded-sm bg-success-300 dark:bg-success-800" />
+        <span className="h-8 flex-1 rounded-sm bg-success-500" />
+        <span className="h-7 flex-1 rounded-sm bg-success-400" />
+      </MetricCardVisual>
+      <MetricCardFooter>
+        <span>Last sync 2 min ago</span>
+        <span>Net sales</span>
+      </MetricCardFooter>
+    </MetricCard>
+    <MetricCard aria-label="Review queue metric" tone="warning">
+      <MetricCardHeader>
+        <MetricCardLabel>Review queue</MetricCardLabel>
+        <MetricCardDelta>+8</MetricCardDelta>
+      </MetricCardHeader>
+      <MetricCardValue>42</MetricCardValue>
+      <MetricCardDescription>Orders waiting on supervisor approval.</MetricCardDescription>
+      <MetricCardFooter>
+        <span>12 high risk</span>
+        <span>Orders</span>
+      </MetricCardFooter>
+    </MetricCard>
+    <MetricCard aria-label="Fulfilment SLA metric" tone="info">
+      <MetricCardHeader>
+        <MetricCardLabel>Fulfilment SLA</MetricCardLabel>
+        <MetricCardDelta tone="danger">-3.1%</MetricCardDelta>
+      </MetricCardHeader>
+      <MetricCardValue>96.8%</MetricCardValue>
+      <MetricCardDescription>Bangkok warehouse, rolling 24 hours.</MetricCardDescription>
+      <MetricCardFooter>
+        <span>Target 98%</span>
+        <span>Warehouse</span>
+      </MetricCardFooter>
+    </MetricCard>
+  </div>
+
+  <PreviewCode>
+```tsx
+<MetricCard aria-label="Revenue metric" tone="success">
+  <MetricCardHeader>
+    <MetricCardLabel>Revenue</MetricCardLabel>
+    <MetricCardDelta>+12.4%</MetricCardDelta>
+  </MetricCardHeader>
+  <MetricCardValue>$84.2K</MetricCardValue>
+  <MetricCardDescription>Compared with the previous 7 days.</MetricCardDescription>
+  <MetricCardFooter>
+    <span>Last sync 2 min ago</span>
+    <span>Net sales</span>
+  </MetricCardFooter>
+</MetricCard>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Compact Density
+
+<ComponentPreview title="Compact Metric">
+  <MetricCard density="compact" tone="danger" aria-label="Failed payments metric" className="max-w-sm">
+    <MetricCardHeader>
+      <MetricCardLabel>Failed payments</MetricCardLabel>
+      <MetricCardDelta>+3</MetricCardDelta>
+    </MetricCardHeader>
+    <MetricCardValue>17</MetricCardValue>
+    <MetricCardDescription>Needs operator follow-up.</MetricCardDescription>
+  </MetricCard>
+
+  <PreviewCode>
+```tsx
+<MetricCard density="compact" tone="danger" aria-label="Failed payments metric">
+  <MetricCardHeader>
+    <MetricCardLabel>Failed payments</MetricCardLabel>
+    <MetricCardDelta>+3</MetricCardDelta>
+  </MetricCardHeader>
+  <MetricCardValue>17</MetricCardValue>
+</MetricCard>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### MetricCard
+
+<PropsTable
+  props={[
+    {
+      name: 'tone',
+      type: "'neutral' | 'success' | 'warning' | 'danger' | 'info'",
+      default: "'neutral'",
+      description: 'Semantic tone for the card border, accent, and default delta styling.',
+    },
+    {
+      name: 'density',
+      type: "'comfortable' | 'compact'",
+      default: "'comfortable'",
+      description: 'Adjusts card padding for dashboard rows or dense side panels.',
+    },
+    {
+      name: 'showAccent',
+      type: 'boolean',
+      default: 'true',
+      description: 'Shows the top accent bar that makes dense KPI rows easier to scan.',
+    },
+  ]}
+/>
+
+### MetricCardDelta
+
+<PropsTable
+  props={[
+    {
+      name: 'tone',
+      type: "'neutral' | 'success' | 'warning' | 'danger' | 'info'",
+      description: 'Overrides the card tone for mixed signals, such as an info metric with a negative delta.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Use MetricCard for dashboard KPIs that need trend or status context; keep Stat for plain numbers.
+- Use `aria-label` to name the metric card when the visible label is not enough on its own.
+- Put short sparkline or threshold visuals in `MetricCardVisual`; avoid full charts inside the card.
+- Keep footer text factual: time range, data source, target, or owner.

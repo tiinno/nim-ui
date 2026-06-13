@@ -1,0 +1,20 @@
+{
+  "title": "Data Display",
+  "pages": [
+    "badge",
+    "avatar",
+    "data-table",
+    "data-toolbar",
+    "status-pill",
+    "filter-summary",
+    "bulk-action-bar",
+    "empty-state",
+    "timeline",
+    "description-list",
+    "record-inspector",
+    "data-card",
+    "metric-card",
+    "stat",
+    "..."
+  ]
+}

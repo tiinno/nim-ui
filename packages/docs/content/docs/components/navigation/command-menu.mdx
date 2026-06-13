@@ -1,0 +1,98 @@
+---
+title: CommandMenu
+description: Searchable command surface for backoffice navigation, records, and actions
+---
+
+import { CommandMenuDemo } from '@/components/demos/CommandMenuDemo';
+
+CommandMenu gives operators a fast path to records, workflows, and high-frequency actions without leaving the current screen.
+
+## Import
+
+```tsx
+import {
+  CommandMenu,
+  CommandMenuEmpty,
+  CommandMenuGroup,
+  CommandMenuInput,
+  CommandMenuItem,
+  CommandMenuList,
+  CommandMenuSeparator,
+  CommandMenuShortcut,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Operations Command Menu" className="block">
+  <CommandMenuDemo />
+
+  <PreviewCode>
+```tsx
+<CommandMenu label="Operations command menu">
+  <CommandMenuInput placeholder="Search orders, users, or actions..." />
+  <CommandMenuList>
+    <CommandMenuEmpty>No command found.</CommandMenuEmpty>
+    <CommandMenuGroup heading="Orders">
+      <CommandMenuItem
+        value="open order 4821 northwind high risk"
+        meta="Northwind Supply · High risk · Today 16:30"
+        badge="Review"
+        shortcut="O 1"
+        onSelect={openOrder}
+      >
+        Open ORD-4821
+      </CommandMenuItem>
+    </CommandMenuGroup>
+  </CommandMenuList>
+</CommandMenu>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### CommandMenuItem
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      required: true,
+      description: 'Searchable command value used by cmdk filtering and passed to onSelect.',
+    },
+    {
+      name: 'onSelect',
+      type: '(value: string) => void',
+      description: 'Called when the command is chosen.',
+    },
+    {
+      name: 'meta',
+      type: 'ReactNode',
+      description: 'Secondary context such as customer, state, owner, or route.',
+    },
+    {
+      name: 'badge',
+      type: 'ReactNode',
+      description: 'Small status or count marker aligned to the right.',
+    },
+    {
+      name: 'shortcut',
+      type: 'ReactNode',
+      description: 'Optional keyboard hint for frequent commands.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      description: 'Marks commands that are unavailable in the current workflow context.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Use `value` for search terms operators actually type: order id, customer, state, owner, action verb.
+- Keep `meta` factual and compact; it should help the operator choose the right record.
+- Show disabled commands when context explains why an action is unavailable.
+- Put `CommandMenu` inside a dialog, popover, or topbar search affordance depending on app shell needs.

@@ -1,0 +1,180 @@
+---
+title: ViewSwitcher
+description: Saved-view and operational-queue switcher for backoffice tables and dashboards
+---
+
+import {
+  Button,
+  DataToolbar,
+  DataToolbarActions,
+  DataToolbarSearch,
+  Input,
+  ViewSwitcher,
+  ViewSwitcherActions,
+  ViewSwitcherItem,
+} from '@/components/nim';
+
+ViewSwitcher lets operators move between saved filters, table views, and work queues without losing the current screen.
+
+## Import
+
+```tsx
+import {
+  ViewSwitcher,
+  ViewSwitcherItem,
+  ViewSwitcherLabel,
+  ViewSwitcherMeta,
+  ViewSwitcherCount,
+  ViewSwitcherActions,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Order Queue Views" className="block">
+  <div className="min-w-0 w-full max-w-4xl space-y-4">
+    <DataToolbar aria-label="Order table controls">
+      <DataToolbarSearch>
+        <Input aria-label="Search orders" placeholder="Search orders..." />
+      </DataToolbarSearch>
+      <DataToolbarActions aria-label="Order actions">
+        <Button variant="outline" size="sm">Export</Button>
+        <Button size="sm">Create order</Button>
+      </DataToolbarActions>
+    </DataToolbar>
+    <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+      <ViewSwitcher aria-label="Order views">
+        <ViewSwitcherItem value="all" selected count={128} meta="All active orders">
+          All orders
+        </ViewSwitcherItem>
+        <ViewSwitcherItem value="review" count={12} meta="Manual approval">
+          Needs review
+        </ViewSwitcherItem>
+        <ViewSwitcherItem value="delayed" count={6} meta="Breached SLA">
+          Delayed
+        </ViewSwitcherItem>
+        <ViewSwitcherItem value="failed" count={3} meta="Payment or sync">
+          Failed
+        </ViewSwitcherItem>
+        <ViewSwitcherItem value="archived" disabled count={0}>
+          Archived
+        </ViewSwitcherItem>
+      </ViewSwitcher>
+      <ViewSwitcherActions aria-label="Saved view actions">
+        <Button variant="outline" size="sm">Save view</Button>
+      </ViewSwitcherActions>
+    </div>
+  </div>
+
+  <PreviewCode>
+```tsx
+<ViewSwitcher aria-label="Order views">
+  <ViewSwitcherItem
+    value="all"
+    selected
+    count={128}
+    meta="All active orders"
+    onSelect={setView}
+  >
+    All orders
+  </ViewSwitcherItem>
+  <ViewSwitcherItem value="review" count={12} meta="Manual approval" onSelect={setView}>
+    Needs review
+  </ViewSwitcherItem>
+  <ViewSwitcherItem value="delayed" count={6} meta="Breached SLA" onSelect={setView}>
+    Delayed
+  </ViewSwitcherItem>
+</ViewSwitcher>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Compact Density
+
+<ComponentPreview title="Compact Saved Views">
+  <ViewSwitcher density="compact" aria-label="Inventory views">
+    <ViewSwitcherItem value="available" selected count={320}>
+      Available
+    </ViewSwitcherItem>
+    <ViewSwitcherItem value="low" count={18}>
+      Low stock
+    </ViewSwitcherItem>
+    <ViewSwitcherItem value="reserved" count={74}>
+      Reserved
+    </ViewSwitcherItem>
+  </ViewSwitcher>
+
+  <PreviewCode>
+```tsx
+<ViewSwitcher density="compact" aria-label="Inventory views">
+  <ViewSwitcherItem value="available" selected count={320}>Available</ViewSwitcherItem>
+  <ViewSwitcherItem value="low" count={18}>Low stock</ViewSwitcherItem>
+</ViewSwitcher>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### ViewSwitcher
+
+<PropsTable
+  props={[
+    {
+      name: 'density',
+      type: "'comfortable' | 'compact'",
+      default: "'comfortable'",
+      description: 'Adjusts tab spacing for primary table views or tighter toolbar placement.',
+    },
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Provides the accessible tablist name.',
+    },
+  ]}
+/>
+
+### ViewSwitcherItem
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      required: true,
+      description: 'Stable value passed to onSelect when the view is chosen.',
+    },
+    {
+      name: 'selected',
+      type: 'boolean',
+      description: 'Marks the active view and sets aria-selected.',
+    },
+    {
+      name: 'count',
+      type: 'ReactNode',
+      description: 'Optional queue count or saved-view result total.',
+    },
+    {
+      name: 'meta',
+      type: 'ReactNode',
+      description: 'Short secondary context for why the queue exists.',
+    },
+    {
+      name: 'onSelect',
+      type: '(value: string) => void',
+      description: 'Called when the operator chooses the view.',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      description: 'Disables unavailable views while keeping the queue visible.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Put ViewSwitcher below DataToolbar when views change the table query.
+- Keep labels short and let `meta` explain operational meaning.
+- Counts should reflect the current workspace, tenant, or filter scope.
+- Use compact density inside dense dashboards or split table/detail layouts.

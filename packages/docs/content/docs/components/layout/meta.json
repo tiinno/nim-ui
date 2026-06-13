@@ -1,0 +1,20 @@
+{
+  "title": "Layout",
+  "pages": [
+    "container",
+    "grid",
+    "stack",
+    "flex",
+    "spacer",
+    "card",
+    "admin-shell",
+    "page-header",
+    "modal",
+    "drawer",
+    "tabs",
+    "accordion",
+    "collapsible",
+    "separator",
+    "..."
+  ]
+}

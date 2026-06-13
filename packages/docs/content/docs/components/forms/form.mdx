@@ -1,0 +1,492 @@
+---
+title: Form
+description: Styled form wrapper component for consistent form layouts and structure
+---
+
+import { submitFormAlert } from '@/components/demo-handlers';
+
+import {
+  Form,
+  FormField,
+  Input,
+  Textarea,
+  Checkbox,
+  Button,
+} from '@/components/nim';
+import { FormWithSelect } from '@/components/demos/FormDemo';
+
+The Form component is a lightweight wrapper around the native HTML `<form>` element. It provides consistent styling, spacing, and structure for building forms. It extends all standard form attributes, so you can attach `onSubmit`, `action`, `method`, and any other native form props.
+
+## Import
+
+```tsx
+import { Form } from '@nim-ui/components';
+```
+
+## Usage
+
+<ComponentPreview title="Basic Form">
+  <Form className="mx-auto max-w-sm gap-5" onSubmit={submitFormAlert}>
+    <FormField label="Name" name="basic-name">
+      <Input placeholder="Operations lead" />
+    </FormField>
+    <FormField label="Email" name="basic-email">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
+    <Button type="submit" variant="primary">
+      Submit
+    </Button>
+  </Form>
+
+  <PreviewCode>
+```tsx
+<Form onSubmit={handleSubmit}>
+  <FormField label="Name" name="name">
+    <Input placeholder="Operations lead" />
+  </FormField>
+  <FormField label="Email" name="email">
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
+  <Button type="submit" variant="primary">
+    Submit
+  </Button>
+</Form>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Form Layouts
+
+### Vertical Layout (Default)
+
+<ComponentPreview title="Vertical Form Layout">
+  <Form className="mx-auto max-w-md gap-5">
+    <div className="grid gap-4 sm:grid-cols-2">
+      <FormField label="First name" name="vertical-first-name">
+        <Input placeholder="Nim" />
+      </FormField>
+      <FormField label="Last name" name="vertical-last-name">
+        <Input placeholder="Team" />
+      </FormField>
+    </div>
+    <FormField label="Email" name="vertical-email">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
+    <FormField label="Message" name="vertical-message">
+      <Textarea placeholder="Share the operational context..." rows={4} />
+    </FormField>
+    <Button type="submit" variant="primary">
+      Send Message
+    </Button>
+  </Form>
+
+  <PreviewCode>
+```tsx
+<Form onSubmit={handleSubmit}>
+  <div className="grid gap-4 sm:grid-cols-2">
+    <FormField label="First name" name="firstName">
+      <Input placeholder="Nim" />
+    </FormField>
+    <FormField label="Last name" name="lastName">
+      <Input placeholder="Team" />
+    </FormField>
+  </div>
+  <FormField label="Email" name="email">
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
+  <FormField label="Message" name="message">
+    <Textarea placeholder="Share the operational context..." rows={4} />
+  </FormField>
+  <Button type="submit" variant="primary">
+    Send Message
+  </Button>
+</Form>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+### Inline Fields
+
+<ComponentPreview title="Form with Inline Fields">
+  <Form className="mx-auto max-w-md gap-5">
+    <div className="grid gap-4 sm:grid-cols-2">
+      <FormField label="First name" name="inline-first-name">
+        <Input placeholder="Nim" />
+      </FormField>
+      <FormField label="Last name" name="inline-last-name">
+        <Input placeholder="Team" />
+      </FormField>
+    </div>
+    <FormField label="Email" name="inline-email">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
+    <Button type="submit" variant="primary">
+      Create Account
+    </Button>
+  </Form>
+
+  <PreviewCode>
+```tsx
+<Form onSubmit={handleSubmit}>
+  <div className="grid gap-4 sm:grid-cols-2">
+    <FormField label="First name" name="firstName">
+      <Input placeholder="Nim" />
+    </FormField>
+    <FormField label="Last name" name="lastName">
+      <Input placeholder="Team" />
+    </FormField>
+  </div>
+  <FormField label="Email" name="email">
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
+  <Button type="submit" variant="primary">
+    Create Account
+  </Button>
+</Form>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## With Select and Checkbox
+
+<ComponentPreview title="Complete Form">
+  <FormWithSelect />
+
+  <PreviewCode>
+```tsx
+<Form onSubmit={handleSubmit}>
+  <FormField label="Full name" name="name">
+    <Input placeholder="Nim Operations" />
+  </FormField>
+  <FormField label="Work email" name="email">
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
+  <div className="space-y-2">
+    <label htmlFor="plan" className="block text-sm font-medium">
+      Plan
+    </label>
+    <Select>
+      <SelectTrigger id="plan" className="w-full">
+        <SelectValue placeholder="Select plan" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="personal">Personal</SelectItem>
+        <SelectItem value="business">Business</SelectItem>
+        <SelectItem value="enterprise">Enterprise</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+  <Checkbox id="terms" label="I agree to the terms and conditions" />
+  <Button type="submit" variant="primary" fullWidth>
+    Sign Up
+  </Button>
+</Form>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## With Validation Errors
+
+<ComponentPreview title="Form with Errors">
+  <Form className="mx-auto max-w-sm gap-5">
+    <FormField label="Email" name="error-email" error="Please enter a valid email address">
+      <Input type="email" placeholder="ops@example.com" />
+    </FormField>
+    <FormField label="Password" name="error-password" error="Password must be at least 8 characters">
+      <Input type="password" placeholder="Password" />
+    </FormField>
+    <Button type="submit" variant="primary" fullWidth>
+      Log In
+    </Button>
+  </Form>
+
+  <PreviewCode>
+```tsx
+<Form onSubmit={handleSubmit}>
+  <FormField label="Email" name="email" error={errors.email}>
+    <Input type="email" placeholder="ops@example.com" />
+  </FormField>
+  <FormField label="Password" name="password" error={errors.password}>
+    <Input type="password" placeholder="Password" />
+  </FormField>
+  <Button type="submit" variant="primary" fullWidth>
+    Log In
+  </Button>
+</Form>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+The Form component extends `React.FormHTMLAttributes<HTMLFormElement>`, so it accepts all standard HTML form attributes in addition to the following:
+
+<PropsTable
+  props={[
+    {
+      name: 'onSubmit',
+      type: '(event: React.FormEvent<HTMLFormElement>) => void',
+      description: 'Submit event handler. Call event.preventDefault() to handle submission in JavaScript.',
+    },
+    {
+      name: 'action',
+      type: 'string',
+      description: 'URL to submit the form to when using native form submission',
+    },
+    {
+      name: 'method',
+      type: "'get' | 'post'",
+      description: 'HTTP method for native form submission',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the form element',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'Form content including inputs, selects, buttons, and other form elements',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Login Form
+
+<ComponentPreview title="Login Form Example">
+  <div className="mx-auto w-full max-w-sm rounded-md border border-neutral-200 bg-white p-5 shadow-soft dark:border-neutral-800 dark:bg-neutral-950 sm:p-6">
+    <div className="mb-5">
+      <p className="text-xs font-medium uppercase text-neutral-500 dark:text-neutral-400">
+        Operator console
+      </p>
+      <h3 className="mt-1 text-xl font-semibold text-neutral-950 dark:text-neutral-50">
+        Sign in
+      </h3>
+      <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+        Use your workspace email to continue.
+      </p>
+    </div>
+    <Form className="gap-5">
+      <FormField label="Email" name="login-email">
+        <Input name="email" type="email" placeholder="ops@example.com" autoComplete="email" />
+      </FormField>
+      <FormField label="Password" name="login-password" helperText="Use at least 8 characters.">
+        <Input name="password" type="password" placeholder="Password" autoComplete="current-password" />
+      </FormField>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Checkbox id="remember-login" name="remember" label="Keep me signed in" />
+        <a href="#" className="text-sm font-medium text-primary-700 hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200">
+          Forgot password?
+        </a>
+      </div>
+      <Button type="submit" variant="primary" fullWidth>
+        Sign in
+      </Button>
+    </Form>
+  </div>
+
+  <PreviewCode>
+```tsx
+import { useState } from 'react';
+import { Form, FormField, Input, Button, Checkbox } from '@nim-ui/components';
+
+function LoginForm() {
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    try {
+      await login(email, password);
+    } catch (err) {
+      setErrors({ email: 'Invalid email or password' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-sm rounded-md border border-neutral-200 bg-white p-6 shadow-soft">
+      <div className="mb-5">
+        <p className="text-xs font-medium uppercase text-neutral-500">
+          Operator console
+        </p>
+        <h3 className="mt-1 text-xl font-semibold text-neutral-950">
+          Sign in
+        </h3>
+        <p className="mt-1 text-sm text-neutral-600">
+          Use your workspace email to continue.
+        </p>
+      </div>
+      <Form onSubmit={handleSubmit} className="gap-5">
+        <FormField label="Email" name="email" error={errors.email}>
+          <Input
+            name="email"
+            type="email"
+            placeholder="ops@example.com"
+            autoComplete="email"
+          />
+        </FormField>
+        <FormField label="Password" name="password" error={errors.password}>
+          <Input
+            name="password"
+            type="password"
+            placeholder="Password"
+            autoComplete="current-password"
+          />
+        </FormField>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Checkbox id="remember" label="Keep me signed in" name="remember" />
+          <a href="#" className="text-sm font-medium text-primary-700">
+            Forgot password?
+          </a>
+        </div>
+        <Button type="submit" variant="primary" fullWidth loading={loading}>
+          Sign in
+        </Button>
+      </Form>
+    </div>
+  );
+}
+```
+  </PreviewCode>
+</ComponentPreview>
+
+
+### Contact Form
+
+```tsx
+import {
+  Form,
+  FormField,
+  Input,
+  Textarea,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  Button,
+} from '@nim-ui/components';
+
+function ContactForm() {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget as HTMLFormElement);
+    await sendContactMessage(Object.fromEntries(formData));
+  };
+
+  return (
+    <Form onSubmit={handleSubmit} className="gap-5">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <FormField label="First name" name="firstName">
+          <Input name="firstName" placeholder="Nim" />
+        </FormField>
+        <FormField label="Last name" name="lastName">
+          <Input name="lastName" placeholder="Team" />
+        </FormField>
+      </div>
+      <FormField label="Email" name="email">
+        <Input name="email" type="email" placeholder="ops@example.com" />
+      </FormField>
+      <div className="space-y-2">
+        <label htmlFor="subject" className="block text-sm font-medium">
+          Subject
+        </label>
+        <Select name="subject">
+          <SelectTrigger id="subject" className="w-full">
+            <SelectValue placeholder="What is this about?" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="general">General Inquiry</SelectItem>
+            <SelectItem value="support">Technical Support</SelectItem>
+            <SelectItem value="billing">Billing</SelectItem>
+            <SelectItem value="feedback">Feedback</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <FormField label="Message" name="message">
+        <Textarea name="message" placeholder="Your message..." rows={6} />
+      </FormField>
+      <Button type="submit" variant="primary">
+        Send Message
+      </Button>
+    </Form>
+  );
+}
+```
+
+### Multi-step Form
+
+```tsx
+import { useState } from 'react';
+import { Form, FormField, Input, Button } from '@nim-ui/components';
+
+function MultiStepForm() {
+  const [step, setStep] = useState(1);
+
+  return (
+    <Form onSubmit={handleFinalSubmit} className="gap-5">
+      {step === 1 && (
+        <>
+          <FormField label="Full name" name="name">
+            <Input name="name" placeholder="Nim Operations" />
+          </FormField>
+          <FormField label="Email" name="email">
+            <Input name="email" type="email" placeholder="ops@example.com" />
+          </FormField>
+          <Button variant="primary" onClick={() => setStep(2)}>
+            Next
+          </Button>
+        </>
+      )}
+      {step === 2 && (
+        <>
+          <FormField label="Company" name="company">
+            <Input name="company" placeholder="Nim UI" />
+          </FormField>
+          <FormField label="Role" name="role">
+            <Input name="role" placeholder="Operations lead" />
+          </FormField>
+          <div className="flex gap-4">
+            <Button variant="outline" onClick={() => setStep(1)}>
+              Back
+            </Button>
+            <Button type="submit" variant="primary">
+              Submit
+            </Button>
+          </div>
+        </>
+      )}
+    </Form>
+  );
+}
+```
+
+## Accessibility
+
+The Form component follows accessibility best practices:
+
+- Uses the semantic `<form>` HTML element
+- Supports native form validation attributes on child inputs
+- Works with screen readers by maintaining proper form landmark semantics
+- All child form elements should include associated labels (see [FormField](/components/forms/form-field/))
+- Error messages are announced to screen readers via `aria-live` regions
+
+## Related Components
+
+- [FormField](/components/forms/form-field/) - Labeled field wrapper with error and helper text
+- [Input](/components/primitives/input/) - Text input field
+- [Select](/components/primitives/select/) - Dropdown selection
+- [Textarea](/components/primitives/textarea/) - Multi-line text input
+- [Checkbox](/components/primitives/checkbox/) - Boolean checkbox input
+- [Button](/components/primitives/button/) - Form submit button

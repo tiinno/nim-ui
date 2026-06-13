@@ -1,0 +1,15 @@
+{
+  "title": "Feedback",
+  "pages": [
+    "toast",
+    "tooltip",
+    "popover",
+    "dropdown-menu",
+    "alert-dialog",
+    "alert",
+    "progress",
+    "spinner",
+    "skeleton",
+    "..."
+  ]
+}

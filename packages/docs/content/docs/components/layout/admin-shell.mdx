@@ -1,0 +1,162 @@
+---
+title: AdminShell
+description: Backoffice application frame with sidebar, topbar, and main content landmarks
+---
+
+import {
+  AdminShell,
+  AdminShellBody,
+  AdminShellHeader,
+  AdminShellMain,
+  AdminShellPanel,
+  AdminShellSidebar,
+  Button,
+  PageHeader,
+  PageHeaderActions,
+  PageHeaderDescription,
+  PageHeaderMeta,
+  PageHeaderTitle,
+  SidebarNav,
+  SidebarNavItem,
+  SidebarNavList,
+  SidebarNavSection,
+  SidebarNavSectionTitle,
+} from '@/components/nim';
+
+The AdminShell component gives internal tools a stable app frame for navigation, workspace controls, and dense operational content.
+
+## Import
+
+```tsx
+import {
+  AdminShell,
+  AdminShellBody,
+  AdminShellHeader,
+  AdminShellMain,
+  AdminShellPanel,
+  AdminShellSidebar,
+} from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Operations Shell" className="block">
+  <AdminShell className="h-[620px] min-h-0 overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
+    <AdminShellBody className="min-h-0">
+      <AdminShellSidebar aria-label="Backoffice navigation" className="h-[620px]">
+        <div className="border-b border-neutral-200 px-4 py-4 dark:border-neutral-800">
+          <p className="text-sm font-semibold text-neutral-950 dark:text-neutral-50">Nim Ops</p>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">BKK warehouse</p>
+        </div>
+        <SidebarNav aria-label="Backoffice navigation">
+          <SidebarNavSection>
+            <SidebarNavSectionTitle>Operate</SidebarNavSectionTitle>
+            <SidebarNavList>
+              <SidebarNavItem href="#orders" active badge="18">Orders</SidebarNavItem>
+              <SidebarNavItem href="#inventory">Inventory</SidebarNavItem>
+              <SidebarNavItem href="#users">Users</SidebarNavItem>
+            </SidebarNavList>
+          </SidebarNavSection>
+        </SidebarNav>
+      </AdminShellSidebar>
+      <AdminShellPanel>
+        <AdminShellHeader>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-medium text-neutral-950 dark:text-neutral-50">Operations Desk</p>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">Synced 90 seconds ago</p>
+          </div>
+          <Button variant="outline" size="sm">Invite</Button>
+        </AdminShellHeader>
+        <AdminShellMain className="space-y-5">
+          <PageHeader>
+            <div className="space-y-2">
+              <PageHeaderMeta>Exception queue</PageHeaderMeta>
+              <PageHeaderTitle>Orders</PageHeaderTitle>
+              <PageHeaderDescription>
+                Review risk signals, assignment gaps, and fulfillment blockers before warehouse cutoff.
+              </PageHeaderDescription>
+            </div>
+            <PageHeaderActions aria-label="Order actions">
+              <Button variant="outline" size="sm">Export</Button>
+              <Button variant="primary" size="sm">Create order</Button>
+            </PageHeaderActions>
+          </PageHeader>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-md border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">Open orders</p>
+              <p className="mt-1 text-2xl font-semibold">184</p>
+            </div>
+            <div className="rounded-md border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">High risk</p>
+              <p className="mt-1 text-2xl font-semibold">18</p>
+            </div>
+            <div className="rounded-md border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">SLA breach</p>
+              <p className="mt-1 text-2xl font-semibold">6</p>
+            </div>
+          </div>
+        </AdminShellMain>
+      </AdminShellPanel>
+    </AdminShellBody>
+  </AdminShell>
+
+  <PreviewCode>
+```tsx
+<AdminShell>
+  <AdminShellBody>
+    <AdminShellSidebar aria-label="Backoffice navigation">
+      <SidebarNav aria-label="Backoffice navigation">{/* sections */}</SidebarNav>
+    </AdminShellSidebar>
+    <AdminShellPanel>
+      <AdminShellHeader>{/* workspace controls */}</AdminShellHeader>
+      <AdminShellMain>{/* page content */}</AdminShellMain>
+    </AdminShellPanel>
+  </AdminShellBody>
+</AdminShell>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### AdminShell
+
+<PropsTable
+  props={[
+    {
+      name: 'density',
+      type: "'comfortable' | 'compact'",
+      default: "'comfortable'",
+      description: 'Controls shell sidebar and topbar sizing tokens.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional classes for shell height, background, or layout boundaries.',
+    },
+  ]}
+/>
+
+### AdminShellSidebar and AdminShellHeader
+
+<PropsTable
+  props={[
+    {
+      name: 'sticky',
+      type: 'boolean',
+      default: 'true',
+      description: 'Keeps the sidebar or topbar fixed while the page content scrolls.',
+    },
+    {
+      name: 'aria-label',
+      type: 'string',
+      description: 'Use on AdminShellSidebar when it contains primary navigation.',
+    },
+  ]}
+/>
+
+## Backoffice Guidance
+
+- Put global navigation in `AdminShellSidebar` and workspace-level controls in `AdminShellHeader`.
+- Keep `AdminShellMain` focused on the current workflow: page header, toolbar, table, details, and alerts.
+- Use `density="compact"` for high-frequency operator screens where vertical space matters.
