@@ -3,8 +3,8 @@ import { Button, Badge, Input } from '@/components/nim';
 
 const features = [
   {
-    title: 'Sixty-four components',
-    body: 'Primitives, layout, data display, commerce, landing, feedback, forms, and navigation — composed for real operational screens.',
+    title: 'Seventy-three components',
+    body: 'Primitives, layout, data display, forms, commerce, landing, feedback, and navigation — composed for real operational screens.',
   },
   {
     title: 'Typed to the edges',
@@ -32,9 +32,11 @@ const categories = [
   ['Primitives', 'Button · Input · Select · Switch · Checkbox · Radio'],
   ['Layout', 'AdminShell · PageHeader · Tabs · Modal · Drawer · Card'],
   ['Data Display', 'DataTable · StatusPill · Timeline · RecordInspector'],
+  ['Forms', 'FormLayout · DatePicker · MultiSelect · Stepper'],
   ['Commerce', 'ProductCard · CartItem · PriceTag · QuantitySelector'],
   ['Feedback', 'Toast · Tooltip · Popover · AlertDialog · Progress'],
   ['Navigation', 'Breadcrumb · SidebarNav · CommandMenu · Pagination'],
+  ['Landing', 'Hero · FeatureGrid · Testimonial · CTA'],
 ];
 
 export default function HomePage() {
