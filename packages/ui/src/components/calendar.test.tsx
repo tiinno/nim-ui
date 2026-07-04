@@ -15,6 +15,11 @@ describe('Calendar', () => {
       expect(screen.getByText(/January 2025/i)).toBeInTheDocument();
     });
 
+    it('can render Buddhist Era year captions', () => {
+      render(<Calendar calendar="buddhist" month={new Date(2025, 0, 15)} />);
+      expect(screen.getByText(/2568/)).toBeInTheDocument();
+    });
+
     it('renders weekday headers', () => {
       render(<Calendar />);
       // react-day-picker renders abbreviated weekday names
@@ -61,6 +66,17 @@ describe('Calendar', () => {
       const cell = dayButton.closest('[role="gridcell"]');
       expect(cell).toHaveAttribute('data-selected', 'true');
       expect(cell).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('keeps selected day text readable on the day button', () => {
+      const selected = new Date(2025, 0, 15);
+      render(
+        <Calendar mode="single" selected={selected} month={selected} />
+      );
+
+      const dayButton = screen.getByRole('button', { name: /15/ });
+      const cell = dayButton.closest('[role="gridcell"]');
+      expect(cell).toHaveClass('[&>button]:text-white');
     });
   });
 

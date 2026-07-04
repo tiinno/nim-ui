@@ -3,6 +3,7 @@ title: Calendar
 description: A date picker calendar built on react-day-picker v9 with OKLCH theming
 ---
 
+import { Calendar } from '@/components/nim';
 
 The Calendar component wraps [react-day-picker v9](https://daypicker.dev/) with nim-ui's OKLCH tokens, dark-mode support, and focus-visible rings. It supports single-date, range, and multiple-date selection, plus full keyboard navigation and i18n through react-day-picker's built-in features.
 
@@ -15,6 +16,24 @@ import { Calendar } from '@nim-ui/components';
 You'll also need to import react-day-picker's styles once in your app's root entry — typically `import 'react-day-picker/style.css';` — so the default layout ships alongside nim-ui's overrides.
 
 ## Single Date
+
+<ComponentPreview title="Single Date">
+  <Calendar
+    mode="single"
+    selected={new Date(2026, 5, 16)}
+    month={new Date(2026, 5, 1)}
+  />
+
+  <PreviewCode>
+```tsx
+<Calendar
+  mode="single"
+  selected={date}
+  onSelect={setDate}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
 
 ```tsx
 import { useState } from 'react';
@@ -34,6 +53,29 @@ export function SingleDateExample() {
 ```
 
 ## Range Selection
+
+<ComponentPreview title="Range Selection" className="block">
+  <Calendar
+    mode="range"
+    selected={{
+      from: new Date(2026, 5, 16),
+      to: new Date(2026, 5, 20),
+    }}
+    month={new Date(2026, 5, 1)}
+    numberOfMonths={2}
+  />
+
+  <PreviewCode>
+```tsx
+<Calendar
+  mode="range"
+  selected={range}
+  onSelect={setRange}
+  numberOfMonths={2}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
 
 ```tsx
 import { useState } from 'react';
@@ -56,6 +98,28 @@ export function RangeExample() {
 
 ## Multiple Dates
 
+<ComponentPreview title="Multiple Dates">
+  <Calendar
+    mode="multiple"
+    selected={[
+      new Date(2026, 5, 16),
+      new Date(2026, 5, 18),
+      new Date(2026, 5, 22),
+    ]}
+    month={new Date(2026, 5, 1)}
+  />
+
+  <PreviewCode>
+```tsx
+<Calendar
+  mode="multiple"
+  selected={dates}
+  onSelect={(value) => setDates(value ?? [])}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
 ```tsx
 import { useState } from 'react';
 import { Calendar } from '@nim-ui/components';
@@ -72,6 +136,30 @@ export function MultipleExample() {
   );
 }
 ```
+
+## Buddhist Era
+
+Set `calendar="buddhist"` to display Buddhist Era years in the calendar UI. Selection values are still JavaScript `Date` objects, so forms and APIs can keep using Gregorian ISO values.
+
+<ComponentPreview title="Thai Buddhist Era">
+  <Calendar
+    calendar="buddhist"
+    mode="single"
+    selected={new Date(2026, 5, 16)}
+    month={new Date(2026, 5, 1)}
+  />
+
+  <PreviewCode>
+```tsx
+<Calendar
+  calendar="buddhist"
+  mode="single"
+  selected={date}
+  onSelect={setDate}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
 
 ## Disabled Dates
 
@@ -100,6 +188,12 @@ Calendar passes through all [react-day-picker props](https://daypicker.dev/api/i
       type: "'single' | 'multiple' | 'range'",
       default: "'single'",
       description: 'Selection mode',
+    },
+    {
+      name: 'calendar',
+      type: "'gregory' | 'buddhist'",
+      default: "'gregory'",
+      description: 'Display Gregorian CE or Buddhist Era years while keeping Date values unchanged',
     },
     {
       name: 'selected',

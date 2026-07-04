@@ -1,0 +1,34 @@
+---
+title: Stepper
+description: Compact progress for multi-step forms and review workflows
+---
+
+import { Stepper } from '@/components/nim';
+
+Stepper shows form progress without owning routing or validation state.
+
+## Import
+
+```tsx
+import { Stepper } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Review Flow" className="block">
+  <Stepper
+    currentStep={1}
+    steps={[
+      { label: 'Details', description: 'Routing fields' },
+      { label: 'Schedule', description: 'SLA window' },
+      { label: 'Review', description: 'Final checks' },
+    ]}
+  />
+
+  <PreviewCode>
+```tsx
+<Stepper steps={steps} currentStep={step} onStepChange={setStep} />
+```
+  </PreviewCode>
+</ComponentPreview>
+

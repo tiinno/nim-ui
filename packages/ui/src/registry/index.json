@@ -2229,6 +2229,217 @@
           "code": "const [range, setRange] = useState<DateRange>();\\n<DateRangePicker value={range} onChange={setRange} />"
         }
       ]
+    },
+    {
+      "name": "TimePicker",
+      "category": "forms",
+      "description": "A compact popover time selector for operational forms and scheduling controls",
+      "keywords": [
+        "time",
+        "picker",
+        "schedule",
+        "form",
+        "cutoff"
+      ],
+      "file": "components/time-picker.tsx",
+      "variants": [
+        {
+          "name": "hourCycle",
+          "values": [
+            "12",
+            "24"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Time Picker",
+          "code": "<TimePicker value={time} onChange={setTime} step={15} name=\"cutoffTime\" />"
+        }
+      ]
+    },
+    {
+      "name": "DateTimePicker",
+      "category": "forms",
+      "description": "Date and time pickers for scheduling, windows, publish times, and backoffice cutoffs",
+      "keywords": [
+        "datetime",
+        "date",
+        "time",
+        "range",
+        "schedule"
+      ],
+      "file": "components/date-time-picker.tsx",
+      "variants": [],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "DateTimePicker",
+          "code": "<DateTimePicker value={publishAt} onChange={setPublishAt} name=\"publishAt\" />"
+        },
+        {
+          "title": "DateTimeRangePicker",
+          "code": "<DateTimeRangePicker value={window} onChange={setWindow} fromName=\"windowStart\" toName=\"windowEnd\" />"
+        }
+      ]
+    },
+    {
+      "name": "DateFilter",
+      "category": "forms",
+      "description": "A date-range filter with operational presets for tables, reports, and dashboards",
+      "keywords": [
+        "date",
+        "filter",
+        "range",
+        "table",
+        "report"
+      ],
+      "file": "components/date-filter.tsx",
+      "variants": [],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Date Filter",
+          "code": "<DateFilter value={range} onChange={setRange} fromName=\"from\" toName=\"to\" />"
+        }
+      ]
+    },
+    {
+      "name": "MultiSelect",
+      "category": "forms",
+      "description": "A searchable multi-select with removable chips and hidden inputs for native forms",
+      "keywords": [
+        "multi",
+        "select",
+        "chips",
+        "filter",
+        "search"
+      ],
+      "file": "components/multi-select.tsx",
+      "variants": [],
+      "hasRadixPrimitive": true,
+      "examples": [
+        {
+          "title": "Multi Select",
+          "code": "<MultiSelect options={teamOptions} value={teams} onChange={setTeams} name=\"teams\" />"
+        }
+      ]
+    },
+    {
+      "name": "TagsInput",
+      "category": "forms",
+      "description": "A tag entry field for labels, segments, and operational metadata",
+      "keywords": [
+        "tags",
+        "input",
+        "chips",
+        "labels",
+        "metadata"
+      ],
+      "file": "components/tags-input.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Tags Input",
+          "code": "<TagsInput value={tags} onChange={setTags} name=\"labels\" maxTags={6} />"
+        }
+      ]
+    },
+    {
+      "name": "FileUpload",
+      "category": "forms",
+      "description": "A local file picker and dropzone for attachment selection without upload transport",
+      "keywords": [
+        "file",
+        "upload",
+        "attachment",
+        "dropzone",
+        "form"
+      ],
+      "file": "components/file-upload.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "File Upload",
+          "code": "<FileUpload accept=\"application/pdf\" maxFiles={3} maxSize={5 * 1024 * 1024} multiple onChange={setFiles} />"
+        }
+      ]
+    },
+    {
+      "name": "NumberInput",
+      "category": "forms",
+      "description": "A numeric input with optional steppers, clamping, and precision handling",
+      "keywords": [
+        "number",
+        "input",
+        "stepper",
+        "quantity",
+        "amount"
+      ],
+      "file": "components/number-input.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Number Input",
+          "code": "<NumberInput value={quantity} onChange={setQuantity} min={1} max={99} />"
+        }
+      ]
+    },
+    {
+      "name": "PasswordInput",
+      "category": "forms",
+      "description": "A password input with accessible show and hide controls",
+      "keywords": [
+        "password",
+        "input",
+        "auth",
+        "visibility",
+        "reveal"
+      ],
+      "file": "components/password-input.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Password Input",
+          "code": "<PasswordInput name=\"password\" autoComplete=\"current-password\" />"
+        }
+      ]
+    },
+    {
+      "name": "Stepper",
+      "category": "forms",
+      "description": "A compact stepper for multi-step forms, setup flows, and review workflows",
+      "keywords": [
+        "stepper",
+        "steps",
+        "wizard",
+        "progress",
+        "form"
+      ],
+      "file": "components/stepper.tsx",
+      "variants": [
+        {
+          "name": "status",
+          "values": [
+            "complete",
+            "current",
+            "pending",
+            "error"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Stepper",
+          "code": "<Stepper steps={steps} currentStep={1} onStepChange={setStep} />"
+        }
+      ]
     }
   ]
 }

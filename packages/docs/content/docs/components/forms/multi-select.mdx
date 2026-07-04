@@ -1,0 +1,44 @@
+---
+title: MultiSelect
+description: Searchable multi-select with removable chips
+---
+
+import { MultiSelect } from '@/components/nim';
+
+MultiSelect is for filters and assignment fields where operators pick more than one value.
+
+## Import
+
+```tsx
+import { MultiSelect } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Review Owners">
+  <div className="w-80">
+    <MultiSelect
+      name="owners"
+      defaultValue={['ops']}
+      options={[
+        { value: 'ops', label: 'Operations', description: 'Queue managers' },
+        { value: 'billing', label: 'Billing' },
+        { value: 'support', label: 'Support' },
+      ]}
+    />
+  </div>
+
+  <PreviewCode>
+```tsx
+<MultiSelect
+  options={ownerOptions}
+  value={owners}
+  onChange={setOwners}
+  name="owners"
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+Selected values render removable chips and repeated hidden inputs with the same `name`.
+

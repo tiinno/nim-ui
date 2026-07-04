@@ -1,0 +1,29 @@
+---
+title: TagsInput
+description: Tag entry for labels, segments, and operational metadata
+---
+
+import { TagsInput } from '@/components/nim';
+
+TagsInput accepts free-form labels. Press Enter or comma to add a tag, Backspace to remove the last empty tag, or paste comma-separated values.
+
+## Import
+
+```tsx
+import { TagsInput } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Order Labels">
+  <div className="w-80">
+    <TagsInput defaultValue={['priority', 'vip']} name="labels" maxTags={6} />
+  </div>
+
+  <PreviewCode>
+```tsx
+<TagsInput value={tags} onChange={setTags} name="labels" maxTags={6} />
+```
+  </PreviewCode>
+</ComponentPreview>
+

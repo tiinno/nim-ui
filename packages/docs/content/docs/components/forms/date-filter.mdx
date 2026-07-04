@@ -1,0 +1,31 @@
+---
+title: DateFilter
+description: Date range filtering with operational presets
+---
+
+import { DateFilter } from '@/components/nim';
+
+DateFilter wraps DateRangePicker with presets for table, report, and dashboard filters.
+
+## Import
+
+```tsx
+import { DateFilter } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Report Range">
+  <div className="w-72">
+    <DateFilter fromName="from" toName="to" />
+  </div>
+
+  <PreviewCode>
+```tsx
+<DateFilter value={range} onChange={setRange} fromName="from" toName="to" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+Default presets are `Today`, `Last 7 days`, and `This month`. Pass `presets` to replace them.
+

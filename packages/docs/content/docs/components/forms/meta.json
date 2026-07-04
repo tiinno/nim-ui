@@ -1,4 +1,22 @@
 {
   "title": "Forms",
-  "pages": ["form", "form-layout", "form-field", "combobox", "calendar", "date-picker", "slider", "..."]
+  "pages": [
+    "form",
+    "form-layout",
+    "form-field",
+    "combobox",
+    "calendar",
+    "date-picker",
+    "time-picker",
+    "date-time-picker",
+    "date-filter",
+    "multi-select",
+    "tags-input",
+    "file-upload",
+    "number-input",
+    "password-input",
+    "stepper",
+    "slider",
+    "..."
+  ]
 }

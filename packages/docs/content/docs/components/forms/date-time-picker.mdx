@@ -1,0 +1,107 @@
+---
+title: DateTimePicker
+description: Date and time controls for scheduling, publish times, and SLA windows
+---
+
+import { DateTimePicker, DateTimeRangePicker } from '@/components/nim';
+import { OperationalFormsDemo } from '@/components/demos/OperationalFormsDemo';
+
+DateTimePicker extends the existing date picker model with time selection while keeping values as `Date` objects. Hidden form inputs serialize selected dates as ISO strings.
+
+## Import
+
+```tsx
+import { DateTimePicker, DateTimeRangePicker } from '@nim-ui/components';
+```
+
+## Single Date And Time
+
+<ComponentPreview title="Publish Time">
+  <div className="w-80">
+    <DateTimePicker defaultValue={new Date(2026, 5, 16, 10, 0)} name="publishAt" />
+  </div>
+
+  <PreviewCode>
+```tsx
+<DateTimePicker value={publishAt} onChange={setPublishAt} name="publishAt" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Date And Time Range
+
+<ComponentPreview title="SLA Window">
+  <div className="w-full max-w-md">
+    <DateTimeRangePicker
+      defaultValue={{
+        from: new Date(2026, 5, 16, 9, 0),
+        to: new Date(2026, 5, 16, 17, 0),
+      }}
+      fromName="windowStart"
+      toName="windowEnd"
+    />
+  </div>
+
+  <PreviewCode>
+```tsx
+<DateTimeRangePicker
+  value={window}
+  onChange={setWindow}
+  fromName="windowStart"
+  toName="windowEnd"
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Buddhist Era Scheduling
+
+Display Thai Buddhist Era dates without changing the submitted value. The component still returns a JavaScript `Date`, and hidden inputs remain ISO strings.
+
+<ComponentPreview title="Thai Publish Time">
+  <div className="w-full max-w-md">
+    <DateTimePicker
+      defaultValue={new Date(2026, 5, 16, 10, 0)}
+      calendar="buddhist"
+      dateFormat="yyyy-MM-dd"
+      name="publishAt"
+    />
+  </div>
+
+  <PreviewCode>
+```tsx
+<DateTimePicker
+  value={publishAt}
+  onChange={setPublishAt}
+  calendar="buddhist"
+  dateFormat="yyyy-MM-dd"
+  name="publishAt"
+/>
+
+// Visible: 2569-06-16 10:00
+// Hidden input: 2026-06-16T03:00:00.000Z (depending on local timezone)
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Operational Form Demo
+
+<ComponentPreview title="Scheduling Review Form" className="block">
+  <OperationalFormsDemo />
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    { name: 'value', type: 'Date', description: 'Controlled selected date and time' },
+    { name: 'defaultValue', type: 'Date', description: 'Uncontrolled initial date and time' },
+    { name: 'onChange', type: '(date: Date | undefined) => void', description: 'Called with the combined Date value' },
+    { name: 'dateFormat', type: "'short' | 'medium' | 'long' | 'full' | 'iso' | string", default: "'PPP'", description: 'Preset or date-fns format for the trigger label' },
+    { name: 'calendar', type: "'gregory' | 'buddhist'", default: "'gregory'", description: 'Display years as Gregorian CE or Buddhist Era; values remain Date objects' },
+    { name: 'locale', type: 'Locale | string', description: 'Display locale. String locales use Intl; date-fns Locale objects also localize the calendar UI' },
+    { name: 'formatDate', type: '(date: Date) => string', description: 'Custom display formatter for product-specific policies' },
+    { name: 'timeStep', type: 'number', default: '15', description: 'Minute interval for time choices' },
+    { name: 'name', type: 'string', description: 'Hidden input name for ISO form submission' },
+  ]}
+/>

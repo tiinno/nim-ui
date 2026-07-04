@@ -1,0 +1,29 @@
+---
+title: NumberInput
+description: Numeric input with steppers, clamping, and precision
+---
+
+import { NumberInput } from '@/components/nim';
+
+NumberInput is for quantities, thresholds, inventory counts, and operational limits.
+
+## Import
+
+```tsx
+import { NumberInput } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Quantity">
+  <div className="w-48">
+    <NumberInput defaultValue={4} min={1} max={99} name="quantity" />
+  </div>
+
+  <PreviewCode>
+```tsx
+<NumberInput value={quantity} onChange={setQuantity} min={1} max={99} />
+```
+  </PreviewCode>
+</ComponentPreview>
+

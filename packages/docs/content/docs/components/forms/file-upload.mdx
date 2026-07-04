@@ -1,0 +1,36 @@
+---
+title: FileUpload
+description: Local file selection and dropzone for attachments
+---
+
+import { FileUpload } from '@/components/nim';
+
+FileUpload manages local file selection only. Upload transport, progress, retries, and storage belong in the application layer.
+
+## Import
+
+```tsx
+import { FileUpload } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Attachments" className="block">
+  <div className="w-full max-w-lg">
+    <FileUpload accept="application/pdf,image/*" multiple maxFiles={3} maxSize={5 * 1024 * 1024} />
+  </div>
+
+  <PreviewCode>
+```tsx
+<FileUpload
+  accept="application/pdf,image/*"
+  multiple
+  maxFiles={3}
+  maxSize={5 * 1024 * 1024}
+  onChange={setFiles}
+  onReject={setRejectedFiles}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+

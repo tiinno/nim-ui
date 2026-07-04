@@ -1,0 +1,49 @@
+---
+title: TimePicker
+description: Compact time selection for cutoff times, shifts, and scheduling fields
+---
+
+import { TimePicker } from '@/components/nim';
+
+TimePicker stores a time-only value as an `HH:mm` string. Use it when the field should not invent a date: cutoff time, pickup slot, shift start, or business hours.
+
+## Import
+
+```tsx
+import { TimePicker } from '@nim-ui/components';
+```
+
+## Basic Usage
+
+<ComponentPreview title="Cutoff Time">
+  <div className="w-64">
+    <TimePicker defaultValue="17:00" step={15} name="cutoffTime" />
+  </div>
+
+  <PreviewCode>
+```tsx
+<TimePicker defaultValue="17:00" step={15} name="cutoffTime" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## 12 Hour Labels
+
+```tsx
+<TimePicker hourCycle="12" step={30} />
+```
+
+## Props
+
+<PropsTable
+  props={[
+    { name: 'value', type: 'string', description: 'Controlled HH:mm value' },
+    { name: 'defaultValue', type: 'string', description: 'Uncontrolled initial HH:mm value' },
+    { name: 'onChange', type: '(time: string | undefined) => void', description: 'Called when a time is selected' },
+    { name: 'step', type: 'number', default: '15', description: 'Minute interval between options' },
+    { name: 'hourCycle', type: "'12' | '24'", default: "'24'", description: 'Display format for option labels' },
+    { name: 'min / max', type: 'string', description: 'Inclusive HH:mm bounds' },
+    { name: 'name', type: 'string', description: 'Renders a hidden input with the selected HH:mm value' },
+  ]}
+/>
+

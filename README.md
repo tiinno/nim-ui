@@ -19,7 +19,7 @@ Built with React 19 + TypeScript + Tailwind CSS v4
 
 ## Features
 
-- **64 Components** across 8 categories: Primitives, Layout, Data Display, Commerce, Landing, Feedback, Forms, Navigation
+- **73 Components** across 8 categories: Primitives, Layout, Data Display, Commerce, Landing, Feedback, Forms, Navigation
 - **Fully Typed** with TypeScript 5.9+ strict mode
 - **Accessible** following WCAG 2.1 AA, keyboard navigation, screen reader support
 - **Dark Mode** built-in with Tailwind `dark:` variants
@@ -66,7 +66,7 @@ export default function App() {
 | **Commerce** | ProductCard, CartItem, PriceTag, QuantitySelector |
 | **Landing** | Hero, FeatureGrid, Testimonial, CTA |
 | **Feedback** | Toast, Tooltip, Popover, DropdownMenu, AlertDialog, Alert, Progress, Spinner, Skeleton |
-| **Forms** | Form, FormLayout, FormField, Combobox, Calendar, DatePicker, Slider |
+| **Forms** | Form, FormLayout, FormField, Combobox, Calendar, DatePicker, TimePicker, DateTimePicker, DateFilter, MultiSelect, TagsInput, FileUpload, NumberInput, PasswordInput, Stepper, Slider |
 | **Navigation** | Breadcrumb, SidebarNav, CommandMenu, ViewSwitcher, Pagination |
 
 ## Development

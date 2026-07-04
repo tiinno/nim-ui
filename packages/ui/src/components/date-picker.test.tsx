@@ -26,6 +26,23 @@ describe('DatePicker', () => {
       render(<DatePicker value={date} format="yyyy-MM-dd" />);
       expect(screen.getByRole('button')).toHaveTextContent('2025-01-15');
     });
+
+    it('can display Buddhist Era years while keeping Date values unchanged', () => {
+      const date = new Date(2025, 0, 15);
+      render(
+        <DatePicker
+          value={date}
+          name="date"
+          calendar="buddhist"
+          format="yyyy-MM-dd"
+        />
+      );
+
+      expect(screen.getByRole('button')).toHaveTextContent('2568-01-15');
+      expect(document.querySelector('input[name="date"]')).toHaveValue(
+        '2025-01-15'
+      );
+    });
   });
 
   describe('Interactions', () => {
@@ -71,6 +88,7 @@ describe('DatePicker', () => {
       const input = document.querySelector('input[name="date"]');
       expect(input).toBeInTheDocument();
       expect(input).toHaveAttribute('type', 'hidden');
+      expect(input).toHaveValue('2025-01-15');
     });
   });
 
@@ -106,6 +124,22 @@ describe('DateRangePicker', () => {
       render(<DateRangePicker value={{ from, to }} />);
       expect(screen.getByRole('button').textContent).toContain('-');
     });
+
+    it('can display Buddhist Era ranges', () => {
+      const from = new Date(2025, 0, 1);
+      const to = new Date(2025, 0, 15);
+      render(
+        <DateRangePicker
+          value={{ from, to }}
+          calendar="buddhist"
+          format="yyyy-MM-dd"
+        />
+      );
+
+      expect(screen.getByRole('button')).toHaveTextContent(
+        '2568-01-01 - 2568-01-15'
+      );
+    });
   });
 
   describe('Interactions', () => {
@@ -114,6 +148,47 @@ describe('DateRangePicker', () => {
       render(<DateRangePicker />);
       await user.click(screen.getByRole('button'));
       expect(screen.getAllByRole('grid').length).toBeGreaterThan(0);
+    });
+
+    it('applies preset ranges', async () => {
+      const user = userEvent.setup();
+      const from = new Date(2025, 0, 1);
+      const to = new Date(2025, 0, 7);
+      const handleChange = vi.fn();
+
+      render(
+        <DateRangePicker
+          onChange={handleChange}
+          presets={[{ label: 'First week', value: { from, to } }]}
+        />
+      );
+
+      await user.click(screen.getByRole('button'));
+      await user.click(screen.getByRole('button', { name: 'First week' }));
+
+      expect(handleChange).toHaveBeenCalledWith({ from, to });
+    });
+  });
+
+  describe('Form integration', () => {
+    it('renders hidden from/to inputs when names are provided', () => {
+      const from = new Date(2025, 0, 1);
+      const to = new Date(2025, 0, 7);
+
+      render(
+        <DateRangePicker
+          value={{ from, to }}
+          fromName="dateFrom"
+          toName="dateTo"
+        />
+      );
+
+      expect(document.querySelector('input[name="dateFrom"]')).toHaveValue(
+        '2025-01-01'
+      );
+      expect(document.querySelector('input[name="dateTo"]')).toHaveValue(
+        '2025-01-07'
+      );
     });
   });
 });
