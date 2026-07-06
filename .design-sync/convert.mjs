@@ -88,3 +88,32 @@ export async function buildExtractedCards(config) {
   }
   return summary;
 }
+
+export async function buildColorsCard(config) {
+  const tokens = await readFile(join(ROOT, config.source.tokens), 'utf8');
+  const re = /--color-(primary|neutral|success|error|warning|info)-(\d+):\s*(oklch\([^)]*\))/g;
+  const scales = {};
+  let mm;
+  while ((mm = re.exec(tokens))) { (scales[mm[1]] ||= []).push({ shade: mm[2], value: mm[3] }); }
+  const order = ['primary', 'neutral', 'success', 'warning', 'error', 'info'];
+  let sections = '';
+  for (const name of order) {
+    const shades = scales[name];
+    if (!shades) continue;
+    let sw = '';
+    for (const s of shades) {
+      sw += `<div style="display:flex;flex-direction:column;gap:4px"><div style="height:56px;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:${s.value}"></div><span style="font:500 11px ui-monospace,monospace">${s.shade}</span><span style="font:10px ui-monospace,monospace;color:#6b7280">${s.value}</span></div>`;
+    }
+    sections += `<section style="margin-bottom:28px"><h2 style="font:600 14px system-ui;margin:0 0 12px;text-transform:capitalize">${name}</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:12px">${sw}</div></section>`;
+  }
+  const card = `<!-- @dsCard group="Foundations" -->
+<main style="max-width:56rem;margin:0 auto;padding:2rem;background:#fff">
+<h1 style="font:600 1.5rem/1.2 system-ui;margin:0 0 4px">Colors</h1>
+<p style="font:14px system-ui;color:#6b7280;margin:0 0 24px">Ink + Muted Steel — OKLCH scales, mirrored from tokens.css</p>
+${sections}</main>
+`;
+  const dest = join(ROOT, config.output.dir, 'foundations', 'colors.html');
+  await mkdir(dirname(dest), { recursive: true });
+  await writeFile(dest, card, 'utf8');
+  return dest;
+}
