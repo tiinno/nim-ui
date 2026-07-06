@@ -145,6 +145,23 @@ export async function buildOverviewCard(config) {
   return dest;
 }
 
+// Claude Design resolves a design system from a ROOT `styles.css` and its
+// `@import` closure — not from what individual cards `<link>`. Without this
+// entry file the app sees no component CSS or @font-face, so it warns "Missing
+// brand fonts" and the design agent styles new work with no Nim UI CSS at all.
+export async function buildStylesEntry(config) {
+  const dest = join(ROOT, config.output.dir, 'styles.css');
+  const rel = './' + config.output.sharedCss.replace(/\\/g, '/');
+  const css = `/* Nim UI — design system entry stylesheet.
+   Claude Design reads a design system's styling from styles.css and its @import
+   closure. Everything real (component CSS + @font-face brand fonts) must be
+   reachable from here; a card <link> alone is invisible to generated designs. */
+@import "${rel}";
+`;
+  await writeFile(dest, css, 'utf8');
+  return dest;
+}
+
 // The assembled shared CSS carries Next's @font-face rules with relative
 // `../media/<file>.woff2` src URLs. Since the CSS lands at `_shared/nim-ui.css`,
 // those resolve to `<build>/media/<file>` — so copy the referenced woff2 there.
@@ -178,11 +195,12 @@ export async function main() {
   const extracted = await buildExtractedCards(config);
   await buildColorsCard(config);
   await buildOverviewCard(config);
+  await buildStylesEntry(config);
   const fonts = await copyFonts(config);
   console.log(`shared CSS: ${(cssBytes / 1024).toFixed(0)} KiB`);
   console.log(`extracted: ${extracted.written} written, ${extracted.skipped.length} skipped`);
   if (extracted.skipped.length) console.log(`  skipped: ${extracted.skipped.join(', ')}`);
-  console.log('generated: colors, overview');
+  console.log('generated: colors, overview, styles.css entry');
   console.log(`fonts: ${fonts.copied}/${fonts.referenced} woff2 copied, ${(fonts.bytes / 1024).toFixed(0)} KiB`);
   if (fonts.missing.length) console.log(`  missing: ${fonts.missing.join(', ')}`);
   console.log(`total cards: ${extracted.written + 2}`);
