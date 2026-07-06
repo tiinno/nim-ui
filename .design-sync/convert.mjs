@@ -117,3 +117,30 @@ ${sections}</main>
   await writeFile(dest, card, 'utf8');
   return dest;
 }
+
+export async function buildOverviewCard(config) {
+  const context = await readFile(join(ROOT, config.source.context), 'utf8');
+  const langMatch = context.match(/## Language([\s\S]*?)\n## /);
+  const langRaw = langMatch ? langMatch[1] : '';
+  const entries = [...langRaw.matchAll(/\*\*(.+?)\*\*:\s*\n([^\n]+)/g)].map((e) => ({ term: e[1], desc: e[2].trim() }));
+  let items = '';
+  for (const e of entries) {
+    items += `<li style="margin-bottom:12px"><strong style="font:600 15px system-ui">${e.term}</strong><br><span style="font:14px system-ui;color:#4b5563">${e.desc}</span></li>`;
+  }
+  const tokens = await readFile(join(ROOT, config.source.tokens), 'utf8');
+  const radius = (tokens.match(/--radius-md:\s*([^;]+)/) || [])[1] || '0.5rem';
+  const card = `<!-- @dsCard group="Overview" -->
+<main style="max-width:48rem;margin:0 auto;padding:2rem;background:#fff">
+<h1 style="font:600 1.75rem/1.2 system-ui;margin:0 0 8px">Nim UI</h1>
+<p style="font:15px/1.6 system-ui;color:#374151;margin:0 0 24px">Quiet, accessible React UI kit for dashboards, backoffice, and commerce operations.</p>
+<h2 style="font:600 16px system-ui;margin:0 0 12px">Design language</h2>
+<ul style="list-style:none;padding:0;margin:0 0 24px">${items}</ul>
+<h2 style="font:600 16px system-ui;margin:0 0 8px">Foundations</h2>
+<p style="font:13px ui-monospace,monospace;color:#4b5563;margin:0">Component radius: ${radius.trim()} · Elevation: soft layered graphite · 75 components / 8 categories</p>
+</main>
+`;
+  const dest = join(ROOT, config.output.dir, 'overview', 'overview.html');
+  await mkdir(dirname(dest), { recursive: true });
+  await writeFile(dest, card, 'utf8');
+  return dest;
+}
