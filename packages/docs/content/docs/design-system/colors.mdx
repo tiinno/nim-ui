@@ -10,19 +10,20 @@ Nim UI uses a carefully crafted color system built on semantic color scales. All
 
 The primary color palette is used for primary actions, links, and brand elements.
 
+{/* Values mirror packages/ui/src/tokens.css (Ink + Muted Steel, OKLCH). Keep in sync. */}
 <ColorSwatch
   name="Primary"
   colors={[
-    { shade: '50', value: '#f0f9ff' },
-    { shade: '100', value: '#e0f2fe' },
-    { shade: '200', value: '#bae6fd' },
-    { shade: '300', value: '#7dd3fc' },
-    { shade: '400', value: '#38bdf8' },
-    { shade: '500', value: '#0ea5e9' },
-    { shade: '600', value: '#0284c7' },
-    { shade: '700', value: '#0369a1' },
-    { shade: '800', value: '#075985' },
-    { shade: '900', value: '#0c4a6e' },
+    { shade: '50', value: 'oklch(0.982 0.003 247.8)' },
+    { shade: '100', value: 'oklch(0.956 0.006 247.8)' },
+    { shade: '200', value: 'oklch(0.902 0.011 247.9)' },
+    { shade: '300', value: 'oklch(0.812 0.018 247.7)' },
+    { shade: '400', value: 'oklch(0.682 0.025 248.0)' },
+    { shade: '500', value: 'oklch(0.534 0.030 248.2)' },
+    { shade: '600', value: 'oklch(0.424 0.028 248.5)' },
+    { shade: '700', value: 'oklch(0.326 0.024 249.0)' },
+    { shade: '800', value: 'oklch(0.254 0.020 249.4)' },
+    { shade: '900', value: 'oklch(0.200 0.018 250.0)' },
   ]}
 />
 
@@ -44,16 +45,16 @@ Neutral colors (grays) are used for text, backgrounds, borders, and other UI ele
 <ColorSwatch
   name="Neutral"
   colors={[
-    { shade: '50', value: '#f9fafb' },
-    { shade: '100', value: '#f3f4f6' },
-    { shade: '200', value: '#e5e7eb' },
-    { shade: '300', value: '#d1d5db' },
-    { shade: '400', value: '#9ca3af' },
-    { shade: '500', value: '#6b7280' },
-    { shade: '600', value: '#4b5563' },
-    { shade: '700', value: '#374151' },
-    { shade: '800', value: '#1f2937' },
-    { shade: '900', value: '#111827' },
+    { shade: '50', value: 'oklch(0.985 0.000 0)' },
+    { shade: '100', value: 'oklch(0.970 0.000 0)' },
+    { shade: '200', value: 'oklch(0.922 0.000 0)' },
+    { shade: '300', value: 'oklch(0.869 0.000 0)' },
+    { shade: '400', value: 'oklch(0.708 0.000 0)' },
+    { shade: '500', value: 'oklch(0.551 0.000 0)' },
+    { shade: '600', value: 'oklch(0.432 0.000 0)' },
+    { shade: '700', value: 'oklch(0.371 0.000 0)' },
+    { shade: '800', value: 'oklch(0.278 0.000 0)' },
+    { shade: '900', value: 'oklch(0.214 0.000 0)' },
   ]}
 />
 
@@ -82,16 +83,16 @@ Used for positive actions, confirmations, and success states.
 <ColorSwatch
   name="Success"
   colors={[
-    { shade: '50', value: '#f0fdf4' },
-    { shade: '100', value: '#dcfce7' },
-    { shade: '200', value: '#bbf7d0' },
-    { shade: '300', value: '#86efac' },
-    { shade: '400', value: '#4ade80' },
-    { shade: '500', value: '#22c55e' },
-    { shade: '600', value: '#16a34a' },
-    { shade: '700', value: '#15803d' },
-    { shade: '800', value: '#166534' },
-    { shade: '900', value: '#14532d' },
+    { shade: '50', value: 'oklch(0.976 0.010 158.0)' },
+    { shade: '100', value: 'oklch(0.945 0.026 158.0)' },
+    { shade: '200', value: 'oklch(0.890 0.050 157.5)' },
+    { shade: '300', value: 'oklch(0.805 0.075 157.0)' },
+    { shade: '400', value: 'oklch(0.700 0.090 156.5)' },
+    { shade: '500', value: 'oklch(0.590 0.090 156.0)' },
+    { shade: '600', value: 'oklch(0.505 0.080 156.0)' },
+    { shade: '700', value: 'oklch(0.430 0.066 156.0)' },
+    { shade: '800', value: 'oklch(0.360 0.052 156.0)' },
+    { shade: '900', value: 'oklch(0.305 0.040 156.0)' },
   ]}
 />
 
@@ -107,16 +108,16 @@ Used for warnings, cautions, and items requiring attention.
 <ColorSwatch
   name="Warning"
   colors={[
-    { shade: '50', value: '#fffbeb' },
-    { shade: '100', value: '#fef3c7' },
-    { shade: '200', value: '#fde68a' },
-    { shade: '300', value: '#fcd34d' },
-    { shade: '400', value: '#fbbf24' },
-    { shade: '500', value: '#f59e0b' },
-    { shade: '600', value: '#d97706' },
-    { shade: '700', value: '#b45309' },
-    { shade: '800', value: '#92400e' },
-    { shade: '900', value: '#78350f' },
+    { shade: '50', value: 'oklch(0.980 0.012 82.0)' },
+    { shade: '100', value: 'oklch(0.948 0.028 82.0)' },
+    { shade: '200', value: 'oklch(0.902 0.052 82.0)' },
+    { shade: '300', value: 'oklch(0.830 0.075 82.0)' },
+    { shade: '400', value: 'oklch(0.740 0.092 82.0)' },
+    { shade: '500', value: 'oklch(0.650 0.096 82.0)' },
+    { shade: '600', value: 'oklch(0.555 0.086 82.0)' },
+    { shade: '700', value: 'oklch(0.465 0.072 82.0)' },
+    { shade: '800', value: 'oklch(0.385 0.056 82.0)' },
+    { shade: '900', value: 'oklch(0.320 0.044 82.0)' },
   ]}
 />
 
@@ -129,19 +130,20 @@ Used for warnings, cautions, and items requiring attention.
 
 Used for errors, destructive actions, and critical states.
 
+{/* tokens.css names this scale `error`; surfaced here as "Danger" to match variant naming */}
 <ColorSwatch
   name="Danger"
   colors={[
-    { shade: '50', value: '#fef2f2' },
-    { shade: '100', value: '#fee2e2' },
-    { shade: '200', value: '#fecaca' },
-    { shade: '300', value: '#fca5a5' },
-    { shade: '400', value: '#f87171' },
-    { shade: '500', value: '#ef4444' },
-    { shade: '600', value: '#dc2626' },
-    { shade: '700', value: '#b91c1c' },
-    { shade: '800', value: '#991b1b' },
-    { shade: '900', value: '#7f1d1d' },
+    { shade: '50', value: 'oklch(0.974 0.010 25.0)' },
+    { shade: '100', value: 'oklch(0.940 0.025 25.0)' },
+    { shade: '200', value: 'oklch(0.880 0.050 25.0)' },
+    { shade: '300', value: 'oklch(0.790 0.080 25.0)' },
+    { shade: '400', value: 'oklch(0.680 0.110 25.0)' },
+    { shade: '500', value: 'oklch(0.560 0.120 25.0)' },
+    { shade: '600', value: 'oklch(0.500 0.110 25.0)' },
+    { shade: '700', value: 'oklch(0.435 0.092 25.0)' },
+    { shade: '800', value: 'oklch(0.365 0.072 25.0)' },
+    { shade: '900', value: 'oklch(0.305 0.055 25.0)' },
   ]}
 />
 
@@ -157,16 +159,16 @@ Used for informational messages and neutral notifications.
 <ColorSwatch
   name="Info"
   colors={[
-    { shade: '50', value: '#eff6ff' },
-    { shade: '100', value: '#dbeafe' },
-    { shade: '200', value: '#bfdbfe' },
-    { shade: '300', value: '#93c5fd' },
-    { shade: '400', value: '#60a5fa' },
-    { shade: '500', value: '#3b82f6' },
-    { shade: '600', value: '#2563eb' },
-    { shade: '700', value: '#1d4ed8' },
-    { shade: '800', value: '#1e40af' },
-    { shade: '900', value: '#1e3a8a' },
+    { shade: '50', value: 'oklch(0.974 0.006 248.0)' },
+    { shade: '100', value: 'oklch(0.944 0.014 248.0)' },
+    { shade: '200', value: 'oklch(0.888 0.025 248.0)' },
+    { shade: '300', value: 'oklch(0.800 0.038 248.0)' },
+    { shade: '400', value: 'oklch(0.690 0.050 248.0)' },
+    { shade: '500', value: 'oklch(0.545 0.058 248.0)' },
+    { shade: '600', value: 'oklch(0.455 0.055 248.0)' },
+    { shade: '700', value: 'oklch(0.380 0.048 248.0)' },
+    { shade: '800', value: 'oklch(0.315 0.040 248.0)' },
+    { shade: '900', value: 'oklch(0.260 0.032 248.0)' },
   ]}
 />
 
