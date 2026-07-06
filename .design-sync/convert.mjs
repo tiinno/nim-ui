@@ -51,3 +51,40 @@ export function extractCard(html, { group }) {
 ${body}</main>
 `;
 }
+
+async function subdirs(path) {
+  const ents = await readdir(path, { withFileTypes: true });
+  return ents.filter((e) => e.isDirectory()).map((e) => e.name);
+}
+
+export async function buildExtractedCards(config) {
+  const outDir = join(ROOT, config.source.docsExport);
+  const buildDir = join(ROOT, config.output.dir);
+  const summary = { written: 0, skipped: [] };
+  const jobs = [];
+
+  const compRoot = join(outDir, 'components');
+  for (const cat of await subdirs(compRoot)) {
+    const group = config.groups[cat] || cat;
+    for (const slug of await subdirs(join(compRoot, cat))) {
+      jobs.push({ src: join(compRoot, cat, slug, 'index.html'), dir: cat, slug, group });
+    }
+  }
+  for (const slug of ['typography', 'spacing', 'dark-mode']) {
+    jobs.push({ src: join(outDir, 'design-system', slug, 'index.html'), dir: 'foundations', slug, group: 'Foundations' });
+  }
+  for (const slug of await subdirs(join(outDir, 'patterns'))) {
+    jobs.push({ src: join(outDir, 'patterns', slug, 'index.html'), dir: 'patterns', slug, group: 'Patterns' });
+  }
+
+  for (const job of jobs) {
+    if (!existsSync(job.src)) { summary.skipped.push(`${job.slug} (missing)`); continue; }
+    const card = extractCard(await readFile(job.src, 'utf8'), { group: job.group });
+    if (!card) { summary.skipped.push(`${job.slug} (no blocks)`); continue; }
+    const dest = join(buildDir, job.dir, `${job.slug}.html`);
+    await mkdir(dirname(dest), { recursive: true });
+    await writeFile(dest, card, 'utf8');
+    summary.written++;
+  }
+  return summary;
+}
