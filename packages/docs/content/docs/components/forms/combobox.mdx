@@ -3,6 +3,7 @@ title: Combobox
 description: A searchable, filterable dropdown input built on cmdk and Radix Popover
 ---
 
+import { ComboboxBasicDemo } from '@/components/demos/ComboboxDemo';
 
 The Combobox provides a searchable, filterable dropdown input — perfect for selecting from large datasets where a plain `Select` becomes unwieldy. It composes [cmdk](https://cmdk.paco.me/) for keyboard navigation and filtering with Radix Popover for positioning, and inherits nim-ui's OKLCH tokens, focus rings, and dark-mode styling.
 
@@ -25,6 +26,42 @@ import {
 ## Basic Usage
 
 Combobox is a controlled component — manage `open` and the selected `value` yourself so you can react to changes (submit a form, sync to URL state, etc.).
+
+<ComponentPreview title="Framework Picker">
+  <ComboboxBasicDemo />
+
+  <PreviewCode>
+```tsx
+<Combobox open={open} onOpenChange={setOpen}>
+  <ComboboxTrigger className="w-64">
+    {selected?.label ?? 'Select a framework…'}
+  </ComboboxTrigger>
+  <ComboboxContent>
+    <ComboboxInput placeholder="Search frameworks…" />
+    <ComboboxList>
+      <ComboboxEmpty>No framework found.</ComboboxEmpty>
+      <ComboboxGroup heading="Frameworks">
+        {frameworks.map((framework) => (
+          <ComboboxItem
+            key={framework.value}
+            value={framework.value}
+            onSelect={(current) => {
+              setValue(current === value ? '' : current);
+              setOpen(false);
+            }}
+          >
+            {framework.label}
+          </ComboboxItem>
+        ))}
+      </ComboboxGroup>
+    </ComboboxList>
+  </ComboboxContent>
+</Combobox>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+Full implementation, including the state and data used above:
 
 ```tsx
 import { useState } from 'react';
