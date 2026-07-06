@@ -144,3 +144,20 @@ export async function buildOverviewCard(config) {
   await writeFile(dest, card, 'utf8');
   return dest;
 }
+
+export async function main() {
+  const config = await loadConfig();
+  const cssBytes = await assembleSharedCss(config);
+  const extracted = await buildExtractedCards(config);
+  await buildColorsCard(config);
+  await buildOverviewCard(config);
+  console.log(`shared CSS: ${(cssBytes / 1024).toFixed(0)} KiB`);
+  console.log(`extracted: ${extracted.written} written, ${extracted.skipped.length} skipped`);
+  if (extracted.skipped.length) console.log(`  skipped: ${extracted.skipped.join(', ')}`);
+  console.log('generated: colors, overview');
+  console.log(`total cards: ${extracted.written + 2}`);
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((e) => { console.error(e.message); process.exit(1); });
+}
