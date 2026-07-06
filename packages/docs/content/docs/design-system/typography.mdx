@@ -4,19 +4,19 @@ description: Font families, sizes, weights, and line heights for consistent text
 ---
 
 
-Nim UI uses a carefully selected typography system built on the Inter font family for body text and Fira Code for monospaced content. All typographic values are available as Tailwind CSS utility classes and CSS custom properties.
+Nim UI uses an editorial type system: **Hanken Grotesk** for UI and body text, **JetBrains Mono** for code, and **Fraunces** as a display serif for expressive headings. All typographic values are available as Tailwind CSS utility classes and CSS custom properties.
 
 ## Font Families
 
-### Sans-serif (Inter)
+### Sans-serif (Hanken Grotesk)
 
-Inter is the primary font family used for all body text, headings, labels, and UI elements. It offers excellent readability at all sizes and strong support for multiple languages.
+Hanken Grotesk is the primary font family used for all body text, headings, labels, and UI elements. It offers excellent readability at small sizes and a neutral, operational tone that suits dense backoffice screens.
 
 ```css
---font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+--font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
 ```
 
-<ComponentPreview title="Sans-serif Font">
+<ComponentPreview title="Sans-serif (Hanken Grotesk)">
   <div className="space-y-2 w-full">
     <p className="font-sans text-lg">The quick brown fox jumps over the lazy dog.</p>
     <p className="font-sans text-lg font-medium">The quick brown fox jumps over the lazy dog. (Medium)</p>
@@ -32,15 +32,15 @@ Inter is the primary font family used for all body text, headings, labels, and U
   </PreviewCode>
 </ComponentPreview>
 
-### Monospace (Fira Code)
+### Monospace (JetBrains Mono)
 
-Fira Code is used for code snippets, technical values, and data that benefits from fixed-width characters. It includes programming ligatures for improved code readability.
+JetBrains Mono is used for code snippets, technical values, and identifiers that benefit from fixed-width characters. Its tall x-height keeps codes and IDs legible in dense tables.
 
 ```css
---font-mono: 'Fira Code', 'Courier New', monospace;
+--font-mono: 'JetBrains Mono', 'Courier New', monospace;
 ```
 
-<ComponentPreview title="Monospace Font">
+<ComponentPreview title="Monospace (JetBrains Mono)">
   <div className="space-y-2 w-full">
     <p className="font-mono text-sm">const greeting = "Hello, World!";</p>
     <p className="font-mono text-sm">function add(a: number, b: number): number</p>
@@ -51,6 +51,29 @@ Fira Code is used for code snippets, technical values, and data that benefits fr
 ```tsx
 <p className="font-mono text-sm">const greeting = "Hello, World!";</p>
 <code className="font-mono">npm install @nim-ui/components</code>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+### Display serif (Fraunces)
+
+Fraunces is a display serif reserved for expressive headings and editorial emphasis — the "quietly refined" voice of the brand. Use it sparingly for hero titles and pull quotes, never for body text or dense UI. It is available through the `font-display` utility and includes an italic style for emphasis.
+
+```css
+--font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+```
+
+<ComponentPreview title="Display Serif (Fraunces)">
+  <div className="space-y-3 w-full">
+    <p className="font-display text-4xl text-neutral-900 dark:text-neutral-100">Quietly refined operations</p>
+    <p className="font-display text-2xl italic text-neutral-700 dark:text-neutral-300">Editorial emphasis, set in italic</p>
+    <p className="font-display text-xl font-medium text-neutral-800 dark:text-neutral-200">Medium weight for display headings</p>
+  </div>
+
+  <PreviewCode>
+```tsx
+<h1 className="font-display text-4xl">Quietly refined operations</h1>
+<em className="font-display text-2xl italic">Editorial emphasis</em>
 ```
   </PreviewCode>
 </ComponentPreview>
@@ -202,7 +225,7 @@ Add the following to your HTML `<head>` to load the recommended fonts:
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,wght@0,400;0,500;0,600;1,400&display=swap"
   rel="stylesheet"
 />
 ```
@@ -210,15 +233,17 @@ Add the following to your HTML `<head>` to load the recommended fonts:
 ### Self-hosted with @fontsource
 
 ```bash
-pnpm add @fontsource/inter @fontsource/fira-code
+pnpm add @fontsource/hanken-grotesk @fontsource/jetbrains-mono @fontsource/fraunces
 ```
 
 ```tsx title="src/main.tsx"
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
-import '@fontsource/fira-code/400.css';
+import '@fontsource/hanken-grotesk/400.css';
+import '@fontsource/hanken-grotesk/500.css';
+import '@fontsource/hanken-grotesk/600.css';
+import '@fontsource/hanken-grotesk/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/fraunces/400.css';
+import '@fontsource/fraunces/400-italic.css';
 ```
 
 ## Customizing Typography

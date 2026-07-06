@@ -30,10 +30,31 @@ export async function assembleSharedCss(config) {
     if (!existsSync(cssPath)) throw new Error(`Missing CSS chunk: ${cssPath}`);
     css += `/* ${href} */\n${await readFile(cssPath, 'utf8')}\n`;
   }
+  css += hoistFontVars(css);
   const dest = join(ROOT, config.output.dir, config.output.sharedCss);
   await mkdir(dirname(dest), { recursive: true });
   await writeFile(dest, css, 'utf8');
   return css.length;
+}
+
+// next/font scopes each `--font-<name>` var to a generated wrapper class that
+// the docs app puts on <html>. Standalone cards have no such wrapper, so those
+// leaf vars are undefined at :root — which makes the composite `--font-sans`,
+// `--font-mono`, `--font-display` (each `var(--font-<name>), <fallback>`, no
+// fallback on the inner var) resolve invalid, and every `font-sans/mono/display`
+// element silently falls back to system fonts. Hoist the actual generated leaf
+// values to :root so cards render the real brand fonts (incl. the Fraunces
+// display serif). :where(:root) keeps 0 specificity — a pure default, never an
+// override. Derived from the bundle so it can't drift from next/font output.
+export function hoistFontVars(css) {
+  const vars = new Map();
+  for (const m of css.matchAll(/(--font-[a-z0-9]+)\s*:\s*("[^;}]+)/g)) {
+    const name = m[1], value = m[2].trim();
+    if (value.startsWith('"') && !value.includes('var(')) vars.set(name, value);
+  }
+  if (vars.size === 0) return '';
+  const decls = [...vars].map(([k, v]) => `${k}:${v}`).join(';');
+  return `\n/* design-sync: hoist next/font leaf vars to :root so standalone cards render brand fonts */\n:where(:root){${decls}}\n`;
 }
 
 export function extractCard(html, { group }) {
