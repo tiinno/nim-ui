@@ -35,3 +35,19 @@ export async function assembleSharedCss(config) {
   await writeFile(dest, css, 'utf8');
   return css.length;
 }
+
+export function extractCard(html, { group }) {
+  const $ = cheerio.load(html);
+  const blocks = $('div.not-prose.my-8');
+  if (blocks.length === 0) return null;
+  blocks.find('details').remove(); // drop the "View Code" disclosure
+  const title = ($('h1').first().text() || 'Component').trim();
+  let body = '';
+  blocks.each((_, el) => { body += `${$.html(el)}\n`; });
+  return `<!-- @dsCard group="${group}" -->
+<link rel="stylesheet" href="../_shared/nim-ui.css">
+<main class="bg-white dark:bg-neutral-950" style="max-width:56rem;margin:0 auto;padding:2rem">
+<h1 style="font:600 1.5rem/1.2 system-ui;margin:0 0 1.5rem">${title}</h1>
+${body}</main>
+`;
+}
