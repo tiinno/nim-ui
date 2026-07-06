@@ -1,0 +1,251 @@
+---
+title: Footer
+description: Marketing site footer with brand, link groups, social links, legal links, and copyright
+---
+
+import { Footer } from '@/components/nim';
+
+The Footer component provides a complete site footer for marketing and landing pages. It supports a brand block with description, columns of grouped links, social links, a bottom bar with copyright and legal links, and a muted surface variant.
+
+## Import
+
+```tsx
+import { Footer } from '@nim-ui/components';
+```
+
+## Usage
+
+<ComponentPreview title="Default Footer">
+  <Footer
+    brand="Nim UI"
+    description="A modern React component library for building production-ready applications."
+    linkGroups={[
+      {
+        title: 'Product',
+        links: [
+          { label: 'Features', href: '#features' },
+          { label: 'Pricing', href: '#pricing' },
+          { label: 'Changelog', href: '#changelog' },
+        ],
+      },
+      {
+        title: 'Resources',
+        links: [
+          { label: 'Documentation', href: '#docs' },
+          { label: 'Components', href: '#components' },
+        ],
+      },
+      {
+        title: 'Company',
+        links: [
+          { label: 'About', href: '#about' },
+          { label: 'Blog', href: '#blog' },
+        ],
+      },
+    ]}
+    copyright="© 2026 Nim UI. All rights reserved."
+  />
+
+  <PreviewCode>
+```tsx
+<Footer
+  brand="Nim UI"
+  description="A modern React component library for building production-ready applications."
+  linkGroups={[
+    {
+      title: 'Product',
+      links: [
+        { label: 'Features', href: '/features' },
+        { label: 'Pricing', href: '/pricing' },
+        { label: 'Changelog', href: '/changelog' },
+      ],
+    },
+    {
+      title: 'Resources',
+      links: [
+        { label: 'Documentation', href: '/docs' },
+        { label: 'Components', href: '/components' },
+      ],
+    },
+    {
+      title: 'Company',
+      links: [
+        { label: 'About', href: '/about' },
+        { label: 'Blog', href: '/blog' },
+      ],
+    },
+  ]}
+  copyright="© 2026 Nim UI. All rights reserved."
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Simple Footer
+
+A minimal footer with just copyright and legal links renders as a single bottom bar.
+
+<ComponentPreview title="Simple Footer">
+  <Footer
+    copyright="© 2026 Nim UI. All rights reserved."
+    legalLinks={[
+      { label: 'Privacy', href: '#privacy' },
+      { label: 'Terms', href: '#terms' },
+    ]}
+  />
+
+  <PreviewCode>
+```tsx
+<Footer
+  copyright="© 2026 Nim UI. All rights reserved."
+  legalLinks={[
+    { label: 'Privacy', href: '/privacy' },
+    { label: 'Terms', href: '/terms' },
+  ]}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Muted Variant
+
+<ComponentPreview title="Muted Footer">
+  <Footer
+    variant="muted"
+    brand="Nim UI"
+    description="Premium operations minimal."
+    linkGroups={[
+      {
+        title: 'Product',
+        links: [
+          { label: 'Features', href: '#features' },
+          { label: 'Pricing', href: '#pricing' },
+        ],
+      },
+    ]}
+    copyright="© 2026 Nim UI"
+  />
+
+  <PreviewCode>
+```tsx
+<Footer
+  variant="muted"
+  brand="Nim UI"
+  description="Premium operations minimal."
+  linkGroups={[
+    {
+      title: 'Product',
+      links: [
+        { label: 'Features', href: '/features' },
+        { label: 'Pricing', href: '/pricing' },
+      ],
+    },
+  ]}
+  copyright="© 2026 Nim UI"
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'brand',
+      type: 'React.ReactNode',
+      description: 'Brand content displayed in the footer — text or a logo node',
+    },
+    {
+      name: 'description',
+      type: 'string',
+      description: 'Short supporting text displayed below the brand',
+    },
+    {
+      name: 'linkGroups',
+      type: '{ title: string; links: { label: string; href: string }[] }[]',
+      description: 'Columns of grouped navigation links',
+    },
+    {
+      name: 'socialLinks',
+      type: '{ label: string; href: string; icon?: React.ReactNode }[]',
+      description: 'Social media links; the label becomes the accessible name when an icon is provided',
+    },
+    {
+      name: 'legalLinks',
+      type: '{ label: string; href: string }[]',
+      description: 'Links displayed in the bottom bar — e.g. privacy policy and terms',
+    },
+    {
+      name: 'copyright',
+      type: 'string',
+      description: 'Copyright notice displayed in the bottom bar',
+    },
+    {
+      name: 'variant',
+      type: "'default' | 'muted'",
+      default: "'default'",
+      description: 'Surface style — default (white) or muted (subtle neutral background)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes to apply to the root element',
+    },
+  ]}
+/>
+
+## Usage Examples
+
+### Complete Marketing Footer
+
+```tsx
+function SiteFooter() {
+  return (
+    <Footer
+      brand="Nim UI"
+      description="A modern React component library."
+      linkGroups={[
+        {
+          title: 'Product',
+          links: [
+            { label: 'Features', href: '/features' },
+            { label: 'Pricing', href: '/pricing' },
+          ],
+        },
+        {
+          title: 'Company',
+          links: [
+            { label: 'About', href: '/about' },
+            { label: 'Careers', href: '/careers' },
+          ],
+        },
+      ]}
+      socialLinks={[
+        { label: 'GitHub', href: 'https://github.com/nim-ui', icon: <GitHubIcon /> },
+        { label: 'Twitter', href: 'https://twitter.com/nim_ui', icon: <TwitterIcon /> },
+      ]}
+      legalLinks={[
+        { label: 'Privacy', href: '/privacy' },
+        { label: 'Terms', href: '/terms' },
+      ]}
+      copyright={`© ${new Date().getFullYear()} Nim UI. All rights reserved.`}
+    />
+  );
+}
+```
+
+## Accessibility
+
+The Footer component follows accessibility best practices:
+
+- Uses a semantic `<footer>` element, exposed as the `contentinfo` landmark
+- Link group titles use heading elements for screen-reader navigation
+- Social links carry an `aria-label` so icon-only links remain accessible
+- All interactive elements have visible focus rings and support keyboard navigation
+
+## Related Components
+
+- [Navbar](/components/landing/navbar/) - Top navigation bar for marketing pages
+- [Hero](/components/landing/hero/) - Landing page hero section
+- [CTA](/components/landing/cta-section/) - Standalone call-to-action section

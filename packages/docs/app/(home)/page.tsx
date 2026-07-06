@@ -3,7 +3,7 @@ import { Button, Badge, Input } from '@/components/nim';
 
 const features = [
   {
-    title: 'Seventy-three components',
+    title: 'Seventy-five components',
     body: 'Primitives, layout, data display, forms, commerce, landing, feedback, and navigation — composed for real operational screens.',
   },
   {
@@ -74,7 +74,7 @@ export default function HomePage() {
         </div>
 
         <p className="mt-10 font-mono text-xs tracking-wide text-fd-muted-foreground">
-          73 components · 8 categories · WCAG 2.1 AA
+          75 components · 8 categories · WCAG 2.1 AA
         </p>
       </section>
 
@@ -158,7 +158,7 @@ export default function HomePage() {
         <div className="grid gap-px overflow-hidden rounded-xl border border-fd-border bg-fd-border sm:grid-cols-2">
           {[
             ['Installation', 'Add Nim UI and start building.', '/getting-started/installation/'],
-            ['Components', 'Browse all 73 with live examples.', '/components/primitives/button/'],
+            ['Components', 'Browse all 75 with live examples.', '/components/primitives/button/'],
             ['Design System', 'Colors, type, and tokens.', '/design-system/colors/'],
             ['Best Practices', 'Accessible, performant patterns.', '/guides/best-practices/'],
           ].map(([title, body, href]) => (

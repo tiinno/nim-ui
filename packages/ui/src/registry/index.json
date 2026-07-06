@@ -869,6 +869,40 @@
       ]
     },
     {
+      "name": "Navbar",
+      "category": "landing",
+      "description": "A responsive top navigation bar for marketing pages with brand, links, CTA, and mobile menu",
+      "keywords": [
+        "navbar",
+        "navigation",
+        "header",
+        "menu",
+        "topbar",
+        "landing"
+      ],
+      "file": "components/navbar.tsx",
+      "variants": [
+        {
+          "name": "sticky",
+          "values": [
+            "true",
+            "false"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Basic Navbar",
+          "code": "<Navbar brand=\"Nim UI\" links={[{ label: 'Features', href: '/features' }, { label: 'Pricing', href: '/pricing', active: true }]} />"
+        },
+        {
+          "title": "Sticky Navbar with CTA",
+          "code": "<Navbar sticky brand=\"Nim UI\" links={[{ label: 'Docs', href: '/docs' }]} cta={{ label: 'Get Started', href: '/signup' }} />"
+        }
+      ]
+    },
+    {
       "name": "Hero",
       "category": "landing",
       "description": "A hero section component for landing pages with headline, description, and call-to-action",
@@ -1005,6 +1039,40 @@
         {
           "title": "Card Testimonial with Avatar",
           "code": "<Testimonial variant=\"card\"><TestimonialQuote>Amazing experience from start to finish</TestimonialQuote><TestimonialAuthor name=\"Jane Smith\" role=\"Designer\" avatar=\"/avatar.jpg\" /></Testimonial>"
+        }
+      ]
+    },
+    {
+      "name": "Footer",
+      "category": "landing",
+      "description": "A marketing site footer with brand, link groups, social links, legal links, and copyright",
+      "keywords": [
+        "footer",
+        "links",
+        "copyright",
+        "social",
+        "landing",
+        "site-footer"
+      ],
+      "file": "components/footer.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": [
+            "default",
+            "muted"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Footer with Link Groups",
+          "code": "<Footer brand=\"Nim UI\" description=\"A modern React component library.\" linkGroups={[{ title: 'Product', links: [{ label: 'Features', href: '/features' }] }]} copyright=\"© 2026 Nim UI\" />"
+        },
+        {
+          "title": "Footer with Social and Legal Links",
+          "code": "<Footer brand=\"Nim UI\" socialLinks={[{ label: 'GitHub', href: 'https://github.com/nim-ui' }]} legalLinks={[{ label: 'Privacy', href: '/privacy' }]} copyright=\"© 2026 Nim UI\" />"
         }
       ]
     },

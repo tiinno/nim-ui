@@ -40,10 +40,12 @@ export * from './price-tag';
 export * from './quantity-selector';
 
 // Landing
+export * from './navbar';
 export * from './hero';
 export * from './feature-grid';
 export * from './cta';
 export * from './testimonial';
+export * from './footer';
 
 // Forms
 export * from './form';
