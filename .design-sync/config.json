@@ -1,0 +1,16 @@
+{
+  "name": "@nim-ui/design-sync",
+  "version": "0.0.0",
+  "project": { "id": null, "name": null },
+  "source": {
+    "docsExport": "packages/docs/out",
+    "tokens": "packages/ui/src/tokens.css",
+    "context": "CONTEXT.md"
+  },
+  "output": { "dir": ".design-sync/build", "sharedCss": "_shared/nim-ui.css" },
+  "groups": {
+    "primitives": "Primitives", "layout": "Layout", "data-display": "Data Display",
+    "commerce": "Commerce", "landing": "Landing", "forms": "Forms",
+    "feedback": "Feedback", "navigation": "Navigation"
+  }
+}

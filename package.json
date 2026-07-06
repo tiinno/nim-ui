@@ -18,6 +18,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
   },
   "devDependencies": {
+    "cheerio": "^1.2.0",
     "culori": "^4.0.2",
     "fast-check": "^4.5.3",
     "prettier": "^3.4.2",
