@@ -49,3 +49,6 @@ quick-test.*
 COMPONENTS_SUMMARY.md
 TEST_COMPONENTS.md
 scripts/convert-colors.*
+
+# Design-sync local state (never commit — personal Claude Design project pin)
+.design-sync/config.local.json

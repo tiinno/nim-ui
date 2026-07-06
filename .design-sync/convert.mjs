@@ -145,16 +145,46 @@ export async function buildOverviewCard(config) {
   return dest;
 }
 
+// The assembled shared CSS carries Next's @font-face rules with relative
+// `../media/<file>.woff2` src URLs. Since the CSS lands at `_shared/nim-ui.css`,
+// those resolve to `<build>/media/<file>` — so copy the referenced woff2 there.
+// Without this, Claude Design warns "Missing brand fonts" and substitutes fonts.
+export async function copyFonts(config) {
+  const outDir = join(ROOT, config.source.docsExport);
+  const buildDir = join(ROOT, config.output.dir);
+  const css = await readFile(join(buildDir, config.output.sharedCss), 'utf8');
+  const refs = new Set();
+  for (const m of css.matchAll(/url\(\s*['"]?([^'")]+\.woff2?)['"]?\s*\)/g)) {
+    refs.add(m[1].split('/').pop());
+  }
+  const mediaSrc = join(outDir, '_next/static/media');
+  let copied = 0, bytes = 0;
+  const missing = [];
+  for (const file of refs) {
+    const src = join(mediaSrc, file);
+    if (!existsSync(src)) { missing.push(file); continue; }
+    const dest = join(buildDir, 'media', file);
+    await mkdir(dirname(dest), { recursive: true });
+    const buf = await readFile(src);
+    await writeFile(dest, buf);
+    copied++; bytes += buf.length;
+  }
+  return { copied, bytes, referenced: refs.size, missing };
+}
+
 export async function main() {
   const config = await loadConfig();
   const cssBytes = await assembleSharedCss(config);
   const extracted = await buildExtractedCards(config);
   await buildColorsCard(config);
   await buildOverviewCard(config);
+  const fonts = await copyFonts(config);
   console.log(`shared CSS: ${(cssBytes / 1024).toFixed(0)} KiB`);
   console.log(`extracted: ${extracted.written} written, ${extracted.skipped.length} skipped`);
   if (extracted.skipped.length) console.log(`  skipped: ${extracted.skipped.join(', ')}`);
   console.log('generated: colors, overview');
+  console.log(`fonts: ${fonts.copied}/${fonts.referenced} woff2 copied, ${(fonts.bytes / 1024).toFixed(0)} KiB`);
+  if (fonts.missing.length) console.log(`  missing: ${fonts.missing.join(', ')}`);
   console.log(`total cards: ${extracted.written + 2}`);
 }
 
