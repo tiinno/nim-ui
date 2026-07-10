@@ -43,7 +43,7 @@ export function Feature2Cols() {
 export function Feature4Cols() {
   return (
     <FeatureGrid columns={4}>
-      <FeatureCard title="73 Components" description="Ready to use out of the box." />
+      <FeatureCard title="75 Components" description="Ready to use out of the box." />
       <FeatureCard title="TypeScript" description="Full type definitions included." />
       <FeatureCard title="Tailwind v4" description="Built on the latest Tailwind." />
       <FeatureCard title="React 19" description="Leveraging the newest features." />

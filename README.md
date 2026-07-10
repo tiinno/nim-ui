@@ -19,7 +19,7 @@ Built with React 19 + TypeScript + Tailwind CSS v4
 
 ## Features
 
-- **73 Components** across 8 categories: Primitives, Layout, Data Display, Commerce, Landing, Feedback, Forms, Navigation
+- **75 Components** across 8 categories: Primitives, Layout, Data Display, Commerce, Landing, Feedback, Forms, Navigation
 - **Fully Typed** with TypeScript 5.9+ strict mode
 - **Accessible** following WCAG 2.1 AA, keyboard navigation, screen reader support
 - **Dark Mode** built-in with Tailwind `dark:` variants
