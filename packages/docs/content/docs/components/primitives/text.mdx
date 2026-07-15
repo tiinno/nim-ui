@@ -1,0 +1,197 @@
+---
+title: Text
+description: Typography primitive with a compact operational type scale
+---
+
+import { Text } from '@/components/nim';
+
+The Text component standardizes typography across operational screens. The `as` prop controls the rendered element (semantics), while `variant` controls the visual style and defaults to the `as` value — so heading levels stay correct even when the design calls for a different size.
+
+## Import
+
+```tsx
+import { Text } from '@nim-ui/components';
+```
+
+## Headings
+
+A compact scale tuned for dense backoffice screens — `h6` doubles as an uppercase eyebrow/section label.
+
+<ComponentPreview title="Headings">
+  <div className="flex w-full flex-col gap-2">
+    <Text as="h1">Heading 1 — Page title</Text>
+    <Text as="h2">Heading 2 — Section</Text>
+    <Text as="h3">Heading 3 — Subsection</Text>
+    <Text as="h4">Heading 4 — Card title</Text>
+    <Text as="h5">Heading 5 — Dense label</Text>
+    <Text as="h6">Heading 6 — Eyebrow</Text>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Text as="h1">Heading 1 — Page title</Text>
+<Text as="h2">Heading 2 — Section</Text>
+<Text as="h3">Heading 3 — Subsection</Text>
+<Text as="h4">Heading 4 — Card title</Text>
+<Text as="h5">Heading 5 — Dense label</Text>
+<Text as="h6">Heading 6 — Eyebrow</Text>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Body text
+
+<ComponentPreview title="Body Text">
+  <div className="flex w-full flex-col gap-2">
+    <Text>Paragraph — the default. Fourteen-pixel body text with relaxed leading, sized for scanning dense record detail without fatigue.</Text>
+    <Text as="small" tone="secondary">Small — metadata, timestamps, and helper text.</Text>
+    <Text as="blockquote">Blockquote — quoted content such as a customer note attached to an order.</Text>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Text>Paragraph — the default.</Text>
+<Text as="small" tone="secondary">Small — metadata and helper text.</Text>
+<Text as="blockquote">Blockquote — quoted content.</Text>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Semantics vs. style
+
+Keep the document outline correct while borrowing another level's visual style.
+
+<ComponentPreview title="Variant Override">
+  <div className="flex w-full flex-col gap-2">
+    <Text as="h2" variant="h4">Semantically h2, styled as h4</Text>
+    <Text as="span" variant="h1">A span wearing h1 styling</Text>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Text as="h2" variant="h4">Semantically h2, styled as h4</Text>
+<Text as="span" variant="h1">A span wearing h1 styling</Text>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Tones
+
+Restrained status coloring for inline emphasis — use sparingly, per the quiet-hierarchy contract.
+
+<ComponentPreview title="Tones">
+  <div className="flex w-full flex-col gap-1">
+    <Text>Default — primary ink</Text>
+    <Text tone="secondary">Secondary — supporting detail</Text>
+    <Text tone="success">Success — payment settled</Text>
+    <Text tone="warning">Warning — inventory below threshold</Text>
+    <Text tone="error">Error — webhook delivery failed</Text>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Text>Default — primary ink</Text>
+<Text tone="secondary">Secondary — supporting detail</Text>
+<Text tone="success">Success — payment settled</Text>
+<Text tone="warning">Warning — inventory below threshold</Text>
+<Text tone="error">Error — webhook delivery failed</Text>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Weight and truncation
+
+Each element has a sensible default weight (headings semibold/medium, body normal); override it with `weight`. `truncate` clips long values to one line.
+
+<ComponentPreview title="Weight and Truncation">
+  <div className="flex w-full max-w-64 flex-col gap-1">
+    <Text as="h3" weight="normal">Light heading</Text>
+    <Text weight="semibold">Semibold body text</Text>
+    <Text tone="secondary" truncate>ord_2f9c8a71-44d0-4b7e-9a3d-1c5e8b2f6a90 — truncated identifier</Text>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Text as="h3" weight="normal">Light heading</Text>
+<Text weight="semibold">Semibold body text</Text>
+<Text tone="secondary" truncate>ord_2f9c8a71…</Text>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'as',
+      type: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'small' | 'blockquote'",
+      default: "'p'",
+      description: 'Rendered HTML element; also the default visual variant',
+    },
+    {
+      name: 'variant',
+      type: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'small' | 'blockquote'",
+      default: 'value of as',
+      description: 'Visual style, independent of the rendered element',
+    },
+    {
+      name: 'tone',
+      type: "'default' | 'secondary' | 'success' | 'warning' | 'error'",
+      default: "'default'",
+      description: 'Text color tone',
+    },
+    {
+      name: 'weight',
+      type: "'normal' | 'medium' | 'semibold'",
+      default: 'per element',
+      description: 'Font weight override (headings default semibold/medium, body normal)',
+    },
+    {
+      name: 'truncate',
+      type: 'boolean',
+      default: 'false',
+      description: 'Clip overflowing text to a single line with an ellipsis',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'Text content',
+      required: true,
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Heading semantics come from `as`, not `variant` — pick `as` for a correct document outline, then adjust the look with `variant` if needed.
+- Never skip heading levels for visual effect; use `variant` instead.
+- Tone colors meet WCAG 2.1 AA contrast in both light and dark mode, but don't rely on color alone — pair status tones with explicit wording or an icon.
+
+## Best Practices
+
+### Do
+
+- Use `Text` for all headings and body copy so the scale stays consistent
+- Use `as="h6"` as an uppercase eyebrow above page or card titles
+- Use `tone="secondary"` for timestamps, metadata, and helper text
+- Combine `truncate` with a fixed-width container for long identifiers
+
+### Don't
+
+- Choose `as` by size — choose it by document structure
+- Scatter status tones across a screen; reserve them for genuine state
+- Nest `Text` inside `Text` when a single element with `weight` would do
+
+## Related Components
+
+- [Stat](/components/data-display/stat/) - Metric display with label
+- [DescriptionList](/components/data-display/description-list/) - Key-value record details
+- [Badge](/components/data-display/badge/) - Status labels
