@@ -1,0 +1,167 @@
+---
+title: Snippet
+description: Copyable mono field for record IDs, API keys, and webhook URLs
+---
+
+import { SnippetBasic, SnippetWithPrefix, SnippetSizes, CopyButtonInline } from '@/components/demos/SnippetDemo';
+
+The Snippet component gives operational values — record IDs, API keys, webhook URLs — a quiet mono field with one-click copying. The bundled **CopyButton** is also exported standalone for embedding copy affordances anywhere (table cells, description lists, inspectors).
+
+## Import
+
+```tsx
+import { Snippet, CopyButton } from '@nim-ui/components';
+```
+
+## Basic usage
+
+Click the copy button — the icon flips to a check and screen readers hear "Copied".
+
+<ComponentPreview title="Copyable Values">
+  <SnippetBasic />
+
+  <PreviewCode>
+```tsx
+<Snippet text="ord_2f9c8a71-44d0-4b7e-9a3d-1c5e8b2f6a90" />
+<Snippet text="whsec_Xk92mPq47TzR8vLnW3jYbA5cD1eF6gH0" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Display-only prefix
+
+The prefix renders but is never copied — handy for shell prompts.
+
+<ComponentPreview title="Command with Prompt">
+  <SnippetWithPrefix />
+
+  <PreviewCode>
+```tsx
+<Snippet prefix="$" text="pnpm add @nim-ui/components" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview title="Sizes">
+  <SnippetSizes />
+
+  <PreviewCode>
+```tsx
+<Snippet size="sm" text="sk_live_51H8…" />
+<Snippet size="md" text="sk_live_51H8…" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Standalone CopyButton
+
+<ComponentPreview title="Inline Copy Button">
+  <CopyButtonInline />
+
+  <PreviewCode>
+```tsx
+<span className="font-mono text-xs">cus_9x82mQ</span>
+<CopyButton value="cus_9x82mQ" aria-label="Copy customer id" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### Snippet
+
+<PropsTable
+  props={[
+    {
+      name: 'text',
+      type: 'string',
+      default: '-',
+      description: 'Value shown and copied verbatim',
+      required: true,
+    },
+    {
+      name: 'prefix',
+      type: 'string',
+      default: '-',
+      description: 'Display-only lead-in (e.g. "$") — never copied',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md'",
+      default: "'md'",
+      description: 'Field padding density',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+### CopyButton
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'string',
+      default: '-',
+      description: 'Text copied to the clipboard',
+      required: true,
+    },
+    {
+      name: 'timeout',
+      type: 'number',
+      default: '2000',
+      description: 'How long the copied state shows, in ms',
+    },
+    {
+      name: 'onCopied',
+      type: '() => void',
+      default: '-',
+      description: 'Called after a successful copy',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md'",
+      default: "'sm'",
+      description: 'Button size (6 / 7 units square)',
+    },
+    {
+      name: 'aria-label',
+      type: 'string',
+      default: "'Copy to clipboard'",
+      description: 'Accessible name — override with the specific value name',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The copied state is announced via a polite live region ("Copied"), not just the icon swap.
+- CopyButton has a default `aria-label`; override it with something specific ("Copy webhook URL") when several appear on one screen.
+- Snippet text is `select-all` — one click selects the whole value for manual copying too.
+- Falls back to `document.execCommand('copy')` in non-secure contexts where the Clipboard API is unavailable.
+
+## Best Practices
+
+### Do
+
+- Use Snippet for values operators copy into other systems: IDs, keys, URLs
+- Override `aria-label` per value when a screen has multiple copy buttons
+- Keep secrets masked elsewhere; Snippet shows its value in full
+
+### Don't
+
+- Use Snippet for multi-line code — it's a single-line field (use a code block)
+- Put interactive content inside `text` — it renders as plain text
+
+## Related Components
+
+- [DescriptionList](/components/data-display/description-list/) - Key-value record details
+- [RecordInspector](/components/data-display/record-inspector/) - Full record side panel
+- [Kbd](/components/primitives/kbd/) - Keyboard shortcut display
