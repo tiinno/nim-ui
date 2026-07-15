@@ -5,6 +5,8 @@ export * from './textarea';
 export * from './badge';
 export * from './avatar';
 export * from './switch';
+export * from './text';
+export * from './kbd';
 
 // Layout
 export * from './container';
@@ -86,6 +88,7 @@ export * from './collapsible';
 export * from './separator';
 
 // Navigation
+export * from './link';
 export * from './breadcrumb';
 export * from './sidebar-nav';
 export * from './command-menu';
