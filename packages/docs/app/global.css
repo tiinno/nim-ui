@@ -144,6 +144,25 @@ body {
   box-shadow: var(--shadow-control);
 }
 
+/* ---------- Component preview canvas ---------- */
+/* Faint dot grid so demos sit on a drafting surface instead of a blank void */
+.preview-canvas {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--color-fd-foreground) 7%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+  background-position: center center;
+}
+.dark .preview-canvas {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--color-fd-foreground) 9%, transparent) 1px,
+    transparent 1px
+  );
+}
+
 /* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar {
   width: 12px;

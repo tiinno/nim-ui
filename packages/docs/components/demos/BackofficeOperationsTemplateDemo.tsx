@@ -108,15 +108,20 @@ const noop = () => undefined;
 
 export function BackofficeOperationsTemplateDemo() {
   return (
-    <AdminShell
-      density="compact"
-      className="min-h-[760px] overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800"
-    >
+    // Fixed 1080px design canvas: the demo composes a desktop workspace, so it
+    // renders at its intended width and scrolls horizontally in narrow columns
+    // instead of letting viewport breakpoints crush the grid inside the docs page.
+    <div className="w-full overflow-x-auto overscroll-x-contain rounded-lg">
+      <div className="min-w-[1160px]">
+        <AdminShell
+          density="compact"
+          className="min-h-[760px] overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800"
+        >
       <AdminShellBody className="min-h-[760px]">
-        <AdminShellSidebar aria-label="Operations navigation" className="bg-neutral-950 text-neutral-50 dark:bg-neutral-950">
-          <div className="border-b border-neutral-800 px-5 py-4">
-            <p className="text-sm font-semibold tracking-normal text-white">Nim Ops</p>
-            <p className="mt-1 text-xs text-neutral-400">Fulfillment control</p>
+        <AdminShellSidebar aria-label="Operations navigation">
+          <div className="border-b border-neutral-200 px-5 py-4 dark:border-neutral-800">
+            <p className="text-sm font-semibold tracking-normal text-neutral-950 dark:text-neutral-50">Nim Ops</p>
+            <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">Fulfillment control</p>
           </div>
           <SidebarNav aria-label="Primary">
             <SidebarNavSection>
@@ -137,8 +142,8 @@ export function BackofficeOperationsTemplateDemo() {
               </SidebarNavList>
             </SidebarNavSection>
           </SidebarNav>
-          <SidebarNavFooter className="border-neutral-800">
-            <p className="text-xs text-neutral-400">Shift lead: Bangkok AM</p>
+          <SidebarNavFooter>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">Shift lead: Bangkok AM</p>
           </SidebarNavFooter>
         </AdminShellSidebar>
 
@@ -167,7 +172,7 @@ export function BackofficeOperationsTemplateDemo() {
               </PageHeaderActions>
             </PageHeader>
 
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="grid grid-cols-3 gap-3">
               <MetricCard tone="warning" density="compact" aria-label="Review queue metric">
                 <MetricCardHeader>
                   <MetricCardLabel>Needs review</MetricCardLabel>
@@ -206,9 +211,9 @@ export function BackofficeOperationsTemplateDemo() {
               </MetricCard>
             </div>
 
-            <div className="grid min-w-0 gap-4 xl:grid-cols-[minmax(0,1fr)_22rem]">
+            <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_22rem] gap-4">
               <section className="min-w-0 rounded-md border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-950">
-                <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex min-w-0 items-center justify-between gap-3">
                   <ViewSwitcher aria-label="Order queues" density="compact">
                     <ViewSwitcherItem value="all" count={184}>All</ViewSwitcherItem>
                     <ViewSwitcherItem value="review" selected count={17} meta="Manual">
@@ -217,15 +222,15 @@ export function BackofficeOperationsTemplateDemo() {
                     <ViewSwitcherItem value="delayed" count={6}>Delayed</ViewSwitcherItem>
                     <ViewSwitcherItem value="failed" count={3}>Failed</ViewSwitcherItem>
                   </ViewSwitcher>
-                  <ViewSwitcherActions aria-label="Saved view actions" className="ml-0 pl-0 lg:ml-auto lg:pl-2">
+                  <ViewSwitcherActions aria-label="Saved view actions" className="ml-auto pl-2">
                     <Button variant="outline" size="sm">Save view</Button>
                   </ViewSwitcherActions>
                 </div>
 
                 <DataToolbar aria-label="Order table controls" className="mt-4">
                   <DataToolbarSearch>
-                    <Input className="w-full sm:w-64" aria-label="Search orders" placeholder="Search orders" />
-                    <DataToolbarMeta>17 orders</DataToolbarMeta>
+                    <Input className="w-full max-w-64" aria-label="Search orders" placeholder="Search orders" />
+                    <DataToolbarMeta className="shrink-0 whitespace-nowrap">17 orders</DataToolbarMeta>
                   </DataToolbarSearch>
                   <DataToolbarFilters aria-label="Order filters">
                     <Button variant="outline" size="sm">High risk</Button>
@@ -352,8 +357,10 @@ export function BackofficeOperationsTemplateDemo() {
               </RecordInspector>
             </div>
           </AdminShellMain>
-        </AdminShellPanel>
-      </AdminShellBody>
-    </AdminShell>
+          </AdminShellPanel>
+        </AdminShellBody>
+        </AdminShell>
+      </div>
+    </div>
   );
 }
