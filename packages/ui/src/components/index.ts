@@ -34,6 +34,8 @@ export * from './record-inspector';
 export * from './empty-state';
 export * from './timeline';
 export * from './stat';
+export * from './dot';
+export * from './meter';
 
 // Commerce
 export * from './product-card';
