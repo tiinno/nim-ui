@@ -1,0 +1,147 @@
+---
+title: ScrollArea
+description: Scroll container with quiet themed scrollbars
+---
+
+import { ScrollArea, ScrollBar, Dot } from '@/components/nim';
+
+The ScrollArea component wraps Radix ScrollArea with scrollbars that match the kit in both themes. Content stays natively scrollable and keyboard accessible — the custom bars are purely visual. Give the root a height (or width, for horizontal) via `className`.
+
+## Import
+
+```tsx
+import { ScrollArea, ScrollBar } from '@nim-ui/components';
+```
+
+## Vertical scrolling
+
+<ComponentPreview title="Activity Feed">
+  <ScrollArea type="always" className="h-56 w-full max-w-sm rounded-md border border-neutral-200 dark:border-neutral-800">
+    <div className="flex flex-col gap-3 p-4 text-sm">
+      <Dot status="success">Payment settled — ord_9021</Dot>
+      <Dot status="processing" pulse>Label printing — ord_9020</Dot>
+      <Dot status="pending">Awaiting stock check — ord_9019</Dot>
+      <Dot status="failed">Webhook retry exhausted — ord_9018</Dot>
+      <Dot status="success">Refund issued — ord_9017</Dot>
+      <Dot status="archived">Order archived — ord_9016</Dot>
+      <Dot status="success">Payment settled — ord_9015</Dot>
+      <Dot status="blocked">Fraud hold — ord_9014</Dot>
+      <Dot status="success">Payment settled — ord_9013</Dot>
+      <Dot status="pending">Awaiting stock check — ord_9012</Dot>
+    </div>
+  </ScrollArea>
+
+  <PreviewCode>
+```tsx
+<ScrollArea type="always" className="h-56 rounded-md border border-neutral-200 dark:border-neutral-800">
+  <div className="flex flex-col gap-3 p-4 text-sm">
+    <Dot status="success">Payment settled — ord_9021</Dot>
+    {/* …more rows… */}
+  </div>
+</ScrollArea>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Horizontal scrolling
+
+Add a horizontal ScrollBar and let the content define its own width.
+
+<ComponentPreview title="Wide Row">
+  <ScrollArea className="w-full max-w-sm rounded-md border border-neutral-200 dark:border-neutral-800">
+    <div className="flex w-max gap-2 p-3 font-mono text-xs text-neutral-600 dark:text-neutral-400">
+      <span>ord_9021</span><span>ord_9020</span><span>ord_9019</span><span>ord_9018</span>
+      <span>ord_9017</span><span>ord_9016</span><span>ord_9015</span><span>ord_9014</span>
+      <span>ord_9013</span><span>ord_9012</span><span>ord_9011</span><span>ord_9010</span>
+    </div>
+    <ScrollBar orientation="horizontal" />
+  </ScrollArea>
+
+  <PreviewCode>
+```tsx
+<ScrollArea className="w-96">
+  <div className="flex w-max gap-2 p-3">{/* wide content */}</div>
+  <ScrollBar orientation="horizontal" />
+</ScrollArea>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### ScrollArea
+
+<PropsTable
+  props={[
+    {
+      name: 'type',
+      type: "'hover' | 'always' | 'scroll' | 'auto'",
+      default: "'hover'",
+      description: 'When scrollbars are shown (Radix behavior)',
+    },
+    {
+      name: 'scrollHideDelay',
+      type: 'number',
+      default: '600',
+      description: 'Hide delay in ms for hover/scroll types',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Size the region here (h-*, max-h-*, w-*)',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'Scrollable content',
+      required: true,
+    },
+  ]}
+/>
+
+### ScrollBar
+
+<PropsTable
+  props={[
+    {
+      name: 'orientation',
+      type: "'vertical' | 'horizontal'",
+      default: "'vertical'",
+      description: 'Scrollbar axis — a vertical bar is included automatically',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The viewport remains a native scroll container — arrow keys, Page Up/Down, and screen-reader scrolling all work untouched.
+- Scrollbars are decorative; they add no extra tab stops.
+- Prefer `type="always"` when discoverability of more content matters (e.g. long policy text an operator must read).
+
+## Best Practices
+
+### Do
+
+- Size the region on ScrollArea's `className`, not on inner content
+- Use inside RecordInspector panels, activity feeds, and long option lists
+- Pair horizontal scrolling with `w-max` content so width comes from content
+
+### Don't
+
+- Nest ScrollAreas — restructure the layout instead
+- Use for whole-page scrolling; it's for bounded panels
+- Hide critical actions below the fold of a small ScrollArea
+
+## Related Components
+
+- [RecordInspector](/components/data-display/record-inspector/) - Side panel that often needs bounded scrolling
+- [Drawer](/components/layout/drawer/) - Overlay panel with its own scroll
+- [DataTable](/components/data-display/data-table/) - Tabular data with its own overflow handling

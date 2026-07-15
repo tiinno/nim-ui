@@ -19,7 +19,7 @@ Built with React 19 + TypeScript + Tailwind CSS v4
 
 ## Features
 
-- **75 Components** across 8 categories: Primitives, Layout, Data Display, Commerce, Landing, Feedback, Forms, Navigation
+- **85 Components** across 8 categories: Primitives, Layout, Data Display, Commerce, Landing, Feedback, Forms, Navigation
 - **Fully Typed** with TypeScript 5.9+ strict mode
 - **Accessible** following WCAG 2.1 AA, keyboard navigation, screen reader support
 - **Dark Mode** built-in with Tailwind `dark:` variants
@@ -60,14 +60,14 @@ export default function App() {
 
 | Category | Components |
 |----------|-----------|
-| **Primitives** | Button, Input, Textarea, Checkbox, Radio, Select, Switch |
-| **Layout** | Container, Grid, Stack, Flex, Spacer, Card, AdminShell, PageHeader, Modal, Drawer, Tabs, Accordion, Collapsible, Separator |
-| **Data Display** | Badge, StatusPill, Avatar, DataTable, DataToolbar, FilterSummary, BulkActionBar, EmptyState, Timeline, DescriptionList, RecordInspector, DataCard, MetricCard, Stat |
+| **Primitives** | Button, ButtonGroup, Text, Kbd, Input, Textarea, Checkbox, Radio, Select, Switch |
+| **Layout** | Container, Grid, Stack, Flex, Spacer, Card, AdminShell, PageHeader, Modal, Drawer, Tabs, ScrollArea, Accordion, Collapsible, Separator |
+| **Data Display** | Badge, StatusPill, Dot, Meter, Avatar, DataTable, DataToolbar, FilterSummary, BulkActionBar, EmptyState, Timeline, DescriptionList, RecordInspector, Snippet, CopyButton, DataCard, MetricCard, Stat |
 | **Commerce** | ProductCard, CartItem, PriceTag, QuantitySelector |
 | **Landing** | Hero, FeatureGrid, Testimonial, CTA |
 | **Feedback** | Toast, Tooltip, Popover, DropdownMenu, AlertDialog, Alert, Progress, Spinner, Skeleton |
-| **Forms** | Form, FormLayout, FormField, Combobox, Calendar, DatePicker, TimePicker, DateTimePicker, DateFilter, MultiSelect, TagsInput, FileUpload, NumberInput, PasswordInput, Stepper, Slider |
-| **Navigation** | Breadcrumb, SidebarNav, CommandMenu, ViewSwitcher, Pagination |
+| **Forms** | Form, FormLayout, FormField, Fieldset, Combobox, Calendar, DatePicker, TimePicker, DateTimePicker, DateFilter, MultiSelect, TagsInput, FileUpload, NumberInput, PasswordInput, Stepper, Slider |
+| **Navigation** | Breadcrumb, Link, SidebarNav, CommandMenu, ViewSwitcher, Pagination |
 
 ## Development
 
