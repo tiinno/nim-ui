@@ -1,0 +1,181 @@
+---
+title: Meter
+description: Capacity and usage bar with automatic threshold coloring
+---
+
+import { Meter } from '@/components/nim';
+
+The Meter component shows how full something is — storage, rate limits, seat quotas. Coloring shifts automatically from calm green through amber to red as usage approaches the limit, so operators can scan a column of meters and spot pressure instantly.
+
+Meter is distinct from Progress: Progress tracks **task completion** (`role="progressbar"`), Meter reports a **measurement within a known range** (`role="meter"`).
+
+## Import
+
+```tsx
+import { Meter } from '@nim-ui/components';
+```
+
+## Automatic threshold coloring
+
+Green below 70%, amber from 70%, red from 90% — thresholds are fractions of `max`.
+
+<ComponentPreview title="Threshold Coloring">
+  <div className="flex w-full max-w-sm flex-col gap-3">
+    <Meter value={42} label="Media storage" showValue />
+    <Meter value={78} label="Webhook queue" showValue />
+    <Meter value={95} label="API rate limit" showValue />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Meter value={42} label="Media storage" showValue />
+<Meter value={78} label="Webhook queue" showValue />
+<Meter value={95} label="API rate limit" showValue />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Custom range and thresholds
+
+<ComponentPreview title="Custom Range">
+  <div className="flex w-full max-w-sm flex-col gap-3">
+    <Meter value={450} max={500} label="API calls this hour" showValue />
+    <Meter
+      value={18}
+      max={20}
+      thresholds={{ warning: 0.8, critical: 0.95 }}
+      label="Seats used"
+      showValue
+    />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Meter value={450} max={500} label="API calls this hour" showValue />
+<Meter
+  value={18}
+  max={20}
+  thresholds={{ warning: 0.8, critical: 0.95 }}
+  label="Seats used"
+  showValue
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Fixed tones
+
+Opt out of threshold logic when the meter is informational rather than a limit.
+
+<ComponentPreview title="Fixed Tones">
+  <div className="flex w-full max-w-sm flex-col gap-3">
+    <Meter value={35} tone="neutral" label="Archive quota" showValue />
+    <Meter value={88} tone="success" label="Cache hit rate" showValue />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Meter value={35} tone="neutral" label="Archive quota" showValue />
+<Meter value={88} tone="success" label="Cache hit rate" showValue />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Sizes
+
+`sm` is the default for table rows; `md` suits card summaries.
+
+<ComponentPreview title="Sizes">
+  <div className="flex w-full max-w-sm flex-col gap-3">
+    <Meter value={62} size="sm" label="Small meter" />
+    <Meter value={62} size="md" label="Medium meter" />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Meter value={62} size="sm" label="Small meter" />
+<Meter value={62} size="md" label="Medium meter" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'value',
+      type: 'number',
+      default: '-',
+      description: 'Current measurement',
+      required: true,
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: '100',
+      description: 'Upper bound of the range',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: '-',
+      description: 'Accessible name for the meter (required unless aria-labelledby is set)',
+    },
+    {
+      name: 'thresholds',
+      type: '{ warning: number; critical: number }',
+      default: '{ warning: 0.7, critical: 0.9 }',
+      description: 'Fractions of max where auto coloring shifts to warning and error',
+    },
+    {
+      name: 'tone',
+      type: "'auto' | 'success' | 'warning' | 'error' | 'neutral'",
+      default: "'auto'",
+      description: 'auto colors by thresholds; fixed tones override',
+    },
+    {
+      name: 'showValue',
+      type: 'boolean',
+      default: 'false',
+      description: 'Show the percentage as trailing text',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md'",
+      default: "'sm'",
+      description: 'Track height',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Uses `role="meter"` with `aria-valuenow` / `aria-valuemin` / `aria-valuemax` and a human-readable `aria-valuetext` ("82% used").
+- Always provide `label` (or `aria-labelledby`) so the measurement has a name.
+- Threshold colors are reinforced by `showValue` text — enable it wherever color alone would carry the warning.
+
+## Best Practices
+
+### Do
+
+- Use Meter for capacity, quotas, and limits; Progress for task completion
+- Tune `thresholds` to when an operator should actually react
+- Show `showValue` in detail panes; omit it in tight table columns
+
+### Don't
+
+- Animate Meter toward a target — it reports a state, not an activity
+- Use red/amber tones for informational meters; use `tone="neutral"`
+
+## Related Components
+
+- [Progress](/components/feedback/progress/) - Task completion indicator
+- [MetricCard](/components/data-display/metric-card/) - KPI summary cards
+- [Stat](/components/data-display/stat/) - Single metric display

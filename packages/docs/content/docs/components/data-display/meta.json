@@ -6,6 +6,7 @@
     "data-table",
     "data-toolbar",
     "status-pill",
+    "dot",
     "filter-summary",
     "bulk-action-bar",
     "empty-state",
@@ -15,6 +16,7 @@
     "data-card",
     "metric-card",
     "stat",
+    "meter",
     "..."
   ]
 }
