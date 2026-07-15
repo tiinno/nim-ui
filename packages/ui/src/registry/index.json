@@ -2753,6 +2753,65 @@
           "code": "<Meter value={450} max={500} thresholds={{ warning: 0.8, critical: 0.95 }} label=\"API calls\" />"
         }
       ]
+    },
+    {
+      "name": "ButtonGroup",
+      "category": "primitives",
+      "description": "Attached button container that collapses inner radii and borders into a single segmented control",
+      "keywords": [
+        "button",
+        "group",
+        "segmented",
+        "toolbar",
+        "toggle"
+      ],
+      "file": "components/button-group.tsx",
+      "variants": [
+        {
+          "name": "orientation",
+          "values": [
+            "horizontal",
+            "vertical"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Segmented Control",
+          "code": "<ButtonGroup aria-label=\"View density\"><Button variant=\"outline\" size=\"sm\">Compact</Button><Button variant=\"outline\" size=\"sm\">Comfortable</Button></ButtonGroup>"
+        },
+        {
+          "title": "Vertical Stack",
+          "code": "<ButtonGroup orientation=\"vertical\" aria-label=\"Sort order\"><Button variant=\"outline\">Newest</Button><Button variant=\"outline\">Oldest</Button></ButtonGroup>"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset",
+      "category": "forms",
+      "description": "Semantic fieldset/legend form section with description, content, and footer areas; native disabled propagation",
+      "keywords": [
+        "fieldset",
+        "legend",
+        "form",
+        "section",
+        "group",
+        "disabled"
+      ],
+      "file": "components/fieldset.tsx",
+      "variants": [],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Form Section",
+          "code": "<Fieldset><FieldsetLegend>Shipping address</FieldsetLegend><FieldsetDescription>Used for carrier labels.</FieldsetDescription><FieldsetContent>…fields…</FieldsetContent><FieldsetFooter><span>Saved 2 minutes ago</span><Button size=\"sm\">Save</Button></FieldsetFooter></Fieldset>"
+        },
+        {
+          "title": "Disable Whole Section",
+          "code": "<Fieldset disabled>…</Fieldset>"
+        }
+      ]
     }
   ]
 }
