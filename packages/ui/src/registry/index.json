@@ -2658,6 +2658,101 @@
           "code": "<NextLink href=\"/queues\" className={linkVariants({ variant: 'standalone' })}>View all queues</NextLink>"
         }
       ]
+    },
+    {
+      "name": "Dot",
+      "category": "data-display",
+      "description": "Minimal inline status dot with optional label for dense table cells and list rows",
+      "keywords": [
+        "dot",
+        "status",
+        "indicator",
+        "inline",
+        "table"
+      ],
+      "file": "components/dot.tsx",
+      "variants": [
+        {
+          "name": "status",
+          "values": [
+            "active",
+            "pending",
+            "processing",
+            "success",
+            "warning",
+            "failed",
+            "blocked",
+            "archived"
+          ]
+        },
+        {
+          "name": "size",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Dot with Label",
+          "code": "<Dot status=\"active\">Online</Dot>"
+        },
+        {
+          "title": "Bare Dot",
+          "code": "<Dot status=\"failed\" aria-label=\"Failed\" />"
+        },
+        {
+          "title": "Live State",
+          "code": "<Dot status=\"processing\" pulse>Syncing</Dot>"
+        }
+      ]
+    },
+    {
+      "name": "Meter",
+      "category": "data-display",
+      "description": "Capacity and usage bar with automatic threshold coloring, distinct from Progress task completion",
+      "keywords": [
+        "meter",
+        "capacity",
+        "usage",
+        "quota",
+        "storage",
+        "limit"
+      ],
+      "file": "components/meter.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": [
+            "sm",
+            "md"
+          ]
+        },
+        {
+          "name": "tone",
+          "values": [
+            "auto",
+            "success",
+            "warning",
+            "error",
+            "neutral"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Storage Usage",
+          "code": "<Meter value={82} label=\"Storage used\" showValue />"
+        },
+        {
+          "title": "Custom Range and Thresholds",
+          "code": "<Meter value={450} max={500} thresholds={{ warning: 0.8, critical: 0.95 }} label=\"API calls\" />"
+        }
+      ]
     }
   ]
 }
