@@ -1,220 +1,226 @@
 # Nim UI - Quick Reference for AI
 
-> Modern React component library with TypeScript, Tailwind v4, and accessibility-first design
+> Quiet, accessible React UI kit for dashboards, backoffice, and commerce operations
 
 ## Stack
 
-- React 19.2+, TypeScript 5.9+, Tailwind CSS v4
-- Build: Vite, Turborepo, pnpm 9+
-- Test: Vitest, React Testing Library
-- Docs: Storybook
+- React 19.2+, TypeScript 5.9+ (strict), Tailwind CSS v4 (OKLCH tokens)
+- Build: tsup + PostCSS, Turborepo, pnpm 9+
+- Test: Vitest, React Testing Library (coverage gates 80/75/70/80)
+- Docs: Next.js 16 + Fumadocs 16 (static export) at https://nim-ui.tiinno.com
 
 ## Project Structure
 
 ```
 nim-ui/
 ├── packages/
-│   ├── ui/              # Component library
+│   ├── ui/               # Component library (@nim-ui/components)
 │   │   └── src/
-│   │       ├── components/  # All components
-│   │       ├── hooks/       # React hooks
-│   │       ├── utils/       # Utilities
-│   │       └── index.ts     # Public exports
-│   └── mcp-server/      # MCP server (5 tools)
-├── apps/
-│   ├── docs/            # Storybook
-│   └── playground/      # Dev sandbox
+│   │       ├── components/   # All components (flat, kebab-case files)
+│   │       ├── lib/          # cn (clsx), date-format
+│   │       ├── registry/     # index.json — machine-readable component registry
+│   │       └── tokens.css    # OKLCH design tokens (single source of truth)
+│   ├── docs/             # Fumadocs documentation site
+│   ├── tailwind-config/  # Shared Tailwind config
+│   └── mcp-server/       # MCP server (reads the registry)
 └── turbo.json
 ```
 
-## 24 Components (6 Categories)
+## 85 Components (8 Categories)
 
-### Layout (5)
-- Container: Responsive container with max-width
-- Grid: CSS Grid with responsive columns
-- Stack: Vertical/horizontal spacing
-- Flex: Flexbox layouts
-- Spacer: Flexible spacing
+### Primitives (10)
+- Button: A versatile button component with multiple variants and sizes for different use cases
+- Input: A flexible input field component with validation states and multiple sizes
+- Select: A dropdown select component with search and multi-select capabilities, built with Radix UI
+- Checkbox: A checkbox input component with label and indeterminate state support, built with Radix UI
+- Radio: A radio button component for selecting a single option from a group, built with Radix UI
+- Textarea: A textarea component with validation states and sizes for multi-line text input
+- Switch: A toggle switch component for boolean on/off states, built with Radix UI
+- Text: Typography primitive rendering semantic text elements with a compact operational type scale, tone, and weight control
+- Kbd: Keyboard key display with KbdGroup for shortcut combinations, styled to match CommandMenu shortcuts
+- ButtonGroup: Attached button container that collapses inner radii and borders into a single segmented control
 
-### Forms (6)
-- Button: variants (primary, secondary, outline, ghost, destructive), sizes (sm, md, lg)
-- Input: Text input with error states
-- Textarea: Multi-line input
-- Select: Dropdown selection
-- Checkbox: Boolean toggle
-- Radio: Single selection
+### Layout (15)
+- Card: A container component for grouping related content with header, body, and footer sections
+- AdminShell: A backoffice application frame with sidebar, topbar, panel, and main content landmarks
+- PageHeader: A backoffice page header with title, description, metadata, and grouped actions
+- Modal: A dialog/modal component for displaying content in an overlay, built with Radix UI
+- Drawer: A slide-out panel component for side navigation or additional content, built with Radix UI
+- Tabs: A tabbed interface component for organizing content into separate views, built with Radix UI
+- Container: A responsive container component with max-width constraints and optional padding
+- Grid: A responsive CSS Grid layout component with configurable columns and gap
+- Stack: A stack component for vertical or horizontal stacking with consistent spacing
+- Flex: A flexible flexbox layout component for common alignment and distribution patterns
+- Spacer: A spacer component for adding fixed or flexible spacing between elements
+- Accordion: A collapsible content component for organizing information into expandable sections, built with Radix UI
+- Separator: A visual divider component for separating content sections, built with Radix UI
+- Collapsible: An expandable section for hiding and revealing content, built with Radix UI
+- ScrollArea: Radix scroll container with quiet themed scrollbars, native keyboard scrolling preserved
 
-### Data Display (5)
-- Card: Content container (default, outlined, elevated)
-- Badge: Status indicators (success, warning, danger, info)
-- Avatar: Profile images/initials
-- Table: Tabular data (striped, hoverable)
-- Spinner: Loading indicator
+### Data Display (18)
+- Badge: A small badge component for displaying status, counts, or labels
+- StatusPill: A compact operational state pill for admin tables, orders, payments, and user workflows
+- FilterSummary: A compact active-filter summary with removable chips and clear-all behavior for search-heavy admin screens
+- Avatar: A user avatar component with image fallback and initials support, built with Radix UI
+- DataCard: A specialized card for displaying data with labels, values, and optional trends
+- MetricCard: A dashboard KPI card with value, trend, tone, supporting text, visual slot, and footer metadata
+- DataTable: A table component for displaying structured data with sorting and styling options
+- DataToolbar: A table and list toolbar for search, filters, result metadata, and actions
+- BulkActionBar: A sticky selected-row action bar for admin tables and bulk workflows
+- EmptyState: An empty table and list state with title, description, decorative icon, and recovery actions
+- Timeline: A semantic activity history component for audit trails, order events, and status changes
+- DescriptionList: A semantic label-value metadata component for detail panels, drawers, and record pages
+- RecordInspector: A compact record detail panel for backoffice review, metadata, actions, and activity
+- Stat: A component for displaying statistics with labels, values, and optional trend indicators
+- Dot: Minimal inline status dot with optional label for dense table cells and list rows
+- Meter: Capacity and usage bar with automatic threshold coloring, distinct from Progress task completion
+- CopyButton: Ghost icon button that copies a value to the clipboard with copied feedback and live-region announcement
+- Snippet: Copyable mono field for record IDs, API keys, and webhook URLs with built-in CopyButton and display-only prefix
 
-### Feedback (3)
-- Alert: Contextual messages (dismissible)
-- Toast: Temporary notifications
-- Progress: Progress bar
+### Commerce (4)
+- ProductCard: A card component optimized for displaying product information including images, titles, and prices
+- CartItem: A component for displaying shopping cart items with quantity controls and removal options
+- PriceTag: A component for displaying prices with optional original price and discount information
+- QuantitySelector: A component for selecting quantities with increment and decrement buttons
 
-### Overlay (3)
-- Modal: Dialog overlay (sm, md, lg, xl)
-- Popover: Contextual popup
-- Tooltip: Hover hints
+### Landing (6)
+- Navbar: A responsive top navigation bar for marketing pages with brand, links, CTA, and mobile menu
+- Hero: A hero section component for landing pages with headline, description, and call-to-action
+- FeatureGrid: A grid layout component for displaying features with icons, titles, and descriptions
+- CTA: A call-to-action component for encouraging user actions with headlines and buttons
+- Testimonial: A component for displaying customer testimonials with quotes, names, and avatars
+- Footer: A marketing site footer with brand, link groups, social links, legal links, and copyright
 
-### Navigation (2)
-- Tabs: Tabbed interface (line, enclosed, pills)
-- Breadcrumb: Navigation hierarchy
+### Forms (17)
+- FormLayout: Sectioned CRUD form layout primitives for backoffice create and edit workflows
+- Form: A form wrapper component with built-in validation and submission handling
+- FormField: A form field component with label, input, error message, and helper text support
+- Slider: A slider input for selecting a value or range within a bounded interval, built with Radix UI
+- Combobox: A searchable, filterable dropdown input built on cmdk and Radix Popover
+- Calendar: A calendar component for date selection, built on react-day-picker v9
+- DatePicker: An input trigger with a calendar popover for selecting dates, composing Popover, Calendar, and Button
+- TimePicker: A compact popover time selector for operational forms and scheduling controls
+- DateTimePicker: Date and time pickers for scheduling, windows, publish times, and backoffice cutoffs
+- DateFilter: A date-range filter with operational presets for tables, reports, and dashboards
+- MultiSelect: A searchable multi-select with removable chips and hidden inputs for native forms
+- TagsInput: A tag entry field for labels, segments, and operational metadata
+- FileUpload: A local file picker and dropzone for attachment selection without upload transport
+- NumberInput: A numeric input with optional steppers, clamping, and precision handling
+- PasswordInput: A password input with accessible show and hide controls
+- Stepper: A compact stepper for multi-step forms, setup flows, and review workflows
+- Fieldset: Semantic fieldset/legend form section with description, content, and footer areas; native disabled propagation
+
+### Feedback (9)
+- Popover: Displays rich content in a floating panel triggered by a click, built with Radix UI
+- Tooltip: Displays informational text when hovering or focusing on an element, built with Radix UI
+- DropdownMenu: A dropdown menu component for displaying actions or options triggered by a button click, built with Radix UI
+- AlertDialog: A modal dialog for confirming destructive or important actions that requires explicit user response, built with Radix UI
+- Toast: Lightweight notification messages with declarative components and an imperative toast API
+- Alert: An inline feedback message component for displaying contextual alerts with dismiss support
+- Progress: A progress bar component for displaying completion percentage with multiple variants
+- Spinner: An animated loading spinner indicator with multiple sizes and color variants
+- Skeleton: A placeholder loading component with pulse animation for content that is loading
+
+### Navigation (6)
+- Breadcrumb: A navigation component for displaying the current page location within a hierarchical structure
+- CommandMenu: Searchable command surface for backoffice navigation, record lookup, and operator actions
+- ViewSwitcher: A saved-view and operational-queue switcher for backoffice tables and dashboards
+- SidebarNav: Grouped sidebar navigation with active states, badges, and icon slots for admin workspaces
+- Pagination: Composable pagination building blocks for navigating through pages of content
+- Link: Styled anchor with muted steel accent, subtle and standalone variants, and safe external-link handling
 
 ## Commands
 
 ```bash
-# Development
-pnpm install              # Install deps
-pnpm dev                  # Start dev server
-pnpm build                # Build all packages
-pnpm test                 # Run tests
-pnpm lint                 # Lint code
-pnpm typecheck            # Type check
-
-# Package-specific
-pnpm dev --filter ui      # UI package only
-pnpm test:watch           # Watch mode
-pnpm test:coverage        # Coverage report
-
-# Storybook
-pnpm storybook            # Start docs
-pnpm build:storybook      # Build docs
+pnpm install                          # Install deps
+pnpm dev                              # Start dev servers
+pnpm build                            # Build all packages
+pnpm --filter @nim-ui/components test # Run UI tests (vitest watch mode; use npx vitest run for one-shot)
+pnpm lint                             # Lint code
+pnpm --filter docs build              # Build docs (static export to packages/docs/out)
 ```
 
 ## Component Pattern (CVA)
 
 ```tsx
-import { forwardRef } from 'react';
+import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/utils/cn';
+import { cn } from '../lib/utils';
 
-// 1. Define variants
-const buttonVariants = cva(
-  'base-classes',
-  {
-    variants: {
-      variant: { primary: 'classes', secondary: 'classes' },
-      size: { sm: 'classes', md: 'classes', lg: 'classes' },
-    },
-    defaultVariants: { variant: 'primary', size: 'md' },
-  }
+const badgeVariants = cva('base-classes', {
+  variants: {
+    variant: { default: 'classes', success: 'classes' },
+    size: { sm: 'classes', md: 'classes' },
+  },
+  defaultVariants: { variant: 'default', size: 'md' },
+});
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof badgeVariants> {}
+
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+  ({ className, variant, size, ...props }, ref) => (
+    <div className={cn(badgeVariants({ variant, size }), className)} ref={ref} {...props} />
+  )
 );
+Badge.displayName = 'Badge';
 
-// 2. TypeScript types
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  loading?: boolean;
-}
-
-// 3. JSDoc + Component
-/**
- * Button component
- * @example <Button variant="primary">Click</Button>
- */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, loading, children, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(buttonVariants({ variant, size }), className)}
-        disabled={loading || props.disabled}
-        {...props}
-      >
-        {loading ? 'Loading...' : children}
-      </button>
-    );
-  }
-);
-
-Button.displayName = 'Button';
+export { Badge, badgeVariants };
 ```
 
-## Design Tokens
+Note: `cn` is plain clsx (no tailwind-merge) — never rely on later classes overriding earlier ones.
 
-### Colors
-```
-Primary: bg-primary-{50-900}, text-primary-500
-Neutral: bg-neutral-{50-900}, text-neutral-500
-Semantic: success, warning, danger, info
-Dark mode: dark:bg-*, dark:text-*
-```
+## Design Language
 
-### Spacing
-```
-xs: 4px, sm: 8px, md: 16px, lg: 24px, xl: 32px, 2xl: 48px
-Use: gap-md, p-lg, m-sm
-```
+- Premium Operations Minimal: calm hierarchy, restrained color, dense-but-readable
+- Ink + Muted Steel Accent: graphite/ink primary actions; the primary-* scale is a subdued steel blue-gray for focus, selection, links
+- Compact Premium Density: 8px component radii, quiet borders, soft layered shadow (shadow-control)
 
-### Border Radius
-```
-sm: 4px, md: 6px, lg: 8px, xl: 12px, 2xl: 16px, full: 9999px
-```
+## Design Tokens (tokens.css, OKLCH)
 
-### Typography
-```
-Sizes: text-{xs,sm,base,lg,xl,2xl}
-Weights: font-{normal,medium,semibold,bold}
-Line heights: leading-{tight,normal,relaxed}
-```
+- Color scales: primary, neutral, success, error, warning, info — each 50…950 (bg-success-500, text-error-700, …)
+- Dark mode: class strategy — pair every color with its dark: variant inline
+- Radius: rounded-md = 0.5rem; animation: duration-fast/duration-slow + animate-* keyframes
 
 ## Accessibility Checklist
 
 - ARIA attributes (aria-label, aria-describedby, role)
 - Keyboard navigation (Enter, Space, Escape, Arrows)
-- Focus management (focus-visible:ring-2)
-- Screen reader support (aria-live, role="alert")
-- Semantic HTML (button, input, nav, etc.)
+- Focus management (focus-visible:ring-2 ring-primary-400)
+- Screen reader support (aria-live, sr-only announcements)
+- Semantic HTML first (button, fieldset/legend, kbd, a)
 
 ## Testing Pattern
 
 ```tsx
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Component } from './Component';
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '../test/test-utils';
+import { Badge, badgeVariants } from './badge';
 
-describe('Component', () => {
-  it('renders correctly', () => {
-    render(<Component>Test</Component>);
-    expect(screen.getByText('Test')).toBeInTheDocument();
-  });
-
-  it('handles interactions', async () => {
-    const onClick = vi.fn();
-    render(<Component onClick={onClick}>Click</Component>);
-    fireEvent.click(screen.getByText('Click'));
-    expect(onClick).toHaveBeenCalled();
-  });
-
-  it('supports variants', () => {
-    const { container } = render(<Component variant="primary" />);
-    expect(container.firstChild).toHaveClass('bg-primary-500');
-  });
+it('renders variant classes incl. dark mode', () => {
+  render(<Badge data-testid="badge" variant="success">Active</Badge>);
+  expect(screen.getByTestId('badge')).toHaveClass('bg-success-50');
 });
+// Tests assert exact class strings, ref forwarding, *Variants() output, aria attributes
 ```
 
 ## MCP Server (5 Tools)
 
-Located: `/packages/mcp-server/`
+Located: `/packages/mcp-server/` — serves `packages/ui/src/registry/index.json`
 
-### Tools
-1. **list-components**: Get all components by category
-2. **get-component-info**: Detailed info for specific component
-3. **search-components**: Find components by query/category
-4. **get-design-tokens**: Get design system tokens
-5. **generate-component-code**: Generate usage code
+1. **ui_list_components**: all components by category
+2. **ui_get_component**: detailed info for one component
+3. **ui_get_tokens**: design system tokens
+4. **ui_search_components**: find components by query/category
+5. **ui_get_example**: usage examples
 
-### Configuration
 ```json
 {
   "mcpServers": {
     "nim-ui": {
       "command": "node",
-      "args": ["path/to/mcp-server/dist/index.js"]
+      "args": ["path/to/nim-ui/packages/mcp-server/dist/index.js"]
     }
   }
 }
@@ -222,108 +228,32 @@ Located: `/packages/mcp-server/`
 
 ## Key Rules
 
-1. ALWAYS use CVA for variants
-2. ALWAYS use forwardRef for DOM elements
-3. ALWAYS include TypeScript types
-4. NEVER use inline styles (Tailwind only)
-5. ALWAYS support dark mode (dark:*)
-6. ALWAYS add ARIA attributes
-7. ALWAYS write tests (>80% coverage)
-8. ALWAYS export from src/index.ts
+1. ALWAYS use CVA for variants and export the *Variants function
+2. ALWAYS use forwardRef + displayName
+3. ALWAYS pair light classes with dark: variants inline
+4. NEVER use inline styles (Tailwind only; width-from-value via style only for meters/progress)
+5. ALWAYS add ARIA attributes and semantic elements
+6. ALWAYS write co-located tests (coverage ≥ 80/75/70/80)
+7. ALWAYS export from src/components/index.ts AND add a registry entry in src/registry/index.json
+8. New docs page: packages/docs/content/docs/components/<category>/<name>.mdx + category meta.json
 
 ## Common Imports
 
 ```tsx
-import { Button, Input, Card, Modal } from '@nim/ui';
-import { cn } from '@nim/ui/utils';
-import { useToast } from '@nim/ui/hooks';
-```
-
-## File Paths
-
-```
-UI Package: /packages/ui/
-Components: /packages/ui/src/components/{Category}/{Component}.tsx
-Tests: /packages/ui/src/components/{Category}/{Component}.test.tsx
-Exports: /packages/ui/src/index.ts
-Utils: /packages/ui/src/utils/
-Hooks: /packages/ui/src/hooks/
+import { Button, DataTable, StatusPill, Snippet } from '@nim-ui/components';
+import '@nim-ui/components/styles';
 ```
 
 ## Quality Gates
 
 Before commit:
+
 ```bash
-pnpm lint && pnpm typecheck && pnpm test && pnpm build
+pnpm lint && pnpm --filter @nim-ui/components build && npx vitest run
 ```
 
 All must pass.
 
-## Example Usage
-
-```tsx
-// Layout
-<Container maxWidth="lg">
-  <Grid cols={3} gap="lg">
-    <Card variant="elevated">Content</Card>
-  </Grid>
-</Container>
-
-// Forms
-<form>
-  <Input placeholder="Email" type="email" error={errors.email} />
-  <Textarea rows={4} placeholder="Message" />
-  <Flex justify="end">
-    <Button variant="primary" loading={isSubmitting}>
-      Submit
-    </Button>
-  </Flex>
-</form>
-
-// Feedback
-<Alert variant="success" dismissible>
-  Operation successful!
-</Alert>
-
-// Overlay
-<Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Confirm">
-  <p>Are you sure?</p>
-  <Flex justify="end" gap="md">
-    <Button variant="ghost" onClick={() => setIsOpen(false)}>Cancel</Button>
-    <Button variant="destructive" onClick={handleDelete}>Delete</Button>
-  </Flex>
-</Modal>
-```
-
-## Anti-Patterns (Never Do)
-
-```tsx
-// ❌ Inline styles
-<div style={{ color: 'red' }}>Bad</div>
-
-// ❌ Type 'any'
-const handleClick = (data: any) => {}
-
-// ❌ No ARIA
-<div onClick={onClick}>Click</div>
-
-// ❌ Hardcoded values
-<div className="w-[237px]">Bad</div>
-
-// ✅ Correct
-<div className="w-60 text-red-500" role="button" aria-label="Click me">
-  Good
-</div>
-```
-
-## Resources
-
-- Full docs: `.claude/CLAUDE.md`
-- Conventions: `.kiro/steering/ui-conventions.md`
-- Tailwind: https://tailwindcss.com/docs
-- React: https://react.dev
-- CVA: https://cva.style/docs
-
 ---
 
-**Version**: 1.0.0 | **Updated**: 2026-02-05 | **Tech**: React 19 + TS 5.9 + Tailwind v4
+**Updated**: 2026-07-15 | **Tech**: React 19 + TS 5.9 + Tailwind v4 | 85 components / 8 categories

@@ -157,7 +157,7 @@ export async function buildOverviewCard(config) {
 <h2 style="font:600 16px system-ui;margin:0 0 12px">Design language</h2>
 <ul style="list-style:none;padding:0;margin:0 0 24px">${items}</ul>
 <h2 style="font:600 16px system-ui;margin:0 0 8px">Foundations</h2>
-<p style="font:13px ui-monospace,monospace;color:#4b5563;margin:0">Component radius: ${radius.trim()} · Elevation: soft layered graphite · 75 components / 8 categories</p>
+<p style="font:13px ui-monospace,monospace;color:#4b5563;margin:0">Component radius: ${radius.trim()} · Elevation: soft layered graphite · 85 components / 8 categories</p>
 </main>
 `;
   const dest = join(ROOT, config.output.dir, 'overview', 'overview.html');
