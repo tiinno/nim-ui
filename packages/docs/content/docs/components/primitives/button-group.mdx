@@ -1,0 +1,134 @@
+---
+title: ButtonGroup
+description: Attached button container forming a single segmented control
+---
+
+import { ButtonGroup, Button } from '@/components/nim';
+
+The ButtonGroup component fuses adjacent Buttons into one segmented control: inner radii collapse, borders overlap by a pixel, and the focused segment lifts above its neighbors so focus rings stay fully visible. It pairs best with `variant="outline"`.
+
+## Import
+
+```tsx
+import { ButtonGroup, Button } from '@nim-ui/components';
+```
+
+## Basic usage
+
+<ComponentPreview title="Segmented Control">
+  <ButtonGroup aria-label="View density">
+    <Button variant="outline" size="sm">Compact</Button>
+    <Button variant="outline" size="sm">Comfortable</Button>
+    <Button variant="outline" size="sm">Spacious</Button>
+  </ButtonGroup>
+
+  <PreviewCode>
+```tsx
+<ButtonGroup aria-label="View density">
+  <Button variant="outline" size="sm">Compact</Button>
+  <Button variant="outline" size="sm">Comfortable</Button>
+  <Button variant="outline" size="sm">Spacious</Button>
+</ButtonGroup>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Vertical orientation
+
+<ComponentPreview title="Vertical Stack">
+  <ButtonGroup orientation="vertical" aria-label="Sort order">
+    <Button variant="outline" size="sm">Newest first</Button>
+    <Button variant="outline" size="sm">Oldest first</Button>
+    <Button variant="outline" size="sm">By priority</Button>
+  </ButtonGroup>
+
+  <PreviewCode>
+```tsx
+<ButtonGroup orientation="vertical" aria-label="Sort order">
+  <Button variant="outline" size="sm">Newest first</Button>
+  <Button variant="outline" size="sm">Oldest first</Button>
+  <Button variant="outline" size="sm">By priority</Button>
+</ButtonGroup>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Mixed states
+
+Segments stay independent — disable or emphasize individual buttons as needed.
+
+<ComponentPreview title="Mixed States">
+  <ButtonGroup aria-label="Pagination actions">
+    <Button variant="outline" size="sm" disabled>← Previous</Button>
+    <Button variant="outline" size="sm">1–50 of 1,204</Button>
+    <Button variant="outline" size="sm">Next →</Button>
+  </ButtonGroup>
+
+  <PreviewCode>
+```tsx
+<ButtonGroup aria-label="Pagination actions">
+  <Button variant="outline" size="sm" disabled>← Previous</Button>
+  <Button variant="outline" size="sm">1–50 of 1,204</Button>
+  <Button variant="outline" size="sm">Next →</Button>
+</ButtonGroup>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'orientation',
+      type: "'horizontal' | 'vertical'",
+      default: "'horizontal'",
+      description: 'Layout direction of the attached buttons',
+    },
+    {
+      name: 'aria-label',
+      type: 'string',
+      default: '-',
+      description: 'Accessible name for the group (required)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'Button elements to attach',
+      required: true,
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Renders `role="group"` — always provide an `aria-label` describing what the group controls.
+- Each Button keeps its own focus stop; focused segments raise above neighbors so the ring is never clipped.
+- For an exclusive-choice toggle, manage selection state yourself (e.g. `aria-pressed` per button) or use ViewSwitcher.
+
+## Best Practices
+
+### Do
+
+- Pair with `variant="outline"` — the hairline borders create the segmented look
+- Keep segments the same size within one group
+- Use for closely related actions: density, sort direction, pagination steps
+
+### Don't
+
+- Mix primary and outline variants inside one group
+- Use as a substitute for Tabs (content switching) or ViewSwitcher (view modes)
+- Attach more than ~4 segments — use a Select or DropdownMenu instead
+
+## Related Components
+
+- [Button](/components/primitives/button/) - The segments themselves
+- [ViewSwitcher](/components/navigation/view-switcher/) - Exclusive view-mode toggle
+- [Pagination](/components/navigation/pagination/) - Full pagination control
