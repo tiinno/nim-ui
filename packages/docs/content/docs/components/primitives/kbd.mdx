@@ -1,0 +1,185 @@
+---
+title: Kbd
+description: Keyboard key display for shortcuts and hotkeys
+---
+
+import { Kbd, KbdGroup } from '@/components/nim';
+
+The Kbd component renders a semantic `<kbd>` element for displaying keyboard keys, styled to match the shortcut hints in CommandMenu. Compose multi-key shortcuts with KbdGroup.
+
+## Import
+
+```tsx
+import { Kbd, KbdGroup } from '@nim-ui/components';
+```
+
+## Single keys
+
+<ComponentPreview title="Single Keys">
+  <div className="flex items-center gap-2">
+    <Kbd>Esc</Kbd>
+    <Kbd>Tab</Kbd>
+    <Kbd>Enter</Kbd>
+    <Kbd>↑</Kbd>
+    <Kbd>↓</Kbd>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Kbd>Esc</Kbd>
+<Kbd>Tab</Kbd>
+<Kbd>Enter</Kbd>
+<Kbd>↑</Kbd>
+<Kbd>↓</Kbd>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Key combinations
+
+Wrap keys in KbdGroup and label the whole shortcut for screen readers.
+
+<ComponentPreview title="Key Combinations">
+  <div className="flex items-center gap-6">
+    <KbdGroup aria-label="Command K">
+      <Kbd>⌘</Kbd>
+      <Kbd>K</Kbd>
+    </KbdGroup>
+    <KbdGroup aria-label="Control Shift P">
+      <Kbd>Ctrl</Kbd>
+      <Kbd>Shift</Kbd>
+      <Kbd>P</Kbd>
+    </KbdGroup>
+  </div>
+
+  <PreviewCode>
+```tsx
+<KbdGroup aria-label="Command K">
+  <Kbd>⌘</Kbd>
+  <Kbd>K</Kbd>
+</KbdGroup>
+<KbdGroup aria-label="Control Shift P">
+  <Kbd>Ctrl</Kbd>
+  <Kbd>Shift</Kbd>
+  <Kbd>P</Kbd>
+</KbdGroup>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Sizes
+
+<ComponentPreview title="Sizes">
+  <div className="flex items-center gap-4">
+    <KbdGroup aria-label="Command K, small">
+      <Kbd size="sm">⌘</Kbd>
+      <Kbd size="sm">K</Kbd>
+    </KbdGroup>
+    <KbdGroup aria-label="Command K, medium">
+      <Kbd size="md">⌘</Kbd>
+      <Kbd size="md">K</Kbd>
+    </KbdGroup>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Kbd size="sm">K</Kbd>
+<Kbd size="md">K</Kbd>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## In context
+
+Use Kbd inline in help text, tooltips, and empty states to teach operators shortcuts.
+
+<ComponentPreview title="Inline Usage">
+  <p className="text-sm text-neutral-600 dark:text-neutral-400">Press <KbdGroup aria-label="Command K"><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup> to open the command menu, or <Kbd>Esc</Kbd> to dismiss this panel.</p>
+
+  <PreviewCode>
+```tsx
+<p>
+  Press <KbdGroup aria-label="Command K"><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup> to open
+  the command menu, or <Kbd>Esc</Kbd> to dismiss this panel.
+</p>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### Kbd
+
+<PropsTable
+  props={[
+    {
+      name: 'size',
+      type: "'sm' | 'md'",
+      default: "'sm'",
+      description: 'Key cap size',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'Key label',
+      required: true,
+    },
+  ]}
+/>
+
+### KbdGroup
+
+<PropsTable
+  props={[
+    {
+      name: 'aria-label',
+      type: 'string',
+      default: '-',
+      description: 'Accessible name for the full shortcut (recommended)',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'Kbd elements forming the combination',
+      required: true,
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Renders a native `<kbd>` element, announced appropriately by screen readers.
+- Give KbdGroup an `aria-label` describing the whole shortcut (e.g. `"Command K"`) so it isn't read as disjointed characters.
+- Displaying a shortcut doesn't implement it — pair with an actual key handler such as CommandMenu's.
+
+## Best Practices
+
+### Do
+
+- Match the OS convention of your audience (⌘ on macOS, Ctrl on Windows)
+- Keep key labels short — symbols or capitalized abbreviations
+- Use the `sm` size inside dense surfaces like menus and tables
+
+### Don't
+
+- Use Kbd for anything other than keyboard input (use Badge for status)
+- Compose combinations by concatenating text inside one Kbd — use KbdGroup
+
+## Related Components
+
+- [CommandMenu](/components/navigation/command-menu/) - Command palette with shortcut hints
+- [Tooltip](/components/feedback/tooltip/) - Hover hints that can embed shortcuts

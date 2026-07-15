@@ -2508,6 +2508,156 @@
           "code": "<Stepper steps={steps} currentStep={1} onStepChange={setStep} />"
         }
       ]
+    },
+    {
+      "name": "Text",
+      "category": "primitives",
+      "description": "Typography primitive rendering semantic text elements with a compact operational type scale, tone, and weight control",
+      "keywords": [
+        "text",
+        "typography",
+        "heading",
+        "paragraph",
+        "blockquote",
+        "tone"
+      ],
+      "file": "components/text.tsx",
+      "variants": [
+        {
+          "name": "as",
+          "values": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "p",
+            "span",
+            "small",
+            "blockquote"
+          ]
+        },
+        {
+          "name": "variant",
+          "values": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "p",
+            "span",
+            "small",
+            "blockquote"
+          ]
+        },
+        {
+          "name": "tone",
+          "values": [
+            "default",
+            "secondary",
+            "success",
+            "warning",
+            "error"
+          ]
+        },
+        {
+          "name": "weight",
+          "values": [
+            "normal",
+            "medium",
+            "semibold"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Paragraph",
+          "code": "<Text>Order queue is empty.</Text>"
+        },
+        {
+          "title": "Semantic h2 styled as h3",
+          "code": "<Text as=\"h2\" variant=\"h3\">Shipment details</Text>"
+        },
+        {
+          "title": "Secondary tone",
+          "code": "<Text tone=\"secondary\" truncate>Long record identifier</Text>"
+        }
+      ]
+    },
+    {
+      "name": "Kbd",
+      "category": "primitives",
+      "description": "Keyboard key display with KbdGroup for shortcut combinations, styled to match CommandMenu shortcuts",
+      "keywords": [
+        "kbd",
+        "keyboard",
+        "shortcut",
+        "hotkey",
+        "key"
+      ],
+      "file": "components/kbd.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": [
+            "sm",
+            "md"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Single Key",
+          "code": "<Kbd>Esc</Kbd>"
+        },
+        {
+          "title": "Key Combination",
+          "code": "<KbdGroup aria-label=\"Command K\"><Kbd>⌘</Kbd><Kbd>K</Kbd></KbdGroup>"
+        }
+      ]
+    },
+    {
+      "name": "Link",
+      "category": "navigation",
+      "description": "Styled anchor with muted steel accent, subtle and standalone variants, and safe external-link handling",
+      "keywords": [
+        "link",
+        "anchor",
+        "navigation",
+        "external",
+        "href"
+      ],
+      "file": "components/link.tsx",
+      "variants": [
+        {
+          "name": "variant",
+          "values": [
+            "default",
+            "subtle",
+            "standalone"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Inline Link",
+          "code": "<Link href=\"/orders/1042\">Order #1042</Link>"
+        },
+        {
+          "title": "External Link",
+          "code": "<Link href=\"https://status.example.com\" external>Status page</Link>"
+        },
+        {
+          "title": "Compose with router link",
+          "code": "<NextLink href=\"/queues\" className={linkVariants({ variant: 'standalone' })}>View all queues</NextLink>"
+        }
+      ]
     }
   ]
 }

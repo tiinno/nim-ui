@@ -1,0 +1,131 @@
+---
+title: Link
+description: Styled anchor with muted steel accent and safe external-link handling
+---
+
+import { Link } from '@/components/nim';
+
+The Link component styles anchors with the muted steel accent so navigation reads calm and operational. `linkVariants` is exported for composing the same styles onto router links such as `next/link`.
+
+## Import
+
+```tsx
+import { Link, linkVariants } from '@nim-ui/components';
+```
+
+## Variants
+
+<ComponentPreview title="Link Variants">
+  <div className="flex w-full flex-col gap-2 text-sm">
+    <p className="text-neutral-700 dark:text-neutral-300">Escalated by <Link href="#">Dana Reyes</Link> after the second failed retry.</p>
+    <p className="text-neutral-700 dark:text-neutral-300">See the <Link href="#" variant="subtle">runbook entry</Link> for manual settlement steps.</p>
+    <Link href="#" variant="standalone">View all open exceptions</Link>
+  </div>
+
+  <PreviewCode>
+```tsx
+// default — inline within body text
+<Link href="/agents/dana">Dana Reyes</Link>
+
+// subtle — quiet, underlined, inherits surrounding muted color
+<Link href="/runbooks/settlement" variant="subtle">runbook entry</Link>
+
+// standalone — nav items and "view all" affordances
+<Link href="/exceptions" variant="standalone">View all open exceptions</Link>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## External links
+
+`external` opens the target in a new tab with `rel="noopener noreferrer"`, an arrow icon, and a screen-reader note.
+
+<ComponentPreview title="External Links">
+  <p className="text-sm text-neutral-700 dark:text-neutral-300">Delivery status is mirrored on the carrier's <Link href="https://example.com/status" external>tracking page</Link>.</p>
+
+  <PreviewCode>
+```tsx
+<Link href="https://example.com/status" external>
+  tracking page
+</Link>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## With router links
+
+Apply `linkVariants` to your framework's link component instead of nesting anchors.
+
+```tsx
+import NextLink from 'next/link';
+import { linkVariants } from '@nim-ui/components';
+
+<NextLink href="/queues" className={linkVariants({ variant: 'standalone' })}>
+  View all queues
+</NextLink>
+```
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'variant',
+      type: "'default' | 'subtle' | 'standalone'",
+      default: "'default'",
+      description: 'Visual style: inline accent, quiet underline, or standalone nav link',
+    },
+    {
+      name: 'external',
+      type: 'boolean',
+      default: 'false',
+      description: 'Open in a new tab with safe rel, external icon, and screen-reader note',
+    },
+    {
+      name: 'href',
+      type: 'string',
+      default: '-',
+      description: 'Link destination',
+      required: true,
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'Link content',
+      required: true,
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Renders a native `<a>` element with visible focus ring (`focus-visible:ring-2`).
+- `external` links announce "(opens in new tab)" to screen readers and mark the icon `aria-hidden`.
+- The `subtle` variant keeps a persistent underline so links remain distinguishable without relying on color alone.
+
+## Best Practices
+
+### Do
+
+- Use links for navigation and Button for actions
+- Use `standalone` for "View all" affordances and sidebar-adjacent navigation
+- Keep link text descriptive — "runbook entry", not "click here"
+
+### Don't
+
+- Use a Link styled as a button to submit forms or mutate data
+- Set `target="_blank"` manually — use `external` so rel safety comes along
+- Overuse the `default` accent inside dense tables; prefer `subtle` there
+
+## Related Components
+
+- [Breadcrumb](/components/navigation/breadcrumb/) - Hierarchical navigation trail
+- [Button](/components/primitives/button/) - For actions rather than navigation
+- [SidebarNav](/components/navigation/sidebar-nav/) - Primary workspace navigation
