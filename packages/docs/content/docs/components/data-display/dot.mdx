@@ -1,0 +1,162 @@
+---
+title: Dot
+description: Minimal inline status dot for dense table cells and lists
+---
+
+import { Dot } from '@/components/nim';
+
+The Dot component is StatusPill's quieter sibling — a bare status indicator with an optional label, sized for dense table cells and list rows where a full pill is too loud. The color map is shared with StatusPill so screens stay consistent.
+
+## Import
+
+```tsx
+import { Dot } from '@nim-ui/components';
+```
+
+## Statuses
+
+<ComponentPreview title="Statuses">
+  <div className="grid w-full grid-cols-2 gap-x-8 gap-y-2 sm:grid-cols-4">
+    <Dot status="active">Active</Dot>
+    <Dot status="pending">Pending</Dot>
+    <Dot status="processing">Processing</Dot>
+    <Dot status="success">Success</Dot>
+    <Dot status="warning">Warning</Dot>
+    <Dot status="failed">Failed</Dot>
+    <Dot status="blocked">Blocked</Dot>
+    <Dot status="archived">Archived</Dot>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Dot status="active">Active</Dot>
+<Dot status="pending">Pending</Dot>
+<Dot status="processing">Processing</Dot>
+<Dot status="success">Success</Dot>
+<Dot status="warning">Warning</Dot>
+<Dot status="failed">Failed</Dot>
+<Dot status="blocked">Blocked</Dot>
+<Dot status="archived">Archived</Dot>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Sizes
+
+`sm` is the default — tuned for table density.
+
+<ComponentPreview title="Sizes">
+  <div className="flex items-center gap-6">
+    <Dot status="active" size="sm">Small</Dot>
+    <Dot status="active" size="md">Medium</Dot>
+    <Dot status="active" size="lg">Large</Dot>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Dot status="active" size="sm">Small</Dot>
+<Dot status="active" size="md">Medium</Dot>
+<Dot status="active" size="lg">Large</Dot>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Live state
+
+`pulse` signals in-flight work — reserve it for genuinely live states.
+
+<ComponentPreview title="Pulse">
+  <div className="flex items-center gap-6">
+    <Dot status="processing" pulse>Syncing inventory</Dot>
+    <Dot status="warning" pulse>Retrying webhook</Dot>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Dot status="processing" pulse>Syncing inventory</Dot>
+<Dot status="warning" pulse>Retrying webhook</Dot>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Bare dots
+
+Without a label the dot stays visual-only — give it an `aria-label` so the status survives for screen readers.
+
+<ComponentPreview title="Bare Dots">
+  <div className="flex items-center gap-3">
+    <Dot status="active" aria-label="Active" />
+    <Dot status="warning" aria-label="Warning" />
+    <Dot status="failed" aria-label="Failed" />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Dot status="active" aria-label="Active" />
+<Dot status="warning" aria-label="Warning" />
+<Dot status="failed" aria-label="Failed" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'status',
+      type: "'active' | 'pending' | 'processing' | 'success' | 'warning' | 'failed' | 'blocked' | 'archived'",
+      default: "'pending'",
+      description: 'Operational status — same vocabulary as StatusPill',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'sm'",
+      description: 'Dot diameter (1.5 / 2 / 2.5 units)',
+    },
+    {
+      name: 'pulse',
+      type: 'boolean',
+      default: 'false',
+      description: 'Animate the dot for live, in-flight states',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'Optional label rendered beside the dot',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The dot itself is `aria-hidden` — the label carries the meaning.
+- Bare dots (no children) must have an `aria-label` describing the status.
+- Color alone never conveys state: pair bare dots with a visible label elsewhere in the row, or use the labeled form.
+
+## Best Practices
+
+### Do
+
+- Use Dot inside DataTable cells where StatusPill would dominate the row
+- Keep the shared status vocabulary — don't invent per-screen color meanings
+- Use `pulse` only while something is actually happening
+
+### Don't
+
+- Mix Dot and StatusPill for the same status column
+- Use Dot as a decorative bullet — it's a status primitive
+
+## Related Components
+
+- [StatusPill](/components/data-display/status-pill/) - Full status pill with background
+- [DataTable](/components/data-display/data-table/) - Dense operational tables
+- [Badge](/components/data-display/badge/) - General-purpose labels
