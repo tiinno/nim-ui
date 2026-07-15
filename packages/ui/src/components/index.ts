@@ -7,6 +7,7 @@ export * from './avatar';
 export * from './switch';
 export * from './text';
 export * from './kbd';
+export * from './button-group';
 
 // Layout
 export * from './container';
@@ -71,6 +72,7 @@ export * from './file-upload';
 export * from './number-input';
 export * from './password-input';
 export * from './stepper';
+export * from './fieldset';
 
 // Feedback
 export * from './toast';

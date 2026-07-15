@@ -4,6 +4,7 @@
     "form",
     "form-layout",
     "form-field",
+    "fieldset",
     "combobox",
     "calendar",
     "date-picker",

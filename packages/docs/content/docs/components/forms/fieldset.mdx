@@ -1,0 +1,177 @@
+---
+title: Fieldset
+description: Semantic form section with legend, description, and footer actions
+---
+
+import { Fieldset, FieldsetLegend, FieldsetDescription, FieldsetContent, FieldsetFooter, FormField, Input, Button } from '@/components/nim';
+
+The Fieldset component groups related form controls in a real `<fieldset>`/`<legend>` pair: assistive tech announces the group by its legend, and the native `disabled` prop switches off every control inside at once — ideal while a save mutation is in flight. The awkward default layout of `<fieldset>` (border-notch legend, intrinsic min-width) is normalized away.
+
+## Import
+
+```tsx
+import {
+  Fieldset,
+  FieldsetLegend,
+  FieldsetDescription,
+  FieldsetContent,
+  FieldsetFooter,
+} from '@nim-ui/components';
+```
+
+## Basic usage
+
+<ComponentPreview title="Form Section">
+  <Fieldset className="w-full max-w-md">
+    <FieldsetLegend>Shipping address</FieldsetLegend>
+    <FieldsetDescription>Used for carrier labels and customs forms.</FieldsetDescription>
+    <FieldsetContent>
+      <FormField label="Street" name="fs-street">
+        <Input placeholder="88 Charoen Krung Rd" />
+      </FormField>
+      <FormField label="City" name="fs-city">
+        <Input placeholder="Bangkok" />
+      </FormField>
+    </FieldsetContent>
+    <FieldsetFooter>
+      <span>Saved 2 minutes ago</span>
+      <Button size="sm">Save</Button>
+    </FieldsetFooter>
+  </Fieldset>
+
+  <PreviewCode>
+```tsx
+<Fieldset>
+  <FieldsetLegend>Shipping address</FieldsetLegend>
+  <FieldsetDescription>Used for carrier labels and customs forms.</FieldsetDescription>
+  <FieldsetContent>
+    <FormField label="Street" name="street">
+      <Input />
+    </FormField>
+    <FormField label="City" name="city">
+      <Input />
+    </FormField>
+  </FieldsetContent>
+  <FieldsetFooter>
+    <span>Saved 2 minutes ago</span>
+    <Button size="sm">Save</Button>
+  </FieldsetFooter>
+</Fieldset>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Disabling a whole section
+
+Native `disabled` reaches every descendant control — no per-field wiring.
+
+<ComponentPreview title="Disabled Section">
+  <Fieldset disabled className="w-full max-w-md">
+    <FieldsetLegend>Billing profile</FieldsetLegend>
+    <FieldsetDescription>Locked while the invoice batch is processing.</FieldsetDescription>
+    <FieldsetContent>
+      <FormField label="Tax ID" name="fs-tax">
+        <Input placeholder="0105561xxxxxx" />
+      </FormField>
+    </FieldsetContent>
+    <FieldsetFooter>
+      <span>Processing…</span>
+      <Button size="sm">Save</Button>
+    </FieldsetFooter>
+  </Fieldset>
+
+  <PreviewCode>
+```tsx
+<Fieldset disabled>
+  <FieldsetLegend>Billing profile</FieldsetLegend>
+  <FieldsetDescription>Locked while the invoice batch is processing.</FieldsetDescription>
+  <FieldsetContent>{/* every control inside is disabled */}</FieldsetContent>
+</Fieldset>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+### Fieldset
+
+<PropsTable
+  props={[
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Native fieldset disabled — disables every descendant control',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'Legend, description, content, and footer parts',
+      required: true,
+    },
+  ]}
+/>
+
+### Parts
+
+<PropsTable
+  props={[
+    {
+      name: 'FieldsetLegend',
+      type: 'legend',
+      default: '-',
+      description: 'Section title; names the group for assistive tech',
+    },
+    {
+      name: 'FieldsetDescription',
+      type: 'p',
+      default: '-',
+      description: 'Supporting text under the legend',
+    },
+    {
+      name: 'FieldsetContent',
+      type: 'div',
+      default: '-',
+      description: 'Field area with vertical spacing',
+    },
+    {
+      name: 'FieldsetFooter',
+      type: 'div',
+      default: '-',
+      description: 'Footer band — hint text left, actions right',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Real `<fieldset>`/`<legend>` semantics: screen readers announce the legend when focus enters any control in the group.
+- `disabled` is the native attribute, so disabled state is conveyed to assistive tech without extra ARIA.
+- Keep one legend per fieldset, and make it a concise noun phrase ("Shipping address", not a sentence).
+
+## Best Practices
+
+### Do
+
+- Group fields that operators think of as one unit (address, billing profile, notification rules)
+- Use `disabled` during mutations instead of disabling fields one by one
+- Put save-state hints in the footer's left slot and the action on the right
+
+### Don't
+
+- Nest fieldsets — flatten into sibling sections instead
+- Use Fieldset as a generic card; Card is for non-form content
+- Hide the legend — the group needs a visible name
+
+## Related Components
+
+- [FormLayout](/components/forms/form-layout/) - Page-level form arrangement
+- [FormField](/components/forms/form-field/) - Label + control + error wiring
+- [Card](/components/layout/card/) - Non-form content container
