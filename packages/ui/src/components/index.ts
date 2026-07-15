@@ -21,6 +21,7 @@ export * from './page-header';
 export * from './modal';
 export * from './drawer';
 export * from './tabs';
+export * from './scroll-area';
 
 // Data Display
 export * from './data-card';
