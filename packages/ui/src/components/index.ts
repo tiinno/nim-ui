@@ -37,6 +37,8 @@ export * from './timeline';
 export * from './stat';
 export * from './dot';
 export * from './meter';
+export * from './copy-button';
+export * from './snippet';
 
 // Commerce
 export * from './product-card';
