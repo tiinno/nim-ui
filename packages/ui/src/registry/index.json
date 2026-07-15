@@ -2812,6 +2812,72 @@
           "code": "<Fieldset disabled>…</Fieldset>"
         }
       ]
+    },
+    {
+      "name": "CopyButton",
+      "category": "data-display",
+      "description": "Ghost icon button that copies a value to the clipboard with copied feedback and live-region announcement",
+      "keywords": [
+        "copy",
+        "clipboard",
+        "button",
+        "icon"
+      ],
+      "file": "components/copy-button.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": [
+            "sm",
+            "md"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Copy an ID",
+          "code": "<CopyButton value=\"ord_2f9c8a71\" />"
+        },
+        {
+          "title": "Custom timeout and callback",
+          "code": "<CopyButton value={webhookUrl} timeout={1500} onCopied={() => track('copied')} />"
+        }
+      ]
+    },
+    {
+      "name": "Snippet",
+      "category": "data-display",
+      "description": "Copyable mono field for record IDs, API keys, and webhook URLs with built-in CopyButton and display-only prefix",
+      "keywords": [
+        "snippet",
+        "copy",
+        "clipboard",
+        "id",
+        "api-key",
+        "mono"
+      ],
+      "file": "components/snippet.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": [
+            "sm",
+            "md"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Record ID",
+          "code": "<Snippet text=\"ord_2f9c8a71-44d0-4b7e\" />"
+        },
+        {
+          "title": "Command with Prompt",
+          "code": "<Snippet prefix=\"$\" text=\"pnpm add @nim-ui/components\" />"
+        }
+      ]
     }
   ]
 }
