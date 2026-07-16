@@ -15,6 +15,19 @@ Meter is distinct from Progress: Progress tracks **task completion** (`role="pro
 import { Meter } from '@nim-ui/components';
 ```
 
+## Playground
+
+Edit the values — coloring shifts automatically as usage crosses the thresholds.
+
+<LivePlayground
+  code={`<div className="flex w-full max-w-sm flex-col gap-3">
+  <Meter value={42} label="Media storage" showValue />
+  <Meter value={78} label="Webhook queue" showValue />
+  <Meter value={19} max={20} label="Seats used" showValue />
+  <Meter value={35} tone="neutral" size="md" label="Archive quota" showValue />
+</div>`}
+/>
+
 ## Automatic threshold coloring
 
 Green below 70%, amber from 70%, red from 90% — thresholds are fractions of `max`.

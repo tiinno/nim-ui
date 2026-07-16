@@ -259,15 +259,11 @@ The Form component extends `React.FormHTMLAttributes<HTMLFormElement>`, so it ac
 <ComponentPreview title="Login Form Example">
   <div className="mx-auto w-full max-w-sm rounded-md border border-neutral-200 bg-white p-5 shadow-soft dark:border-neutral-800 dark:bg-neutral-950 sm:p-6">
     <div className="mb-5">
-      <p className="text-xs font-medium uppercase text-neutral-500 dark:text-neutral-400">
-        Operator console
-      </p>
+      <p className="text-xs font-medium uppercase text-neutral-500 dark:text-neutral-400">Operator console</p>
       <h3 className="mt-1 text-xl font-semibold text-neutral-950 dark:text-neutral-50">
         Sign in
       </h3>
-      <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-        Use your workspace email to continue.
-      </p>
+      <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">Use your workspace email to continue.</p>
     </div>
     <Form className="gap-5">
       <FormField label="Email" name="login-email">
@@ -317,15 +313,11 @@ function LoginForm() {
   return (
     <div className="w-full max-w-sm rounded-md border border-neutral-200 bg-white p-6 shadow-soft">
       <div className="mb-5">
-        <p className="text-xs font-medium uppercase text-neutral-500">
-          Operator console
-        </p>
+        <p className="text-xs font-medium uppercase text-neutral-500">Operator console</p>
         <h3 className="mt-1 text-xl font-semibold text-neutral-950">
           Sign in
         </h3>
-        <p className="mt-1 text-sm text-neutral-600">
-          Use your workspace email to continue.
-        </p>
+        <p className="mt-1 text-sm text-neutral-600">Use your workspace email to continue.</p>
       </div>
       <Form onSubmit={handleSubmit} className="gap-5">
         <FormField label="Email" name="email" error={errors.email}>

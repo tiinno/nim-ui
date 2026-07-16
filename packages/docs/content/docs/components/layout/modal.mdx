@@ -66,10 +66,7 @@ Add `ModalDescription` to provide additional context for screen readers and visu
   <ModalContent>
     <ModalHeader>
       <ModalTitle>Confirm Deletion</ModalTitle>
-      <ModalDescription>
-        This action cannot be undone. This will permanently delete the item
-        and all associated data.
-      </ModalDescription>
+      <ModalDescription>This action cannot be undone. This will permanently delete the item and all associated data.</ModalDescription>
     </ModalHeader>
     <ModalBody>
       <div className="flex gap-3 mt-4 justify-end">
@@ -134,9 +131,7 @@ function FormModal() {
       <ModalContent>
         <ModalHeader>
           <ModalTitle>Create Item</ModalTitle>
-          <ModalDescription>
-            Fill out the form below to create a new item.
-          </ModalDescription>
+          <ModalDescription>Fill out the form below to create a new item.</ModalDescription>
         </ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit}>

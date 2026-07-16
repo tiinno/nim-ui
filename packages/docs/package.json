@@ -15,8 +15,10 @@
     "fumadocs-mdx": "^15.0.12",
     "fumadocs-ui": "^16.10.2",
     "next": "^16.2.9",
+    "prism-react-renderer": "^2.4.1",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "react-live": "^4.1.8"
   },
   "devDependencies": {
     "@nim-ui/tailwind-config": "workspace:*",
