@@ -13,6 +13,20 @@ The Text component standardizes typography across operational screens. The `as` 
 import { Text } from '@nim-ui/components';
 ```
 
+## Playground
+
+Edit the code — the preview re-renders as you type.
+
+<LivePlayground
+  code={`<div className="flex w-full max-w-md flex-col gap-2">
+  <Text as="h6">Fulfillment</Text>
+  <Text as="h2" variant="h3">Shipment SLA-2041</Text>
+  <Text tone="secondary">Carrier picked up 14 cartons from BKK-02 at 09:40.</Text>
+  <Text tone="warning" weight="medium">Customs paperwork still pending.</Text>
+  <Text tone="secondary" truncate>ord_2f9c8a71-44d0-4b7e-9a3d-1c5e8b2f6a90</Text>
+</div>`}
+/>
+
 ## Headings
 
 A compact scale tuned for dense backoffice screens — `h6` doubles as an uppercase eyebrow/section label.
