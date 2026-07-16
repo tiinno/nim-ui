@@ -48,7 +48,15 @@ interface LivePlaygroundProps {
 
 export function LivePlayground({ code, language = 'tsx' }: LivePlaygroundProps) {
   const [source, setSource] = useState(code.trim());
+  const [copied, setCopied] = useState(false);
   const dirty = source !== code.trim();
+
+  const copySource = () => {
+    void navigator.clipboard?.writeText(source).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  };
 
   return (
     <div className="not-prose my-8 min-w-0 max-w-full overflow-hidden rounded-xl border border-fd-border bg-white shadow-soft dark:bg-neutral-950">
@@ -66,15 +74,25 @@ export function LivePlayground({ code, language = 'tsx' }: LivePlaygroundProps) 
             <span className="font-mono text-[11px] font-medium uppercase tracking-wide text-[oklch(0.6_0.012_262)]">
               Editable
             </span>
-            {dirty && (
+            <span className="flex items-center gap-4">
+              {dirty && (
+                <button
+                  type="button"
+                  onClick={() => setSource(code.trim())}
+                  className="rounded font-mono text-[11px] text-[oklch(0.72_0.05_248)] transition-colors hover:text-[oklch(0.85_0.04_250)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+                >
+                  Reset
+                </button>
+              )}
               <button
                 type="button"
-                onClick={() => setSource(code.trim())}
-                className="rounded font-mono text-[11px] text-[oklch(0.72_0.05_248)] transition-colors hover:text-[oklch(0.85_0.04_250)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+                onClick={copySource}
+                aria-label="Copy code"
+                className="rounded font-mono text-[11px] text-[oklch(0.6_0.012_262)] transition-colors hover:text-[oklch(0.9_0.005_90)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
               >
-                Reset
+                {copied ? 'Copied' : 'Copy'}
               </button>
-            )}
+            </span>
           </div>
           <LiveEditor
             onChange={setSource}
