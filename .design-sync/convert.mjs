@@ -57,18 +57,31 @@ export function hoistFontVars(css) {
   return `\n/* design-sync: hoist next/font leaf vars to :root so standalone cards render brand fonts */\n:where(:root){${decls}}\n`;
 }
 
+// Card chrome (titles, section headings, captions) should render in the design
+// system's own type, not system-ui. Every card links `_shared/nim-ui.css`, and
+// hoistFontVars puts the next/font leaf vars on :root, so these resolve. Written
+// as longhands rather than the `font:` shorthand: if a var ever goes missing,
+// only font-family is invalidated instead of the whole declaration.
+const DISPLAY_FONT = "var(--font-display),'Iowan Old Style',Georgia,serif";
+const SANS_FONT = 'var(--font-sans),ui-sans-serif,system-ui,sans-serif';
+const MONO_FONT = 'var(--font-mono),ui-monospace,monospace';
+const SHARED_CSS_LINK = '<link rel="stylesheet" href="../_shared/nim-ui.css">';
+
 export function extractCard(html, { group }) {
   const $ = cheerio.load(html);
-  const blocks = $('div.not-prose.my-8');
+  // Deliberately not tag-qualified: ComponentPreview roots as <figure> and
+  // LivePlayground as <div>. Qualifying this with `div` silently dropped every
+  // ComponentPreview card (83 -> 10) when preview.tsx moved to <figure>.
+  const blocks = $('.not-prose.my-8');
   if (blocks.length === 0) return null;
   blocks.find('details').remove(); // drop the "View Code" disclosure
   const title = ($('h1').first().text() || 'Component').trim();
   let body = '';
   blocks.each((_, el) => { body += `${$.html(el)}\n`; });
   return `<!-- @dsCard group="${group}" -->
-<link rel="stylesheet" href="../_shared/nim-ui.css">
+${SHARED_CSS_LINK}
 <main class="bg-white dark:bg-neutral-950" style="max-width:56rem;margin:0 auto;padding:2rem">
-<h1 style="font:600 1.5rem/1.2 system-ui;margin:0 0 1.5rem">${title}</h1>
+<h1 style="font-weight:600;font-size:1.5rem;line-height:1.2;font-family:${DISPLAY_FONT};margin:0 0 1.5rem">${title}</h1>
 ${body}</main>
 `;
 }
@@ -107,6 +120,14 @@ export async function buildExtractedCards(config) {
     await writeFile(dest, card, 'utf8');
     summary.written++;
   }
+  // A handful of skips is normal; a majority means the extractor's selector has
+  // drifted from the docs markup and every card is quietly being dropped. Fail
+  // loudly rather than shipping a near-empty design system.
+  if (summary.skipped.length > summary.written) {
+    throw new Error(
+      `Extractor matched only ${summary.written}/${jobs.length} pages — the preview selector has likely drifted from packages/docs/components/preview.tsx. Skipped: ${summary.skipped.join(', ')}`
+    );
+  }
   return summary;
 }
 
@@ -123,14 +144,15 @@ export async function buildColorsCard(config) {
     if (!shades) continue;
     let sw = '';
     for (const s of shades) {
-      sw += `<div style="display:flex;flex-direction:column;gap:4px"><div style="height:56px;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:${s.value}"></div><span style="font:500 11px ui-monospace,monospace">${s.shade}</span><span style="font:10px ui-monospace,monospace;color:#6b7280">${s.value}</span></div>`;
+      sw += `<div style="display:flex;flex-direction:column;gap:4px"><div style="height:56px;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:${s.value}"></div><span style="font-weight:500;font-size:11px;font-family:${MONO_FONT}">${s.shade}</span><span style="font-size:10px;font-family:${MONO_FONT};color:#6b7280">${s.value}</span></div>`;
     }
-    sections += `<section style="margin-bottom:28px"><h2 style="font:600 14px system-ui;margin:0 0 12px;text-transform:capitalize">${name}</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:12px">${sw}</div></section>`;
+    sections += `<section style="margin-bottom:28px"><h2 style="font-weight:600;font-size:14px;font-family:${SANS_FONT};margin:0 0 12px;text-transform:capitalize">${name}</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:12px">${sw}</div></section>`;
   }
   const card = `<!-- @dsCard group="Foundations" -->
+${SHARED_CSS_LINK}
 <main style="max-width:56rem;margin:0 auto;padding:2rem;background:#fff">
-<h1 style="font:600 1.5rem/1.2 system-ui;margin:0 0 4px">Colors</h1>
-<p style="font:14px system-ui;color:#6b7280;margin:0 0 24px">Ink + Muted Steel — OKLCH scales, mirrored from tokens.css</p>
+<h1 style="font-weight:600;font-size:1.5rem;line-height:1.2;font-family:${DISPLAY_FONT};margin:0 0 4px">Colors</h1>
+<p style="font-size:14px;font-family:${SANS_FONT};color:#6b7280;margin:0 0 24px">Ink + Muted Steel — OKLCH scales, mirrored from tokens.css</p>
 ${sections}</main>
 `;
   const dest = join(ROOT, config.output.dir, 'foundations', 'colors.html');
@@ -146,18 +168,23 @@ export async function buildOverviewCard(config) {
   const entries = [...langRaw.matchAll(/\*\*(.+?)\*\*:\s*\n([^\n]+)/g)].map((e) => ({ term: e[1], desc: e[2].trim() }));
   let items = '';
   for (const e of entries) {
-    items += `<li style="margin-bottom:12px"><strong style="font:600 15px system-ui">${e.term}</strong><br><span style="font:14px system-ui;color:#4b5563">${e.desc}</span></li>`;
+    items += `<li style="margin-bottom:12px"><strong style="font-weight:600;font-size:15px;font-family:${SANS_FONT}">${e.term}</strong><br><span style="font-size:14px;font-family:${SANS_FONT};color:#4b5563">${e.desc}</span></li>`;
   }
   const tokens = await readFile(join(ROOT, config.source.tokens), 'utf8');
   const radius = (tokens.match(/--radius-md:\s*([^;]+)/) || [])[1] || '0.5rem';
+  // Counts come from the registry so the card can't drift as components land.
+  const registry = JSON.parse(await readFile(join(ROOT, config.source.registry), 'utf8'));
+  const componentCount = registry.components.length;
+  const categoryCount = new Set(registry.components.map((c) => c.category)).size;
   const card = `<!-- @dsCard group="Overview" -->
+${SHARED_CSS_LINK}
 <main style="max-width:48rem;margin:0 auto;padding:2rem;background:#fff">
-<h1 style="font:600 1.75rem/1.2 system-ui;margin:0 0 8px">Nim UI</h1>
-<p style="font:15px/1.6 system-ui;color:#374151;margin:0 0 24px">Quiet, accessible React UI kit for dashboards, backoffice, and commerce operations.</p>
-<h2 style="font:600 16px system-ui;margin:0 0 12px">Design language</h2>
+<h1 style="font-weight:600;font-size:1.75rem;line-height:1.2;font-family:${DISPLAY_FONT};margin:0 0 8px">Nim UI</h1>
+<p style="font-size:15px;line-height:1.6;font-family:${SANS_FONT};color:#374151;margin:0 0 24px">Quiet, accessible React UI kit for dashboards, backoffice, and commerce operations.</p>
+<h2 style="font-weight:600;font-size:16px;font-family:${SANS_FONT};margin:0 0 12px">Design language</h2>
 <ul style="list-style:none;padding:0;margin:0 0 24px">${items}</ul>
-<h2 style="font:600 16px system-ui;margin:0 0 8px">Foundations</h2>
-<p style="font:13px ui-monospace,monospace;color:#4b5563;margin:0">Component radius: ${radius.trim()} · Elevation: soft layered graphite · 85 components / 8 categories</p>
+<h2 style="font-weight:600;font-size:16px;font-family:${SANS_FONT};margin:0 0 8px">Foundations</h2>
+<p style="font-size:13px;font-family:${MONO_FONT};color:#4b5563;margin:0">Component radius: ${radius.trim()} · Elevation: soft layered graphite · ${componentCount} components / ${categoryCount} categories</p>
 </main>
 `;
   const dest = join(ROOT, config.output.dir, 'overview', 'overview.html');

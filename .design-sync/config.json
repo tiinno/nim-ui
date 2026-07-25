@@ -5,7 +5,8 @@
   "source": {
     "docsExport": "packages/docs/out",
     "tokens": "packages/ui/src/tokens.css",
-    "context": "CONTEXT.md"
+    "context": "CONTEXT.md",
+    "registry": "packages/ui/src/registry/index.json"
   },
   "output": { "dir": ".design-sync/build", "sharedCss": "_shared/nim-ui.css" },
   "groups": {
