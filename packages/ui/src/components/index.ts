@@ -22,6 +22,7 @@ export * from './modal';
 export * from './drawer';
 export * from './tabs';
 export * from './scroll-area';
+export * from './resizable';
 
 // Data Display
 export * from './data-card';
@@ -40,6 +41,10 @@ export * from './dot';
 export * from './meter';
 export * from './copy-button';
 export * from './snippet';
+export * from './avatar-group';
+export * from './tree-view';
+export * from './sparkline';
+export * from './bar-chart';
 
 // Commerce
 export * from './product-card';
@@ -81,6 +86,7 @@ export * from './fieldset';
 export * from './toast';
 export * from './toast-store';
 export * from './alert';
+export * from './banner';
 export * from './progress';
 export * from './spinner';
 export * from './skeleton';

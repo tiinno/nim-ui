@@ -1,0 +1,268 @@
+---
+title: Banner
+description: Full-bleed system notice bar for page-level announcements
+---
+
+import { Banner, Button, Link } from '@/components/nim';
+
+Banner is the app-frame notice bar: maintenance windows, degraded integrations, trial expiry, read-only mode. It spans the full width of the shell — sitting above or inside `AdminShell` chrome — so a single message reaches every screen without stealing space from the working area.
+
+It is deliberately not an Alert. Alert is inline and content-scoped: it explains the form you are looking at, keeps a card radius, and stays where you put it. Banner is chrome — denser vertically, square-cornered with a bottom border only, optionally sticky, and dismissible by the operator.
+
+## Import
+
+```tsx
+import { Banner } from '@nim-ui/components';
+```
+
+## Playground
+
+Change the tone and watch the ARIA role follow: `warning` and `error` render `role="alert"` so screen readers interrupt; everything else is a polite `role="status"`.
+
+<LivePlayground
+  code={`<div className="w-full overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
+  <Banner tone="warning" title="Scheduled maintenance">
+    Order sync pauses Sunday 02:00–04:00 UTC.
+  </Banner>
+  <Banner
+    tone="info"
+    title="Trial ends in 5 days"
+    dismissible
+    action={<Button size="sm">Upgrade plan</Button>}
+  >
+    Add billing details to keep fulfillment running.
+  </Banner>
+  <Banner tone="success" title="Warehouse sync restored" dismissible />
+  <Banner align="center" icon={null}>
+    Read-only mode — you are viewing a historical snapshot.
+  </Banner>
+</div>`}
+/>
+
+## Tones
+
+`neutral` uses the standard surface treatment for routine announcements. The four status tones are soft tonal, matching Badge and StatusPill so a banner reads as the same severity language used elsewhere in the app.
+
+<ComponentPreview title="Tones">
+  <div className="w-full overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
+    <Banner title="Release 2026.7 is live">Changelog is available in Settings.</Banner>
+    <Banner tone="info" title="New export limits">CSV exports now cap at 50k rows.</Banner>
+    <Banner tone="success" title="Warehouse sync restored">All queues are draining normally.</Banner>
+    <Banner tone="warning" title="Scheduled maintenance">Order sync pauses Sunday 02:00–04:00 UTC.</Banner>
+    <Banner tone="error" title="Payment provider degraded">Captures are queued and will retry automatically.</Banner>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Banner title="Release 2026.7 is live">Changelog is available in Settings.</Banner>
+<Banner tone="info" title="New export limits">CSV exports now cap at 50k rows.</Banner>
+<Banner tone="success" title="Warehouse sync restored">All queues are draining normally.</Banner>
+<Banner tone="warning" title="Scheduled maintenance">Order sync pauses Sunday 02:00–04:00 UTC.</Banner>
+<Banner tone="error" title="Payment provider degraded">Captures are queued and will retry automatically.</Banner>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Action and dismissal
+
+Give the operator one way out: an `action` that resolves the notice, a dismiss button that hides it, or both. Dismissal is uncontrolled — the banner calls `onDismiss` and removes itself from the page, so persisting the choice is your job.
+
+<ComponentPreview title="Action and Dismissal">
+  <div className="w-full overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
+    <Banner
+      tone="info"
+      title="Trial ends in 5 days"
+      dismissible
+      action={<Button size="sm">Upgrade plan</Button>}
+    >
+      Add billing details to keep fulfillment running.
+    </Banner>
+    <Banner
+      tone="error"
+      title="3 payouts failed"
+      action={<Link href="#">Review payouts</Link>}
+    >
+      Bank details were rejected by the provider.
+    </Banner>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Banner
+  tone="info"
+  title="Trial ends in 5 days"
+  dismissible
+  onDismiss={() => localStorage.setItem('trial-banner', 'dismissed')}
+  action={<Button size="sm">Upgrade plan</Button>}
+>
+  Add billing details to keep fulfillment running.
+</Banner>
+
+<Banner tone="error" title="3 payouts failed" action={<Link href="#">Review payouts</Link>}>
+  Bank details were rejected by the provider.
+</Banner>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+Because dismissal unmounts the banner, the same element will not reappear when its props change. When a **new** notice must surface after a prior dismissal, give the banner a `key` tied to the notice id (or conditionally render it) so React mounts a fresh instance.
+
+## Alignment and icons
+
+`align="center"` suits short, whole-app statements such as read-only mode. Pass `icon={null}` when the copy carries the meaning on its own, or supply your own node for product-specific marks.
+
+<ComponentPreview title="Alignment and Icons">
+  <div className="w-full overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
+    <Banner align="center" icon={null}>Read-only mode — you are viewing a historical snapshot.</Banner>
+    <Banner tone="info" align="center" title="Impersonating operator@acme.io" dismissible />
+    <Banner tone="warning" icon={null} title="Legacy API deprecated">Migrate to v3 before 31 August.</Banner>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Banner align="center" icon={null}>
+  Read-only mode — you are viewing a historical snapshot.
+</Banner>
+<Banner tone="info" align="center" title="Impersonating operator@acme.io" dismissible />
+<Banner tone="warning" icon={null} title="Legacy API deprecated">
+  Migrate to v3 before 31 August.
+</Banner>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Sticky chrome
+
+`sticky` pins the banner to the top of the viewport at `z-30` — above the `AdminShell` header — so an outage notice survives a long queue scroll. Reserve it for notices that stay true while the operator works.
+
+<ComponentPreview title="Sticky Banner">
+  <div className="h-40 w-full overflow-y-auto rounded-md border border-neutral-200 dark:border-neutral-800">
+    <Banner sticky tone="error" title="Payment provider degraded">Captures are queued and will retry automatically.</Banner>
+    <div className="space-y-2 p-4 text-sm text-neutral-500 dark:text-neutral-400">
+      <p>Scroll this panel — the banner stays pinned.</p>
+      <p>Order #10241 · captured</p>
+      <p>Order #10242 · queued</p>
+      <p>Order #10243 · queued</p>
+      <p>Order #10244 · queued</p>
+      <p>Order #10245 · queued</p>
+      <p>Order #10246 · queued</p>
+    </div>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Banner sticky tone="error" title="Payment provider degraded">
+  Captures are queued and will retry automatically.
+</Banner>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'tone',
+      type: "'neutral' | 'info' | 'success' | 'warning' | 'error'",
+      default: "'neutral'",
+      description:
+        'Severity of the notice; drives the tonal surface and the ARIA role',
+    },
+    {
+      name: 'title',
+      type: 'React.ReactNode',
+      default: '-',
+      description: 'Headline of the notice, rendered in medium weight',
+    },
+    {
+      name: 'children',
+      type: 'React.ReactNode',
+      default: '-',
+      description: 'Supporting copy shown beneath the title',
+    },
+    {
+      name: 'icon',
+      type: 'React.ReactNode',
+      default: 'tone icon',
+      description:
+        'Leading icon slot; defaults to a decorative tone icon, pass null to suppress',
+    },
+    {
+      name: 'action',
+      type: 'React.ReactNode',
+      default: '-',
+      description: 'Trailing action slot — a Button or Link that resolves the notice',
+    },
+    {
+      name: 'dismissible',
+      type: 'boolean',
+      default: 'false',
+      description: 'Render a dismiss button that unmounts the banner',
+    },
+    {
+      name: 'onDismiss',
+      type: '() => void',
+      default: '-',
+      description: 'Called when the operator dismisses the banner; persist the choice here',
+    },
+    {
+      name: 'dismissLabel',
+      type: 'string',
+      default: "'Dismiss'",
+      description: 'Accessible name for the dismiss button',
+    },
+    {
+      name: 'sticky',
+      type: 'boolean',
+      default: 'false',
+      description: 'Pin the banner to the top of the viewport above app chrome',
+    },
+    {
+      name: 'align',
+      type: "'start' | 'center'",
+      default: "'start'",
+      description: 'Horizontal alignment of the banner content',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- `neutral`, `info`, and `success` render `role="status"` (polite) so routine notices do not interrupt; `warning` and `error` render `role="alert"` (assertive) so urgent notices do.
+- Mount urgent banners in response to the event rather than rendering them hidden — a live region only announces content that arrives after it is on the page.
+- The dismiss button has an accessible name (`dismissLabel`, default "Dismiss") and the standard `focus-visible` ring, so it is reachable and visible via keyboard.
+- Default tone icons are `aria-hidden` — severity is carried by the copy and the role, never by color alone. A custom `icon` keeps its own semantics, so give a meaningful mark an `alt` or `aria-label` (and mark a purely decorative one `aria-hidden` yourself).
+- Dismissing moves focus to the document body because the button unmounts with the banner; if the banner sits mid-page, move focus somewhere deliberate in `onDismiss`.
+- Place the banner early in the DOM (above the header) so tab order reaches the notice and its action before the page content.
+
+## Best Practices
+
+### Do
+
+- Use Banner for app-wide state, and Alert for messages scoped to one form, card, or panel
+- Keep the copy to one line of `title` plus one line of supporting text — it is chrome, not a document
+- Pair `dismissible` with persistence in `onDismiss` so the notice does not return on every route change
+- Reserve `error` and `warning` for notices an operator must act on, so `role="alert"` keeps its meaning
+- Give the banner a `key` tied to the notice id when a new message must appear after a prior dismissal
+
+### Don't
+
+- Stack more than one banner — the second one is already noise; queue them or promote the urgent one
+- Use Banner for transient confirmations ("Saved") — that is Toast
+- Round the corners or add a shadow to make it look like a card; the flat bottom border is what makes it read as chrome
+- Make a banner dismissible when the condition is still true and unresolvable by the operator
+- Use `sticky` for notices that stop being true as the operator scrolls or navigates
+
+## Related Components
+
+- [Alert](/components/feedback/alert/) - Inline, content-scoped feedback message
+- [Toast](/components/feedback/toast/) - Transient confirmation of an action
+- [AdminShell](/components/layout/admin-shell/) - App frame the banner sits inside
+- [StatusPill](/components/data-display/status-pill/) - Compact record-level status

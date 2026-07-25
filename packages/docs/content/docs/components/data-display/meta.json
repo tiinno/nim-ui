@@ -3,6 +3,7 @@
   "pages": [
     "badge",
     "avatar",
+    "avatar-group",
     "data-table",
     "data-toolbar",
     "status-pill",
@@ -18,6 +19,9 @@
     "metric-card",
     "stat",
     "meter",
+    "sparkline",
+    "bar-chart",
+    "tree-view",
     "..."
   ]
 }

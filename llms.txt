@@ -26,7 +26,7 @@ nim-ui/
 └── turbo.json
 ```
 
-## 85 Components (8 Categories)
+## 91 Components (8 Categories)
 
 ### Primitives (10)
 - Button: A versatile button component with multiple variants and sizes for different use cases
@@ -40,7 +40,7 @@ nim-ui/
 - Kbd: Keyboard key display with KbdGroup for shortcut combinations, styled to match CommandMenu shortcuts
 - ButtonGroup: Attached button container that collapses inner radii and borders into a single segmented control
 
-### Layout (15)
+### Layout (16)
 - Card: A container component for grouping related content with header, body, and footer sections
 - AdminShell: A backoffice application frame with sidebar, topbar, panel, and main content landmarks
 - PageHeader: A backoffice page header with title, description, metadata, and grouped actions
@@ -56,8 +56,9 @@ nim-ui/
 - Separator: A visual divider component for separating content sections, built with Radix UI
 - Collapsible: An expandable section for hiding and revealing content, built with Radix UI
 - ScrollArea: Radix scroll container with quiet themed scrollbars, native keyboard scrolling preserved
+- Resizable: Draggable two-pane split with a keyboard-accessible separator handle
 
-### Data Display (18)
+### Data Display (22)
 - Badge: A small badge component for displaying status, counts, or labels
 - StatusPill: A compact operational state pill for admin tables, orders, payments, and user workflows
 - FilterSummary: A compact active-filter summary with removable chips and clear-all behavior for search-heavy admin screens
@@ -76,6 +77,10 @@ nim-ui/
 - Meter: Capacity and usage bar with automatic threshold coloring, distinct from Progress task completion
 - CopyButton: Ghost icon button that copies a value to the clipboard with copied feedback and live-region announcement
 - Snippet: Copyable mono field for record IDs, API keys, and webhook URLs with built-in CopyButton and display-only prefix
+- Sparkline: Dependency-free inline SVG trend line for tables and metric cards, plots a series over time with optional area fill and last-point emphasis
+- BarChart: Dependency-free categorical bar chart for dashboard cards, with vertical and horizontal orientations and per-datum tones
+- TreeView: Hierarchical navigator with the full WAI-ARIA tree keyboard model, roving tabindex, and steel selection
+- AvatarGroup: Stacked avatars with a +N overflow chip for assignee columns and collaborator rows, distinct from single-person Avatar
 
 ### Commerce (4)
 - ProductCard: A card component optimized for displaying product information including images, titles, and prices
@@ -110,7 +115,7 @@ nim-ui/
 - Stepper: A compact stepper for multi-step forms, setup flows, and review workflows
 - Fieldset: Semantic fieldset/legend form section with description, content, and footer areas; native disabled propagation
 
-### Feedback (9)
+### Feedback (10)
 - Popover: Displays rich content in a floating panel triggered by a click, built with Radix UI
 - Tooltip: Displays informational text when hovering or focusing on an element, built with Radix UI
 - DropdownMenu: A dropdown menu component for displaying actions or options triggered by a button click, built with Radix UI
@@ -120,6 +125,7 @@ nim-ui/
 - Progress: A progress bar component for displaying completion percentage with multiple variants
 - Spinner: An animated loading spinner indicator with multiple sizes and color variants
 - Skeleton: A placeholder loading component with pulse animation for content that is loading
+- Banner: Full-bleed page-level announcement bar with tonal severity, sticky option, and self-dismissal, distinct from inline Alert
 
 ### Navigation (6)
 - Breadcrumb: A navigation component for displaying the current page location within a hierarchical structure
@@ -256,4 +262,4 @@ All must pass.
 
 ---
 
-**Updated**: 2026-07-15 | **Tech**: React 19 + TS 5.9 + Tailwind v4 | 85 components / 8 categories
+**Updated**: 2026-07-25 | **Tech**: React 19 + TS 5.9 + Tailwind v4 | 91 components / 8 categories

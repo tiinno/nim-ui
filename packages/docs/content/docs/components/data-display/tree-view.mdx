@@ -1,0 +1,329 @@
+---
+title: TreeView
+description: Hierarchical navigator with the full WAI-ARIA tree keyboard model
+---
+
+import { TreeView } from '@/components/nim';
+
+The TreeView component renders hierarchical data an operator has to browse and pick from — product category trees, org and permission structures, folder-like storage layouts. It keeps the whole hierarchy in one scannable column so a reviewer can see where a record sits before acting on it.
+
+Accordion also opens and closes regions, but each of its panels is independent disclosure for prose. TreeView is a single navigable structure: one roving tab stop, arrow keys that walk the visible rows, and exactly one selected node reported back through `onSelect`. Reach for SidebarNav instead when the hierarchy is app navigation rather than data.
+
+## Import
+
+```tsx
+import { TreeView } from '@nim-ui/components';
+```
+
+## Playground
+
+Click a row to select it, click a chevron to expand. Focus a row and try the arrow keys, Home, End, and Enter.
+
+<LivePlayground
+  code={`<TreeView
+  label="Catalog"
+  className="max-w-sm"
+  defaultExpandedIds={['apparel']}
+  defaultSelectedId="tees"
+  data={[
+    {
+      id: 'apparel',
+      label: 'Apparel',
+      badge: 248,
+      children: [
+        { id: 'tees', label: 'T-shirts', badge: 96 },
+        { id: 'jackets', label: 'Jackets', badge: 41 },
+        { id: 'knitwear', label: 'Knitwear', badge: 27 },
+      ],
+    },
+    {
+      id: 'home',
+      label: 'Home & Living',
+      badge: 132,
+      children: [
+        {
+          id: 'kitchen',
+          label: 'Kitchen',
+          children: [
+            { id: 'cookware', label: 'Cookware', badge: 18 },
+            { id: 'storage', label: 'Storage', badge: 12 },
+          ],
+        },
+        { id: 'bedding', label: 'Bedding', badge: 34 },
+      ],
+    },
+    { id: 'archive', label: 'Archived categories', disabled: true },
+  ]}
+/>`}
+/>
+
+## Category picker
+
+The default case: a branch carries a count, a leaf is selectable, and selection uses the muted steel treatment reserved for focus and selection.
+
+<ComponentPreview title="Category Picker">
+  <TreeView
+    label="Catalog"
+    className="max-w-sm"
+    defaultExpandedIds={['apparel']}
+    defaultSelectedId="tees"
+    data={[
+      {
+        id: 'apparel',
+        label: 'Apparel',
+        badge: 248,
+        children: [
+          { id: 'tees', label: 'T-shirts', badge: 96 },
+          { id: 'jackets', label: 'Jackets', badge: 41 },
+        ],
+      },
+      { id: 'home', label: 'Home & Living', badge: 132, children: [{ id: 'bedding', label: 'Bedding', badge: 34 }] },
+    ]}
+  />
+  <PreviewCode>
+```tsx
+<TreeView
+  label="Catalog"
+  defaultExpandedIds={['apparel']}
+  defaultSelectedId="tees"
+  data={[
+    {
+      id: 'apparel',
+      label: 'Apparel',
+      badge: 248,
+      children: [
+        { id: 'tees', label: 'T-shirts', badge: 96 },
+        { id: 'jackets', label: 'Jackets', badge: 41 },
+      ],
+    },
+    { id: 'home', label: 'Home & Living', badge: 132, children: [{ id: 'bedding', label: 'Bedding', badge: 34 }] },
+  ]}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Permission tree with disabled nodes
+
+Disabled nodes stay visible for context but cannot be selected and are skipped by arrow navigation, so a reviewer never lands on a scope they are not allowed to grant.
+
+<ComponentPreview title="Permission Tree">
+  <TreeView
+    label="Permission scopes"
+    className="max-w-sm"
+    defaultExpandedIds={['orders', 'finance']}
+    data={[
+      {
+        id: 'orders',
+        label: 'Orders',
+        children: [
+          { id: 'orders.read', label: 'Read orders' },
+          { id: 'orders.refund', label: 'Issue refunds' },
+        ],
+      },
+      {
+        id: 'finance',
+        label: 'Finance',
+        children: [
+          { id: 'finance.read', label: 'Read payouts' },
+          { id: 'finance.export', label: 'Export ledger', disabled: true },
+        ],
+      },
+    ]}
+  />
+  <PreviewCode>
+```tsx
+<TreeView
+  label="Permission scopes"
+  defaultExpandedIds={['orders', 'finance']}
+  data={[
+    {
+      id: 'orders',
+      label: 'Orders',
+      children: [
+        { id: 'orders.read', label: 'Read orders' },
+        { id: 'orders.refund', label: 'Issue refunds' },
+      ],
+    },
+    {
+      id: 'finance',
+      label: 'Finance',
+      children: [
+        { id: 'finance.read', label: 'Read payouts' },
+        { id: 'finance.export', label: 'Export ledger', disabled: true },
+      ],
+    },
+  ]}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Compact density
+
+`size="sm"` tightens the rows for dense side panels and inspector rails; `md` is the default for standalone pickers.
+
+<ComponentPreview title="Compact Density">
+  <TreeView
+    label="Storage"
+    size="sm"
+    className="max-w-xs"
+    defaultExpandedIds={['exports', 'exports-2026']}
+    defaultSelectedId="exports-q2"
+    data={[
+      {
+        id: 'exports',
+        label: 'exports/',
+        children: [
+          {
+            id: 'exports-2026',
+            label: '2026/',
+            children: [
+              { id: 'exports-q1', label: 'q1-settlements.csv' },
+              { id: 'exports-q2', label: 'q2-settlements.csv' },
+            ],
+          },
+        ],
+      },
+      { id: 'backups', label: 'backups/', children: [{ id: 'backups-daily', label: 'daily/' }] },
+    ]}
+  />
+  <PreviewCode>
+```tsx
+<TreeView
+  label="Storage"
+  size="sm"
+  defaultExpandedIds={['exports', 'exports-2026']}
+  defaultSelectedId="exports-q2"
+  data={storageNodes}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Controlled expansion and selection
+
+Pass `expandedIds` / `onExpandedChange` and `selectedId` / `onSelect` to own the state — for persisting an operator's open branches, or for expanding a path in response to a search hit.
+
+```tsx
+function CategoryPicker() {
+  const [expandedIds, setExpandedIds] = useState<string[]>(['apparel']);
+  const [selectedId, setSelectedId] = useState<string | undefined>();
+
+  return (
+    <TreeView
+      label="Catalog"
+      data={categories}
+      expandedIds={expandedIds}
+      onExpandedChange={setExpandedIds}
+      selectedId={selectedId}
+      onSelect={(id, node) => {
+        setSelectedId(id);
+        console.log('picked', node.label);
+      }}
+    />
+  );
+}
+```
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'data',
+      type: 'TreeNode[]',
+      default: '-',
+      description: 'Hierarchical node data; each node is { id, label, children?, icon?, badge?, disabled? }',
+      required: true,
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: '-',
+      description: 'Accessible name for the tree',
+      required: true,
+    },
+    {
+      name: 'defaultExpandedIds',
+      type: 'string[]',
+      default: '[]',
+      description: 'Initially expanded branch ids (uncontrolled)',
+    },
+    {
+      name: 'expandedIds',
+      type: 'string[]',
+      default: '-',
+      description: 'Expanded branch ids (controlled)',
+    },
+    {
+      name: 'onExpandedChange',
+      type: '(ids: string[]) => void',
+      default: '-',
+      description: 'Fires whenever the expanded set changes',
+    },
+    {
+      name: 'defaultSelectedId',
+      type: 'string',
+      default: '-',
+      description: 'Initially selected node id (uncontrolled)',
+    },
+    {
+      name: 'selectedId',
+      type: 'string',
+      default: '-',
+      description: 'Selected node id (controlled)',
+    },
+    {
+      name: 'onSelect',
+      type: '(id: string, node: TreeNode) => void',
+      default: '-',
+      description: 'Fires when a node is selected via click, Enter, or Space',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md'",
+      default: "'md'",
+      description: 'Row density',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Implements the WAI-ARIA tree pattern: `role="tree"` with `aria-label`, `role="treeitem"` rows carrying `aria-level`, `aria-selected`, `aria-disabled`, and `aria-expanded` on branches only, plus `role="group"` child lists.
+- Roving tabindex: exactly one row is in the tab order at a time — the selected node, otherwise the first enabled one — so the tree is a single Tab stop.
+- Keyboard: Arrow Down / Arrow Up move through visible rows only, skipping collapsed subtrees and disabled nodes.
+- Arrow Right expands a collapsed branch; on a second press, once the branch is open, it moves to the first enabled child. Arrow Left collapses an expanded branch, otherwise moves to the parent.
+- Home / End jump to the first and last enabled visible rows; Enter and Space select the focused node.
+- A keystroke is handled only by the row it originated on, so navigating a nested row never also drives its ancestors.
+- The focus ring is drawn on the row itself, not the subtree region, so the focused node stays unambiguous at any depth.
+- Each row is named by `aria-labelledby` pointing at its own label, so a branch announces just its label rather than the text of everything nested under it.
+
+## Best Practices
+
+### Do
+
+- Give every node a unique, stable `id` — ids drive expansion, selection, and focus
+- Expand the path to the current record with `defaultExpandedIds` so operators start with context
+- Use `badge` for counts so a branch communicates volume without being opened
+- Prefer `size="sm"` in side panels where the tree sits beside a detail pane
+
+### Don't
+
+- Load a tree with thousands of nodes at once — expand lazily and swap `data` per branch instead
+- Use TreeView for app navigation; SidebarNav carries `aria-current` and the ink active treatment
+- Disable a branch to hide it — filter it out of `data` if the operator should never see it
+- Nest so deeply that rows lose their labels; the visual indent stops after eight levels
+
+## Related Components
+
+- [Accordion](/components/layout/accordion/) - Independent disclosure panels for prose
+- [SidebarNav](/components/navigation/sidebar-nav/) - Application navigation hierarchy
+- [DataTable](/components/data-display/data-table/) - Flat structured records

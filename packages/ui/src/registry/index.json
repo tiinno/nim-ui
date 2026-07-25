@@ -2920,6 +2920,261 @@
           "code": "<ScrollArea className=\"w-96\"><div className=\"flex w-max gap-2 p-3\">…</div><ScrollBar orientation=\"horizontal\" /></ScrollArea>"
         }
       ]
+    },
+    {
+      "name": "Sparkline",
+      "category": "data-display",
+      "description": "Dependency-free inline SVG trend line for tables and metric cards, with optional area fill and last-point emphasis",
+      "keywords": [
+        "sparkline",
+        "chart",
+        "trend",
+        "series",
+        "line",
+        "svg",
+        "metric"
+      ],
+      "file": "components/sparkline.tsx",
+      "variants": [
+        {
+          "name": "tone",
+          "values": [
+            "ink",
+            "steel",
+            "success",
+            "warning",
+            "error"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Trend Beside a Metric",
+          "code": "<Sparkline data={[12, 18, 15, 22, 27, 24, 31]} label=\"Orders, last 7 days\" />"
+        },
+        {
+          "title": "Area With Last Point",
+          "code": "<Sparkline data={[31, 34, 30, 38, 42, 40, 48]} label=\"Revenue trend\" tone=\"success\" area showLastPoint className=\"h-10 w-full\" />"
+        },
+        {
+          "title": "Pinned Domain",
+          "code": "<Sparkline data={[180, 210, 260, 240, 330]} label=\"p95 latency\" tone=\"error\" min={0} max={500} className=\"h-8 w-full\" />"
+        }
+      ]
+    },
+    {
+      "name": "BarChart",
+      "category": "data-display",
+      "description": "Dependency-free categorical bar chart for dashboard cards, with vertical and horizontal orientations and per-datum tones",
+      "keywords": [
+        "bar chart",
+        "chart",
+        "categorical",
+        "comparison",
+        "dashboard",
+        "analytics",
+        "data visualization"
+      ],
+      "file": "components/bar-chart.tsx",
+      "variants": [
+        {
+          "name": "orientation",
+          "values": [
+            "vertical",
+            "horizontal"
+          ]
+        },
+        {
+          "name": "tone",
+          "values": [
+            "ink",
+            "steel",
+            "success",
+            "warning",
+            "error"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Orders by Channel",
+          "code": "<BarChart label=\"Orders by channel\" showValues data={[{ label: 'Web', value: 412 }, { label: 'POS', value: 268 }, { label: 'API', value: 97 }]} />"
+        },
+        {
+          "title": "Horizontal with Per-Datum Tones",
+          "code": "<BarChart label=\"Failed payments by reason\" orientation=\"horizontal\" showValues data={[{ label: 'Card declined', value: 34, tone: 'error' }, { label: 'Address mismatch', value: 21, tone: 'warning' }, { label: 'Manual review', value: 12 }]} />"
+        },
+        {
+          "title": "Fixed Scale and Formatted Values",
+          "code": "<BarChart label=\"SLA attainment\" max={100} tone=\"steel\" showValues valueFormatter={(v) => `${v}%`} data={[{ label: 'Tier 1', value: 98 }, { label: 'Tier 2', value: 91 }]} />"
+        }
+      ]
+    },
+    {
+      "name": "TreeView",
+      "category": "data-display",
+      "description": "Hierarchical navigator with the full WAI-ARIA tree keyboard model, roving tabindex, and steel selection",
+      "keywords": [
+        "tree",
+        "hierarchy",
+        "nested",
+        "category",
+        "permissions",
+        "folder",
+        "navigation"
+      ],
+      "file": "components/tree-view.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": [
+            "sm",
+            "md"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Category Picker",
+          "code": "<TreeView label=\"Catalog\" defaultExpandedIds={['apparel']} defaultSelectedId=\"tees\" data={[{ id: 'apparel', label: 'Apparel', badge: 248, children: [{ id: 'tees', label: 'T-shirts' }, { id: 'jackets', label: 'Jackets' }] }]} />"
+        },
+        {
+          "title": "Controlled Expansion and Selection",
+          "code": "<TreeView label=\"Permissions\" data={nodes} expandedIds={expanded} onExpandedChange={setExpanded} selectedId={selected} onSelect={(id, node) => setSelected(id)} />"
+        }
+      ]
+    },
+    {
+      "name": "Banner",
+      "category": "feedback",
+      "description": "Full-bleed page-level announcement bar with tonal severity, sticky option, and self-dismissal",
+      "keywords": [
+        "banner",
+        "announcement",
+        "notice",
+        "system",
+        "chrome",
+        "dismissible",
+        "sticky"
+      ],
+      "file": "components/banner.tsx",
+      "variants": [
+        {
+          "name": "tone",
+          "values": [
+            "neutral",
+            "info",
+            "success",
+            "warning",
+            "error"
+          ]
+        },
+        {
+          "name": "align",
+          "values": [
+            "start",
+            "center"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "System Notice",
+          "code": "<Banner tone=\"warning\" title=\"Scheduled maintenance\">Order sync pauses Sunday 02:00-04:00 UTC.</Banner>"
+        },
+        {
+          "title": "Dismissible With Action",
+          "code": "<Banner tone=\"info\" title=\"Trial ends in 5 days\" dismissible onDismiss={() => {}} action={<Button size=\"sm\">Upgrade plan</Button>}>Add billing details to keep fulfillment running.</Banner>"
+        },
+        {
+          "title": "Sticky Centered Announcement",
+          "code": "<Banner sticky align=\"center\" icon={null}>Read-only mode - you are viewing a historical snapshot.</Banner>"
+        }
+      ]
+    },
+    {
+      "name": "Resizable",
+      "category": "layout",
+      "description": "Draggable two-pane split with a keyboard-accessible separator handle",
+      "keywords": [
+        "resizable",
+        "split",
+        "splitter",
+        "pane",
+        "divider"
+      ],
+      "file": "components/resizable.tsx",
+      "variants": [
+        {
+          "name": "direction",
+          "values": [
+            "horizontal",
+            "vertical"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "List Beside An Inspector",
+          "code": "<Resizable className=\"h-96\" defaultSize={38} minSize={25} maxSize={65} handleLabel=\"Resize order list\"><OrderList /><RecordInspector aria-label=\"Order inspector\" /></Resizable>"
+        },
+        {
+          "title": "Vertical Split",
+          "code": "<Resizable direction=\"vertical\" className=\"h-96\" defaultSize={60} minSize={25}><div className=\"h-full overflow-auto p-4\">Results</div><div className=\"h-full overflow-auto p-4\">Log console</div></Resizable>"
+        },
+        {
+          "title": "Controlled Size",
+          "code": "<Resizable className=\"h-96\" size={size} onSizeChange={setSize} minSize={20} maxSize={80}><Filters /><Results /></Resizable>"
+        }
+      ]
+    },
+    {
+      "name": "AvatarGroup",
+      "category": "data-display",
+      "description": "Stacked avatars with a +N overflow chip for assignee columns and collaborator rows",
+      "keywords": [
+        "avatar",
+        "group",
+        "stack",
+        "assignees",
+        "collaborators",
+        "overflow"
+      ],
+      "file": "components/avatar-group.tsx",
+      "variants": [
+        {
+          "name": "size",
+          "values": [
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ]
+        },
+        {
+          "name": "spacing",
+          "values": [
+            "tight",
+            "normal"
+          ]
+        }
+      ],
+      "hasRadixPrimitive": false,
+      "examples": [
+        {
+          "title": "Assignee Stack",
+          "code": "<AvatarGroup size=\"sm\" label=\"Assignees\"><Avatar><AvatarFallback>JD</AvatarFallback></Avatar><Avatar><AvatarFallback>AM</AvatarFallback></Avatar><Avatar><AvatarFallback>RK</AvatarFallback></Avatar></AvatarGroup>"
+        },
+        {
+          "title": "Overflow with Total",
+          "code": "<AvatarGroup max={4} total={37} label=\"Collaborators\"><Avatar><AvatarFallback>JD</AvatarFallback></Avatar><Avatar><AvatarFallback>AM</AvatarFallback></Avatar><Avatar><AvatarFallback>RK</AvatarFallback></Avatar><Avatar><AvatarFallback>SB</AvatarFallback></Avatar></AvatarGroup>"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,262 @@
+---
+title: Sparkline
+description: Dependency-free inline SVG trend line for tables and metric cards
+---
+
+import { Sparkline } from '@/components/nim';
+
+Sparkline is a compact, axis-less line chart that sits next to a number and answers one question: which way is this going? Reach for it in queue tables, KPI headers, and account rows where a full chart would be noise but a bare number hides the trend.
+
+It is the kit's chart primitive and needs no charting library — it renders plain inline SVG. Sparkline differs from Meter and Progress in what it plots: Meter reports a **measurement inside a known range**, Progress reports **task completion**, and Sparkline plots a **series over time** with no absolute scale of its own.
+
+## Import
+
+```tsx
+import { Sparkline } from '@nim-ui/components';
+```
+
+## Playground
+
+Edit the series, tone, and flags — the geometry recomputes from the data.
+
+<LivePlayground
+  code={`<div className="flex w-full max-w-md flex-col gap-4">
+  <Sparkline data={[12, 18, 15, 22, 27, 24, 31]} label="Orders, last 7 days" className="h-8 w-full" />
+  <Sparkline
+    data={[48, 52, 44, 61, 58, 72, 80]}
+    label="Revenue trend"
+    tone="success"
+    area
+    showLastPoint
+    className="h-10 w-full"
+  />
+  <Sparkline
+    data={[180, 210, 260, 240, 330, 410, 480]}
+    label="p95 latency"
+    tone="error"
+    min={0}
+    className="h-8 w-full"
+  />
+</div>`}
+/>
+
+## Tones
+
+`ink` is the default and the right choice when the trend is neutral information. Reserve status tones for series an operator is meant to judge; `steel` reads as quiet interactive emphasis.
+
+<ComponentPreview title="Tones">
+  <div className="flex w-full max-w-md flex-col gap-3">
+    <Sparkline data={[12, 18, 15, 22, 27, 24, 31]} label="Neutral trend" className="h-8 w-full" />
+    <Sparkline data={[12, 18, 15, 22, 27, 24, 31]} label="Steel trend" tone="steel" className="h-8 w-full" />
+    <Sparkline data={[12, 18, 15, 22, 27, 24, 31]} label="Healthy trend" tone="success" className="h-8 w-full" />
+    <Sparkline data={[31, 24, 27, 22, 15, 18, 12]} label="Degrading trend" tone="error" className="h-8 w-full" />
+  </div>
+
+  <PreviewCode>
+```tsx
+const series = [12, 18, 15, 22, 27, 24, 31];
+const falling = [31, 24, 27, 22, 15, 18, 12];
+
+<Sparkline data={series} label="Neutral trend" className="h-8 w-full" />
+<Sparkline data={series} label="Steel trend" tone="steel" className="h-8 w-full" />
+<Sparkline data={series} label="Healthy trend" tone="success" className="h-8 w-full" />
+<Sparkline data={falling} label="Degrading trend" tone="error" className="h-8 w-full" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Area and last point
+
+`area` adds a soft fill under the line for standalone cards; `showLastPoint` marks the most recent reading so the eye lands on "now" rather than the peak.
+
+<ComponentPreview title="Area and Last Point">
+  <div className="flex w-full max-w-sm flex-col gap-2 rounded-md border border-neutral-200 bg-white p-4 shadow-soft dark:border-neutral-800 dark:bg-neutral-950">
+    <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400">Gross volume</span>
+    <span className="text-2xl font-semibold tabular-nums tracking-tight text-neutral-950 dark:text-neutral-50">$48,210</span>
+    <Sparkline
+      data={[31, 34, 30, 38, 42, 40, 48]}
+      label="Gross volume, last 7 days"
+      tone="success"
+      area
+      showLastPoint
+      className="mt-1 h-12 w-full"
+    />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Sparkline
+  data={[31, 34, 30, 38, 42, 40, 48]}
+  label="Gross volume, last 7 days"
+  tone="success"
+  area
+  showLastPoint
+  className="mt-1 h-12 w-full"
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## In a table row
+
+At its intrinsic 120×32 size the line stays crisp beside dense numeric columns — the stroke does not scale with the box.
+
+<ComponentPreview title="Table Row Trends">
+  <div className="w-full max-w-lg divide-y divide-neutral-200 rounded-md border border-neutral-200 bg-white text-sm dark:divide-neutral-800 dark:border-neutral-800 dark:bg-neutral-950">
+    <div className="flex items-center gap-4 px-4 py-2.5">
+      <span className="flex-1 text-neutral-700 dark:text-neutral-300">Northwind Traders</span>
+      <Sparkline data={[8, 11, 9, 14, 13, 18, 21]} label="Northwind Traders order trend" />
+      <span className="w-16 text-right tabular-nums text-neutral-950 dark:text-neutral-50">21</span>
+    </div>
+    <div className="flex items-center gap-4 px-4 py-2.5">
+      <span className="flex-1 text-neutral-700 dark:text-neutral-300">Contoso Ltd</span>
+      <Sparkline data={[24, 22, 25, 19, 16, 14, 9]} label="Contoso Ltd order trend" tone="error" />
+      <span className="w-16 text-right tabular-nums text-neutral-950 dark:text-neutral-50">9</span>
+    </div>
+    <div className="flex items-center gap-4 px-4 py-2.5">
+      <span className="flex-1 text-neutral-700 dark:text-neutral-300">Fabrikam Inc</span>
+      <Sparkline data={[15, 15, 15, 15, 15, 15, 15]} label="Fabrikam Inc order trend" />
+      <span className="w-16 text-right tabular-nums text-neutral-950 dark:text-neutral-50">15</span>
+    </div>
+  </div>
+
+  <PreviewCode>
+```tsx
+<Sparkline data={[8, 11, 9, 14, 13, 18, 21]} label="Northwind Traders order trend" />
+<Sparkline data={[24, 22, 25, 19, 16, 14, 9]} label="Contoso Ltd order trend" tone="error" />
+<Sparkline data={[15, 15, 15, 15, 15, 15, 15]} label="Fabrikam Inc order trend" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Sparse and empty data
+
+A flat series renders a centered flat line, a single reading renders a flat line across the box, and an empty series renders an accessible empty chart — never a broken or `NaN` path. An explicit `min` / `max` pins the domain so rows stay comparable, and either bound works on its own: pass `min={0}` alone to anchor the floor while the ceiling still tracks the data.
+
+An empty chart carries `data-empty="true"` on the `<svg>`, so you can style or replace the empty state from CSS (`[data-empty] { … }`) without branching in your own render.
+
+<ComponentPreview title="Edge Cases">
+  <div className="flex w-full max-w-md flex-col gap-3">
+    <Sparkline data={[]} label="No activity recorded" className="h-8 w-full" />
+    <Sparkline data={[42]} label="Single reading" className="h-8 w-full" />
+    <Sparkline data={[15, 15, 15, 15]} label="Unchanged" className="h-8 w-full" />
+    <Sparkline data={[4, 6, 5, 7]} label="Pinned domain" min={0} max={20} tone="steel" className="h-8 w-full" />
+  </div>
+
+  <PreviewCode>
+```tsx
+<Sparkline data={[]} label="No activity recorded" className="h-8 w-full" />
+<Sparkline data={[42]} label="Single reading" className="h-8 w-full" />
+<Sparkline data={[15, 15, 15, 15]} label="Unchanged" className="h-8 w-full" />
+<Sparkline data={[4, 6, 5, 7]} label="Pinned domain" min={0} max={20} tone="steel" className="h-8 w-full" />
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'data',
+      type: 'number[]',
+      default: '-',
+      description: 'The series to plot, oldest first. Non-finite entries are ignored',
+      required: true,
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: '-',
+      description: 'Accessible name for the chart — describe the series and its window',
+      required: true,
+    },
+    {
+      name: 'width',
+      type: 'number',
+      default: '120',
+      description: 'Intrinsic width in viewBox units; override the rendered size with className',
+    },
+    {
+      name: 'height',
+      type: 'number',
+      default: '32',
+      description: 'Intrinsic height in viewBox units; override the rendered size with className',
+    },
+    {
+      name: 'tone',
+      type: "'ink' | 'steel' | 'success' | 'warning' | 'error'",
+      default: "'ink'",
+      description: 'Series color; ink for neutral trends, status tones for judged ones',
+    },
+    {
+      name: 'area',
+      type: 'boolean',
+      default: 'false',
+      description: 'Draw a soft fill between the line and the baseline',
+    },
+    {
+      name: 'showLastPoint',
+      type: 'boolean',
+      default: 'false',
+      description: 'Emphasize the most recent value with a dot',
+    },
+    {
+      name: 'strokeWidth',
+      type: 'number',
+      default: '1.5',
+      description: 'Line thickness in device pixels (the stroke does not scale with the box)',
+    },
+    {
+      name: 'min',
+      type: 'number',
+      default: '-',
+      description: 'Lower bound of the value domain; derived from data when omitted',
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: '-',
+      description: 'Upper bound of the value domain; derived from data when omitted',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- Renders `role="img"` with `aria-label`, so the chart is announced as a single named image rather than a pile of unlabeled shapes.
+- `label` is required — name the series *and* its window ("Orders, last 7 days"), since the chart has no visible axis or title.
+- A sparkline is a summary, not the data. Always pair it with the current value in text, and keep the underlying numbers reachable in a table or detail view.
+- Tone alone must never carry the meaning — an operator with low color vision should get the same story from the shape and the adjacent number.
+- Non-interactive by design: it takes no focus and needs none. If a trend must be actionable, wrap it in a Button or link that owns the focus ring.
+
+## Best Practices
+
+### Do
+
+- Use Sparkline for a series over time; Meter for capacity, Progress for task completion
+- Pass an explicit `min` / `max` when sparklines in the same column must be compared
+- Keep `ink` as the default and save status tones for series an operator should judge
+- Stretch it with `className="h-8 w-full"` in cards, and leave the intrinsic size in dense table rows
+- Enable `showLastPoint` when "the latest value" is the point, not the peak
+- Drop it into `MetricCardVisual` — that slot exists for exactly this kind of visual
+
+### Don't
+
+- Add axes, gridlines, or tooltips — that is a full chart, not a sparkline
+- Use `area` in table rows; the fill turns a scannable column into visual noise
+- Plot fewer than about five points, where the "trend" is mostly noise
+- Let a sparkline be the only place a number appears
+
+## Related Components
+
+- [Meter](/components/data-display/meter/) - Capacity and usage within a known range
+- [MetricCard](/components/data-display/metric-card/) - KPI cards with a `MetricCardVisual` slot for this
+- [Stat](/components/data-display/stat/) - Single metric with trend indicator
+- [Progress](/components/feedback/progress/) - Task completion indicator
