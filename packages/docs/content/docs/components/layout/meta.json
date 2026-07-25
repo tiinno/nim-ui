@@ -13,6 +13,7 @@
     "drawer",
     "tabs",
     "scroll-area",
+    "resizable",
     "accordion",
     "collapsible",
     "separator",

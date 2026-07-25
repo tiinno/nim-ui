@@ -1,0 +1,271 @@
+---
+title: Resizable
+description: Draggable two-pane split with a keyboard-accessible handle
+---
+
+import {
+  Resizable,
+  ScrollArea,
+  Dot,
+  Badge,
+  DescriptionList,
+  DescriptionListItem,
+  DescriptionListTerm,
+  DescriptionListDescription,
+} from '@/components/nim';
+
+The Resizable component splits a region into two panes with a divider the operator can drag. It exists for the layout backoffices reach for constantly — a record list beside a detail panel — where the right ratio depends on the screen, the dataset, and the person reviewing it.
+
+Grid and Flex distribute space by a rule you decide at build time; Resizable hands that ratio to the user and reports it back through `onSizeChange`, so it can be persisted per operator. It is dependency-free: pointer drag plus a full keyboard model on a `role="separator"` handle.
+
+## Import
+
+```tsx
+import { Resizable } from '@nim-ui/components';
+```
+
+## Playground
+
+Drag the divider, or focus it and use the arrow keys. The root needs an explicit height.
+
+<LivePlayground
+  code={`<Resizable className="h-64" defaultSize={38} minSize={25} maxSize={70} handleLabel="Resize order list">
+  <div className="flex h-full flex-col gap-2 overflow-auto p-3 text-sm">
+    <div className="font-medium text-neutral-900 dark:text-neutral-100">Orders</div>
+    <Dot status="pending">ord_9021</Dot>
+    <Dot status="processing" pulse>ord_9020</Dot>
+    <Dot status="success">ord_9019</Dot>
+    <Dot status="failed">ord_9018</Dot>
+  </div>
+  <div className="flex h-full flex-col gap-2 overflow-auto p-4 text-sm">
+    <div className="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">ord_9020</div>
+    <div className="text-neutral-600 dark:text-neutral-400">Label printing — carrier handoff pending.</div>
+    <div className="tabular-nums text-neutral-600 dark:text-neutral-400">Total 1,284.00 THB</div>
+  </div>
+</Resizable>`}
+/>
+
+## List beside an inspector
+
+The motivating case. Give the first pane the list, the second the detail panel, and size the root — panes inherit the height.
+
+<ComponentPreview title="Record List and Inspector">
+  <Resizable className="h-72 w-full" defaultSize={38} minSize={25} maxSize={65} handleLabel="Resize order list">
+    <ScrollArea className="h-full w-full">
+      <div className="flex flex-col gap-3 p-3 text-sm">
+        <Dot status="processing" pulse>ord_9020 — Bangkok</Dot>
+        <Dot status="pending">ord_9019 — Chiang Mai</Dot>
+        <Dot status="success">ord_9018 — Phuket</Dot>
+        <Dot status="failed">ord_9017 — Khon Kaen</Dot>
+        <Dot status="success">ord_9016 — Hat Yai</Dot>
+        <Dot status="archived">ord_9015 — Rayong</Dot>
+      </div>
+    </ScrollArea>
+    <div className="flex h-full flex-col gap-3 p-4">
+      <div className="flex items-center gap-2">
+        <span className="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100">ord_9020</span>
+        <Badge variant="secondary">Processing</Badge>
+      </div>
+      <DescriptionList variant="inline" aria-label="Order details">
+        <DescriptionListItem>
+          <DescriptionListTerm>Customer</DescriptionListTerm>
+          <DescriptionListDescription>Napat S.</DescriptionListDescription>
+        </DescriptionListItem>
+        <DescriptionListItem>
+          <DescriptionListTerm>Total</DescriptionListTerm>
+          <DescriptionListDescription>1,284.00 THB</DescriptionListDescription>
+        </DescriptionListItem>
+        <DescriptionListItem>
+          <DescriptionListTerm>Carrier</DescriptionListTerm>
+          <DescriptionListDescription>Kerry</DescriptionListDescription>
+        </DescriptionListItem>
+      </DescriptionList>
+    </div>
+  </Resizable>
+
+  <PreviewCode>
+```tsx
+<Resizable className="h-72" defaultSize={38} minSize={25} maxSize={65} handleLabel="Resize order list">
+  <ScrollArea className="h-full w-full">{/* order list */}</ScrollArea>
+  <RecordInspector aria-label="Order inspector">{/* detail panel */}</RecordInspector>
+</Resizable>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Vertical split
+
+`direction="vertical"` stacks the panes and turns the handle into a horizontal bar — results above, a log console below.
+
+<ComponentPreview title="Vertical Split">
+  <Resizable direction="vertical" className="h-72 w-full" defaultSize={60} minSize={25} maxSize={80} handleLabel="Resize query results">
+    <div className="flex h-full flex-col gap-2 overflow-auto p-4 text-sm">
+      <div className="font-medium text-neutral-900 dark:text-neutral-100">Query results</div>
+      <div className="tabular-nums text-neutral-600 dark:text-neutral-400">1,482 rows · 34 ms</div>
+      <div className="tabular-nums text-neutral-600 dark:text-neutral-400">payments.settled — 1,204</div>
+      <div className="tabular-nums text-neutral-600 dark:text-neutral-400">payments.refunded — 278</div>
+    </div>
+    <div className="h-full overflow-auto bg-neutral-50 p-4 font-mono text-xs text-neutral-600 dark:bg-neutral-900 dark:text-neutral-400">
+      <div>12:04:18 worker acquired batch 4821</div>
+      <div>12:04:19 settled 1204 payments</div>
+      <div>12:04:21 retry queue drained</div>
+    </div>
+  </Resizable>
+
+  <PreviewCode>
+```tsx
+<Resizable direction="vertical" className="h-72" defaultSize={60} minSize={25} maxSize={80}>
+  <div className="h-full overflow-auto p-4">{/* results */}</div>
+  <div className="h-full overflow-auto p-4 font-mono text-xs">{/* log console */}</div>
+</Resizable>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Controlled size
+
+Pass `size` and `onSizeChange` when the ratio belongs to your state — persisting it per operator, or syncing two splits. `onSizeChange` fires in uncontrolled mode too, so you can save the ratio without owning it.
+
+```tsx
+function OrderWorkspace() {
+  const [size, setSize] = useState(() => loadPreference('orders.split') ?? 38);
+
+  return (
+    <Resizable
+      className="h-[calc(100vh-8rem)]"
+      size={size}
+      onSizeChange={(next) => {
+        setSize(next);
+        savePreference('orders.split', next);
+      }}
+      minSize={25}
+      maxSize={65}
+      handleLabel="Resize order list"
+    >
+      <OrderList />
+      <RecordInspector aria-label="Order inspector">{/* … */}</RecordInspector>
+    </Resizable>
+  );
+}
+```
+
+## Locked split
+
+`disabled` freezes the ratio while keeping the handle in the tab order, so the layout stays legible during read-only or loading states.
+
+<ComponentPreview title="Disabled Handle">
+  <Resizable className="h-40 w-full" defaultSize={50} disabled>
+    <div className="h-full p-4 text-sm text-neutral-700 dark:text-neutral-300">Locked list</div>
+    <div className="h-full p-4 text-sm text-neutral-700 dark:text-neutral-300">Locked detail</div>
+  </Resizable>
+
+  <PreviewCode>
+```tsx
+<Resizable className="h-40" defaultSize={50} disabled>
+  <div className="h-full p-4">Locked list</div>
+  <div className="h-full p-4">Locked detail</div>
+</Resizable>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description:
+        'Exactly two panes; extras are ignored and fewer render without a handle',
+    },
+    {
+      name: 'direction',
+      type: "'horizontal' | 'vertical'",
+      default: "'horizontal'",
+      description:
+        'Split axis — horizontal places panes side by side with a vertical handle',
+    },
+    {
+      name: 'defaultSize',
+      type: 'number',
+      default: '50',
+      description: 'Uncontrolled starting size of the first pane, as a percentage',
+    },
+    {
+      name: 'size',
+      type: 'number',
+      default: '-',
+      description: 'Controlled size of the first pane, as a percentage',
+    },
+    {
+      name: 'onSizeChange',
+      type: '(size: number) => void',
+      default: '-',
+      description: 'Called with the new first-pane percentage on every resize',
+    },
+    {
+      name: 'minSize',
+      type: 'number',
+      default: '15',
+      description: 'Smallest allowed first-pane percentage',
+    },
+    {
+      name: 'maxSize',
+      type: 'number',
+      default: '85',
+      description: 'Largest allowed first-pane percentage',
+    },
+    {
+      name: 'handleLabel',
+      type: 'string',
+      default: "'Resize panes'",
+      description: 'Accessible name for the drag handle',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      description: 'Lock the split — the handle stays focusable but ignores input',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Size the split here (h-*, max-h-*) — panes inherit it',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The handle is a `role="separator"` with `tabIndex=0`, `aria-orientation`, and `aria-valuenow` / `aria-valuemin` / `aria-valuemax` reporting the first pane's percentage. `aria-valuetext` reads it as a percentage, and `aria-controls` points at the pane the handle sizes.
+- `minSize` / `maxSize` are percentages: they are clamped into 0–100 and normalized if passed reversed, so the reported range is always valid.
+- Keyboard: Arrow Left / Arrow Right (Arrow Up / Arrow Down when vertical) nudge by 1%, Shift + arrow by 10%, Home jumps to `minSize`, End to `maxSize`, and Enter resets to `defaultSize`.
+- Always set `handleLabel` when a page has more than one split, so each separator has a distinct name.
+- `disabled` sets `aria-disabled` rather than removing the handle from the tab order — focus order stays stable when the lock lifts.
+- Focus shows the standard steel ring; the handle never relies on hover alone to signal that it is interactive.
+
+## Best Practices
+
+### Do
+
+- Give the root an explicit height (`h-*` or `max-h-*`) — panes size themselves from it
+- Set `minSize` / `maxSize` so neither pane can be dragged into uselessness
+- Persist the controlled `size` per operator; the ratio is a personal preference
+- Put a ScrollArea inside a pane when its content can overflow
+
+### Don't
+
+- Nest Resizables to build a three-pane grid — reach for Grid or a dedicated layout
+- Pass more than two children and expect a third pane; extras are ignored
+- Use it for content that only needs a fixed ratio — Grid or Flex says that more clearly
+- Rely on drag alone in a keyboard-first backoffice; the arrow-key model is the primary path
+
+## Related Components
+
+- [RecordInspector](/components/data-display/record-inspector/) - The detail panel this layout usually holds
+- [ScrollArea](/components/layout/scroll-area/) - Bounded scrolling inside a pane
+- [Grid](/components/layout/grid/) - Fixed-ratio layout when the user should not adjust it
+- [AdminShell](/components/layout/admin-shell/) - The outer backoffice frame

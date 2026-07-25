@@ -1,0 +1,250 @@
+---
+title: AvatarGroup
+description: Stacked avatars with a +N overflow chip for assignee and collaborator rows
+---
+
+import { AvatarGroup, Avatar, AvatarFallback } from '@/components/nim';
+
+The AvatarGroup component folds a list of people into a single overlapping row with a quiet `+N` chip, so an assignee column in DataTable or a collaborator row in RecordInspector stays one line tall no matter how many names are behind it.
+
+Avatar renders one person; AvatarGroup renders the shape of a team. It reuses Avatar's exact `sm | md | lg | xl` scale and forwards that size to every child that did not set its own, so the overflow chip always shares the avatars' diameter.
+
+Stacking follows DOM order — each avatar overlaps the one before it and the chip sits on top at the end — which keeps reading order for assistive technology identical to visual order.
+
+## Import
+
+```tsx
+import { AvatarGroup, Avatar, AvatarFallback } from '@nim-ui/components';
+```
+
+## Playground
+
+Change `max`, `total`, `size`, and `spacing` to see how the stack collapses.
+
+<LivePlayground
+  code={`<div className="flex flex-col gap-4">
+  <AvatarGroup size="sm" label="Assignees">
+    <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+  </AvatarGroup>
+  <AvatarGroup max={4} total={37} label="Collaborators">
+    <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>SB</AvatarFallback></Avatar>
+  </AvatarGroup>
+  <AvatarGroup size="lg" spacing="tight" label="Reviewers">
+    <Avatar><AvatarFallback>SB</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>TL</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>MC</AvatarFallback></Avatar>
+  </AvatarGroup>
+</div>`}
+/>
+
+## Overflow
+
+`max` caps how many avatars render. Anything beyond it collapses into the chip. When the group fits under `max`, no chip is rendered at all.
+
+<ComponentPreview title="Overflow Chip">
+  <div className="flex flex-col gap-4">
+    <AvatarGroup size="sm" label="Two assignees">
+      <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+    </AvatarGroup>
+    <AvatarGroup size="sm" max={3} label="Seven assignees">
+      <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>SB</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>TL</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>MC</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>PN</AvatarFallback></Avatar>
+    </AvatarGroup>
+  </div>
+  <PreviewCode>
+```tsx
+{/* Fits under max — no chip */}
+<AvatarGroup size="sm" label="Two assignees">
+  <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+  <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+</AvatarGroup>
+
+{/* Seven people, three shown */}
+<AvatarGroup size="sm" max={3} label="Seven assignees">
+  {people.map((p) => (
+    <Avatar key={p.id}>
+      <AvatarFallback>{p.initials}</AvatarFallback>
+    </Avatar>
+  ))}
+</AvatarGroup>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Counting people you never fetched
+
+Set `total` when the API returned only a page of members. The chip subtracts the rendered avatars from `total` instead of from the children you happened to pass. `total` only ever adds people — if it comes back stale and lands below the number of children you passed, it is clamped up to that count, so `max` can never truncate the stack without the chip saying so.
+
+<ComponentPreview title="Total Override">
+  <AvatarGroup max={4} total={37} label="37 collaborators">
+    <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+    <Avatar><AvatarFallback>SB</AvatarFallback></Avatar>
+  </AvatarGroup>
+  <PreviewCode>
+```tsx
+<AvatarGroup max={4} total={37} label="37 collaborators">
+  {firstFour.map((p) => (
+    <Avatar key={p.id}>
+      <AvatarImage src={p.avatarUrl} alt={p.name} />
+      <AvatarFallback>{p.initials}</AvatarFallback>
+    </Avatar>
+  ))}
+</AvatarGroup>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Sizes
+
+Sizes come straight from Avatar. Use `sm` inside table rows and `md` or larger in detail panes.
+
+<ComponentPreview title="Sizes">
+  <div className="flex flex-col gap-4">
+    <AvatarGroup size="sm" max={3} label="Small group">
+      <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>SB</AvatarFallback></Avatar>
+    </AvatarGroup>
+    <AvatarGroup size="md" max={3} label="Medium group">
+      <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>SB</AvatarFallback></Avatar>
+    </AvatarGroup>
+    <AvatarGroup size="lg" max={3} label="Large group">
+      <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>SB</AvatarFallback></Avatar>
+    </AvatarGroup>
+  </div>
+  <PreviewCode>
+```tsx
+<AvatarGroup size="sm" max={3} label="Small group">…</AvatarGroup>
+<AvatarGroup size="md" max={3} label="Medium group">…</AvatarGroup>
+<AvatarGroup size="lg" max={3} label="Large group">…</AvatarGroup>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Spacing
+
+`normal` keeps initials readable; `tight` buys horizontal room in a narrow column.
+
+<ComponentPreview title="Spacing">
+  <div className="flex flex-col gap-4">
+    <AvatarGroup spacing="normal" label="Normal overlap">
+      <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+    </AvatarGroup>
+    <AvatarGroup spacing="tight" label="Tight overlap">
+      <Avatar><AvatarFallback>JD</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>AM</AvatarFallback></Avatar>
+      <Avatar><AvatarFallback>RK</AvatarFallback></Avatar>
+    </AvatarGroup>
+  </div>
+  <PreviewCode>
+```tsx
+<AvatarGroup spacing="normal" label="Normal overlap">…</AvatarGroup>
+<AvatarGroup spacing="tight" label="Tight overlap">…</AvatarGroup>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description:
+        'Avatar elements to stack; non-element children (strings, null, false) are ignored',
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: '4',
+      description:
+        'How many avatars to render before the rest collapse into the +N chip. max={0} renders no avatars and folds everyone into the chip',
+    },
+    {
+      name: 'total',
+      type: 'number',
+      default: '-',
+      description:
+        'True population size when only a slice was rendered (e.g. 4 avatars of 37 collaborators). Treated as a floor — a total below the number of children passed is clamped up to that count, so a stale value never hides people',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg' | 'xl'",
+      default: "'md'",
+      description:
+        'Diameter forwarded to Avatar children that did not set their own size, and used for the overflow chip',
+    },
+    {
+      name: 'spacing',
+      type: "'tight' | 'normal'",
+      default: "'normal'",
+      description: 'How far the avatars overlap',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: '-',
+      description: 'Accessible name for the group',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The root is `role="group"` named by `label` — always pass one ("Assignees", "Collaborators") so the stack is announced as a unit.
+- DOM order matches visual order, so screen readers read the people in the same sequence they appear.
+- Give each `AvatarImage` a real `alt` and each `AvatarFallback` the person's initials; the group's label does not replace per-person names.
+- The `+N` chip is plain text content, so it is announced along with the group rather than being hidden decoration.
+- Every stacked avatar carries a surface-colored ring, so the boundaries stay visible in both light and dark themes and do not rely on hue alone.
+
+## Best Practices
+
+### Do
+
+- Use `size="sm"` in DataTable cells and `md` or larger in RecordInspector panes
+- Pass `total` whenever you rendered a page of members rather than all of them
+- Order avatars by relevance — primary assignee first, since that one sits at the left edge
+- Pair the group with a tooltip or popover listing full names when the stack is the only place a person appears
+
+### Don't
+
+- Don't stack more than 5 avatars before collapsing — past that the row reads as texture, not people
+- Don't mix sizes inside one group; let the group's `size` drive the children
+- Don't wrap each `Avatar` in another element — `size` and the surface ring go to the group's direct children, so the ring lands as a rectangle around the wrapper instead of following the avatar's circle, and `size` is ignored. Put the tooltip or link around the whole group instead
+- Don't use the group as the only affordance for an action — make the surrounding cell or a dedicated button the target
+
+## Related Components
+
+- [Avatar](/components/data-display/avatar/) - Single user profile image with initials fallback
+- [DataTable](/components/data-display/data-table/) - Dense record table where assignee columns live
+- [RecordInspector](/components/data-display/record-inspector/) - Detail pane for a single record

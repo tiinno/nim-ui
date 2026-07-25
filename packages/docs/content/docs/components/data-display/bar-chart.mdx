@@ -1,0 +1,265 @@
+---
+title: BarChart
+description: Dependency-free categorical bar chart for dashboard cards and record panels
+---
+
+import { BarChart } from '@/components/nim';
+
+The BarChart component compares a handful of named categories — orders by channel, failures by reason, volume by warehouse — inside a dashboard card or a record detail panel. It is drawn with plain layout elements rather than SVG, so it reflows with its container and ships with zero charting dependencies.
+
+BarChart is distinct from Meter: Meter reports **one value inside a known range** (`role="meter"`), while BarChart compares **several categories against each other** on a shared scale. Reach for it when the story is "which category is biggest", not "how full is this".
+
+## Import
+
+```tsx
+import { BarChart } from '@nim-ui/components';
+```
+
+## Playground
+
+Change the values, tones, orientation, or `max` — bars rescale against the largest value unless you pin the scale.
+
+<LivePlayground
+  code={`<div className="w-full max-w-md">
+  <BarChart
+    label="Orders by channel"
+    showValues
+    data={[
+      { label: 'Web', value: 412 },
+      { label: 'POS', value: 268 },
+      { label: 'API', value: 97 },
+      { label: 'Phone', value: 41 },
+    ]}
+  />
+</div>`}
+/>
+
+## Vertical comparison
+
+The default. Short category names sit under each column; `showValues` prints the formatted value at the top of each bar.
+
+<ComponentPreview title="Vertical">
+  <div className="w-full max-w-md">
+    <BarChart
+      label="Orders by channel"
+      showValues
+      data={[
+        { label: 'Web', value: 412 },
+        { label: 'POS', value: 268 },
+        { label: 'API', value: 97 },
+        { label: 'Phone', value: 41 },
+      ]}
+    />
+  </div>
+  <PreviewCode>
+```tsx
+<BarChart
+  label="Orders by channel"
+  showValues
+  data={[
+    { label: 'Web', value: 412 },
+    { label: 'POS', value: 268 },
+    { label: 'API', value: 97 },
+    { label: 'Phone', value: 41 },
+  ]}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Horizontal with per-datum tones
+
+Use `orientation="horizontal"` when category names are long enough to truncate under a column. Per-datum `tone` flags the rows an operator should act on.
+
+<ComponentPreview title="Horizontal">
+  <div className="w-full max-w-md">
+    <BarChart
+      label="Failed payments by reason"
+      orientation="horizontal"
+      showValues
+      data={[
+        { label: 'Card declined', value: 34, tone: 'error' },
+        { label: 'Address mismatch', value: 21, tone: 'warning' },
+        { label: 'Manual review', value: 12 },
+        { label: 'Expired card', value: 5 },
+      ]}
+    />
+  </div>
+  <PreviewCode>
+```tsx
+<BarChart
+  label="Failed payments by reason"
+  orientation="horizontal"
+  showValues
+  data={[
+    { label: 'Card declined', value: 34, tone: 'error' },
+    { label: 'Address mismatch', value: 21, tone: 'warning' },
+    { label: 'Manual review', value: 12 },
+    { label: 'Expired card', value: 5 },
+  ]}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Fixed scale and formatted values
+
+Pin `max` when the scale is meaningful on its own (a target, a quota, a percentage) so bars stay comparable between renders. `valueFormatter` controls both the printed value and the screen-reader enumeration.
+
+<LivePlayground
+  code={`<div className="w-full max-w-md">
+  <BarChart
+    label="SLA attainment by tier"
+    orientation="horizontal"
+    tone="steel"
+    max={100}
+    showValues
+    valueFormatter={(v) => \`\${v}%\`}
+    data={[
+      { label: 'Tier 1', value: 98 },
+      { label: 'Tier 2', value: 91 },
+      { label: 'Tier 3', value: 76 },
+    ]}
+  />
+</div>`}
+/>
+
+## Compact plot height
+
+`height` sets the vertical plot height in px — drop it to around 72 for a chart tucked into a summary card.
+
+<ComponentPreview title="Compact">
+  <div className="w-full max-w-xs">
+    <BarChart
+      label="Webhook retries per day"
+      height={72}
+      tone="warning"
+      data={[
+        { label: 'Mon', value: 12 },
+        { label: 'Tue', value: 19 },
+        { label: 'Wed', value: 7 },
+        { label: 'Thu', value: 22 },
+        { label: 'Fri', value: 15 },
+      ]}
+    />
+  </div>
+  <PreviewCode>
+```tsx
+<BarChart
+  label="Webhook retries per day"
+  height={72}
+  tone="warning"
+  data={[
+    { label: 'Mon', value: 12 },
+    { label: 'Tue', value: 19 },
+    { label: 'Wed', value: 7 },
+    { label: 'Thu', value: 22 },
+    { label: 'Fri', value: 15 },
+  ]}
+/>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+## Props
+
+<PropsTable
+  props={[
+    {
+      name: 'data',
+      type: 'Array<{ label: string; value: number; tone?: BarChartTone }>',
+      default: '-',
+      description: 'Categories to plot, in display order',
+      required: true,
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: '-',
+      description: 'Accessible name for the chart',
+      required: true,
+    },
+    {
+      name: 'orientation',
+      type: "'vertical' | 'horizontal'",
+      default: "'vertical'",
+      description: 'Columns with labels underneath, or rows with labels in a leading column',
+    },
+    {
+      name: 'max',
+      type: 'number',
+      default: 'largest value in data',
+      description: 'Upper bound of the scale; values above it are clamped to 100%',
+    },
+    {
+      name: 'tone',
+      type: "'ink' | 'steel' | 'success' | 'warning' | 'error'",
+      default: "'ink'",
+      description: 'Chart-level bar tone; a per-datum tone overrides it',
+    },
+    {
+      name: 'showValues',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Print the formatted value beside each bar — above the column when vertical, in a fixed-width trailing column when horizontal',
+    },
+    {
+      name: 'valueFormatter',
+      type: '(value: number) => string',
+      default: 'String',
+      description: 'Formats values for display and for the screen-reader enumeration',
+    },
+    {
+      name: 'height',
+      type: 'number',
+      default: '120',
+      description:
+        'Plot height in px, vertical orientation only; a non-finite or non-positive value falls back to 120',
+    },
+    {
+      name: 'aria-describedby',
+      type: 'string',
+      default: 'generated description id',
+      description:
+        'Replaces the built-in screen-reader enumeration with your own description element',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Additional CSS classes to apply',
+    },
+  ]}
+/>
+
+## Accessibility
+
+- The root is `role="img"` with `aria-label={label}`, so the chart is announced as a single named graphic instead of a pile of empty divs.
+- A visually hidden enumeration of every `label: value` pair is referenced via `aria-describedby`, so screen readers get the actual numbers — not just a summary. Pass your own `aria-describedby` to substitute a richer description.
+- The drawn plot is `aria-hidden`, and values are formatted with `valueFormatter` in both the visual and the hidden text, so the two never disagree.
+- Tone is never the only signal: enable `showValues`, or pair the chart with a legend or table, wherever a color difference carries meaning.
+
+## Best Practices
+
+### Do
+
+- Keep it to roughly 3-8 categories — beyond that a DataTable reads faster
+- Pin `max` when the scale is meaningful (a quota, a target, a percentage) so charts stay comparable
+- Use `valueFormatter` for currency, percentages, and thousands separators
+- Reach for `orientation="horizontal"` as soon as category names start truncating
+- Use `tone="steel"` for a secondary data series — as data encoding, not decoration
+
+### Don't
+
+- Use BarChart for a single measurement against a limit — that is Meter
+- Give every bar a different tone; tone should mark exceptions, not label categories
+- Plot a time series with dozens of points — bar charts compare categories, not trends
+- Rely on tone alone to communicate a threshold breach without values or supporting text
+
+## Related Components
+
+- [Meter](/components/data-display/meter/) - Single value within a known range
+- [MetricCard](/components/data-display/metric-card/) - KPI card that can host a chart
+- [Stat](/components/data-display/stat/) - Single metric with trend
+- [DataTable](/components/data-display/data-table/) - Exact values across many rows
