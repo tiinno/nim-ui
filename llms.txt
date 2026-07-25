@@ -255,10 +255,17 @@ import '@nim-ui/components/styles';
 Before commit:
 
 ```bash
-pnpm lint && pnpm --filter @nim-ui/components build && npx vitest run
+pnpm lint && pnpm type-check && pnpm test && pnpm build
 ```
 
-All must pass.
+All must pass. Run from the repo root — these go through turbo, so every package
+is covered.
+
+Do **not** run a bare `npx vitest run` from the root: there is no root vitest
+config, so tests execute in the node environment without jsdom or the setup
+file, and 92 of 94 files fail with "document is not defined". Per-package
+configs are the only ones that work — `pnpm test` (turbo `test:run`) uses them.
+For a single file: `pnpm --filter @nim-ui/components exec vitest run src/components/<name>.test.tsx`.
 
 ---
 
