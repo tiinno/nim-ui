@@ -104,9 +104,28 @@ export const tokens = {
     full: '9999px',
   },
   typography: {
+    // Editorial-ink type system, mirroring packages/ui/src/styles.css @theme.
+    // Named, not loaded — the kit ships no @font-face. Apps load the families
+    // themselves; without them these stacks fall back to platform defaults.
     fontFamily: {
-      sans: ['Inter', 'system-ui', 'sans-serif'],
-      mono: ['Fira Code', 'monospace'],
+      sans: [
+        'Hanken Grotesk',
+        'ui-sans-serif',
+        'system-ui',
+        '-apple-system',
+        'Segoe UI',
+        'Roboto',
+        'sans-serif',
+      ],
+      mono: [
+        'JetBrains Mono',
+        'ui-monospace',
+        'SFMono-Regular',
+        'Menlo',
+        'Consolas',
+        'monospace',
+      ],
+      display: ['Fraunces', 'Iowan Old Style', 'Georgia', 'Times New Roman', 'serif'],
     },
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],
