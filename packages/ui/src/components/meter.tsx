@@ -38,7 +38,7 @@ const meterVariants = cva(
   }
 );
 
-const meterFillVariants = cva('h-full rounded-full transition-all duration-slow ease-out', {
+const meterFillVariants = cva('h-full rounded-full transition-all duration-(--duration-slow) ease-out', {
   variants: {
     tone: {
       success: 'bg-success-500 dark:bg-success-400',

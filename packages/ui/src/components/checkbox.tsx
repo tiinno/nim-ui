@@ -23,7 +23,7 @@ import { cn } from '../lib/utils';
  */
 
 const checkboxVariants = cva(
-  'peer relative cursor-pointer shrink-0 rounded-sm border border-neutral-300 transition-[background-color,border-color] duration-fast ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-600 data-[state=checked]:text-white data-[state=checked]:border-primary-600 dark:border-neutral-600 dark:data-[state=checked]:bg-primary-700 dark:data-[state=checked]:border-primary-700 after:absolute after:-inset-1.5 after:content-[\'\']',
+  'peer relative cursor-pointer shrink-0 rounded-sm border border-neutral-300 transition-[background-color,border-color] duration-(--duration-fast) ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-600 data-[state=checked]:text-white data-[state=checked]:border-primary-600 dark:border-neutral-600 dark:data-[state=checked]:bg-primary-700 dark:data-[state=checked]:border-primary-700 after:absolute after:-inset-1.5 after:content-[\'\']',
   {
     variants: {
       size: {

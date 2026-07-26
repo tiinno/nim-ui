@@ -64,7 +64,7 @@ const barChartVariants = cva('w-full', {
   },
 });
 
-const barChartBarVariants = cva('rounded-sm transition-all duration-slow ease-out', {
+const barChartBarVariants = cva('rounded-sm transition-all duration-(--duration-slow) ease-out', {
   variants: {
     tone: {
       ink: 'bg-neutral-900 dark:bg-neutral-100',

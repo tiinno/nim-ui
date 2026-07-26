@@ -160,7 +160,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors duration-fast',
+      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors duration-(--duration-fast)',
       'focus-visible:bg-primary-500 focus-visible:text-white',
       'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',
       'data-disabled:pointer-events-none data-disabled:opacity-50 data-disabled:cursor-not-allowed',
@@ -232,7 +232,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-fast',
+      'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-(--duration-fast)',
       'focus-visible:bg-primary-500 focus-visible:text-white',
       'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',
       'data-disabled:pointer-events-none data-disabled:opacity-50 data-disabled:cursor-not-allowed',
@@ -275,7 +275,7 @@ const DropdownMenuRadioItem = React.forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-fast',
+      'relative flex cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors duration-(--duration-fast)',
       'focus-visible:bg-primary-500 focus-visible:text-white',
       'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',
       'data-disabled:pointer-events-none data-disabled:opacity-50 data-disabled:cursor-not-allowed',
@@ -320,7 +320,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors duration-fast',
+      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors duration-(--duration-fast)',
       'focus-visible:bg-primary-500 focus-visible:text-white',
       'data-[state=open]:bg-neutral-100 dark:data-[state=open]:bg-neutral-800',
       'dark:focus-visible:bg-primary-600 dark:focus-visible:text-white',

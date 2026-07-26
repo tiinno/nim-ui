@@ -86,7 +86,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             role="combobox"
             disabled={disabled}
             className={cn(
-              'flex h-9 w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-left text-sm text-neutral-900 shadow-control transition-colors duration-fast hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800',
+              'flex h-9 w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-left text-sm text-neutral-900 shadow-control transition-colors duration-(--duration-fast) hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800',
               selectedLabels.length === 0 && 'text-neutral-500 dark:text-neutral-400',
               className
             )}
@@ -133,7 +133,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                       value={option.value}
                       disabled={option.disabled}
                       onSelect={() => toggleValue(option.value)}
-                      className="relative flex cursor-pointer select-none items-start gap-2 rounded-sm px-2 py-2 text-sm outline-none transition-colors duration-fast data-[selected=true]:bg-neutral-100 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 dark:data-[selected=true]:bg-neutral-800"
+                      className="relative flex cursor-pointer select-none items-start gap-2 rounded-sm px-2 py-2 text-sm outline-none transition-colors duration-(--duration-fast) data-[selected=true]:bg-neutral-100 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 dark:data-[selected=true]:bg-neutral-800"
                     >
                       <span
                         className={cn(

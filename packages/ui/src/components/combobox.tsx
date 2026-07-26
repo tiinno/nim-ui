@@ -52,7 +52,7 @@ const ComboboxTrigger = React.forwardRef<
     ref={ref}
     role="combobox"
     className={cn(
-      'flex h-9 w-full cursor-pointer items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 shadow-control transition-colors duration-fast',
+      'flex h-9 w-full cursor-pointer items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 shadow-control transition-colors duration-(--duration-fast)',
       'hover:bg-neutral-50',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
       'disabled:cursor-not-allowed disabled:opacity-50',
@@ -244,7 +244,7 @@ const ComboboxItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors duration-fast',
+      'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors duration-(--duration-fast)',
       'data-[selected=true]:bg-neutral-100 dark:data-[selected=true]:bg-neutral-700',
       'data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
       className

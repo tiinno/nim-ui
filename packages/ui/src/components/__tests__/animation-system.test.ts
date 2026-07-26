@@ -421,9 +421,11 @@ describe('Property 6: Form control Radix state selectors', () => {
         );
         expect(hasTransition).toBe(true);
 
-        // Verify that the transition uses animation token duration (duration-fast)
+        // Verify that the transition uses the actual compiled duration utility
+        // (the token-preserving `duration-(--duration-fast)` form — bare
+        // `duration-fast` is a dead class with no Tailwind v4 namespace match).
         const hasDurationToken = cvaBaseStrings.some(
-          (s) => /duration-fast/.test(s),
+          (s) => /duration-\(--duration-fast\)/.test(s),
         );
         expect(hasDurationToken).toBe(true);
       }),
