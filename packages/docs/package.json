@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "postinstall": "fumadocs-mdx",
     "dev": "next dev --port 5175",
     "build": "next build && node scripts/finalize-export.mjs",
     "start": "next start",
