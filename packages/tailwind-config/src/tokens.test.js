@@ -130,11 +130,10 @@ describe('Feature: oklch-color-system, Property 3: All color values use OKLCH fo
  * **Validates: Requirements 2.2, 2.3**
  */
 describe('Token structure — key structure and shade counts', () => {
-  const expectedTopLevelKeys = ['primary', 'neutral', 'success', 'error', 'warning'];
+  const expectedTopLevelKeys = ['primary', 'neutral', 'success', 'error', 'warning', 'info'];
   const fullPaletteShades = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
-  const semanticShades = ['50', '500', '700'];
 
-  it('tokens.colors has exactly the expected top-level keys: primary, neutral, success, error, warning', () => {
+  it('tokens.colors has exactly the expected top-level keys: primary, neutral, success, error, warning, info', () => {
     const actualKeys = Object.keys(tokens.colors).sort();
     expect(actualKeys).toEqual([...expectedTopLevelKeys].sort());
   });
@@ -151,21 +150,62 @@ describe('Token structure — key structure and shade counts', () => {
     expect(neutralKeys).toHaveLength(11);
   });
 
-  it('success palette has 3 shades (50, 500, 700)', () => {
+  it('success palette has 11 shades (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950)', () => {
     const successKeys = Object.keys(tokens.colors.success).sort((a, b) => Number(a) - Number(b));
-    expect(successKeys).toEqual(semanticShades);
-    expect(successKeys).toHaveLength(3);
+    expect(successKeys).toEqual(fullPaletteShades);
+    expect(successKeys).toHaveLength(11);
   });
 
-  it('error palette has 3 shades (50, 500, 700)', () => {
+  it('error palette has 11 shades (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950)', () => {
     const errorKeys = Object.keys(tokens.colors.error).sort((a, b) => Number(a) - Number(b));
-    expect(errorKeys).toEqual(semanticShades);
-    expect(errorKeys).toHaveLength(3);
+    expect(errorKeys).toEqual(fullPaletteShades);
+    expect(errorKeys).toHaveLength(11);
   });
 
-  it('warning palette has 3 shades (50, 500, 700)', () => {
+  it('warning palette has 11 shades (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950)', () => {
     const warningKeys = Object.keys(tokens.colors.warning).sort((a, b) => Number(a) - Number(b));
-    expect(warningKeys).toEqual(semanticShades);
-    expect(warningKeys).toHaveLength(3);
+    expect(warningKeys).toEqual(fullPaletteShades);
+    expect(warningKeys).toHaveLength(11);
+  });
+
+  it('info palette has 11 shades (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950)', () => {
+    const infoKeys = Object.keys(tokens.colors.info).sort((a, b) => Number(a) - Number(b));
+    expect(infoKeys).toEqual(fullPaletteShades);
+    expect(infoKeys).toHaveLength(11);
+  });
+});
+
+/**
+ * Unit Tests for Typography Tokens
+ *
+ * Verifies that tokens.typography.fontFamily exposes the sans, mono, and
+ * display stacks, each as a non-empty array whose first entry is the
+ * intended primary family. This token group previously drifted silently
+ * from the docs site, so it is pinned here.
+ */
+describe('Token structure — typography.fontFamily', () => {
+  it('has sans, mono, and display font family stacks, each a non-empty array', () => {
+    const { fontFamily } = tokens.typography;
+    expect(fontFamily).toHaveProperty('sans');
+    expect(fontFamily).toHaveProperty('mono');
+    expect(fontFamily).toHaveProperty('display');
+    expect(Array.isArray(fontFamily.sans)).toBe(true);
+    expect(Array.isArray(fontFamily.mono)).toBe(true);
+    expect(Array.isArray(fontFamily.display)).toBe(true);
+    expect(fontFamily.sans.length).toBeGreaterThan(0);
+    expect(fontFamily.mono.length).toBeGreaterThan(0);
+    expect(fontFamily.display.length).toBeGreaterThan(0);
+  });
+
+  it('sans stack leads with Hanken Grotesk', () => {
+    expect(tokens.typography.fontFamily.sans[0]).toBe('Hanken Grotesk');
+  });
+
+  it('mono stack leads with JetBrains Mono', () => {
+    expect(tokens.typography.fontFamily.mono[0]).toBe('JetBrains Mono');
+  });
+
+  it('display stack leads with Fraunces', () => {
+    expect(tokens.typography.fontFamily.display[0]).toBe('Fraunces');
   });
 });
