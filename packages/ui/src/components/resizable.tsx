@@ -46,7 +46,7 @@ const resizableVariants = cva('flex w-full', {
 });
 
 const resizableHandleVariants = cva(
-  'group relative flex shrink-0 grow-0 touch-none select-none items-center justify-center bg-neutral-200 transition-colors duration-fast focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-400 dark:bg-neutral-800',
+  'group relative flex shrink-0 grow-0 touch-none select-none items-center justify-center bg-neutral-200 transition-colors duration-(--duration-fast) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-400 dark:bg-neutral-800',
   {
     variants: {
       direction: {
@@ -286,7 +286,7 @@ const Resizable = React.forwardRef<HTMLDivElement, ResizableProps>(
               aria-hidden="true"
               data-testid="resizable-grip"
               className={cn(
-                'pointer-events-none absolute rounded-full bg-neutral-400 transition-colors duration-fast group-hover:bg-primary-500 dark:bg-neutral-600 dark:group-hover:bg-primary-400',
+                'pointer-events-none absolute rounded-full bg-neutral-400 transition-colors duration-(--duration-fast) group-hover:bg-primary-500 dark:bg-neutral-600 dark:group-hover:bg-primary-400',
                 isHorizontal ? 'h-8 w-0.5' : 'h-0.5 w-8'
               )}
             />

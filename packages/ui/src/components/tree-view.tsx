@@ -81,7 +81,7 @@ const treeViewVariants = cva('w-full min-w-0 select-none', {
 });
 
 const treeItemVariants = cva(
-  'flex w-full min-w-0 items-center rounded-md text-left transition-colors duration-fast',
+  'flex w-full min-w-0 items-center rounded-md text-left transition-colors duration-(--duration-fast)',
   {
     variants: {
       size: {
@@ -186,7 +186,7 @@ const ChevronIcon = ({ expanded }: { expanded: boolean }) => (
     aria-hidden="true"
     data-testid="tree-view-chevron"
     className={cn(
-      'shrink-0 transition-transform duration-fast ease-out',
+      'shrink-0 transition-transform duration-(--duration-fast) ease-out',
       expanded && 'rotate-90'
     )}
   >

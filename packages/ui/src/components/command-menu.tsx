@@ -124,7 +124,7 @@ const CommandMenuItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex min-h-12 cursor-pointer select-none items-center gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-fast',
+      'relative flex min-h-12 cursor-pointer select-none items-center gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors duration-(--duration-fast)',
       'data-[selected=true]:bg-neutral-100 data-[selected=true]:text-neutral-950 dark:data-[selected=true]:bg-neutral-900 dark:data-[selected=true]:text-neutral-50',
       'data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
       className
