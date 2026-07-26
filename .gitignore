@@ -12,6 +12,7 @@ out
 .source
 next-env.d.ts
 .astro
+*.tsbuildinfo
 
 # Tooling artifacts
 .playwright-mcp
