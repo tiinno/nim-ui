@@ -10,7 +10,7 @@ import { cn } from '../lib/utils';
  */
 
 const statusPillVariants = cva(
-  'inline-flex min-w-0 items-center justify-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium leading-none transition-colors',
+  'inline-flex min-w-0 items-center justify-center gap-1.5 rounded-full border font-medium transition-colors',
   {
     variants: {
       status: {
@@ -24,9 +24,9 @@ const statusPillVariants = cva(
         archived: 'border-neutral-200 bg-neutral-100 text-neutral-500 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-500',
       },
       size: {
-        sm: 'px-2 py-0.5 text-xs',
-        md: 'px-2.5 py-1 text-xs',
-        lg: 'px-3 py-1.5 text-sm',
+        sm: 'px-2 py-0.5 text-xs leading-none',
+        md: 'px-2.5 py-1 text-xs leading-none',
+        lg: 'px-3 py-1.5 text-sm leading-none',
       },
     },
     defaultVariants: {

@@ -28,9 +28,13 @@ describe('Form', () => {
       expect(screen.getByRole('button')).toBeInTheDocument();
     });
 
-    it('renders with default full-width class', () => {
+    it('renders the default layout classes and bakes in no width', () => {
       render(<Form data-testid="form"><input /></Form>);
-      expect(screen.getByTestId('form')).toHaveClass('w-full');
+      const form = screen.getByTestId('form');
+      expect(form).toHaveClass('flex', 'flex-col', 'gap-4');
+      // A base width utility would be emitted before — and beat — a caller's
+      // width override, so the block-level <form> is left to fill naturally.
+      expect(form).not.toHaveClass('w-full');
     });
 
     it('renders multiple form fields', () => {
@@ -254,7 +258,7 @@ describe('Form', () => {
 
       const form = screen.getByTestId('form');
       expect(form).toHaveClass('space-y-4');
-      expect(form).toHaveClass('w-full');
+      expect(form).toHaveClass('flex', 'flex-col', 'gap-4');
     });
 
     it('allows overriding width class', () => {
@@ -264,7 +268,11 @@ describe('Form', () => {
         </Form>
       );
 
-      expect(screen.getByTestId('form')).toHaveClass('w-1/2');
+      const form = screen.getByTestId('form');
+      expect(form).toHaveClass('w-1/2');
+      // The override has to be the only width class on the element: with a base
+      // `w-full` still emitted, `.w-full` wins in CSS order and `w-1/2` is inert.
+      expect(form).not.toHaveClass('w-full');
     });
 
     it('supports multiple custom classes', () => {

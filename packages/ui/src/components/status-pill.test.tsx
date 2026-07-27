@@ -51,4 +51,26 @@ describe('StatusPill', () => {
     expect(screen.getByText('Syncing').parentElement).toHaveClass('custom-status');
     expect(screen.getByTestId('status-pill-dot')).toHaveClass('animate-pulse');
   });
+
+  // Size-critical utilities live in the size variants, never in the cva base:
+  // a base copy is emitted first and wins in CSS order, so the size prop would
+  // silently do nothing for padding and font-size.
+  it('emits only the selected size padding and font size', () => {
+    const { rerender } = render(<StatusPill size="sm">Small</StatusPill>);
+    const sm = screen.getByText('Small').parentElement;
+    expect(sm).toHaveClass('px-2', 'py-0.5', 'text-xs', 'leading-none');
+    expect(sm).not.toHaveClass('px-2.5');
+    expect(sm).not.toHaveClass('py-1');
+
+    rerender(<StatusPill size="md">Medium</StatusPill>);
+    const md = screen.getByText('Medium').parentElement;
+    expect(md).toHaveClass('px-2.5', 'py-1', 'text-xs', 'leading-none');
+
+    rerender(<StatusPill size="lg">Large</StatusPill>);
+    const lg = screen.getByText('Large').parentElement;
+    expect(lg).toHaveClass('px-3', 'py-1.5', 'text-sm', 'leading-none');
+    expect(lg).not.toHaveClass('text-xs');
+    expect(lg).not.toHaveClass('px-2.5');
+    expect(lg).not.toHaveClass('py-1');
+  });
 });

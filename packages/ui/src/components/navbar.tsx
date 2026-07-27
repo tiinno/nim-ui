@@ -70,8 +70,11 @@ export interface NavbarProps
   };
 }
 
+// Display is intentionally NOT set here: each call site supplies its own
+// (`hidden md:inline-flex` on desktop, `inline-flex` in the mobile menu).
+// A base `inline-flex` would be emitted before the caller's `hidden` and win.
 const ctaClasses =
-  'inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md bg-neutral-950 px-4 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white';
+  'h-9 items-center justify-center whitespace-nowrap rounded-md bg-neutral-950 px-4 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white';
 
 function desktopLinkClasses(active?: boolean): string {
   return cn(
@@ -219,7 +222,7 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                 </a>
               ))}
             </div>
-            {cta && <div className="pt-3">{renderCta('w-full')}</div>}
+            {cta && <div className="pt-3">{renderCta('inline-flex w-full')}</div>}
           </div>
         )}
       </header>

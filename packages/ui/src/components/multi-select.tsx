@@ -86,8 +86,12 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             role="combobox"
             disabled={disabled}
             className={cn(
-              'flex h-9 w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-left text-sm text-neutral-900 shadow-control transition-colors duration-(--duration-fast) hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800',
-              selectedLabels.length === 0 && 'text-neutral-500 dark:text-neutral-400',
+              'flex h-9 w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-left text-sm shadow-control transition-colors duration-(--duration-fast) hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800',
+              // Text colour lives entirely in this ternary — an unconditional
+              // `text-neutral-900` in the base would beat the placeholder tone.
+              selectedLabels.length === 0
+                ? 'text-neutral-500 dark:text-neutral-400'
+                : 'text-neutral-900 dark:text-neutral-100',
               className
             )}
           >
@@ -109,7 +113,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
               <path d="m7 9 5-5 5 5" />
             </svg>
           </PopoverTrigger>
-          <PopoverContent className="w-[var(--radix-popover-trigger-width)] overflow-hidden p-0">
+          <PopoverContent padding="none" className="w-[var(--radix-popover-trigger-width)] overflow-hidden">
             <CommandPrimitive className="flex flex-col overflow-hidden rounded-md bg-transparent text-neutral-900 dark:text-neutral-100">
               <div
                 className="flex items-center border-b border-neutral-200 px-3 dark:border-neutral-800"

@@ -36,11 +36,14 @@ import { cn } from '../lib/utils';
 export interface FormProps
   extends React.FormHTMLAttributes<HTMLFormElement> {}
 
+// Note: the base intentionally carries no width utility. A <form> is
+// block-level and already fills its container, and an unconditional `w-full`
+// would be emitted before — and therefore beat — a caller's width override.
 const Form = React.forwardRef<HTMLFormElement, FormProps>(
   ({ className, ...props }, ref) => (
     <form
       ref={ref}
-      className={cn('flex w-full flex-col gap-4', className)}
+      className={cn('flex flex-col gap-4', className)}
       {...props}
     />
   )

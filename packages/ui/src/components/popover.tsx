@@ -83,8 +83,11 @@ PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName;
 // popoverContentVariants (CVA)
 // ---------------------------------------------------------------------------
 
+// Padding is a variant rather than a base class: panels that host their own
+// chrome (a calendar, a listbox) need `p-0`/`p-1`, and a base `p-4` would be
+// emitted first and win over it.
 const popoverContentVariants = cva(
-  'z-50 w-72 rounded-md p-4 outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+  'z-50 w-72 rounded-md outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
   {
     variants: {
       variant: {
@@ -93,9 +96,15 @@ const popoverContentVariants = cva(
         outline:
           'border-2 border-primary-500 bg-white text-neutral-900 shadow-panel dark:border-primary-400 dark:bg-neutral-900 dark:text-neutral-100',
       },
+      padding: {
+        none: 'p-0',
+        sm: 'p-1',
+        md: 'p-4',
+      },
     },
     defaultVariants: {
       variant: 'default',
+      padding: 'md',
     },
   }
 );
@@ -107,6 +116,11 @@ const popoverContentVariants = cva(
 export interface PopoverContentProps
   extends React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>,
     VariantProps<typeof popoverContentVariants> {
+  /**
+   * Inner padding. Use `"none"` when the panel hosts its own chrome
+   * (a calendar, a listbox). @default 'md'
+   */
+  padding?: VariantProps<typeof popoverContentVariants>['padding'];
   /** Show an arrow pointing to the trigger element. @default false */
   showArrow?: boolean;
   /** Distance in px between the popover and the trigger. @default 4 */
@@ -121,6 +135,7 @@ const PopoverContent = React.forwardRef<
     {
       className,
       variant,
+      padding,
       showArrow = false,
       sideOffset = 4,
       side = 'bottom',
@@ -185,7 +200,7 @@ const PopoverContent = React.forwardRef<
           ref={ref}
           side={side}
           sideOffset={showArrow ? sideOffset + arrowSize : sideOffset}
-          className={cn(popoverContentVariants({ variant }), '[--popover-arrow-color:white] dark:[--popover-arrow-color:var(--color-neutral-900)]', className)}
+          className={cn(popoverContentVariants({ variant, padding }), '[--popover-arrow-color:white] dark:[--popover-arrow-color:var(--color-neutral-900)]', className)}
           style={{ position: 'relative' }}
           {...props}
         >

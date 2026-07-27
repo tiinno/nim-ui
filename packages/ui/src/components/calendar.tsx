@@ -65,13 +65,19 @@ function Calendar({
         month_caption: 'flex justify-center pt-1 relative items-center',
         caption_label: 'text-sm font-medium',
         nav: 'flex items-center gap-1',
+        // `size: null` makes cva skip its defaultVariants, so the h-7/w-7/p-0 below
+        // are the only sizing classes emitted. `ghost` is transparent in both themes,
+        // so the border is added explicitly rather than using `outline`, whose
+        // background would otherwise win over a later `bg-transparent`.
+        // These border tokens intentionally mirror buttonVariants' `outline` — keep
+        // them in sync if the design contract's control border ever changes.
         button_previous: cn(
-          buttonVariants({ variant: 'outline', size: 'sm' }),
-          'absolute left-1 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100'
+          buttonVariants({ variant: 'ghost', size: null }),
+          'absolute left-1 h-7 w-7 border border-neutral-200 p-0 text-sm opacity-50 hover:opacity-100 dark:border-neutral-800'
         ),
         button_next: cn(
-          buttonVariants({ variant: 'outline', size: 'sm' }),
-          'absolute right-1 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100'
+          buttonVariants({ variant: 'ghost', size: null }),
+          'absolute right-1 h-7 w-7 border border-neutral-200 p-0 text-sm opacity-50 hover:opacity-100 dark:border-neutral-800'
         ),
         month_grid: 'w-full border-collapse space-y-1',
         weekdays: 'flex',
@@ -82,8 +88,8 @@ function Calendar({
           'relative p-0 text-center text-sm focus-within:relative focus-within:z-20'
         ),
         day_button: cn(
-          buttonVariants({ variant: 'ghost', size: 'sm' }),
-          'h-9 w-9 p-0 font-normal aria-selected:opacity-100'
+          buttonVariants({ variant: 'ghost', size: null }),
+          'h-9 w-9 p-0 text-sm font-normal aria-selected:opacity-100'
         ),
         range_start: 'day-range-start',
         range_end: 'day-range-end',

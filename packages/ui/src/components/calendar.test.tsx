@@ -36,6 +36,23 @@ describe('Calendar', () => {
         screen.getByRole('button', { name: /next/i })
       ).toBeInTheDocument();
     });
+
+    it('sizes nav and day buttons itself instead of inheriting button sizing', () => {
+      const month = new Date(2025, 0, 15);
+      render(<Calendar mode="single" month={month} />);
+      const prev = screen.getByRole('button', { name: /previous/i });
+      expect(prev).toHaveClass('h-7', 'w-7', 'p-0');
+      // buttonVariants' `sm` size and `outline` background are emitted before
+      // these overrides and would win, rendering a 32px white pill instead.
+      expect(prev).not.toHaveClass('h-8');
+      expect(prev).not.toHaveClass('px-3');
+      expect(prev).not.toHaveClass('bg-white/70');
+
+      // In react-day-picker v9 the day button is a child of the gridcell <td>.
+      const day = screen.getByRole('button', { name: /15/ });
+      expect(day).toHaveClass('h-9', 'w-9', 'p-0');
+      expect(day).not.toHaveClass('px-3');
+    });
   });
 
   describe('Single mode', () => {

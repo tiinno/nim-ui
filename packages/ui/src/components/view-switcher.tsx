@@ -18,7 +18,7 @@ const viewSwitcherVariants = cva(
 );
 
 const viewSwitcherItemVariants = cva(
-  'group inline-flex min-w-max items-center gap-2 rounded-md text-left text-sm font-medium outline-none transition-colors duration-(--duration-fast) focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50',
+  'group inline-flex min-w-max items-center gap-2 rounded-md text-left font-medium outline-none transition-colors duration-(--duration-fast) focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       selected: {
@@ -27,7 +27,10 @@ const viewSwitcherItemVariants = cva(
           'text-neutral-600 hover:bg-white/70 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-950/60 dark:hover:text-neutral-50',
       },
       density: {
-        comfortable: 'px-3 py-2',
+        // Font size lives here, not in the base: a base `text-sm` would be
+        // emitted before the compact `text-xs` and the winner would be decided
+        // by CSS emission order rather than by the density prop.
+        comfortable: 'px-3 py-2 text-sm',
         compact: 'px-2.5 py-1.5 text-xs',
       },
     },

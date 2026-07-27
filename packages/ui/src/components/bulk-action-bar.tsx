@@ -17,11 +17,11 @@ import { cn } from '../lib/utils';
  */
 
 const bulkActionBarVariants = cva(
-  'sticky bottom-3 z-20 flex flex-col gap-3 rounded-lg border border-neutral-200 bg-white px-3 py-3 shadow-panel dark:border-neutral-800 dark:bg-neutral-950 dark:shadow-black/30 sm:flex-row sm:items-center sm:justify-between',
+  'sticky bottom-3 z-20 flex flex-col gap-3 rounded-lg border bg-white px-3 py-3 shadow-panel dark:bg-neutral-950 dark:shadow-black/30 sm:flex-row sm:items-center sm:justify-between',
   {
     variants: {
       tone: {
-        default: '',
+        default: 'border-neutral-200 dark:border-neutral-800',
         elevated: 'border-neutral-300 dark:border-neutral-700',
       },
     },

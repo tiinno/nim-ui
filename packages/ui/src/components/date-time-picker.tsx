@@ -199,9 +199,10 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
             className={cn(
               buttonVariants({ variant: 'outline' }),
               'w-full justify-start text-left font-normal',
-              !selected && 'text-neutral-500 dark:text-neutral-400',
+              'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
               className
             )}
+            data-placeholder={!selected ? '' : undefined}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -231,7 +232,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
                 })} ${formatTimeLabel(dateToTime(selected), hourCycle)}`
               : placeholder}
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
+          <PopoverContent padding="none" className="w-auto">
             <Calendar
               calendar={calendar}
               locale={typeof locale === 'string' ? undefined : locale}
@@ -364,9 +365,10 @@ const DateTimeRangePicker = React.forwardRef<
             className={cn(
               buttonVariants({ variant: 'outline' }),
               'w-full justify-start text-left font-normal',
-              !selected?.from && 'text-neutral-500 dark:text-neutral-400',
+              'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
               className
             )}
+            data-placeholder={!selected?.from ? '' : undefined}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -390,7 +392,7 @@ const DateTimeRangePicker = React.forwardRef<
             </svg>
             <span className="truncate">{label}</span>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
+          <PopoverContent padding="none" className="w-auto">
             <div className="flex flex-col sm:flex-row">
               {presets && presets.length > 0 && (
                 <div className="flex min-w-40 flex-row gap-1 border-b border-neutral-200 p-2 dark:border-neutral-800 sm:flex-col sm:border-b-0 sm:border-r">

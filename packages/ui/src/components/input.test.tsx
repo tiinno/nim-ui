@@ -63,7 +63,11 @@ describe('Input', () => {
 
     it('applies correct text size for lg', () => {
       render(<Input size="lg" data-testid="input" />);
-      expect(screen.getByTestId('input')).toHaveClass('text-base');
+      const input = screen.getByTestId('input');
+      expect(input).toHaveClass('text-base');
+      // The base must not also emit `text-sm`: it is emitted first but wins in
+      // CSS order, so a large input would silently render at 14px.
+      expect(input).not.toHaveClass('text-sm');
     });
   });
 

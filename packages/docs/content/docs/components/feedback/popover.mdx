@@ -157,6 +157,7 @@ function ControlledPopover() {
 <PropsTable
   props={[
     { name: 'variant', type: "'default' | 'outline'", default: "'default'", description: 'Visual style variant' },
+    { name: 'padding', type: "'none' | 'sm' | 'md'", default: "'md'", description: 'Inner padding — use "none" when the panel hosts its own chrome' },
     { name: 'side', type: "'top' | 'bottom' | 'left' | 'right'", default: "'bottom'", description: 'Preferred side to display the popover' },
     { name: 'sideOffset', type: 'number', default: '4', description: 'Distance in px between the popover and the trigger' },
     { name: 'showArrow', type: 'boolean', default: 'false', description: 'Show an arrow pointing to the trigger' },

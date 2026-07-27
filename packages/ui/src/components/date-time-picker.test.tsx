@@ -10,6 +10,19 @@ describe('DateTimePicker', () => {
     expect(screen.getByRole('button')).toHaveTextContent('10:30');
   });
 
+  it('marks the empty trigger as a placeholder', () => {
+    const { rerender } = render(<DateTimePicker />);
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveAttribute('data-placeholder', '');
+    expect(trigger).toHaveClass('data-[placeholder]:text-neutral-500');
+    // A plain `text-neutral-500` here would lose to buttonVariants'
+    // `text-neutral-900` in CSS emission order.
+    expect(trigger).not.toHaveClass('text-neutral-500');
+
+    rerender(<DateTimePicker value={new Date(2025, 0, 15, 10, 30)} />);
+    expect(screen.getByRole('button')).not.toHaveAttribute('data-placeholder');
+  });
+
   it('updates the Date when time changes', async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
