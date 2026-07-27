@@ -177,6 +177,17 @@ describe('Checkbox', () => {
       expect(checkbox).toHaveClass('disabled:opacity-50');
     });
 
+    it('gives the disabled label a not-allowed cursor, not a pointer', () => {
+      // The label composes an unconditional `cursor-pointer` with a conditional
+      // `cursor-not-allowed`. Both used to ship, and cursor-pointer is emitted
+      // later in the stylesheet, so a disabled label showed a pointer. cn() now
+      // resolves the conflict in favour of the last-written class.
+      render(<Checkbox disabled label="Disabled option" id="cb-disabled" />);
+      const label = screen.getByText('Disabled option').closest('label');
+      expect(label).toHaveClass('cursor-not-allowed');
+      expect(label).not.toHaveClass('cursor-pointer');
+    });
+
     it('does not trigger onCheckedChange when disabled', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
