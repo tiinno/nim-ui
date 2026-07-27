@@ -1301,6 +1301,14 @@
             "left",
             "right"
           ]
+        },
+        {
+          "name": "padding",
+          "values": [
+            "none",
+            "sm",
+            "md"
+          ]
         }
       ],
       "hasRadixPrimitive": true,

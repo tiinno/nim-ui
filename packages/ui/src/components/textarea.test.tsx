@@ -55,6 +55,14 @@ describe('Textarea', () => {
       render(<Textarea data-testid="textarea" size={size as any} />);
       expect(screen.getByTestId('textarea')).toHaveClass(expectedClass);
     });
+
+    it('emits exactly one font-size class so lg is not shadowed by the base', () => {
+      render(<Textarea data-testid="textarea" size="lg" />);
+      const textarea = screen.getByTestId('textarea');
+      expect(textarea).toHaveClass('text-base');
+      // A base `text-sm` would be emitted first but win in CSS order.
+      expect(textarea).not.toHaveClass('text-sm');
+    });
   });
 
   describe('Resize Prop', () => {

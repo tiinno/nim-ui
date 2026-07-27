@@ -72,4 +72,28 @@ describe('BulkActionBar', () => {
     expect(screen.getByRole('toolbar')).toHaveClass('custom-bulk-bar');
     expect(screen.getByRole('toolbar')).toHaveClass('sticky');
   });
+
+  it('carries the border colour of the selected tone in both themes', () => {
+    const { rerender } = render(
+      <BulkActionBar aria-label="Default tone">
+        <BulkActionBarSelection count={1} />
+      </BulkActionBar>
+    );
+    expect(screen.getByRole('toolbar')).toHaveClass(
+      'border-neutral-200',
+      'dark:border-neutral-800'
+    );
+
+    rerender(
+      <BulkActionBar aria-label="Elevated tone" tone="elevated">
+        <BulkActionBarSelection count={1} />
+      </BulkActionBar>
+    );
+    const elevated = screen.getByRole('toolbar');
+    expect(elevated).toHaveClass('border-neutral-300', 'dark:border-neutral-700');
+    // Base copies of these would be emitted first and win in CSS order, so the
+    // elevated tone would keep the default border in dark mode.
+    expect(elevated).not.toHaveClass('border-neutral-200');
+    expect(elevated).not.toHaveClass('dark:border-neutral-800');
+  });
 });

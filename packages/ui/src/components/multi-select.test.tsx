@@ -20,6 +20,20 @@ describe('MultiSelect', () => {
     expect(handleChange).toHaveBeenCalledWith(['ops']);
   });
 
+  it('switches the trigger tone between placeholder and selection', () => {
+    const { rerender } = render(<MultiSelect options={options} />);
+    const trigger = screen.getByRole('combobox');
+    expect(trigger).toHaveClass('text-neutral-500', 'dark:text-neutral-400');
+    // A base `text-neutral-900` is emitted after the placeholder tone and wins,
+    // so the empty trigger would render at full contrast.
+    expect(trigger).not.toHaveClass('text-neutral-900');
+
+    rerender(<MultiSelect options={options} value={['ops']} />);
+    const filled = screen.getByRole('combobox');
+    expect(filled).toHaveClass('text-neutral-900', 'dark:text-neutral-100');
+    expect(filled).not.toHaveClass('text-neutral-500');
+  });
+
   it('renders selected chips and hidden inputs', () => {
     render(
       <MultiSelect

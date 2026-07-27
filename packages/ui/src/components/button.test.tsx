@@ -45,6 +45,25 @@ describe('Button', () => {
       render(<Button size={size as any}>Size {size}</Button>);
       expect(screen.getByRole('button')).toHaveClass(expectedClass);
     });
+
+    it('size={null} skips the default size so composers can supply their own', () => {
+      // Calendar composes buttonVariants and supplies its own h-7/w-7/p-0. It relies
+      // on cva skipping defaultVariants for an explicit null — no `size: 'none'`
+      // variant is needed, and adding one would put a height-less, padding-less
+      // button in the public API.
+      const sized = buttonVariants({ variant: 'ghost' });
+      const unsized = buttonVariants({ variant: 'ghost', size: null });
+
+      // The default really does emit sizing — proves the null case below is not vacuous.
+      expect(sized).toContain('h-9');
+      expect(sized).toContain('px-3.5');
+
+      expect(unsized).not.toContain('h-9');
+      expect(unsized).not.toContain('px-3.5');
+      // Non-sizing base styling still applies.
+      expect(unsized).toContain('inline-flex');
+      expect(unsized).toContain('rounded-md');
+    });
   });
 
   describe('Interactions', () => {

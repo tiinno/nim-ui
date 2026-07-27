@@ -107,9 +107,10 @@ const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
             className={cn(
               buttonVariants({ variant: 'outline' }),
               'w-full justify-start text-left font-normal',
-              !selected && 'text-neutral-500 dark:text-neutral-400',
+              'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
               className
             )}
+            data-placeholder={!selected ? '' : undefined}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +130,7 @@ const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
             </svg>
             {selected ? formatTimeLabel(selected, hourCycle) : placeholder}
           </PopoverTrigger>
-          <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-1">
+          <PopoverContent padding="sm" className="w-[var(--radix-popover-trigger-width)]">
             <div
               role="listbox"
               aria-label="Time options"
@@ -142,9 +143,10 @@ const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
                   role="option"
                   aria-selected={selected === option}
                   className={cn(
-                    'flex h-8 w-full items-center rounded-sm px-2 text-left text-sm text-neutral-700 transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 dark:text-neutral-200 dark:hover:bg-neutral-800',
-                    selected === option &&
-                      'bg-neutral-100 font-medium text-neutral-950 dark:bg-neutral-800 dark:text-neutral-50'
+                    'flex h-8 w-full items-center rounded-sm px-2 text-left text-sm transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 dark:hover:bg-neutral-800',
+                    selected === option
+                      ? 'bg-neutral-100 font-medium text-neutral-950 dark:bg-neutral-800 dark:text-neutral-50'
+                      : 'text-neutral-700 dark:text-neutral-200'
                   )}
                   onClick={() => handleSelect(option)}
                 >

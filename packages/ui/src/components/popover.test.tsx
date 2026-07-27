@@ -91,6 +91,27 @@ describe('Popover', () => {
       expect(classes).toContain('bg-white');
       expect(classes).toContain('border-neutral-200');
     });
+
+    it('padding is a variant, so panels can opt out of the default p-4', () => {
+      const tokens = (v?: 'none' | 'sm' | 'md') =>
+        popoverContentVariants({ padding: v }).split(' ');
+
+      expect(tokens()).toContain('p-4');
+      expect(tokens('md')).toContain('p-4');
+      // Without this, a base `p-4` is emitted before — and beats — the p-0/p-1
+      // that calendar/listbox panels need.
+      expect(tokens('none')).toContain('p-0');
+      expect(tokens('none')).not.toContain('p-4');
+      expect(tokens('sm')).toContain('p-1');
+      expect(tokens('sm')).not.toContain('p-4');
+    });
+
+    it('renders the requested padding on the content element', () => {
+      renderPopover({ padding: 'none' }, { defaultOpen: true });
+      const content = getPopoverContent();
+      expect(content).toHaveClass('p-0');
+      expect(content).not.toHaveClass('p-4');
+    });
   });
 
   // -----------------------------------------------------------------------

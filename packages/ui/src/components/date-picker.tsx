@@ -104,9 +104,10 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
           className={cn(
             buttonVariants({ variant: 'outline' }),
             'w-full justify-start text-left font-normal',
-            !date && 'text-neutral-500 dark:text-neutral-400',
+            'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
             className
           )}
+          data-placeholder={!date ? '' : undefined}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +145,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             />
           )}
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
+        <PopoverContent padding="none" className="w-auto">
           <Calendar
             calendar={calendar}
             locale={typeof locale === 'string' ? undefined : locale}
@@ -276,9 +277,10 @@ const DateRangePicker = React.forwardRef<
             className={cn(
               buttonVariants({ variant: 'outline' }),
               'w-full justify-start text-left font-normal',
-              !range?.from && 'text-neutral-500 dark:text-neutral-400',
+              'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
               className
             )}
+            data-placeholder={!range?.from ? '' : undefined}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -300,7 +302,7 @@ const DateRangePicker = React.forwardRef<
             </svg>
             <span className="truncate">{displayLabel}</span>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
+          <PopoverContent padding="none" className="w-auto">
             <div className="flex flex-col sm:flex-row">
               {showPresets && presets && presets.length > 0 && (
                 <div className="flex min-w-36 flex-row gap-1 border-b border-neutral-200 p-2 dark:border-neutral-800 sm:flex-col sm:border-b-0 sm:border-r">

@@ -49,15 +49,15 @@ const toastVariants = cva(
     variants: {
       variant: {
         default:
-          'border-neutral-200 bg-white text-neutral-900 shadow-panel dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
+          'border-neutral-200 bg-white text-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
         success:
-          'border-success-500/30 bg-success-50 text-success-700 shadow-panel dark:bg-success-500/10 dark:text-success-500 dark:border-success-500/20',
+          'border-success-500/30 bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500 dark:border-success-500/20',
         error:
-          'border-error-500/30 bg-error-50 text-error-700 shadow-panel dark:bg-error-500/10 dark:text-error-500 dark:border-error-500/20',
+          'border-error-500/30 bg-error-50 text-error-700 dark:bg-error-500/10 dark:text-error-500 dark:border-error-500/20',
         warning:
-          'border-warning-500/30 bg-warning-50 text-warning-700 shadow-panel dark:bg-warning-500/10 dark:text-warning-500 dark:border-warning-500/20',
+          'border-warning-500/30 bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500 dark:border-warning-500/20',
         info:
-          'border-primary-500/30 bg-primary-50 text-primary-700 shadow-panel dark:bg-primary-500/10 dark:text-primary-500 dark:border-primary-500/20',
+          'border-primary-500/30 bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-500 dark:border-primary-500/20',
       },
     },
     defaultVariants: {

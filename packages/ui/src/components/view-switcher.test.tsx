@@ -86,7 +86,11 @@ describe('ViewSwitcher', () => {
     );
 
     expect(screen.getByRole('tablist')).toHaveClass('custom-switcher');
-    expect(screen.getByRole('tab', { name: /Delayed/ })).toHaveClass('text-xs');
+    const compactTab = screen.getByRole('tab', { name: /Delayed/ });
+    expect(compactTab).toHaveClass('text-xs');
+    // The base must not also emit `text-sm`, or the density prop's font size
+    // would be decided by CSS emission order instead of by the variant.
+    expect(compactTab).not.toHaveClass('text-sm');
     expect(screen.getByText('Breached SLA')).toBeInTheDocument();
     expect(screen.getByRole('group', { name: 'View actions' })).toBeInTheDocument();
   });

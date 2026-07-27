@@ -160,6 +160,15 @@ describe('Navbar', () => {
       expect(cta).toHaveClass('dark:bg-neutral-100');
       expect(cta).toHaveClass('dark:text-neutral-950');
     });
+
+    it('desktop CTA is hidden below md and carries no competing display class', () => {
+      render(<Navbar brand="Nim UI" cta={{ label: 'Get Started' }} />);
+      const cta = screen.getByText('Get Started');
+      expect(cta).toHaveClass('hidden', 'md:inline-flex');
+      // An unprefixed `inline-flex` from the shared CTA classes is emitted
+      // before `.hidden` and wins, leaving the CTA visible on small screens.
+      expect(cta).not.toHaveClass('inline-flex');
+    });
   });
 
   describe('Actions', () => {
@@ -252,7 +261,11 @@ describe('Navbar', () => {
       await user.click(
         screen.getByRole('button', { name: 'Toggle navigation menu' })
       );
-      expect(screen.getAllByText('Get Started')).toHaveLength(2);
+      const ctas = screen.getAllByText('Get Started');
+      expect(ctas).toHaveLength(2);
+      // The in-menu CTA supplies its own display class since the shared CTA
+      // classes no longer set one.
+      expect(ctas[1]).toHaveClass('inline-flex', 'w-full');
     });
   });
 

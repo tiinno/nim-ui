@@ -14,6 +14,19 @@ describe('DatePicker', () => {
       expect(screen.getByText('Select a date')).toBeInTheDocument();
     });
 
+    it('marks the trigger as a placeholder so the muted tone outranks the button colour', () => {
+      const { rerender } = render(<DatePicker />);
+      const trigger = screen.getByRole('button');
+      // A plain `text-neutral-500` would lose to buttonVariants' text-neutral-900
+      // in CSS order; the data-attribute variant wins on specificity instead.
+      expect(trigger).toHaveAttribute('data-placeholder', '');
+      expect(trigger).toHaveClass('data-[placeholder]:text-neutral-500');
+      expect(trigger).not.toHaveClass('text-neutral-500');
+
+      rerender(<DatePicker value={new Date(2025, 0, 15)} />);
+      expect(screen.getByRole('button')).not.toHaveAttribute('data-placeholder');
+    });
+
     it('renders with initial value', () => {
       const date = new Date(2025, 0, 15);
       render(<DatePicker value={date} />);
