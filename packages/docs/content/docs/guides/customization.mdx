@@ -75,8 +75,9 @@ import { cn } from '@nim-ui/components';
 
 // Basic merging
 cn('p-4 text-red-500', 'p-8')
-// Result: 'p-8 text-red-500'
-// tailwind-merge resolves p-4 vs p-8 → keeps p-8
+// Result: 'text-red-500 p-8'
+// tailwind-merge resolves p-4 vs p-8 → keeps p-8.
+// Surviving classes stay in their original order.
 
 // Conditional classes
 cn('base-class', isActive && 'bg-primary-500', isDisabled && 'opacity-50')
@@ -87,7 +88,16 @@ cn(
   { 'bg-red-500': hasError, 'bg-green-500': isSuccess },
   className // prop from parent
 )
+
+// Elevation tokens override cleanly too
+cn('shadow-soft', 'shadow-lg')
+// Result: 'shadow-lg'
 ```
+
+Nim UI's `cn()` is configured with the kit's `shadow-soft` / `shadow-panel` / `shadow-control`
+elevation tokens. If you build your own `cn()` with a bare `twMerge`, tailwind-merge reads those
+tokens as shadow *colors* — `shadow-soft shadow-red-500` collapses to `shadow-red-500` and the
+elevation is lost. Import `cn` from `@nim-ui/components` rather than rolling your own.
 
 ### Using cn() in Custom Components
 
