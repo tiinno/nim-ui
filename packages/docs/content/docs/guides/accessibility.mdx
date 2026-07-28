@@ -45,11 +45,19 @@ Nim UI components include the appropriate ARIA attributes out of the box.
 ```tsx
 // Standard button - no extra ARIA needed
 <Button variant="primary">Save Changes</Button>
-// Renders: <button type="button">Save Changes</button>
+// Renders: <button>Save Changes</button>
+// Button sets no default `type`, so the HTML default applies: inside a <form>
+// this button SUBMITS. Pass type="button" when that is not what you want.
 
-// Loading button - disables interaction and announces state
+// Loading button - suppresses click activation, but stays focusable
 <Button loading>Saving...</Button>
-// Renders: <button disabled aria-busy="true">Saving...</button>
+// Renders: <button aria-disabled="true" aria-busy="true"><span role="status">
+//            <svg aria-hidden="true" />
+//          </span>Saving...</button>
+// NOT `disabled` on purpose: a native disabled button leaves the tab order, so a
+// keyboard user loses focus to <body> on the interaction they just triggered.
+// Accessible name is unchanged ("Saving...") — pass `loadingLabel` to add
+// sr-only text, which renames the button while it loads.
 
 // Icon-only button - requires aria-label
 <Button variant="ghost" aria-label="Close dialog">
@@ -215,9 +223,16 @@ Nim UI components are tested with popular screen readers including VoiceOver (ma
 Components announce meaningful state changes to screen readers:
 
 ```tsx
-// Loading states
+// Loading states — focus stays on the button and the name does NOT change
 <Button loading>Submitting...</Button>
-// Screen reader: "Submitting..., button, busy"
+// Screen reader: "Submitting..., button, busy, unavailable"
+
+// Opt-in sr-only text. It joins the accessible NAME (a button's descendants are
+// presentational, so it is not a separate live announcement) — which means the
+// focused button is re-announced in full. Use it deliberately, and put a live
+// region OUTSIDE the button when you need a guaranteed status announcement.
+<Button loading loadingLabel="Submitting">Save</Button>
+// Screen reader: "Submitting Save, button, busy, unavailable"
 
 // Error states
 <Input error="Email is required" />

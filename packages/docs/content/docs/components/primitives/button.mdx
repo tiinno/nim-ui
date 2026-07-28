@@ -192,13 +192,22 @@ Combine buttons with icons for enhanced visual communication.
       name: 'disabled',
       type: 'boolean',
       default: 'false',
-      description: 'Whether the button is disabled',
+      description:
+        'Natively disabled — removed from the tab order. Wins over loading; do not use it for the in-flight state',
     },
     {
       name: 'loading',
       type: 'boolean',
       default: 'false',
-      description: 'Show loading state and disable interaction',
+      description:
+        'Show the spinner and suppress click activation, while the button stays focusable and aria-disabled',
+    },
+    {
+      name: 'loadingLabel',
+      type: 'string',
+      default: 'undefined',
+      description:
+        'Opt-in screen-reader-only text next to the spinner. It joins the accessible name, so passing it renames the button while loading',
     },
     {
       name: 'fullWidth',
@@ -306,8 +315,10 @@ The Button component follows WAI-ARIA best practices:
 
 - Uses semantic `<button>` element
 - Supports keyboard navigation (Enter, Space)
-- Properly handles `disabled` and `aria-disabled` states
-- Announces loading state to screen readers
+- `disabled` is a native `disabled`; `loading` is `aria-disabled` instead, so the button **keeps focus and its place in the tab order** while a request is in flight (WCAG 2.2 SC 2.4.3 Focus Order)
+- **Use `loading`, not `disabled`, for the in-flight state.** `disabled` wins when both are set, which puts the button back out of the tab order and undoes the focus guarantee for exactly the users it exists for — so `disabled={isSubmitting || !isValid} loading={isSubmitting}` is a bug. Write `disabled={!isValid} loading={isSubmitting}`
+- Suppression while `loading` is scoped to **click activation and the form submission that follows** — pointer clicks, Enter and Space (a native `<button>` synthesises a click for both). Unlike native `disabled`, every other event still dispatches: `pointerdown`, `mousedown`, `keydown`, and capture-phase click listeners. A trigger that opens on `pointerdown` (Radix `DropdownMenu`, `Popover`, `Select`) will still open around a loading Button and needs its own guard
+- The loading state is carried by `aria-busy` and `aria-disabled`. `loadingLabel` is **opt-in** because the text sits inside the button and joins its accessible name (`<Button loading loadingLabel="Saving">Save</Button>` → "Saving Save"), which both renames the button and makes screen readers re-announce it under the user's focus. ARIA treats a button's descendants as presentational, so the `role="status"` wrapper is markup parity with `Spinner`, **not** a live region — a guaranteed status announcement (SC 4.1.3) needs a live region *outside* the button, which `Button` cannot own without wrapping itself
 - Focus visible states for keyboard users
 
 ### Keyboard Support
