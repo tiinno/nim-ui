@@ -100,7 +100,7 @@ DropdownMenuTrigger.displayName = 'DropdownMenuTrigger';
 // ---------------------------------------------------------------------------
 
 const dropdownMenuContentVariants = cva(
-  'z-50 min-w-[8rem] overflow-hidden rounded-md p-1 shadow-panel outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+  'z-50 min-w-[8rem] overflow-hidden rounded-md p-1 shadow-panel outline-none data-[state=open]:animate-fade-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none',
   {
     variants: {
       variant: {

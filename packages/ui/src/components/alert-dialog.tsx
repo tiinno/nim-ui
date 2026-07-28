@@ -95,7 +95,7 @@ const AlertDialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       'fixed inset-0 z-50 bg-black/50',
-      'data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+      'data-[state=open]:animate-fade-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none',
       className
     )}
     {...props}
@@ -108,7 +108,7 @@ AlertDialogOverlay.displayName = 'AlertDialogOverlay';
 // ---------------------------------------------------------------------------
 
 const alertDialogContentVariants = cva(
-  'fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg p-6 shadow-panel outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+  'fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg p-6 shadow-panel outline-none data-[state=open]:animate-fade-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none',
   {
     variants: {
       variant: {

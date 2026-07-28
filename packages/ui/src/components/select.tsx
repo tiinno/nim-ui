@@ -82,7 +82,7 @@ const SelectTrigger = React.forwardRef<
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
 const selectContentVariants = cva(
-  'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-neutral-200 bg-white shadow-panel data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out dark:border-neutral-800 dark:bg-neutral-900',
+  'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-neutral-200 bg-white shadow-panel data-[state=open]:animate-scale-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-scale-out data-[state=closed]:motion-reduce:animate-none dark:border-neutral-800 dark:bg-neutral-900',
   {
     variants: {},
     defaultVariants: {},

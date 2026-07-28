@@ -200,6 +200,23 @@ describe('Badge', () => {
       expect(classes).toContain('px-3');
       expect(classes).toContain('text-sm');
     });
+
+    // Badge is the library's only UNMODIFIED entrance animation, so the bare
+    // `motion-reduce:animate-none` is load-bearing here: both selectors are
+    // (0,1,0) and Tailwind emits variant utilities after plain ones, so the
+    // counterpart wins on source order. See src/motion-reduce.test.ts for the
+    // compiled-CSS proof.
+    it('pairs the entrance animation with a reduced-motion counterpart', () => {
+      const classes = badgeVariants({ animate: true });
+      expect(classes).toContain('animate-scale-in');
+      expect(classes).toContain('motion-reduce:animate-none');
+    });
+
+    it('applies no animation classes when animate is not set', () => {
+      const classes = badgeVariants({});
+      expect(classes).not.toContain('animate-scale-in');
+      expect(classes).not.toContain('motion-reduce:animate-none');
+    });
   });
 
   describe('Custom className', () => {

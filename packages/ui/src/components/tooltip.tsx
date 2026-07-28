@@ -93,7 +93,7 @@ TooltipTrigger.displayName = TooltipPrimitive.Trigger.displayName;
 // ---------------------------------------------------------------------------
 
 const tooltipContentVariants = cva(
-  'z-50 overflow-hidden rounded-md px-3 py-1.5 text-sm data-[state=delayed-open]:animate-fade-in data-[state=closed]:animate-fade-out',
+  'z-50 overflow-hidden rounded-md px-3 py-1.5 text-sm data-[state=delayed-open]:animate-fade-in data-[state=delayed-open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none',
   {
     variants: {
       variant: {

@@ -37,7 +37,7 @@ const badgeVariants = cva(
         lg: 'px-3 py-1 text-sm',
       },
       animate: {
-        true: 'animate-scale-in',
+        true: 'animate-scale-in motion-reduce:animate-none',
       },
     },
     defaultVariants: {

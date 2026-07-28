@@ -455,6 +455,13 @@ describe('Popover', () => {
             // Animation classes (both variants)
             expect(classes).toContain('animate-fade-in');
             expect(classes).toContain('animate-fade-out');
+
+            // Reduced-motion counterparts. The `data-[state=…]` prefix must
+            // match the animation it switches off: the animated selector
+            // compiles to (0,2,0), so a bare `motion-reduce:animate-none` at
+            // (0,1,0) would lose the cascade and still animate.
+            expect(classes).toContain('data-[state=open]:motion-reduce:animate-none');
+            expect(classes).toContain('data-[state=closed]:motion-reduce:animate-none');
           },
         ),
         { numRuns: 100 },

@@ -105,7 +105,7 @@ const ComboboxContent = React.forwardRef<
         ref={ref}
         sideOffset={sideOffset}
         className={cn(
-          'z-50 overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-900 shadow-panel data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
+          'z-50 overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-900 shadow-panel data-[state=open]:animate-fade-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100',
           width === 'trigger' && 'w-[var(--radix-popover-trigger-width)]',
           className
         )}

@@ -44,7 +44,7 @@ const viewportVariants = cva(
  * ```
  */
 const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-lg border p-4 pr-8 shadow-panel transition-all data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-fade-out data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:animate-slide-out-to-right',
+  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-lg border p-4 pr-8 shadow-panel transition-all data-[state=open]:animate-slide-in-from-right data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:animate-slide-out-to-right data-[swipe=end]:motion-reduce:animate-none',
   {
     variants: {
       variant: {

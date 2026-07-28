@@ -87,7 +87,7 @@ PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName;
 // chrome (a calendar, a listbox) need `p-0`/`p-1`, and a base `p-4` would be
 // emitted first and win over it.
 const popoverContentVariants = cva(
-  'z-50 w-72 rounded-md outline-none data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+  'z-50 w-72 rounded-md outline-none data-[state=open]:animate-fade-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none',
   {
     variants: {
       variant: {
