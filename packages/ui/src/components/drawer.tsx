@@ -46,7 +46,7 @@ const DrawerOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+      'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none',
       className
     )}
     {...props}
@@ -59,8 +59,8 @@ const drawerContentVariants = cva(
   {
     variants: {
       side: {
-        left: 'inset-y-0 left-0 h-full w-3/4 max-w-sm border-r border-neutral-200 data-[state=open]:animate-slide-in-from-left data-[state=closed]:animate-slide-out-to-left sm:max-w-md dark:border-neutral-800',
-        right: 'inset-y-0 right-0 h-full w-3/4 max-w-sm border-l border-neutral-200 data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-slide-out-to-right sm:max-w-md dark:border-neutral-800',
+        left: 'inset-y-0 left-0 h-full w-3/4 max-w-sm border-r border-neutral-200 data-[state=open]:animate-slide-in-from-left data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-slide-out-to-left data-[state=closed]:motion-reduce:animate-none sm:max-w-md dark:border-neutral-800',
+        right: 'inset-y-0 right-0 h-full w-3/4 max-w-sm border-l border-neutral-200 data-[state=open]:animate-slide-in-from-right data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-slide-out-to-right data-[state=closed]:motion-reduce:animate-none sm:max-w-md dark:border-neutral-800',
       },
     },
     defaultVariants: {

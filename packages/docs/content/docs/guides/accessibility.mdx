@@ -356,18 +356,63 @@ Always pair color with another visual indicator:
 
 ## Reduced Motion
 
-Nim UI respects the `prefers-reduced-motion` media query. When enabled, animations and transitions are minimized or removed:
+Nim UI honours `prefers-reduced-motion` automatically. There is **no prop, no provider, and no consumer code** to write: import the stylesheet and every entrance and exit animation in the kit switches itself off for users who have asked their OS for reduced motion.
+
+Two layers do the work.
+
+### 1. Per-component `motion-reduce:animate-none`
+
+Every component that animates on open or close ships a reduced-motion counterpart next to the animation itself. Popover's content, as shipped:
+
+```tsx
+'z-50 w-72 rounded-md outline-none data-[state=open]:animate-fade-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none'
+```
+
+The repeated `data-[state=...]` prefix on the counterpart is load-bearing, not noise. Tailwind compiles a `data-*` variant to an attribute selector, so `data-[state=open]:animate-fade-in` lands at specificity (0,2,0) while a bare `motion-reduce:animate-none` is only (0,1,0) -- a media query adds no specificity of its own. The counterpart has to carry the same modifier to reach the same specificity, and Tailwind emits the two-variant utility after the one-variant one, so it wins the tie.
+
+This applies to Accordion, AlertDialog, Badge, Collapsible, Combobox, Drawer, DropdownMenu, Modal, Popover, Select, Toast, and Tooltip -- with the exception of Badge, whose animation carries no modifier and therefore uses the bare `motion-reduce:animate-none`.
+
+Loading indicators are excluded from *this* per-component treatment. `Spinner`, `Skeleton`, `Dot`, `StatusPill`, and `Button`'s loading state keep their `animate-spin` / `animate-pulse` class, because switching a loading indicator off outright removes the only signal that work is in flight. What actually reaches them under reduced motion is decided by the global damper below.
+
+### 2. A global animation damper in the token stylesheet
+
+`tokens.css` also ships a blanket reset, so any animation the kit does not own -- including one you add in your own app -- is reduced to an imperceptible tick:
 
 ```css
-/* Applied internally by Nim UI */
+/* Applied internally by Nim UI (packages/ui/src/tokens.css) */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }
+```
+
+Note how far that rule reaches. It is `!important` and unlayered, so it outranks every utility: under reduced motion, `animate-spin` and `animate-pulse` run a single 0.01ms iteration and stop, and every `transition-*` in your app -- Nim's or your own -- collapses to 0.01ms. That is the current behaviour of a deliberately blunt reset, not a per-component design decision, and the treatment of loading indicators is under review. If you need a spinner to keep turning for reduced-motion users, re-declare it in your own stylesheet.
+
+### Overriding an overlay animation yourself
+
+`cn()` runs class names through `tailwind-merge`, but **tailwind-merge resolves conflicts per modifier**. A class with no modifier never overrides a class that has one:
+
+```tsx
+// Does NOT work -- both classes survive, the animation still plays
+<PopoverContent className="animate-none" />
+
+// Works -- the modifier matches, so tailwind-merge sees a real conflict
+<PopoverContent className="data-[state=open]:animate-none data-[state=closed]:animate-none" />
+```
+
+The same rule applies to swapping one animation for another, and note that Tooltip opens on `data-[state=delayed-open]` rather than `data-[state=open]`.
+
+Swapping under a modifier the component already uses keeps its reduced-motion cover: `tailwind-merge` replaces only the animation, and the shipped `data-[state=open]:motion-reduce:animate-none` survives the merge. Introduce a *new* modifier and you own the counterpart:
+
+```tsx
+// Reduced motion still handled -- the shipped counterpart is untouched
+<PopoverContent className="data-[state=open]:animate-scale-in" />
+
+// New modifier -- pair it yourself
+<PopoverContent className="data-[side=top]:animate-slide-in-from-bottom data-[side=top]:motion-reduce:animate-none" />
 ```
 
 In your custom components, respect this preference:

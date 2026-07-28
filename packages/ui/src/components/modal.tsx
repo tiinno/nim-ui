@@ -47,7 +47,7 @@ const ModalOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out',
+      'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none',
       className
     )}
     {...props}
@@ -56,7 +56,7 @@ const ModalOverlay = React.forwardRef<
 ModalOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const modalContentVariants = cva(
-  'fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-neutral-200 bg-white p-6 shadow-panel data-[state=open]:animate-scale-in data-[state=closed]:animate-scale-out dark:border-neutral-800 dark:bg-neutral-900',
+  'fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-neutral-200 bg-white p-6 shadow-panel data-[state=open]:animate-scale-in data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-scale-out data-[state=closed]:motion-reduce:animate-none dark:border-neutral-800 dark:bg-neutral-900',
   {
     variants: {},
     defaultVariants: {},
