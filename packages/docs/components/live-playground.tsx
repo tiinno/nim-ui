@@ -14,21 +14,37 @@ import * as Nim from '@/components/nim';
  * The editor panel stays deep-ink in both themes, mirroring the code blocks.
  */
 
-// Ink-press editor theme — tuned to the JetBrains Mono / deep-ink code blocks
+/*
+ * Nim Ink, dark column — the same nine tokens as the fenced code blocks (see
+ * lib/nim-ink-theme.ts). Unconditionally dark in both site themes because this
+ * editor panel is a fixed dark surface. prism-react-renderer takes fontWeight
+ * and fontStyle directly in `style`, so none of the Shiki CSS plumbing in
+ * global.css applies here.
+ */
 const inkTheme: PrismTheme = {
   plain: {
-    color: 'oklch(0.9 0.005 90)',
+    color: '#D2CEC4',
     backgroundColor: 'transparent',
   },
   styles: [
-    { types: ['comment', 'prolog', 'doctype', 'cdata'], style: { color: 'oklch(0.55 0.012 262)', fontStyle: 'italic' } },
-    { types: ['punctuation'], style: { color: 'oklch(0.72 0.01 262)' } },
-    { types: ['tag', 'keyword', 'operator'], style: { color: 'oklch(0.78 0.06 20)' } },
-    { types: ['attr-name'], style: { color: 'oklch(0.82 0.05 250)' } },
-    { types: ['string', 'attr-value', 'char'], style: { color: 'oklch(0.8 0.06 145)' } },
-    { types: ['number', 'boolean', 'constant'], style: { color: 'oklch(0.8 0.07 70)' } },
-    { types: ['function', 'class-name', 'maybe-class-name'], style: { color: 'oklch(0.85 0.04 250)' } },
-    { types: ['variable', 'parameter'], style: { color: 'oklch(0.9 0.005 90)' } },
+    // comment
+    { types: ['comment', 'prolog', 'doctype', 'cdata'], style: { color: '#9C947F', fontStyle: 'italic' } },
+    // plain
+    { types: ['plain', 'variable', 'parameter', 'text'], style: { color: '#D2CEC4' } },
+    // property
+    { types: ['attr-name', 'property', 'selector'], style: { color: '#9FB4CC' } },
+    // entity
+    { types: ['tag', 'class-name', 'maybe-class-name', 'builtin'], style: { color: '#EDEAE3', fontWeight: 'bold' } },
+    // keyword
+    { types: ['keyword', 'atrule', 'imports', 'exports'], style: { color: '#9DA2A8' } },
+    // function
+    { types: ['function', 'method', 'function-variable'], style: { color: '#7E95AF' } },
+    // constant
+    { types: ['number', 'boolean', 'constant', 'symbol', 'unit', 'entity'], style: { color: '#A08A62' } },
+    // punctuation
+    { types: ['punctuation', 'operator'], style: { color: '#848992' } },
+    // string — last, so quote marks match their contents
+    { types: ['string', 'attr-value', 'char', 'regex', 'url'], style: { color: '#B09B72' } },
   ],
 };
 
@@ -59,7 +75,7 @@ export function LivePlayground({ code, language = 'tsx' }: LivePlaygroundProps) 
   };
 
   return (
-    <div className="not-prose my-8 min-w-0 max-w-full overflow-hidden rounded-xl border border-fd-border bg-white shadow-soft dark:bg-neutral-950">
+    <div className="not-prose my-8 min-w-0 max-w-full overflow-hidden rounded-md border border-fd-border bg-white shadow-soft dark:bg-neutral-950">
       <LiveProvider code={source} scope={scope} theme={inkTheme} language={language}>
         <div className="preview-canvas relative isolate flex min-h-36 min-w-0 items-center justify-center overflow-x-auto p-6 sm:p-10">
           <div className="flex w-full min-w-0 flex-wrap items-center justify-center gap-4">

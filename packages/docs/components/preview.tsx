@@ -39,7 +39,7 @@ export function ComponentPreview({
         </figcaption>
       )}
 
-      <div className="min-w-0 max-w-full overflow-hidden rounded-xl border border-fd-border bg-white shadow-soft dark:bg-neutral-950">
+      <div className="min-w-0 max-w-full overflow-hidden rounded-md border border-fd-border bg-white shadow-soft dark:bg-neutral-950">
         {fullBleed ? (
           <div className={`min-w-0 max-w-full ${className}`}>{demo}</div>
         ) : (
@@ -84,7 +84,9 @@ export function ComponentPreview({
                 <path d="m9 18 6-6-6-6" />
               </svg>
             </summary>
-            <div className="max-w-full overflow-x-auto border-t border-fd-border p-3 [&_pre]:m-0 [&_pre]:max-w-full [&_pre]:overflow-x-auto">
+            {/* The card frames this panel, so the code inside it renders edge
+                to edge — see the code-block section of app/global.css. */}
+            <div className="max-w-full border-t border-fd-border [&_pre]:m-0">
               {code}
             </div>
           </details>

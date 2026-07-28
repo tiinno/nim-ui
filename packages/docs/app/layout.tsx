@@ -19,11 +19,15 @@ const sans = Hanken_Grotesk({
   display: 'swap',
   weight: ['400', '500', '600', '700'],
 });
+// 700 and italic are load-bearing for the Nim Ink syntax palette: Shiki emits
+// literal `bold` (700) for entity tokens and italic for comments, and
+// font-synthesis is off, so both cuts have to be real.
 const mono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains',
   display: 'swap',
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {

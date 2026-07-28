@@ -46,6 +46,13 @@
   --color-fd-accent: oklch(0.955 0.008 250);
   --color-fd-accent-foreground: oklch(0.3 0.02 258);
   --color-fd-ring: oklch(0.5 0.045 248);
+
+  /* Diff lines — the kit's soft tonal status recipe. fumadocs' stock values
+     are saturated magenta/green, the loudest thing on any page. */
+  --color-fd-diff-add: color-mix(in oklab, var(--color-success-50) 80%, transparent);
+  --color-fd-diff-add-symbol: var(--color-success-700);
+  --color-fd-diff-remove: color-mix(in oklab, var(--color-error-50) 80%, transparent);
+  --color-fd-diff-remove-symbol: var(--color-error-700);
 }
 
 /* ---- Ink Press palette — deep ink (dark) ---- */
@@ -66,6 +73,11 @@
   --color-fd-accent: oklch(0.28 0.016 262);
   --color-fd-accent-foreground: oklch(0.93 0.005 90);
   --color-fd-ring: oklch(0.72 0.05 248);
+
+  --color-fd-diff-add: color-mix(in oklab, var(--color-success-950) 40%, transparent);
+  --color-fd-diff-add-symbol: var(--color-success-300);
+  --color-fd-diff-remove: color-mix(in oklab, var(--color-error-950) 40%, transparent);
+  --color-fd-diff-remove-symbol: var(--color-error-300);
 }
 
 /* neutral.css ทับ sidebar เป็นเทากลาง — ดึงกลับมาเป็นโทน ink */
@@ -137,11 +149,100 @@ body {
   font-weight: 600;
 }
 
-/* ---------- Code blocks — refined frame ---------- */
-#nd-page pre {
-  border: 1px solid var(--color-fd-border);
-  border-radius: 0.65rem;
+/* ---------- Code blocks — one frame, owned by the <figure> ---------- */
+/*
+ * Fumadocs frames the <figure> (it owns the clipping, the title bar and the
+ * copy button); we used to frame the inner <pre> too, which drew a second
+ * hairline ~1px inside the first. Worse, that <pre> is sized to its content
+ * inside the scrolling viewport, so on long lines its frame scrolled away
+ * with the code. The figure keeps the frame; the pre carries nothing.
+ *
+ * Radius and elevation come from the kit's tokens (0.5rem / control
+ * elevation) instead of fumadocs' 0.75rem and stock Tailwind elevation.
+ */
+#nd-page figure.shiki {
+  border-radius: var(--radius-md);
+  border-color: var(--color-fd-border);
   box-shadow: var(--shadow-control);
+}
+
+/* In a tab group the panel owns the frame — fumadocs already drops the
+   figure's hairline there, so drop the elevation with it. */
+#nd-page [role='tabpanel'] figure.shiki {
+  box-shadow: none;
+}
+
+/* Same deal inside a ComponentPreview's code disclosure: the preview card is
+   the frame, so the code inside it renders edge to edge. */
+#nd-page details figure.shiki {
+  margin: 0;
+  border-width: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Tab-group chrome joins the same radius family as the code frame. */
+#nd-page div[data-orientation='horizontal']:has(> [role='tablist']),
+#nd-page [role='tabpanel'] {
+  border-radius: var(--radius-md);
+}
+
+/*
+ * Copy button — the docs' steel focus indicator plus the contract's 2px
+ * offset, which fumadocs omits. The offset colour tracks the figure surface
+ * so the indicator reads as a gap in both themes. Steel is kept over
+ * primary-400 because primary-400 measures 2.73:1 on the light card (below
+ * the 3:1 non-text minimum); --color-fd-ring measures 5.72:1 / 7.26:1.
+ */
+#nd-page figure.shiki button:focus-visible {
+  @apply ring-2 ring-fd-ring ring-offset-2 ring-offset-fd-card;
+}
+
+/* Inline code — the 5px the typography plugin hardcodes is off the scale;
+   a chip this small takes the 0.25rem step (as the kit's Kbd does). */
+#nd-page .prose :not(pre) > code {
+  border-radius: 0.25rem;
+}
+
+/*
+ * Shiki emits weight as --shiki-{variant}-font-weight, but fumadocs' preset
+ * only consumes colour and font-style, so every semibold token rendered at 400.
+ * Mirrors fumadocs' own selector shape. Two fallback paths must both resolve:
+ * Shiki omits the var entirely on tokens that are plain in every theme, and
+ * writes the literal string `inherit` when a token is styled in one theme only.
+ */
+.shiki:not(.not-fumadocs-codeblock *) code span {
+  font-weight: var(--shiki-light-font-weight, inherit);
+}
+.dark .shiki:not(.not-fumadocs-codeblock *) code span {
+  font-weight: var(--shiki-dark-font-weight, inherit);
+}
+
+/* No synthesised faces: if a real JetBrains Mono cut is missing, it should
+   fail visibly thin rather than being smeared into a fake one. */
+#nd-page .shiki,
+#nd-page .shiki code,
+.live-editor {
+  font-synthesis: none;
+}
+
+/*
+ * Emphasised lines. fumadocs washes them in fd-primary/10, and in dark mode
+ * fd-primary is a *light* colour, so the wash lifts the surface and drops the
+ * punctuation token on that line to 3.12:1 — a live WCAG failure. Thin the
+ * wash to a hint and let the left rule carry the signal instead.
+ */
+#nd-page .shiki .highlighted {
+  background-color: color-mix(in oklab, var(--color-fd-primary) 4%, transparent);
+}
+#nd-page .shiki .highlighted::after {
+  border-left-color: var(--color-fd-primary);
+}
+
+/* Removed diff lines: fumadocs dims them to 0.7 opacity, which lands the text
+   near 2.8:1. The tonal background already carries the meaning. */
+#nd-page .shiki .diff.remove {
+  opacity: 1;
 }
 
 /* ---------- Component preview canvas ---------- */
