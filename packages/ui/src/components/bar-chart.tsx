@@ -64,20 +64,23 @@ const barChartVariants = cva('w-full', {
   },
 });
 
-const barChartBarVariants = cva('rounded-sm transition-all duration-(--duration-slow) ease-out', {
-  variants: {
-    tone: {
-      ink: 'bg-neutral-900 dark:bg-neutral-100',
-      steel: 'bg-primary-500 dark:bg-primary-400',
-      success: 'bg-success-500 dark:bg-success-400',
-      warning: 'bg-warning-500 dark:bg-warning-400',
-      error: 'bg-error-600 dark:bg-error-400',
+const barChartBarVariants = cva(
+  'rounded-sm transition-all motion-reduce:transition-none duration-(--duration-slow) ease-out',
+  {
+    variants: {
+      tone: {
+        ink: 'bg-neutral-900 dark:bg-neutral-100',
+        steel: 'bg-primary-500 dark:bg-primary-400',
+        success: 'bg-success-500 dark:bg-success-400',
+        warning: 'bg-warning-500 dark:bg-warning-400',
+        error: 'bg-error-600 dark:bg-error-400',
+      },
     },
-  },
-  defaultVariants: {
-    tone: 'ink',
-  },
-});
+    defaultVariants: {
+      tone: 'ink',
+    },
+  }
+);
 
 /** Tones available to the chart and to individual data points */
 export type BarChartTone = 'ink' | 'steel' | 'success' | 'warning' | 'error';

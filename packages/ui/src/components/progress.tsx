@@ -19,7 +19,7 @@ const progressVariants = cva(
 );
 
 const progressIndicatorVariants = cva(
-  'h-full rounded-full transition-all duration-(--duration-slow) ease-out',
+  'h-full rounded-full transition-all motion-reduce:transition-none duration-(--duration-slow) ease-out',
   {
     variants: {
       variant: {

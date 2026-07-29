@@ -34,7 +34,7 @@ import { cn } from '../lib/utils';
  */
 
 const cardVariants = cva(
-  'rounded-md transition-[box-shadow,transform,border-color,background-color] duration-(--duration-fast) ease-out',
+  'rounded-md transition-[box-shadow,transform,border-color,background-color] motion-reduce:transition-none duration-(--duration-fast) ease-out',
   {
     variants: {
       variant: {

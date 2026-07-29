@@ -186,7 +186,7 @@ const ChevronIcon = ({ expanded }: { expanded: boolean }) => (
     aria-hidden="true"
     data-testid="tree-view-chevron"
     className={cn(
-      'shrink-0 transition-transform duration-(--duration-fast) ease-out',
+      'shrink-0 transition-transform motion-reduce:transition-none duration-(--duration-fast) ease-out',
       expanded && 'rotate-90'
     )}
   >

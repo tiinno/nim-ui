@@ -34,7 +34,7 @@ import { cn } from '../lib/utils';
  */
 
 const productCardVariants = cva(
-  'overflow-hidden rounded-md border border-neutral-200 bg-white shadow-soft transition-[box-shadow,transform] duration-(--duration-fast) ease-out hover:shadow-panel dark:border-neutral-800 dark:bg-neutral-950',
+  'overflow-hidden rounded-md border border-neutral-200 bg-white shadow-soft transition-[box-shadow,transform] motion-reduce:transition-none duration-(--duration-fast) ease-out hover:shadow-panel dark:border-neutral-800 dark:bg-neutral-950',
   {
     variants: {},
     defaultVariants: {},
@@ -63,7 +63,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
         <img
           src={image}
           alt={imageAlt || title}
-          className="h-full w-full object-cover transition-transform duration-(--duration-normal) hover:scale-105"
+          className="h-full w-full object-cover transition-transform motion-reduce:transition-none duration-(--duration-normal) hover:scale-105"
         />
       </div>
       <div className="p-4 space-y-2">

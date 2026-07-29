@@ -22,6 +22,16 @@
  * `packages/ui/src/motion-reduce.test.ts` (which fails the build if a
  * component ever animates without one).
  *
+ * MOVEMENT-BEARING TRANSITIONS are likewise unaffected, as of NIMUI-43: the
+ * chevrons, the switch thumb, the meter/progress/bar fills, the product-card
+ * zoom, the card lift and the toast swipe each carry a counterpart that
+ * switches the `transition-property` longhand off in the component's own class
+ * string — a different longhand from the two this file clamps, so it keeps
+ * working once the clamp is gone. The same guard file pins that inventory.
+ * Colour and opacity transitions (~55 sites) deliberately carry NO counterpart:
+ * a crossfade moves nothing, so removing the import below is exactly what gives
+ * them back, which is the intent.
+ *
  * LOADING INDICATORS ARE THE DELIBERATE EXCEPTION. `Spinner`, `Skeleton`,
  * `Dot`, `StatusPill` and `Button`'s loading state carry a bare
  * `animate-spin` / `animate-pulse` and are exempt from that contract
