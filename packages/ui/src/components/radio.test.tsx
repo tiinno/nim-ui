@@ -638,6 +638,34 @@ describe('Radio', () => {
       expect(indicator).toHaveClass('rounded-full');
     });
 
+    it('renders small indicator dot dimensions', () => {
+      render(
+        <RadioGroup defaultValue="option1">
+          <RadioGroupItem value="option1" size="sm" data-testid="radio" />
+        </RadioGroup>
+      );
+
+      const radio = screen.getByTestId('radio');
+      const indicator = radio.querySelector('[class*="bg-current"]');
+      expect(indicator).toBeInTheDocument();
+      expect(indicator).toHaveClass('h-2');
+      expect(indicator).toHaveClass('w-2');
+    });
+
+    it('renders large indicator dot dimensions', () => {
+      render(
+        <RadioGroup defaultValue="option1">
+          <RadioGroupItem value="option1" size="lg" data-testid="radio" />
+        </RadioGroup>
+      );
+
+      const radio = screen.getByTestId('radio');
+      const indicator = radio.querySelector('[class*="bg-current"]');
+      expect(indicator).toBeInTheDocument();
+      expect(indicator).toHaveClass('h-3');
+      expect(indicator).toHaveClass('w-3');
+    });
+
     it('renders the dot as phrasing content inside Radix\'s indicator span', () => {
       // Radix renders RadioGroup.Indicator as a <span>, which takes phrasing
       // content. The dot used to be a <div>, so every consumer app shipped
