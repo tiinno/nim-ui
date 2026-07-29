@@ -4,13 +4,16 @@ description: Placeholder loading component with pulse animation for content that
 ---
 
 import { Skeleton } from '@/components/nim';
+import { SkeletonGroupToggleDemo } from '@/components/demos/SkeletonDemo';
 
 The Skeleton component renders a pulsing placeholder that mimics the shape of content being loaded. It has no props of its own — control size and shape entirely through `className`.
+
+Each Skeleton is `aria-hidden`, so a surface built from them is silent to assistive tech. Wrap the surface in [`SkeletonGroup`](#skeletongroup) to announce the load once, for the whole region.
 
 ## Import
 
 ```tsx
-import { Skeleton } from '@nim-ui/components';
+import { Skeleton, SkeletonGroup } from '@nim-ui/components';
 ```
 
 ## Basic Usage
@@ -93,16 +96,61 @@ import { Skeleton } from '@nim-ui/components';
 
 The Skeleton component accepts all standard `div` HTML attributes.
 
-## Usage Examples
+`aria-hidden="true"` is applied *before* the prop spread, so it is a default rather than a contract — pass `aria-hidden={false}` if one particular placeholder really must be exposed. **Never put focusable content inside a Skeleton**: a focusable element under an `aria-hidden` ancestor is the axe `aria-hidden-focus` violation and a real keyboard trap.
 
-### Conditional Loading
+## SkeletonGroup
+
+`SkeletonGroup` is the loading *surface*, and the surface is what owes the status message. It renders one `role="status"` live region as a **sibling** of the `aria-busy` content host, swaps `fallback` for `children` when `loading` flips, and never unmounts the region in between.
+
+Skeleton itself is deliberately not a live region: a real surface shows 2–5 of them, which would mint 2–5 competing announcements per load.
+
+<ComponentPreview title="SkeletonGroup" description="Toggle the loading state; the live region stays mounted across the transition">
+  <SkeletonGroupToggleDemo />
+
+  <PreviewCode>
+```tsx
+function OperatorCard({ operator, isLoading }: Props) {
+  return (
+    <SkeletonGroup
+      loading={isLoading}
+      label="Loading operator"
+      fallback={
+        <div className="flex items-center gap-3">
+          <Skeleton className="h-10 w-10 rounded-full" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-40" />
+            <Skeleton className="h-3 w-28" />
+          </div>
+        </div>
+      }
+    >
+      <div className="flex items-center gap-3">
+        <Avatar src={operator.avatar} />
+        <div>
+          <p className="font-medium">{operator.name}</p>
+          <p className="text-sm text-neutral-500">{operator.email}</p>
+        </div>
+      </div>
+    </SkeletonGroup>
+  );
+}
+```
+  </PreviewCode>
+</ComponentPreview>
+
+Layout classes belong **inside** `fallback` and `children`. `SkeletonGroup` ships none of its own, and `className` lands on the root wrapper only — so `space-y-*` on the group would space the live region, not your rows.
+
+### Don't: return early and unmount the region
+
+The obvious shape. It works visually and announces nothing: the live region is created at the same moment its text arrives, which screen readers handle inconsistently, and it disappears again the instant loading ends.
 
 ```tsx
-function UserProfile({ user, isLoading }: Props) {
+// ✗ Don't — the loading region is mounted and unmounted with the skeletons
+function OperatorCard({ operator, isLoading }: Props) {
   if (isLoading) {
     return (
       <div className="flex items-center gap-3">
-        <Skeleton className="h-12 w-12 rounded-full" />
+        <Skeleton className="h-10 w-10 rounded-full" />
         <div className="space-y-2">
           <Skeleton className="h-4 w-40" />
           <Skeleton className="h-3 w-28" />
@@ -113,20 +161,88 @@ function UserProfile({ user, isLoading }: Props) {
 
   return (
     <div className="flex items-center gap-3">
-      <Avatar src={user.avatar} />
+      <Avatar src={operator.avatar} />
       <div>
-        <p className="font-medium">{user.name}</p>
-        <p className="text-sm text-neutral-500">{user.email}</p>
+        <p className="font-medium">{operator.name}</p>
+        <p className="text-sm text-neutral-500">{operator.email}</p>
       </div>
     </div>
   );
 }
 ```
 
+### Do: one region, mounted the whole time
+
+`SkeletonGroup` renders on both sides of the transition — that is what makes the change in its text an announcement rather than an insertion. For the same reason, mount the group unconditionally: `{isLoading && <SkeletonGroup … />}` puts you straight back to the "don't".
+
+```tsx
+// ✓ Do — the region is mounted (and empty) before the text arrives
+<SkeletonGroup
+  loading={isLoading}
+  fallback={<Skeleton className="h-4 w-40" />}
+>
+  <p>{operator.name}</p>
+</SkeletonGroup>
+```
+
+### SkeletonGroup props
+
+<PropsTable
+  props={[
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: '-',
+      description: 'Whether the surface is still loading. Required, so the state is always wired',
+      required: true,
+    },
+    {
+      name: 'fallback',
+      type: 'ReactNode',
+      default: '-',
+      description: 'The skeletons rendered while loading — put layout classes here, not on the group',
+      required: true,
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      default: '-',
+      description: 'The real content, rendered once loading is false',
+    },
+    {
+      name: 'label',
+      type: 'string',
+      default: "'Loading'",
+      description: 'Screen-reader text held in the live region while loading',
+    },
+    {
+      name: 'loadedLabel',
+      type: 'string',
+      default: '-',
+      description: 'Optional text announced when loading finishes; omitted by default so a refetching dashboard stays quiet',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      default: '-',
+      description: 'Classes for the root wrapper only; the group ships no layout of its own',
+    },
+  ]}
+/>
+
 ## Accessibility
 
-- Uses `animate-pulse` CSS animation which respects `prefers-reduced-motion`
-- Pair with appropriate `aria-busy` and `aria-live` attributes on the parent container
+Skeletons are a **status message** in the WCAG 2.2 sense — a change of state the user has to learn about without moving focus (SC 4.1.3 Status Messages, AA). The kit splits that job in two, the same way `Spinner` does:
+
+- **Each `Skeleton` is `aria-hidden="true"`.** Placeholder boxes carry no information, and there are always several, so exposing them just fills the accessibility tree with noise.
+- **`SkeletonGroup` owns the announcement.** One `role="status"` region per surface, holding `label` ("Loading" by default) while loading and `loadedLabel` — nothing, unless you set it — afterwards.
+- **The live region is a sibling of the `aria-busy` host, never a descendant.** `aria-busy` tells assistive tech to *defer* announcements for its own subtree, which is exactly the window the region needs to speak in. Collapsing both onto one element silences it.
+- **The region must not unmount.** A live region inserted together with its text is announced inconsistently; changing the text of a region that was already there is the reliable path.
+- Skeletons animate with `animate-pulse`, which the kit already gates behind `prefers-reduced-motion`.
+
+Known limitation: on **initial** mount the region already contains its text, so most screen readers will not fire a live announcement for it — the text is still in the accessibility tree and reachable in browse mode. SC 4.1.3's live case is the *transition*, which this shape does handle.
+
+Do not put focusable content (links, buttons, inputs) inside a `Skeleton`. It is `aria-hidden`, so anything focusable within it becomes reachable by keyboard but invisible to assistive tech.
 
 ## Related Components
 

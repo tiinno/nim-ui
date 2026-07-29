@@ -12,7 +12,7 @@ describe('Dot', () => {
     });
 
     it('renders a bare dot without a label span', () => {
-      render(<Dot data-testid="dot" aria-label="Failed" status="failed" />);
+      render(<Dot data-testid="dot" status="failed" />);
       const root = screen.getByTestId('dot');
       expect(root.querySelector('.truncate')).toBeNull();
       expect(screen.getByTestId('dot-indicator')).toBeInTheDocument();
@@ -95,9 +95,41 @@ describe('Dot', () => {
       expect(screen.getByTestId('dot-indicator')).toHaveAttribute('aria-hidden', 'true');
     });
 
-    it('supports aria-label on a bare dot', () => {
-      render(<Dot aria-label="Failed" status="failed" />);
-      expect(screen.getByLabelText('Failed')).toBeInTheDocument();
+    // Replaces a vacuous test that asserted `getByLabelText('Failed')` against
+    // `<Dot aria-label="Failed" />`. That was green against markup that does not
+    // work: the wrapper is a role-less <span>, whose implicit `generic` role
+    // PROHIBITS an accessible name, so browsers never expose the label — but
+    // Testing Library matches `aria-label` regardless of role. The status has to
+    // be real text in the tree instead.
+    it('carries the status of a visually bare dot as sr-only text', () => {
+      render(<Dot data-testid="dot" status="failed" srLabel="Failed" />);
+      const label = screen.getByText('Failed');
+      expect(label).toHaveClass('sr-only');
+      expect(screen.getByTestId('dot')).toContainElement(label);
+      // The invariant, not just the presence: the label must be a DIRECT child
+      // of the flex wrapper. Inside `.truncate` it becomes a static flex item
+      // and `gap-1.5` doubles a bare dot's width from 6px to 12px — measured in
+      // Chromium. An absolutely-positioned direct child is not a flex item and
+      // costs nothing. Same shape as spinner.tsx.
+      expect(label.closest('.truncate')).toBeNull();
+      expect(label.parentElement).toBe(screen.getByTestId('dot'));
+    });
+
+    // An srLabel next to a visible label would announce the status twice.
+    it('ignores srLabel when children are present', () => {
+      render(
+        <Dot data-testid="dot" status="failed" srLabel="Failed">
+          Payment failed
+        </Dot>
+      );
+      expect(screen.queryByText('Failed')).toBeNull();
+      expect(screen.getByTestId('dot').querySelector('.sr-only')).toBeNull();
+      expect(screen.getByText('Payment failed')).toHaveClass('truncate');
+    });
+
+    it('renders no sr-only span when srLabel is omitted', () => {
+      render(<Dot data-testid="dot" status="failed" />);
+      expect(screen.getByTestId('dot').querySelector('.sr-only')).toBeNull();
     });
   });
 
