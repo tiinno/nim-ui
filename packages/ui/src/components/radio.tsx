@@ -76,7 +76,17 @@ const radioGroupItemVariants = cva(
   }
 );
 
-const radioGroupIndicatorVariants = cva('rounded-full bg-current', {
+// The dot is a <span>, not a <div>: Radix renders RadioGroup.Indicator as a
+// <span>, which takes phrasing content only, so a block-level child is invalid
+// HTML in every consumer app.
+//
+// `block` is load-bearing precisely because the tag changed. Sizing here is set
+// by height/width utilities, and those do not apply to a non-replaced inline
+// box — the <div> was safe by default, a bare <span> would not be. The
+// indicator's `flex` does blockify this child today, so `block` is a no-op in
+// the current markup, but that invariant lives in a *different* element's class
+// string. Declaring it on the dot keeps the sizing correct on its own terms.
+const radioGroupIndicatorVariants = cva('block rounded-full bg-current', {
   variants: {
     size: {
       sm: 'h-2 w-2',
@@ -103,7 +113,7 @@ const RadioGroupItem = React.forwardRef<
     {...props}
   >
     <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-      <div className={radioGroupIndicatorVariants({ size })} />
+      <span className={radioGroupIndicatorVariants({ size })} />
     </RadioGroupPrimitive.Indicator>
   </RadioGroupPrimitive.Item>
 ));
