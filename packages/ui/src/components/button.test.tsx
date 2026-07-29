@@ -396,6 +396,106 @@ describe('Button', () => {
     });
   });
 
+  // The aria-disabled case deliberately keeps its pointer events (see the cva
+  // note), so `:hover` still matches on a loading button. Without a counterpart
+  // the variant's `hover:bg-*` lightens it while `cursor-not-allowed` is
+  // showing — the colour says clickable, the cursor says no.
+  //
+  // The fix restores the variant's RESTING colour under
+  // `[aria-disabled="true"]:hover`, which is (0,3,0) against the plain hover's
+  // (0,2,0). Restoring rather than suppressing keeps every enabled-path rule
+  // byte-identical: `hover:bg-*` stays in the class string, so tailwind-merge
+  // still lets a consumer's own `hover:bg-*` replace it, and nothing outranks
+  // calendar's `[&>button]:hover:bg-primary-700` (0,2,1) any more than before.
+  describe('Hover while aria-disabled', () => {
+    /**
+     * Class names here are ASSEMBLED, never written as literals.
+     *
+     * Tailwind scans test files. A literal `aria-disabled:hover:bg-*` in this
+     * file would compile a real rule into `dist/styles.css` even after
+     * `button.tsx` stopped emitting the class — which would let the
+     * compiled-CSS half of `src/aria-disabled-hover.test.ts` pass over a
+     * reverted fix. Same trick as the `pointer-events-none` check above.
+     */
+    const restingWhileHovered = (utility: string, dark = false) =>
+      [...(dark ? ['dark'] : []), 'aria-disabled', 'hover', utility].join(':');
+
+    // Each row is [variant, light resting utilities, dark resting utilities] —
+    // exactly the utilities the variant already applies at rest, re-applied for
+    // the hovered aria-disabled case. Nothing new is invented here; if a value
+    // below does not match the variant's resting colour, one of them is wrong.
+    it.each([
+      ['primary', ['bg-neutral-950'], ['bg-neutral-100']],
+      ['default', ['bg-neutral-950'], ['bg-neutral-100']],
+      ['secondary', ['bg-neutral-100'], ['bg-neutral-800']],
+      ['outline', ['border-neutral-200', 'bg-white/70'], ['border-neutral-800', 'bg-neutral-950/60']],
+      ['ghost', ['bg-transparent', 'text-neutral-700'], ['bg-transparent', 'text-neutral-300']],
+      ['destructive', ['bg-error-700'], ['bg-error-300']],
+    ])('%s keeps its resting colours while hovered and aria-disabled', (variant, light, dark) => {
+      const classes = buttonVariants({ variant: variant as any });
+
+      for (const utility of light) {
+        expect(classes).toContain(restingWhileHovered(utility));
+      }
+      for (const utility of dark) {
+        expect(classes).toContain(restingWhileHovered(utility, true));
+      }
+    });
+
+    // Proves the rows above are counterparts and not replacements: the enabled
+    // hover styling is untouched, so a normal button still lightens on hover.
+    it.each([
+      ['primary', ['hover:bg-neutral-800', 'dark:hover:bg-white']],
+      ['default', ['hover:bg-neutral-800', 'dark:hover:bg-white']],
+      ['secondary', ['hover:bg-neutral-200', 'dark:hover:bg-neutral-700']],
+      [
+        'outline',
+        [
+          'hover:border-neutral-300',
+          'hover:bg-neutral-50',
+          'dark:hover:border-neutral-700',
+          'dark:hover:bg-neutral-900',
+        ],
+      ],
+      [
+        'ghost',
+        [
+          'hover:bg-neutral-100',
+          'hover:text-neutral-950',
+          'dark:hover:bg-neutral-900',
+          'dark:hover:text-neutral-50',
+        ],
+      ],
+      ['destructive', ['hover:bg-error-800', 'dark:hover:bg-error-200']],
+    ])('%s still changes colour on hover when it is not aria-disabled', (variant, hovers) => {
+      const classes = buttonVariants({ variant: variant as any });
+
+      for (const utility of hovers) {
+        expect(classes).toContain(utility);
+      }
+    });
+
+    it('applies the hover counterparts to a rendered loading button', () => {
+      render(<Button loading>Save</Button>);
+      const button = screen.getByRole('button');
+
+      expect(button).toHaveClass(restingWhileHovered('bg-neutral-950'));
+      expect(button).toHaveClass(restingWhileHovered('bg-neutral-100', true));
+    });
+
+    // The counterpart is keyed on the ATTRIBUTE, not on the `loading` prop, so
+    // it also covers a consumer-set `aria-disabled` and the five components
+    // that compose `buttonVariants` — including `PaginationLink`, which is an
+    // <a> and can never be natively disabled.
+    it('applies the hover counterparts to a consumer-set aria-disabled button', () => {
+      render(<Button aria-disabled>Save</Button>);
+      const button = screen.getByRole('button');
+
+      expect(button).toHaveAttribute('aria-disabled', 'true');
+      expect(button).toHaveClass(restingWhileHovered('bg-neutral-950'));
+    });
+  });
+
   describe('Ref Forwarding', () => {
     it('forwards ref to button element', () => {
       const ref = { current: null };

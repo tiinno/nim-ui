@@ -39,18 +39,36 @@ import { cn } from '../lib/utils';
  * aria-disabled case keeps its pointer events and suppresses activation in the
  * click handler instead; `cursor-not-allowed` carries the affordance. None of the
  * three is colour-bearing, so none needs a `dark:` twin.
+ *
+ * Keeping pointer events has one consequence the variants below must answer:
+ * `:hover` still matches on a loading button. So every variant pairs each of its
+ * hover colours with an `aria-disabled:hover:*` counterpart that re-applies that
+ * variant's own RESTING utility — otherwise the button lightens under the
+ * pointer while `cursor-not-allowed` is showing, and the colour says "clickable"
+ * while the cursor says the opposite. Each counterpart carries the same `dark:`
+ * prefix as the hover class it answers, so both themes are covered.
+ *
+ * The counterparts RESTORE rather than suppress on purpose. Tailwind's `not-*`
+ * variant would read better, but it compiles to `:not(*[aria-disabled="true"])`
+ * on the *enabled* hover — (0,3,0) instead of (0,2,0) — which silently outranks
+ * `calendar.tsx`'s `[&>button]:hover:*` override of the composed `ghost` variant
+ * at (0,2,1), and outranks any consumer `className` hover, which tailwind-merge
+ * can no longer de-duplicate once the modifier set differs. Restoring is purely
+ * additive: every rule it adds is gated on the attribute, so the enabled path's
+ * cascade is untouched. `src/aria-disabled-hover.test.ts` asserts all of this
+ * against the compiled stylesheet.
  */
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium shadow-control transition-all duration-(--duration-fast) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:active:scale-100',
   {
     variants: {
       variant: {
-        primary: 'bg-neutral-950 text-white hover:bg-neutral-800 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white',
-        default: 'bg-neutral-950 text-white hover:bg-neutral-800 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white',
-        secondary: 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200 focus-visible:ring-primary-300 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700',
-        outline: 'border border-neutral-200 bg-white/70 text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50 focus-visible:ring-primary-300 dark:border-neutral-800 dark:bg-neutral-950/60 dark:text-neutral-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900',
-        ghost: 'bg-transparent shadow-none text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 focus-visible:ring-primary-300 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-neutral-50',
-        destructive: 'bg-error-700 text-white hover:bg-error-800 focus-visible:ring-error-400 dark:bg-error-300 dark:text-error-950 dark:hover:bg-error-200',
+        primary: 'bg-neutral-950 text-white hover:bg-neutral-800 aria-disabled:hover:bg-neutral-950 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white dark:aria-disabled:hover:bg-neutral-100',
+        default: 'bg-neutral-950 text-white hover:bg-neutral-800 aria-disabled:hover:bg-neutral-950 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white dark:aria-disabled:hover:bg-neutral-100',
+        secondary: 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200 aria-disabled:hover:bg-neutral-100 focus-visible:ring-primary-300 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700 dark:aria-disabled:hover:bg-neutral-800',
+        outline: 'border border-neutral-200 bg-white/70 text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50 aria-disabled:hover:border-neutral-200 aria-disabled:hover:bg-white/70 focus-visible:ring-primary-300 dark:border-neutral-800 dark:bg-neutral-950/60 dark:text-neutral-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 dark:aria-disabled:hover:border-neutral-800 dark:aria-disabled:hover:bg-neutral-950/60',
+        ghost: 'bg-transparent shadow-none text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 aria-disabled:hover:bg-transparent aria-disabled:hover:text-neutral-700 focus-visible:ring-primary-300 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-neutral-50 dark:aria-disabled:hover:bg-transparent dark:aria-disabled:hover:text-neutral-300',
+        destructive: 'bg-error-700 text-white hover:bg-error-800 aria-disabled:hover:bg-error-700 focus-visible:ring-error-400 dark:bg-error-300 dark:text-error-950 dark:hover:bg-error-200 dark:aria-disabled:hover:bg-error-300',
       },
       size: {
         sm: 'h-8 px-3 text-sm',
