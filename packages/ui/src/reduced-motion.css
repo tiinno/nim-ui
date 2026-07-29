@@ -9,51 +9,50 @@
  * iteration and every transition collapses to 0.01ms.
  *
  * Deciding that for a whole application is the application's call, not a
- * component library's, so this file is being split out to become **opt-in**
- * (NIMUI-33). It is extracted here unchanged and still imported by
- * `styles.css`, so behaviour is identical today; a later slice drops that
- * import and consumers who want the damper add it themselves:
+ * component library's, so as of NIMUI-33 this file is **opt-in**: nothing in
+ * the kit imports it, `styles.css` least of all, and it reaches a page only
+ * when the application asks for it by name:
  *
  *   @import '@nim-ui/components/reduced-motion.css';
  *
- * ENTRANCE/EXIT animations are unaffected by that removal: overlays, menus,
+ * ENTRANCE/EXIT animations never depended on it: overlays, menus,
  * toasts and the rest each ship a `motion-reduce:animate-none` counterpart in
  * the component's own class string, guarded by
  * `packages/ui/src/motion-reduce.test.ts` (which fails the build if a
  * component ever animates without one).
  *
- * MOVEMENT-BEARING TRANSITIONS are likewise unaffected, as of NIMUI-43: the
- * chevrons, the switch thumb, the meter/progress/bar fills, the product-card
- * zoom, the card lift and the toast swipe each carry a counterpart that
- * switches the `transition-property` longhand off in the component's own class
- * string — a different longhand from the two this file clamps, so it keeps
- * working once the clamp is gone. The same guard file pins that inventory.
- * Colour and opacity transitions (~55 sites) deliberately carry NO counterpart:
- * a crossfade moves nothing, so removing the import below is exactly what gives
- * them back, which is the intent.
+ * MOVEMENT-BEARING TRANSITIONS are likewise independent of it, as of NIMUI-43:
+ * the chevrons, the switch thumb, the meter/progress/bar fills, the
+ * product-card zoom, the card lift and the toast swipe each carry a
+ * counterpart that switches the `transition-property` longhand off in the
+ * component's own class string — a different longhand from the two this file
+ * clamps, so it kept working once the clamp went away. The same guard file
+ * pins that inventory. Colour and opacity transitions (~55 sites) deliberately
+ * carry NO counterpart: a crossfade moves nothing, so they now run for
+ * everyone unless an application opts this file back in, which is the intent.
  *
- * LOADING INDICATORS ARE THE DELIBERATE EXCEPTION. `Spinner`, `Skeleton`,
- * `Dot`, `StatusPill` and `Button`'s loading state carry a bare
- * `animate-spin` / `animate-pulse` and are exempt from that contract
- * (`EXEMPT_ANIMATIONS` in motion-reduce.test.ts), so this file is the ONLY
- * thing damping them today. Removing the import restores full-speed
- * `animate-spin` / `animate-pulse` under reduced motion — which is the
- * INTENDED outcome per NIMUI-42: for a loading indicator the motion is the
- * information, and WCAG 2.2 SC 2.2.2 exempts an activity indicator on exactly
- * that basis. Note what the clamp below does to them today: it does not slow
- * these loops, it stops them dead. One 0.01ms iteration and the element sits
- * motionless at its un-animated position (Chromium reports `transform: none`
- * on the spinner), which reads as a hung UI rather than as work in flight.
+ * LOADING INDICATORS ARE THE DELIBERATE EXCEPTION, AND THE REASON THIS FILE IS
+ * NO LONGER DEFAULT. `Spinner`, `Skeleton`, `Dot`, `StatusPill` and `Button`'s
+ * loading state carry a bare `animate-spin` / `animate-pulse` and are exempt
+ * from that contract (`EXEMPT_ANIMATIONS` in motion-reduce.test.ts), so this
+ * file was the only thing damping them. They now run at full speed under
+ * reduced motion — the INTENDED outcome per NIMUI-42: for a loading indicator
+ * the motion is the information, and WCAG 2.2 SC 2.2.2 exempts an activity
+ * indicator on exactly that basis. Note what the clamp below does to them when
+ * it IS opted in: it does not slow these loops, it stops them dead. One 0.01ms
+ * iteration and the element sits motionless at its un-animated position
+ * (Chromium reports `transform: none` on the spinner), which reads as a hung
+ * UI rather than as work in flight. Opt in with that trade-off in mind.
  *
- * Why this rule wins, since the import position is easy to misread: an
+ * Why this rule wins once opted in, since import position is easy to misread: an
  * unlayered declaration outranks every layered NORMAL declaration whatever its
  * source position, and layer order is fixed by the first layer-name
  * declaration, not by where a rule sits. The inverse is the one to remember —
  * among `!important` declarations the layer order INVERTS and unlayered is the
  * WEAKEST tier, so a layered `!important` animation/transition rule would beat
- * this one. There is none today. Source order only decides against another
- * unlayered `!important` declaration on the same properties; there is none of
- * those either.
+ * this one. The kit ships none; a host application may. Source order only
+ * decides against another unlayered `!important` declaration on the same
+ * properties.
  */
 
 @media (prefers-reduced-motion: reduce) {

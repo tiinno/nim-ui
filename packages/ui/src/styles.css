@@ -3,15 +3,20 @@
 /* Shared design tokens — single source of truth (also imported by the docs site) */
 @import "./tokens.css";
 
-/* Global reduced-motion damper. Application-level, so it is a separate opt-in
-   entry point (@nim-ui/components/reduced-motion.css) that this bundle still
-   pulls in — see the file's header for what depends on it. The rule wins
-   because it is unlayered AND `!important`: an unlayered declaration outranks
-   every layered normal declaration whatever its source position. Among
-   `!important` declarations layer order inverts and unlayered is the weakest
-   tier, so a layered `!important` animation/transition rule would beat it —
-   there is none today. */
-@import "./reduced-motion.css";
+/* This bundle deliberately does NOT import ./reduced-motion.css. That file is
+   an APPLICATION-level blanket damper — selector `*`, declarations
+   `!important`, unlayered — so pulling it in here would clamp every animation
+   and transition across the consumer's whole application, including code the
+   kit does not own, with no way to opt out. It ships as its own entry point
+   instead and an application that wants it asks for it by name:
+
+     @import '@nim-ui/components/reduced-motion.css';
+
+   The kit still honours prefers-reduced-motion without it: every entrance/exit
+   animation and every movement-bearing transition carries its own
+   per-component counterpart, guarded by src/motion-reduce.test.ts. Loading
+   indicators keep animating on purpose (NIMUI-42) — see reduced-motion.css.
+   src/styles.test.ts fails if this import ever comes back. */
 
 /* Class/attribute-based dark mode — `.dark` for apps, `[data-theme="dark"]` for Starlight docs.
    Without this, Tailwind v4 `dark:` follows the OS (prefers-color-scheme) and ignores theme toggles. */

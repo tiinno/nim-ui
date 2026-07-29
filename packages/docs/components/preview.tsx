@@ -71,8 +71,12 @@ export function ComponentPreview({
                 </svg>
                 Code
               </span>
+              {/* The reduced-motion counterpart switches the transition-property
+                  longhand off, exactly as the kit's own moving transitions do.
+                  The docs site does not opt into the kit's blanket damper, so
+                  this chevron is covered by nothing else. */}
               <svg
-                className="size-3.5 text-fd-muted-foreground transition-transform group-open:rotate-90"
+                className="size-3.5 text-fd-muted-foreground transition-transform motion-reduce:transition-none group-open:rotate-90"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"

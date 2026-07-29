@@ -38,17 +38,17 @@ import { resolve, join } from 'path';
  *
  * ## Why the transition arm exists, and why it covers so few of them
  *
- * `src/reduced-motion.css` still ships a blanket `*` reset that clamps every
- * `animation-duration` / `transition-duration` in the consumer's whole
- * application. That reset is on its way to being opt-in (NIMUI-33), which means
- * every transition in this kit is currently covered by nothing else. The ones
- * that actually MOVE something therefore need their own per-component cover
- * first — that is the arm below.
+ * `src/reduced-motion.css` holds a blanket `*` reset that clamps every
+ * `animation-duration` / `transition-duration` on the page. As of NIMUI-33 the
+ * kit no longer imports it — it is a published opt-in entry point and nothing
+ * else — so this arm is the ONLY reduced-motion cover the kit's moving
+ * transitions have.
  *
- * The counterpart works on a different longhand from the blanket reset: it sets
+ * The counterpart works on a different longhand from that reset: it sets
  * `transition-property: none`, which the reset never touches, so the transition
  * does not run at all rather than running a 0.01ms one. Correctness by
- * construction, and it survives the reset being removed.
+ * construction, and it is why removing the import did not regress anything
+ * here.
  *
  * **Colour and opacity transitions are deliberately left uncovered.** ~55 of
  * the kit's ~70 transitions are `transition-colors`, and a colour crossfade is
@@ -70,16 +70,38 @@ const distStylesPath = resolve(__dirname, '../dist/styles.css');
 /**
  * Animation names deliberately EXEMPT from the reduced-motion pairing.
  *
- * - `spin` / `pulse` — loading spinners and skeletons. Removing the animation
- *   outright removes the only signal that something is in flight, which is a
- *   product decision, not an accessibility one, and is being made separately.
- * - `ping` / `bounce` — Tailwind's built-in attention loops. Same reasoning;
- *   listed pre-emptively so adding one does not silently trip this guard with
- *   an unrelated failure message.
+ * - `spin` / `pulse` — loading indicators. **Settled: they keep animating under
+ *   `prefers-reduced-motion` (NIMUI-42).** For a loading indicator the motion
+ *   *is* the information — it is the only signal that work is in flight — and
+ *   WCAG 2.2 SC 2.2.2 exempts an activity indicator on exactly that basis. This
+ *   is not a deferred question any more, so do not "finish the job" by pairing
+ *   them; the suite below fails if you do.
+ *
+ *   Worth knowing why it was settled the way it was: until NIMUI-33 the blanket
+ *   reset in `src/reduced-motion.css` shipped in the default bundle and was the
+ *   only thing reaching these five. It did not *slow* the loops, it stopped
+ *   them dead — one 0.01ms iteration and the element sits at its un-animated
+ *   position (Chromium reports `transform: none` on the spinner), which reads
+ *   as a hung interface rather than as work in flight. Full speed is better
+ *   than frozen, and an application that disagrees can opt the reset back in
+ *   with one `@import`.
+ * - `ping` / `bounce` — Tailwind's built-in attention loops. Listed
+ *   pre-emptively so adding one does not silently trip this guard with an
+ *   unrelated failure message. Unlike the two above, nobody has ruled on these:
+ *   they are not activity indicators, so if one ever ships, decide it on its
+ *   own merits rather than inheriting NIMUI-42.
  * - `none` — this is the counterpart itself (`motion-reduce:animate-none`).
  *   Without it the scan would demand a counterpart for every counterpart.
  */
 const EXEMPT_ANIMATIONS = new Set(['none', 'spin', 'pulse', 'ping', 'bounce']);
+
+/**
+ * The exempt animations that are ACTIVITY INDICATORS, as opposed to the
+ * counterpart's own `none` and the two attention loops nobody has ruled on.
+ * Separated because only these carry the NIMUI-42 decision, and only these get
+ * asserted as deliberately unpaired below.
+ */
+const LOADING_ANIMATIONS = new Set(['spin', 'pulse']);
 
 /**
  * The three parts of the transition counterpart, kept apart on purpose.
@@ -222,6 +244,12 @@ interface ClassGroup {
   tokens: Set<string>;
   /** Entrance/exit animations used in that literal. */
   usages: AnimationUsage[];
+  /**
+   * Activity-indicator animations (`LOADING_ANIMATIONS`) used in that literal.
+   * Kept apart from `usages` rather than dropped, so the NIMUI-42 exemption can
+   * be asserted instead of merely implied by an absence.
+   */
+  loaderUsages: AnimationUsage[];
   /** Transitions used in that literal, movement-bearing or not. */
   transitions: TransitionUsage[];
 }
@@ -349,6 +377,7 @@ function extractClassGroups(file: string, source: string): ClassGroup[] {
   return extractStringLiterals(source).map((text) => {
     const tokenList = text.split(/\s+/).filter(Boolean);
     const usages: AnimationUsage[] = [];
+    const loaderUsages: AnimationUsage[] = [];
     const transitions: TransitionUsage[] = [];
 
     for (const token of tokenList) {
@@ -393,19 +422,29 @@ function extractClassGroups(file: string, source: string): ClassGroup[] {
       const animation = match[1];
       // `noUncheckedIndexedAccess` — the capture group is always present when
       // the regex matched, but narrow it explicitly rather than asserting.
-      if (animation === undefined || EXEMPT_ANIMATIONS.has(animation)) continue;
+      if (animation === undefined) continue;
 
       const prefix = token.slice(0, token.length - `animate-${animation}`.length);
-      usages.push({
+      const usage: AnimationUsage = {
         file,
         className: token,
         prefix,
         animation,
         counterpart: `${prefix}motion-reduce:animate-none`,
-      });
+      };
+
+      // Activity indicators are recorded on their own list rather than skipped,
+      // so their exemption is asserted rather than inferred from silence.
+      if (LOADING_ANIMATIONS.has(animation)) {
+        loaderUsages.push(usage);
+        continue;
+      }
+      if (EXEMPT_ANIMATIONS.has(animation)) continue;
+
+      usages.push(usage);
     }
 
-    return { file, text, tokens: new Set(tokenList), usages, transitions };
+    return { file, text, tokens: new Set(tokenList), usages, loaderUsages, transitions };
   });
 }
 
@@ -416,6 +455,7 @@ const scanned = componentFiles.map((file) => ({
 
 const allUsages = scanned.flatMap((s) => s.groups.flatMap((g) => g.usages));
 const allGroups = scanned.flatMap((s) => s.groups);
+const allLoaderUsages = scanned.flatMap((s) => s.groups.flatMap((g) => g.loaderUsages));
 const allTransitions = allGroups.flatMap((g) => g.transitions);
 const movementGroups = allGroups.filter((g) => g.transitions.some((t) => t.movement));
 
@@ -537,6 +577,78 @@ describe('every entrance/exit animation is paired with motion-reduce:animate-non
         '`motion-reduce:animate-none` at (0,1,0) loses the cascade and the animation still ' +
         'plays for reduced-motion users.\n' +
         `Exempt by design: ${[...EXEMPT_ANIMATIONS].join(', ')}.`
+    ).toEqual([]);
+  });
+});
+
+/**
+ * Exact inventory of the ACTIVITY-INDICATOR animations the library ships, as
+ * `<file>: <class>`.
+ *
+ * Pinned exactly, like the entrance/exit list, and for the same reason: a bare
+ * "no counterpart was found" assertion passes the moment the tokeniser stops
+ * seeing these classes, which is precisely the blindness this file exists to
+ * prevent. If a component gains or loses a loading indicator, update this list
+ * in the same commit.
+ */
+const EXPECTED_LOADING_USAGES = [
+  'button.tsx: animate-spin',
+  'dot.tsx: animate-pulse',
+  'skeleton.tsx: animate-pulse',
+  'spinner.tsx: animate-spin',
+  'status-pill.tsx: animate-pulse',
+];
+
+/**
+ * The other side of the contract: loading indicators must stay UNPAIRED.
+ *
+ * NIMUI-42 settled this — for an activity indicator the motion is the
+ * information, and WCAG 2.2 SC 2.2.2 exempts it on that basis. Since NIMUI-33
+ * made the blanket reset opt-in, nothing else damps these five, so a
+ * well-meaning contributor pairing one would re-freeze it for reduced-motion
+ * users and there would be no failing test to notice. This is that test.
+ *
+ * It is deliberately a HARD failure rather than a lint: reverting the decision
+ * is allowed, but it has to be done by editing this file, in the same commit,
+ * where the reasoning above is impossible to miss.
+ */
+describe('loading indicators are deliberately NOT paired (NIMUI-42)', () => {
+  it('detects exactly the known inventory of activity-indicator animations', () => {
+    const found = allLoaderUsages.map((u) => `${u.file}: ${u.className}`).sort();
+
+    expect(
+      found,
+      'The set of detected loading indicators drifted from EXPECTED_LOADING_USAGES.\n' +
+        '- FEWER than expected usually means the tokeniser regressed, so the exemption ' +
+        'assertion below is now passing vacuously. Fix the scan.\n' +
+        '- MORE (or different) means a component gained or changed a loading indicator. ' +
+        'That is fine — update the list in the same commit, so the change is visible in ' +
+        'review.'
+    ).toEqual([...EXPECTED_LOADING_USAGES].sort());
+  });
+
+  it.each(componentFiles)('%s does not switch its loading indicator off', (file) => {
+    const entry = scanned.find((s) => s.file === file)!;
+
+    const paired = entry.groups.flatMap((group) =>
+      group.loaderUsages
+        .filter((u) => group.tokens.has(u.counterpart))
+        .map((u) => `${u.className} was paired with "${u.counterpart}"`)
+    );
+
+    expect(
+      paired,
+      `${file} switches a loading indicator off under prefers-reduced-motion. That is a ` +
+        'decided behaviour, not an omission (NIMUI-42): for an activity indicator the ' +
+        'motion IS the information, and WCAG 2.2 SC 2.2.2 exempts it on that basis. ' +
+        'Stopping it leaves the element frozen at its un-animated position, which reads ' +
+        'as a hung interface rather than as work in flight.\n' +
+        'An application that wants these damped opts the blanket reset back in with one ' +
+        "line — `@import '@nim-ui/components/reduced-motion.css';` — rather than the kit " +
+        'deciding it for everyone.\n' +
+        'If the decision genuinely changed, remove the animation from LOADING_ANIMATIONS ' +
+        'and EXEMPT_ANIMATIONS in this file so the normal pairing contract applies, and ' +
+        'say why in the same commit.'
     ).toEqual([]);
   });
 });
@@ -671,9 +783,9 @@ describe('every movement-bearing transition is paired with a reduced-motion coun
         missing,
         `${file} transitions something that moves without honouring prefers-reduced-motion.\n` +
           'Add the counterpart class to the same class string as the transition. It sets the ' +
-          '`transition-property` longhand, which the blanket reset in reduced-motion.css never ' +
-          'touches — so the transition does not run at all, and it keeps not running once that ' +
-          'reset becomes opt-in (NIMUI-33).\n' +
+          '`transition-property` longhand, so the transition does not run at all. Nothing else ' +
+          'covers it: the blanket reset in reduced-motion.css became opt-in with NIMUI-33 and ' +
+          'the kit no longer imports it.\n' +
           'If the transition genuinely moves nothing, the fix is the property list, not an ' +
           'exemption: name the properties you actually animate instead of reaching for ' +
           '`transition-all`.\n' +
@@ -905,14 +1017,14 @@ describe('dist/styles.css — the transition counterparts compile and win', () =
       );
 
       // The `transition-property` longhand specifically. Clamping the DURATION
-      // is what the blanket reset in reduced-motion.css already does, and that
-      // reset is on its way out; switching the property list off is what makes
-      // this cover survive without it.
+      // is all the blanket reset in reduced-motion.css ever did, and that reset
+      // is opt-in now — switching the property list off is what makes this
+      // cover stand on its own.
       expect(
         body,
         `${selector} does not switch the transition-property longhand off, so it only ` +
-          'duplicates what the blanket reset already does and will stop working when that ' +
-          'reset becomes opt-in.'
+          'duplicates what the opt-in blanket reset does — and the kit no longer ships that ' +
+          'reset, so nothing covers this transition at all.'
       ).toMatch(/transition-property:\s*none/);
 
       const transitionIdx = findSelectorIndex(distCss, toSelector(usage.className));

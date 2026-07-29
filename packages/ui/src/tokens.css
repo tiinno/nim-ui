@@ -191,8 +191,9 @@
 /* The global reduced-motion damper used to live here. It is an
    application-level `*` reset, not a token, and this file is imported straight
    into consumer stylesheets (including the docs site), so it moved to
-   ./reduced-motion.css on its way to becoming opt-in (NIMUI-33). styles.css
-   still imports it, so nothing about the compiled bundle's behaviour changed. */
+   ./reduced-motion.css and, as of NIMUI-33, is opt-in: nothing in the kit
+   imports it. Add `@import '@nim-ui/components/reduced-motion.css';` to your
+   own stylesheet if you want an application-wide clamp. */
 
 @layer base {
   :root {

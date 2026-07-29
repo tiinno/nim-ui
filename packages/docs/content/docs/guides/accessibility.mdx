@@ -396,9 +396,9 @@ Always pair color with another visual indicator:
 
 ## Reduced Motion
 
-Nim UI honours `prefers-reduced-motion` automatically. There is **no prop, no provider, and no consumer code** to write: import the stylesheet and every entrance and exit animation in the kit switches itself off for users who have asked their OS for reduced motion.
+Nim UI honours `prefers-reduced-motion` automatically. There is **no prop, no provider, and no consumer code** to write: import the stylesheet and every entrance and exit animation in the kit -- and every transition that moves something -- switches itself off for users who have asked their OS for reduced motion.
 
-Two layers do the work.
+It does that **per component**, in the component's own class string. The kit does not install an application-wide reset on your behalf; there is one available, opt-in, described in section 3.
 
 ### 1. Per-component `motion-reduce:animate-none`
 
@@ -412,14 +412,34 @@ The repeated `data-[state=...]` prefix on the counterpart is load-bearing, not n
 
 This applies to Accordion, AlertDialog, Badge, Collapsible, Combobox, Drawer, DropdownMenu, Modal, Popover, Select, Toast, and Tooltip -- with the exception of Badge, whose animation carries no modifier and therefore uses the bare `motion-reduce:animate-none`.
 
-Loading indicators are excluded from *this* per-component treatment. `Spinner`, `Skeleton`, `Dot`, `StatusPill`, and `Button`'s loading state keep their `animate-spin` / `animate-pulse` class, because switching a loading indicator off outright removes the only signal that work is in flight. What actually reaches them under reduced motion is decided by the global damper below.
+**Loading indicators are deliberately excluded, and they keep animating.** `Spinner`, `Skeleton`, `Dot`, `StatusPill`, and `Button`'s loading state carry a bare `animate-spin` / `animate-pulse` with no counterpart, on purpose: for an activity indicator the motion *is* the information -- it is the only signal that work is in flight -- and [WCAG 2.2 SC 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html) exempts an activity indicator on exactly that basis. A frozen spinner does not read as "reduced motion", it reads as a hung interface. If your product needs them damped, section 3 is how.
 
-### 2. A global animation damper in the kit's stylesheet
+### 2. Per-component transition cover for the things that move
 
-`reduced-motion.css`, which the compiled `@nim-ui/components/styles` bundle imports, ships a blanket reset, so any animation the kit does not own -- including one you add in your own app -- is reduced to an imperceptible tick:
+The same idea applies to transitions, on a different longhand. Every transition in the kit that can actually change an element's position or size -- the accordion and tree-view chevrons, the switch thumb, the meter / progress / bar-chart fills, the product-card zoom, the card lift, the toast swipe -- ships a counterpart that switches the property list off. Switch's thumb, as shipped:
+
+```tsx
+'pointer-events-none block rounded-full bg-white shadow-lg ring-0 transition-transform motion-reduce:transition-none duration-(--duration-fast) ease-out dark:bg-neutral-100'
+```
+
+`transition-property: none` means the transition never runs, rather than running an imperceptibly short one. The thumb still arrives at the checked position -- it just gets there instantly.
+
+Colour and opacity transitions (about 55 of them) deliberately carry **no** counterpart. A crossfade moves nothing, so clamping it buys no accessibility and makes every hover in the kit feel broken. Nor does the 2-3% press squeeze on Button, CTA and the Toast action: it is an in-place squeeze the user initiates and releases, a control's own affordance rather than the large movement or parallax WCAG 2.3.3 is about.
+
+### 3. The application-wide reset is opt-in
+
+The kit also publishes a blanket reset, but **it is not part of the default stylesheet**. Deciding motion policy for a whole document is the application's call, not a component library's: the rule below has a `*` selector, `!important` declarations and no cascade layer, so it reaches every element on the page -- yours, ours, and any third-party widget rendered alongside -- with no way for anything to opt out of it.
+
+If you want it, ask for it by name. One line, anywhere in your stylesheet:
 
 ```css
-/* Applied internally by Nim UI (packages/ui/src/reduced-motion.css) */
+@import '@nim-ui/components/reduced-motion.css';
+```
+
+That is exactly this, and nothing else:
+
+```css
+/* @nim-ui/components/reduced-motion.css */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -429,7 +449,9 @@ Loading indicators are excluded from *this* per-component treatment. `Spinner`, 
 }
 ```
 
-Note how far that rule reaches. It is `!important` and unlayered, so it outranks every utility: under reduced motion, `animate-spin` and `animate-pulse` run a single 0.01ms iteration and stop, and every `transition-*` in your app -- Nim's or your own -- collapses to 0.01ms. That is the current behaviour of a deliberately blunt reset, not a per-component design decision, and the treatment of loading indicators is under review. If you need a spinner to keep turning for reduced-motion users, re-declare it in your own stylesheet.
+Two things to weigh before adding it. It reaches far beyond Nim -- every `transition-*` in your own code collapses to 0.01ms too. And it does not *slow* a looping animation, it stops it: after one 0.01ms iteration the element sits motionless at its un-animated position, so the kit's spinners and skeletons freeze rather than easing off. That trade is yours to make; the kit no longer makes it for you.
+
+Sections 1 and 2 do not depend on this import. Entrance and exit animations, and the transitions that move, are covered either way.
 
 ### Overriding an overlay animation yourself
 
