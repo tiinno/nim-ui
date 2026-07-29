@@ -107,6 +107,30 @@ showToast({
 // - Auto-dismissal respects prefers-reduced-motion
 ```
 
+### Skeleton
+
+```tsx
+<SkeletonGroup loading={isLoading} fallback={<Skeleton className="h-4 w-40" />}>
+  <p>{user.name}</p>
+</SkeletonGroup>
+
+// Renders:
+// <div>
+//   <span role="status" class="sr-only">Loading</span>
+//   <div aria-busy="true">
+//     <div aria-hidden="true" class="animate-pulse …" />
+//   </div>
+// </div>
+//
+// - Each Skeleton is aria-hidden: placeholders carry no information, and a
+//   surface shows several of them
+// - SkeletonGroup owns the single role="status" region (SC 4.1.3), so the
+//   announcement belongs to the surface, not to each placeholder
+// - The region is a SIBLING of the aria-busy host: aria-busy defers
+//   announcements for its own subtree, which is the window we announce in
+// - The region stays mounted across the transition; only its text changes
+```
+
 ### Tabs
 
 ```tsx

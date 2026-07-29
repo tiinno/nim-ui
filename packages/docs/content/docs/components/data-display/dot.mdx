@@ -81,20 +81,24 @@ import { Dot } from '@nim-ui/components';
 
 ## Bare dots
 
-Without a label the dot stays visual-only — give it an `aria-label` so the status survives for screen readers.
+Without a visible label the dot is colour-only, so the status has to be carried as real text — pass `srLabel`.
+
+An `aria-label` on `Dot` does **not** work: the wrapper is a role-less `<span>`, and its implicit `generic` role prohibits an accessible name, so browsers never expose it and screen readers announce nothing. (`role="img"` is not the fix either — it prunes descendant text, which would break the labelled form above.)
+
+`srLabel` renders screen-reader-only text as a direct child of the wrapper, so it stays out of flow and the dot keeps its exact 6px footprint. Hand-rolling it as a child instead — `<Dot><span className="sr-only">…</span></Dot>` — routes it through the label wrapper, which *is* a flex item, and `gap-1.5` silently doubles the dot's width. `srLabel` is ignored when children are present, so a labelled dot can never announce twice.
 
 <ComponentPreview title="Bare Dots">
   <div className="flex items-center gap-3">
-    <Dot status="active" aria-label="Active" />
-    <Dot status="warning" aria-label="Warning" />
-    <Dot status="failed" aria-label="Failed" />
+    <Dot status="active" srLabel="Active" />
+    <Dot status="warning" srLabel="Warning" />
+    <Dot status="failed" srLabel="Failed" />
   </div>
 
   <PreviewCode>
 ```tsx
-<Dot status="active" aria-label="Active" />
-<Dot status="warning" aria-label="Warning" />
-<Dot status="failed" aria-label="Failed" />
+<Dot status="active" srLabel="Active" />
+<Dot status="warning" srLabel="Warning" />
+<Dot status="failed" srLabel="Failed" />
 ```
   </PreviewCode>
 </ComponentPreview>
@@ -122,6 +126,12 @@ Without a label the dot stays visual-only — give it an `aria-label` so the sta
       description: 'Animate the dot for live, in-flight states',
     },
     {
+      name: 'srLabel',
+      type: 'string',
+      default: '-',
+      description: 'Screen-reader-only status text for a visually bare dot; ignored when children are present',
+    },
+    {
       name: 'className',
       type: 'string',
       default: '-',
@@ -139,7 +149,7 @@ Without a label the dot stays visual-only — give it an `aria-label` so the sta
 ## Accessibility
 
 - The dot itself is `aria-hidden` — the label carries the meaning.
-- Bare dots (no children) must have an `aria-label` describing the status.
+- Visually bare dots need `srLabel`, not an `aria-label`: the wrapper is a role-less `<span>` (`generic` role), which prohibits naming, so an `aria-label` is silently dropped by the browser.
 - Color alone never conveys state: pair bare dots with a visible label elsewhere in the row, or use the labeled form.
 
 ## Best Practices

@@ -14,8 +14,12 @@ import { cn } from '../lib/utils';
  * <Dot status="active">Online</Dot>
  *
  * @example
- * // Bare dot in a dense cell (label the status for screen readers)
- * <Dot status="failed" aria-label="Failed" />
+ * // Visually bare dot in a dense cell — carry the status in sr-only text.
+ * // NOT `aria-label`: the wrapper is a role-less <span>, whose implicit
+ * // `generic` role prohibits naming, so no browser exposes the label and real
+ * // assistive tech ignores it. `role="img"` is not the fix either — it prunes
+ * // descendant text and would break the labelled form above.
+ * <Dot status="failed" srLabel="Failed" />
  *
  * @example
  * // Live state
@@ -51,10 +55,25 @@ const dotVariants = cva('shrink-0 rounded-full', {
 
 export interface DotProps
   extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof dotVariants> {}
+    VariantProps<typeof dotVariants> {
+  /**
+   * Screen-reader-only status text for a visually bare dot (no `children`).
+   *
+   * Needed because the wrapper is a role-less `<span>`: its implicit `generic`
+   * role **prohibits** an accessible name, so `aria-label` on a `Dot` is
+   * silently dropped by every browser. The status has to be real text in the
+   * accessibility tree instead.
+   *
+   * Ignored when `children` are present — an `srLabel` alongside a visible
+   * label would announce the status twice.
+   *
+   * @default undefined
+   */
+  srLabel?: string;
+}
 
 const Dot = React.forwardRef<HTMLSpanElement, DotProps>(
-  ({ className, status, size, pulse, children, ...props }, ref) => (
+  ({ className, status, size, pulse, srLabel, children, ...props }, ref) => (
     <span
       ref={ref}
       className={cn(
@@ -68,6 +87,15 @@ const Dot = React.forwardRef<HTMLSpanElement, DotProps>(
         aria-hidden="true"
         className={cn(dotVariants({ status, size, pulse }))}
       />
+      {/*
+        A DIRECT child of the flex wrapper, never inside `.truncate` — same
+        shape as `spinner.tsx`. `.truncate` is `position: static`, so it stays
+        a flex item even when its only content is absolutely positioned, and
+        `gap-1.5` then adds 6px: a "bare" dot measures 12px instead of 6px. An
+        `sr-only` span is absolutely positioned, so as a direct child of the
+        flex container it is out of flow, is not a flex item, and costs nothing.
+      */}
+      {children == null && srLabel != null && <span className="sr-only">{srLabel}</span>}
       {children != null && <span className="truncate">{children}</span>}
     </span>
   )
