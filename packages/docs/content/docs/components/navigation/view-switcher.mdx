@@ -44,21 +44,11 @@ import {
     </DataToolbar>
     <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
       <ViewSwitcher aria-label="Order views">
-        <ViewSwitcherItem value="all" selected count={128} meta="All active orders">
-          All orders
-        </ViewSwitcherItem>
-        <ViewSwitcherItem value="review" count={12} meta="Manual approval">
-          Needs review
-        </ViewSwitcherItem>
-        <ViewSwitcherItem value="delayed" count={6} meta="Breached SLA">
-          Delayed
-        </ViewSwitcherItem>
-        <ViewSwitcherItem value="failed" count={3} meta="Payment or sync">
-          Failed
-        </ViewSwitcherItem>
-        <ViewSwitcherItem value="archived" disabled count={0}>
-          Archived
-        </ViewSwitcherItem>
+        <ViewSwitcherItem value="all" selected count={128} meta="All active orders">All orders</ViewSwitcherItem>
+        <ViewSwitcherItem value="review" count={12} meta="Manual approval">Needs review</ViewSwitcherItem>
+        <ViewSwitcherItem value="delayed" count={6} meta="Breached SLA">Delayed</ViewSwitcherItem>
+        <ViewSwitcherItem value="failed" count={3} meta="Payment or sync">Failed</ViewSwitcherItem>
+        <ViewSwitcherItem value="archived" disabled count={0}>Archived</ViewSwitcherItem>
       </ViewSwitcher>
       <ViewSwitcherActions aria-label="Saved view actions">
         <Button variant="outline" size="sm">Save view</Button>
@@ -93,15 +83,9 @@ import {
 
 <ComponentPreview title="Compact Saved Views">
   <ViewSwitcher density="compact" aria-label="Inventory views">
-    <ViewSwitcherItem value="available" selected count={320}>
-      Available
-    </ViewSwitcherItem>
-    <ViewSwitcherItem value="low" count={18}>
-      Low stock
-    </ViewSwitcherItem>
-    <ViewSwitcherItem value="reserved" count={74}>
-      Reserved
-    </ViewSwitcherItem>
+    <ViewSwitcherItem value="available" selected count={320}>Available</ViewSwitcherItem>
+    <ViewSwitcherItem value="low" count={18}>Low stock</ViewSwitcherItem>
+    <ViewSwitcherItem value="reserved" count={74}>Reserved</ViewSwitcherItem>
   </ViewSwitcher>
 
   <PreviewCode>
