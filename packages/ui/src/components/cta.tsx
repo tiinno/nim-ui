@@ -76,6 +76,13 @@ const CTA = React.forwardRef<HTMLDivElement, CTAProps>(
   }, ref) => {
     const isColoredVariant = variant === 'primary' || variant === 'gradient';
 
+    // The `active:scale-*` press feedback carries no reduced-motion counterpart
+    // on purpose — same call as `button.tsx`, reasoned there and pinned in
+    // `src/motion-reduce.test.ts`: an in-place 2–3% squeeze the user initiates
+    // and releases is a control's own affordance, not a vestibular trigger. A
+    // narrowed counterpart listing only `color` and `background-color` would
+    // compile fine and would keep the hover crossfade, so this is a choice made
+    // on that affordance argument, not a limit of the mechanism.
     const btnClasses = cn(
       'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-all duration-(--duration-fast) active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
       isColoredVariant

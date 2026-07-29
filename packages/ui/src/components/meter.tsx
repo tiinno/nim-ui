@@ -38,19 +38,22 @@ const meterVariants = cva(
   }
 );
 
-const meterFillVariants = cva('h-full rounded-full transition-all duration-(--duration-slow) ease-out', {
-  variants: {
-    tone: {
-      success: 'bg-success-500 dark:bg-success-400',
-      warning: 'bg-warning-500 dark:bg-warning-400',
-      error: 'bg-error-600 dark:bg-error-400',
-      neutral: 'bg-neutral-400 dark:bg-neutral-500',
+const meterFillVariants = cva(
+  'h-full rounded-full transition-all motion-reduce:transition-none duration-(--duration-slow) ease-out',
+  {
+    variants: {
+      tone: {
+        success: 'bg-success-500 dark:bg-success-400',
+        warning: 'bg-warning-500 dark:bg-warning-400',
+        error: 'bg-error-600 dark:bg-error-400',
+        neutral: 'bg-neutral-400 dark:bg-neutral-500',
+      },
     },
-  },
-  defaultVariants: {
-    tone: 'success',
-  },
-});
+    defaultVariants: {
+      tone: 'success',
+    },
+  }
+);
 
 export interface MeterProps
   extends React.HTMLAttributes<HTMLDivElement>,

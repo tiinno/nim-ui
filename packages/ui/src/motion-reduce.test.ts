@@ -4,14 +4,19 @@ import { resolve, join } from 'path';
 
 /**
  * Guards the kit's `prefers-reduced-motion` contract: every entrance/exit
- * animation a component applies must be switched off for users who ask for
- * reduced motion, with **zero consumer code**.
+ * animation **and every movement-bearing transition** a component applies must
+ * be switched off for users who ask for reduced motion, with **zero consumer
+ * code**.
  *
- * Two independent halves, because either one alone passes vacuously:
+ * Two arms, each with two independent halves, because either half alone passes
+ * vacuously:
  *
  * 1. **Source scan** — every `animate-*` in `src/components/*.tsx` must be
  *    paired with a `motion-reduce:animate-none` carrying the *same variant
- *    prefix*. This is what makes a future component that forgets it fail CI.
+ *    prefix*, and every transition that can move something must be paired with
+ *    the reduced-motion counterpart that switches the `transition-property`
+ *    longhand off. This is what makes a future component that forgets it fail
+ *    CI.
  *
  * 2. **Compiled-CSS assertion** — the paired class must emit a real rule
  *    inside an `@media (prefers-reduced-motion: reduce)` block in
@@ -30,6 +35,28 @@ import { resolve, join } from 'path';
  * The counterpart must carry the same `data-[…]` modifier to reach (0,2,0),
  * and must be emitted later in the stylesheet to win the tie. Both facts are
  * asserted below against the built artifact rather than assumed.
+ *
+ * ## Why the transition arm exists, and why it covers so few of them
+ *
+ * `src/reduced-motion.css` still ships a blanket `*` reset that clamps every
+ * `animation-duration` / `transition-duration` in the consumer's whole
+ * application. That reset is on its way to being opt-in (NIMUI-33), which means
+ * every transition in this kit is currently covered by nothing else. The ones
+ * that actually MOVE something therefore need their own per-component cover
+ * first — that is the arm below.
+ *
+ * The counterpart works on a different longhand from the blanket reset: it sets
+ * `transition-property: none`, which the reset never touches, so the transition
+ * does not run at all rather than running a 0.01ms one. Correctness by
+ * construction, and it survives the reset being removed.
+ *
+ * **Colour and opacity transitions are deliberately left uncovered.** ~55 of
+ * the kit's ~70 transitions are `transition-colors`, and a colour crossfade is
+ * not a vestibular trigger — clamping it buys no accessibility and makes every
+ * hover in the kit feel broken. Same for `transition-opacity`: a fade moves
+ * nothing. Do not "complete" this guard by pairing those; the classifier below
+ * treats them as non-motion on purpose and pins them, so the decision is
+ * visible rather than implied.
  *
  * This is a separate file from `styles.test.ts` on purpose: that file guards
  * a different invariant (custom `@theme` tokens that compile to dead
@@ -54,6 +81,105 @@ const distStylesPath = resolve(__dirname, '../dist/styles.css');
  */
 const EXEMPT_ANIMATIONS = new Set(['none', 'spin', 'pulse', 'ping', 'bounce']);
 
+/**
+ * The three parts of the transition counterpart, kept apart on purpose.
+ *
+ * Tailwind scans test files exactly like component files, so a counterpart
+ * written here as one literal would compile a real rule into `dist/styles.css`
+ * and keep it alive after a component stopped emitting the class — the
+ * compiled-CSS half would then pass over a reverted fix, which is the one thing
+ * it exists to catch. Assembled at runtime it is invisible to the scanner.
+ * `aria-disabled-hover.test.ts` derives its counterparts the same way, for the
+ * same reason. (Also why nothing below writes the word out in prose.)
+ */
+const MOTION_REDUCE_VARIANT = 'motion-reduce';
+const TRANSITION_UTILITY = 'transition';
+const TRANSITION_OFF = 'none';
+
+/**
+ * Named `transition-*` values that cannot move anything, so they need no
+ * counterpart.
+ *
+ * - `colors` / `opacity` — a crossfade is not motion. This is the deliberate
+ *   scope limit described in the file docblock, not an oversight.
+ * - `shadow` — `box-shadow` changes depth cues, not position.
+ * - `discrete` — sets `transition-behavior`, not a property list at all.
+ * - `none` — the counterpart itself; without it the scan would demand a
+ *   counterpart for every counterpart.
+ *
+ * Anything NOT listed here (`all`, `transform`, a bare `transition`, a
+ * `(--custom-property)` value) is treated as movement-bearing. The list fails
+ * closed on purpose: a value nobody classified yet asks for a counterpart
+ * rather than slipping through.
+ */
+const NON_MOTION_TRANSITION_VALUES = new Set(['colors', 'opacity', 'shadow', 'discrete', 'none']);
+
+/**
+ * CSS properties that may appear inside an arbitrary bracketed property list
+ * without making it movement-bearing.
+ *
+ * Same fail-closed shape: a bracketed list is exempt only when EVERY property
+ * in it is listed here. A list naming `width` or `inset` added tomorrow moves
+ * something and will be asked for a counterpart, which a keyword-spotting rule
+ * (does the list happen to mention a transform?) would have let through
+ * silently.
+ *
+ * Examples in this docblock are named as bare CSS properties on purpose:
+ * Tailwind scans comments, and a full utility written out here would compile a
+ * dead rule into the shipped stylesheet (NIMUI-30's failure mode, and 958 bytes
+ * of it while this file was being written).
+ */
+const NON_MOTION_TRANSITION_PROPERTIES = new Set([
+  'color',
+  'background-color',
+  'border-color',
+  'outline-color',
+  'text-decoration-color',
+  'accent-color',
+  'caret-color',
+  'fill',
+  'stroke',
+  'opacity',
+  'box-shadow',
+  'text-shadow',
+]);
+
+/**
+ * Movement-bearing transitions that deliberately ship NO counterpart, matched
+ * by file plus a token that identifies the one class string meant.
+ *
+ * All three are the same call, made once and applied consistently: a press
+ * feedback squeeze. Reasoned at length in `button.tsx`; in short —
+ *
+ * - it is a 2–3% in-place scale, user-initiated, reverting the moment the
+ *   pointer or key is released, travelling no distance. WCAG 2.3.3 is about
+ *   non-essential interaction animation such as large movement or parallax; a
+ *   control's own press affordance is neither.
+ * - under reduced motion the scale would still apply, just instantly, so
+ *   pairing removes the 150ms interpolation and nothing else. There is no
+ *   accessibility gain to buy with the cost below.
+ * - that cost: all three elements reach for `transition-all` mainly to
+ *   crossfade their hover colours, and the counterpart used everywhere else in
+ *   this kit switches the whole property list off. It is worth being precise
+ *   about what that does and does NOT force — a NARROWED counterpart compiles
+ *   just as well (an arbitrary property list under the reduced-motion variant,
+ *   naming only `color`, `background-color` and `border-color`) and would keep
+ *   the crossfade while suppressing the squeeze. It was considered and rejected
+ *   on the affordance argument above, not ruled out by the cascade. Anyone
+ *   revisiting this should weigh it on the merits rather than assume the
+ *   mechanism decided. (Property names are written bare here on purpose: this
+ *   file is scanned by Tailwind, and a full utility in a comment compiles a
+ *   dead rule into the shipped stylesheet.)
+ *
+ * Each entry must match exactly one movement-bearing class string, asserted
+ * below — a stale exemption fails instead of quietly widening.
+ */
+const PRESS_FEEDBACK_EXEMPTIONS = [
+  { file: 'button.tsx', marker: 'active:scale-[0.98]', what: 'the shared button base' },
+  { file: 'cta.tsx', marker: 'active:scale-[0.97]', what: "the CTA's own button" },
+  { file: 'toast.tsx', marker: 'active:scale-[0.97]', what: 'the toast action button' },
+];
+
 const componentFiles = readdirSync(componentsDir)
   .filter((f) => f.endsWith('.tsx') && !f.endsWith('.test.tsx'))
   .sort();
@@ -71,14 +197,54 @@ interface AnimationUsage {
   counterpart: string;
 }
 
+interface TransitionUsage {
+  /** Source file the class was found in. */
+  file: string;
+  /** Full class as written, e.g. `transition-transform`. */
+  className: string;
+  /** Variant chain including its trailing colon. Empty when unmodified. */
+  prefix: string;
+  /** The value part, e.g. `all`, `[box-shadow,transform]`, or `''` for a bare `transition`. */
+  value: string;
+  /** Whether the declared property list can carry movement. */
+  movement: boolean;
+  /** The class that must accompany a movement-bearing transition. */
+  counterpart: string;
+}
+
 /** One string literal from a source file, treated as one class-string group. */
 interface ClassGroup {
+  /** Source file the literal came from. */
+  file: string;
   /** The literal's contents, for failure messages. */
   text: string;
   /** Every whitespace-delimited token in that literal. */
   tokens: Set<string>;
   /** Entrance/exit animations used in that literal. */
   usages: AnimationUsage[];
+  /** Transitions used in that literal, movement-bearing or not. */
+  transitions: TransitionUsage[];
+}
+
+/**
+ * Does a `transition-*` value declare a property list that can move something?
+ *
+ * `''` is a bare `transition`, whose default list includes `transform`,
+ * `translate`, `scale` and `rotate` — movement. Everything else is decided by
+ * the two fail-closed lists above.
+ */
+function isMovementBearing(value: string): boolean {
+  if (value === '') return true;
+  if (value.startsWith('(')) return true;
+  if (value.startsWith('[')) {
+    const properties = value
+      .slice(1, -1)
+      .split(',')
+      .map((p) => p.trim().toLowerCase())
+      .filter(Boolean);
+    return properties.length === 0 || !properties.every((p) => NON_MOTION_TRANSITION_PROPERTIES.has(p));
+  }
+  return !NON_MOTION_TRANSITION_VALUES.has(value);
 }
 
 /**
@@ -160,8 +326,8 @@ function extractStringLiterals(source: string): string[] {
 }
 
 /**
- * Pull every `animate-*` class out of a source file, grouped by the string
- * literal it lives in.
+ * Pull every `animate-*` and `transition-*` class out of a source file, grouped
+ * by the string literal it lives in.
  *
  * **The grouping is the point.** A per-FILE check is not good enough: a
  * component with several independently-classed elements (drawer's `left` /
@@ -183,8 +349,34 @@ function extractClassGroups(file: string, source: string): ClassGroup[] {
   return extractStringLiterals(source).map((text) => {
     const tokenList = text.split(/\s+/).filter(Boolean);
     const usages: AnimationUsage[] = [];
+    const transitions: TransitionUsage[] = [];
 
     for (const token of tokenList) {
+      // The same forms as the animation scan, plus the bare `transition` whose
+      // default property list already includes the transforms. Named
+      // (`transition-transform`), bracketed and `(--custom-property)` values
+      // are all recognised, so a component cannot slip past the guard by
+      // reaching for Tailwind v4's escape hatches. Only forms that already
+      // exist in the kit are written out here — see the constants above for why
+      // a comment cannot name a utility the source does not ship.
+      const transitionMatch =
+        /(?:^|:)transition(?:-(\[[^\]]*\]|\(--[^)]*\)|[a-z][a-z0-9-]*))?$/.exec(token);
+
+      if (transitionMatch) {
+        const value = transitionMatch[1] ?? '';
+        const prefix = token.slice(0, token.length - (value === '' ? 'transition' : `transition-${value}`).length);
+        transitions.push({
+          file,
+          className: token,
+          prefix,
+          value,
+          movement: isMovementBearing(value),
+          // Assembled from parts, never written as one literal — see the
+          // constants' docblock.
+          counterpart: `${prefix}${MOTION_REDUCE_VARIANT}:${TRANSITION_UTILITY}-${TRANSITION_OFF}`,
+        });
+      }
+
       // Must END in `animate-<name>` and the segment must start the class or
       // follow a variant colon — this skips e.g. `no-animate-foo`.
       //
@@ -213,7 +405,7 @@ function extractClassGroups(file: string, source: string): ClassGroup[] {
       });
     }
 
-    return { text, tokens: new Set(tokenList), usages };
+    return { file, text, tokens: new Set(tokenList), usages, transitions };
   });
 }
 
@@ -223,6 +415,19 @@ const scanned = componentFiles.map((file) => ({
 }));
 
 const allUsages = scanned.flatMap((s) => s.groups.flatMap((g) => g.usages));
+const allGroups = scanned.flatMap((s) => s.groups);
+const allTransitions = allGroups.flatMap((g) => g.transitions);
+const movementGroups = allGroups.filter((g) => g.transitions.some((t) => t.movement));
+
+/** Groups this file deliberately leaves without a counterpart, and why. */
+const exemptGroups = new Map<ClassGroup, (typeof PRESS_FEEDBACK_EXEMPTIONS)[number]>();
+for (const exemption of PRESS_FEEDBACK_EXEMPTIONS) {
+  for (const group of movementGroups) {
+    if (group.file === exemption.file && group.tokens.has(exemption.marker)) {
+      exemptGroups.set(group, exemption);
+    }
+  }
+}
 
 /**
  * Exact inventory of the entrance/exit animations the library ships, as
@@ -334,6 +539,149 @@ describe('every entrance/exit animation is paired with motion-reduce:animate-non
         `Exempt by design: ${[...EXEMPT_ANIMATIONS].join(', ')}.`
     ).toEqual([]);
   });
+});
+
+/**
+ * Exact inventory of the movement-bearing transitions the library ships, as
+ * `<file>: <class>` — the ones whose declared property list can move an
+ * element. Includes the three press-feedback sites that deliberately ship no
+ * counterpart, so the exemption stays visible in one list rather than hiding as
+ * an absence.
+ *
+ * Pinned exactly rather than as a floor, for the same reason the animation list
+ * is: a floor of "at least 10" stays green if the classifier silently stops
+ * seeing a subset. If you add or change a transition, update this list in the
+ * same commit — the diff is the point.
+ *
+ * Note what is NOT here: `transition-colors` (~55 sites), `transition-opacity`,
+ * and the three bracketed colour/shadow lists. They move nothing. See the file
+ * docblock before "completing" them.
+ */
+const EXPECTED_MOVEMENT_TRANSITIONS = [
+  'accordion.tsx: transition-all',
+  'accordion.tsx: transition-transform',
+  'bar-chart.tsx: transition-all',
+  'button.tsx: transition-all',
+  'card.tsx: transition-[box-shadow,transform,border-color,background-color]',
+  'cta.tsx: transition-all',
+  'meter.tsx: transition-all',
+  'product-card.tsx: transition-[box-shadow,transform]',
+  'product-card.tsx: transition-transform',
+  'progress.tsx: transition-all',
+  'switch.tsx: transition-transform',
+  'toast.tsx: transition-all',
+  'toast.tsx: transition-all',
+  'tree-view.tsx: transition-transform',
+];
+
+/**
+ * Every DISTINCT transition value the classifier decided moves nothing, as the
+ * bare value (never the class name — writing the counterpart's own class here
+ * would compile it, see the constants' docblock).
+ *
+ * Pinned so that the classifier cannot quietly reclassify a moving transition
+ * as harmless: a change on either side of the line shows up in exactly one of
+ * these two lists. `none` is the counterpart's own value, which the scan sees
+ * as a transition like any other.
+ */
+const EXPECTED_NON_MOTION_TRANSITION_VALUES = [
+  '[background-color,border-color]',
+  '[background-color,box-shadow,color]',
+  '[border-color,box-shadow]',
+  'colors',
+  'none',
+  'opacity',
+];
+
+describe('every movement-bearing transition is paired with a reduced-motion counterpart', () => {
+  // Same vacuity guard as the animation arm: if the tokeniser stops seeing
+  // transitions, every per-file assertion below passes by finding nothing.
+  it('found transitions to classify', () => {
+    expect(allTransitions.length).toBeGreaterThan(50);
+  });
+
+  it('detects exactly the known inventory of movement-bearing transitions', () => {
+    const found = allTransitions
+      .filter((t) => t.movement)
+      .map((t) => `${t.file}: ${t.className}`)
+      .sort();
+
+    expect(
+      found,
+      'The set of movement-bearing transitions drifted from EXPECTED_MOVEMENT_TRANSITIONS.\n' +
+        '- FEWER than expected usually means the classifier regressed and this suite is now ' +
+        'passing vacuously over the ones it stopped seeing. Fix the scan.\n' +
+        '- MORE (or different) means a component gained or changed a transition that can move ' +
+        'something. Pair it with the counterpart and add it here in the same commit, so the ' +
+        'change is visible in review.'
+    ).toEqual([...EXPECTED_MOVEMENT_TRANSITIONS].sort());
+  });
+
+  it('classifies exactly the known set of values as moving nothing', () => {
+    const found = [
+      ...new Set(allTransitions.filter((t) => !t.movement).map((t) => t.value)),
+    ].sort();
+
+    expect(
+      found,
+      'The set of transitions treated as non-motion drifted from ' +
+        'EXPECTED_NON_MOTION_TRANSITION_VALUES. A value that quietly moved onto this side of ' +
+        'the line is a transition that now ships no reduced-motion cover at all. Colour and ' +
+        'opacity belong here; anything that changes size, position or a transform does not.'
+    ).toEqual([...EXPECTED_NON_MOTION_TRANSITION_VALUES].sort());
+  });
+
+  it.each(PRESS_FEEDBACK_EXEMPTIONS.map((e) => [`${e.file} (${e.what})`, e] as const))(
+    '%s still matches exactly one movement-bearing class string',
+    (_name, exemption) => {
+      const matches = movementGroups.filter(
+        (g) => g.file === exemption.file && g.tokens.has(exemption.marker)
+      );
+
+      expect(
+        matches.length,
+        `The press-feedback exemption for ${exemption.file} matched ${matches.length} ` +
+          'movement-bearing class strings, expected exactly 1.\n' +
+          `- 0 means the exemption is stale: no class string in that file still carries ` +
+          `"${exemption.marker}" next to a movement-bearing transition. Delete the entry (and ` +
+          'the comment in the component that points here).\n' +
+          '- 2+ means the marker no longer identifies ONE element, so the exemption is ' +
+          'silently excusing a second transition nobody decided about. Pick a marker unique ' +
+          'to the element that carries the press feedback.'
+      ).toBe(1);
+    }
+  );
+
+  it.each(componentFiles)(
+    '%s pairs each movement-bearing transition with a counterpart',
+    (file) => {
+      const entry = scanned.find((s) => s.file === file)!;
+
+      // Scoped to the SAME class string, exactly like the animation arm: a
+      // counterpart on a sibling element must not excuse this one.
+      const missing = entry.groups
+        .filter((group) => !exemptGroups.has(group))
+        .flatMap((group) =>
+          group.transitions
+            .filter((t) => t.movement && !group.tokens.has(t.counterpart))
+            .map((t) => `${t.className} -> needs "${t.counterpart}" in the SAME class string`)
+        );
+
+      expect(
+        missing,
+        `${file} transitions something that moves without honouring prefers-reduced-motion.\n` +
+          'Add the counterpart class to the same class string as the transition. It sets the ' +
+          '`transition-property` longhand, which the blanket reset in reduced-motion.css never ' +
+          'touches — so the transition does not run at all, and it keeps not running once that ' +
+          'reset becomes opt-in (NIMUI-33).\n' +
+          'If the transition genuinely moves nothing, the fix is the property list, not an ' +
+          'exemption: name the properties you actually animate instead of reaching for ' +
+          '`transition-all`.\n' +
+          `Deliberately unpaired: ${PRESS_FEEDBACK_EXEMPTIONS.map((e) => e.file).join(', ')} ` +
+          '(press feedback — see button.tsx).'
+      ).toEqual([]);
+    }
+  );
 });
 
 /**
@@ -489,4 +837,129 @@ describe('dist/styles.css — the reduced-motion counterparts compile and win', 
       ).toBeGreaterThan(animatedIdx);
     }
   );
+});
+
+describe('dist/styles.css — the transition counterparts compile and win', () => {
+  let distCss: string;
+  /** Byte range of the single `@layer utilities { … }` block. */
+  let utilitiesLayer: { start: number; end: number };
+
+  beforeAll(() => {
+    if (!existsSync(distStylesPath)) {
+      throw new Error(
+        `packages/ui/dist/styles.css does not exist at ${distStylesPath}.\n` +
+          'This suite asserts against the BUILT stylesheet because Tailwind only emits ' +
+          'utilities it finds in source, and jsdom never evaluates a media query — a ' +
+          'class-string test cannot tell a working motion-reduce variant from a dead one. ' +
+          'Run `pnpm --filter @nim-ui/components build` first.'
+      );
+    }
+    distCss = readFileSync(distStylesPath, 'utf-8');
+
+    const start = distCss.indexOf('@layer utilities {');
+    if (start === -1) {
+      throw new Error(
+        'No `@layer utilities` block in dist/styles.css. The compiled output changed shape; ' +
+          'the source-order assertions in this suite assume both rules share one layer and ' +
+          'must be re-derived before they can be trusted.'
+      );
+    }
+    const braceStart = distCss.indexOf('{', start);
+    utilitiesLayer = { start, end: braceStart + 1 + ruleBodyAt(distCss, start).length };
+  });
+
+  // One rule covers every paired site, so assert per DISTINCT transition class:
+  // what differs between them is the rule the counterpart has to beat.
+  const coveredClasses = [
+    ...new Map(
+      allGroups
+        .filter((g) => !exemptGroups.has(g))
+        .flatMap((g) => g.transitions)
+        .filter((t) => t.movement)
+        .map((t) => [t.className, t])
+    ).values(),
+  ].sort((a, b) => a.className.localeCompare(b.className));
+
+  it('has paired transitions to assert against', () => {
+    expect(coveredClasses.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it.each(coveredClasses.map((t) => [t.className, t] as const))(
+    '%s is switched off under prefers-reduced-motion by a rule that wins',
+    (_name, usage) => {
+      const selector = toSelector(usage.counterpart);
+      const idx = findSelectorIndex(distCss, selector);
+
+      expect(
+        idx,
+        `No compiled rule for ${selector} in dist/styles.css (used by ${usage.file}). ` +
+          'The class name exists in source but Tailwind generated nothing for it — it is ' +
+          'a dead class and reduced-motion users still get the movement. Rebuild with ' +
+          '`pnpm --filter @nim-ui/components build`; if it is still missing, the variant ' +
+          'chain is malformed.'
+      ).toBeGreaterThan(-1);
+
+      const body = ruleBodyAt(distCss, idx);
+      expect(body, `${selector} compiled to an empty rule body.`).toMatch(
+        /@media\s*\(\s*prefers-reduced-motion:\s*reduce\s*\)/
+      );
+
+      // The `transition-property` longhand specifically. Clamping the DURATION
+      // is what the blanket reset in reduced-motion.css already does, and that
+      // reset is on its way out; switching the property list off is what makes
+      // this cover survive without it.
+      expect(
+        body,
+        `${selector} does not switch the transition-property longhand off, so it only ` +
+          'duplicates what the blanket reset already does and will stop working when that ' +
+          'reset becomes opt-in.'
+      ).toMatch(/transition-property:\s*none/);
+
+      const transitionIdx = findSelectorIndex(distCss, toSelector(usage.className));
+      expect(
+        transitionIdx,
+        `No compiled rule for ${toSelector(usage.className)} — the scan and the build disagree.`
+      ).toBeGreaterThan(-1);
+
+      // Byte offsets only decide the cascade inside one layer.
+      for (const [label, at] of [
+        [selector, idx],
+        [toSelector(usage.className), transitionIdx],
+      ] as const) {
+        expect(
+          at > utilitiesLayer.start && at < utilitiesLayer.end,
+          `${label} is emitted OUTSIDE the @layer utilities block ` +
+            `(offset ${at}, layer spans ${utilitiesLayer.start}-${utilitiesLayer.end}). ` +
+            'Cascade layers outrank source order, so the byte comparison below no longer ' +
+            'proves which rule wins.'
+        ).toBe(true);
+      }
+
+      expect(
+        idx,
+        `${selector} is emitted BEFORE ${toSelector(usage.className)} in dist/styles.css. ` +
+          'Both selectors have the same specificity and share a cascade layer — a media ' +
+          'query adds none — so the earlier one loses and the element still moves under ' +
+          'prefers-reduced-motion.'
+      ).toBeGreaterThan(transitionIdx);
+    }
+  );
+
+  // The whole mechanism rests on nothing else claiming that longhand with
+  // `!important`: an important declaration outranks the counterpart whatever
+  // the layer or order. The blanket reset deliberately clamps DURATION only,
+  // and this is the assertion that keeps it that way.
+  it('leaves the transition-property longhand uncontested by any !important rule', () => {
+    const offenders = [...distCss.matchAll(/transition-property:[^;{}]*!important/g)].map(
+      (m) => m[0]
+    );
+
+    expect(
+      offenders,
+      'Something in the compiled stylesheet sets transition-property with !important. That ' +
+        'beats every per-component counterpart regardless of cascade layer or source order, ' +
+        'so the paired transitions would either move under reduced motion or stop moving for ' +
+        'everyone. Keep the blanket reset on the duration longhands.'
+    ).toEqual([]);
+  });
 });

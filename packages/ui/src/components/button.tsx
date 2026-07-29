@@ -57,6 +57,26 @@ import { cn } from '../lib/utils';
  * additive: every rule it adds is gated on the attribute, so the enabled path's
  * cascade is untouched. `src/aria-disabled-hover.test.ts` asserts all of this
  * against the compiled stylesheet.
+ *
+ * The `active:scale-*` press feedback deliberately ships NO reduced-motion
+ * counterpart, and that is a decision rather than an oversight. The press is a
+ * 2% in-place squeeze, user-initiated, reverting the moment the pointer or key
+ * is released, travelling no distance — a control's own affordance, not the
+ * large movement or parallax WCAG 2.3.3 is about. It is worth keeping.
+ *
+ * Note what that decision does NOT rest on. A narrowed counterpart is entirely
+ * possible: Tailwind v4 compiles an arbitrary property list under the
+ * reduced-motion variant just as readily as it compiles the off switch, so a
+ * counterpart listing only `color`, `background-color` and `border-color` would
+ * suppress the squeeze and keep the hover crossfade. (Named as bare CSS
+ * properties on purpose — Tailwind scans comments, and the utility spelled out
+ * here would compile a rule nothing uses.) That option was considered and
+ * rejected on the affordance argument above, not because the cascade left no
+ * choice. Re-open the decision on those merits if you disagree.
+ *
+ * `src/motion-reduce.test.ts` pins this exemption alongside the two other
+ * press-feedback sites (`cta.tsx`, the toast action button) and fails if a
+ * movement-bearing transition is ever added without one.
  */
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium shadow-control transition-all duration-(--duration-fast) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:active:scale-100',

@@ -44,7 +44,7 @@ const viewportVariants = cva(
  * ```
  */
 const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-lg border p-4 pr-8 shadow-panel transition-all data-[state=open]:animate-slide-in-from-right data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:animate-slide-out-to-right data-[swipe=end]:motion-reduce:animate-none',
+  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-lg border p-4 pr-8 shadow-panel transition-all motion-reduce:transition-none data-[state=open]:animate-slide-in-from-right data-[state=open]:motion-reduce:animate-none data-[state=closed]:animate-fade-out data-[state=closed]:motion-reduce:animate-none data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=end]:animate-slide-out-to-right data-[swipe=end]:motion-reduce:animate-none',
   {
     variants: {
       variant: {
@@ -309,6 +309,14 @@ const ToastAction = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitive.Action
     ref={ref}
+    // No reduced-motion counterpart on this `transition-all`: the only movement
+    // it carries is the `active:scale-*` press feedback, which is the control's
+    // own affordance rather than a vestibular trigger. Same call as `button.tsx`
+    // (reasoned there) and pinned in `src/motion-reduce.test.ts`. A narrowed
+    // counterpart naming only `background-color` would compile and would keep
+    // this element's hover crossfade, so the exemption is a judgement, not a
+    // constraint. The toast ROOT is a different matter and is paired — a
+    // swipe-dismiss travels the full width of the toast.
     className={cn(
       'inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md border border-neutral-200 bg-transparent px-3 py-1.5 text-sm font-medium transition-all duration-(--duration-fast) active:scale-[0.97]',
       'hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',

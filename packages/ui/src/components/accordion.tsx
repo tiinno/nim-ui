@@ -24,7 +24,7 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        'flex flex-1 cursor-pointer items-center justify-between py-4 text-sm font-medium transition-all duration-(--duration-fast)',
+        'flex flex-1 cursor-pointer items-center justify-between py-4 text-sm font-medium transition-all motion-reduce:transition-none duration-(--duration-fast)',
         'hover:underline',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
         '[&[data-state=open]>svg]:rotate-180',
@@ -43,7 +43,7 @@ const AccordionTrigger = React.forwardRef<
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="shrink-0 text-neutral-500 transition-transform duration-(--duration-normal) dark:text-neutral-400"
+        className="shrink-0 text-neutral-500 transition-transform motion-reduce:transition-none duration-(--duration-normal) dark:text-neutral-400"
         aria-hidden="true"
       >
         <polyline points="6 9 12 15 18 9" />
