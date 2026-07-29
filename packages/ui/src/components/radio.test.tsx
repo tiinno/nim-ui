@@ -632,9 +632,28 @@ describe('Radio', () => {
       const radio = screen.getByTestId('radio');
       const indicator = radio.querySelector('[class*="bg-current"]');
       expect(indicator).toBeInTheDocument();
+      expect(indicator).toHaveClass('block');
       expect(indicator).toHaveClass('h-2.5');
       expect(indicator).toHaveClass('w-2.5');
       expect(indicator).toHaveClass('rounded-full');
+    });
+
+    it('renders the dot as phrasing content inside Radix\'s indicator span', () => {
+      // Radix renders RadioGroup.Indicator as a <span>, which takes phrasing
+      // content. The dot used to be a <div>, so every consumer app shipped
+      // invalid markup — and the docs export guard had to quarantine it.
+      // `block` keeps the inline span's h-*/w-* box without leaning on the
+      // indicator's flex blockification.
+      render(
+        <RadioGroup defaultValue="option1">
+          <RadioGroupItem value="option1" data-testid="radio" />
+        </RadioGroup>
+      );
+
+      const dot = screen.getByTestId('radio').querySelector('[class*="bg-current"]');
+      expect(dot?.tagName).toBe('SPAN');
+      expect(dot?.parentElement?.tagName).toBe('SPAN');
+      expect(dot).toHaveClass('block');
     });
   });
 

@@ -262,22 +262,22 @@ function findViolations(html: string): Violation[] {
 }
 
 /**
- * Two known violations are produced by code this package does not own. They
- * are matched by structural signature, never by count, so neither a new docs
- * page nor a fix landing upstream turns this suite red for the wrong reason.
+ * One known violation is produced by code this package does not own: fumadocs'
+ * own search trigger renders `<button data-search-full><div>…`. It comes from
+ * `node_modules/fumadocs-ui` and appears on every page. It is matched by
+ * structural signature, never by count, so neither a new docs page nor a fix
+ * landing upstream turns this suite red for the wrong reason.
  *
- *  1. fumadocs' own search trigger renders `<button data-search-full><div>…`.
- *     It comes from `node_modules/fumadocs-ui` and appears on every page.
- *  2. The Nim RadioGroupIndicator renders its dot as a `<div>` inside Radix's
- *     `<span data-state>` indicator (`packages/ui/src/components/radio.tsx`).
- *     That is a library fix, not a docs fix — tracked separately.
+ * A second signature used to live here — the Nim RadioGroupIndicator rendering
+ * its dot as a `<div>` inside Radix's `<span data-state>` indicator. That was
+ * ours, not upstream, and it was fixed in `packages/ui/src/components/radio.tsx`
+ * rather than excused; `<span data-state><div>` is a hard failure again.
  *
- * Neither signature can be produced by the MDX own-line-child mistake this
+ * This signature cannot be produced by the MDX own-line-child mistake this
  * suite exists to catch: MDX only ever inserts a bare `<p>`.
  */
 function isKnownUpstream(v: Violation): boolean {
   if (v.parent === 'button' && v.child === 'div' && /\bdata-search-/.test(v.parentAttrs)) return true;
-  if (v.parent === 'span' && v.child === 'div' && /\bdata-state=/.test(v.parentAttrs)) return true;
   return false;
 }
 
@@ -375,15 +375,28 @@ describe('the detector actually detects', () => {
     expect(findViolations(html)).toEqual([]);
   });
 
-  it('quarantines only the two known upstream signatures', () => {
-    expect(findViolations('<div><button data-search-full=""><div>x</div></button></div>').every(isKnownUpstream)).toBe(
-      true,
-    );
-    expect(findViolations('<div><span data-state="checked"><div>x</div></span></div>').every(isKnownUpstream)).toBe(
-      true,
-    );
+  it('quarantines only the one known upstream signature', () => {
+    // Each case asserts the violation count FIRST. `[].every(...)` is true and
+    // `[].some(...)` is false, so a detector that regressed to finding nothing
+    // would satisfy every quarantine assertion below for free — the length
+    // check is what stops this test passing over a broken scanner.
+    const searchTrigger = findViolations('<div><button data-search-full=""><div>x</div></button></div>');
+    expect(searchTrigger).toHaveLength(1);
+    expect(searchTrigger.every(isKnownUpstream)).toBe(true);
+
+    // Radix's own indicator span is no longer excused: the Nim dot inside it is
+    // a <span> now, so a <div> there means the fix was reverted.
+    const radixIndicator = findViolations('<div><span data-state="checked"><div>x</div></span></div>');
+    expect(radixIndicator).toHaveLength(1);
+    expect(radixIndicator.some(isKnownUpstream)).toBe(false);
+
     // A plain button/span with a div child is still a failure.
-    expect(findViolations('<div><button><div>x</div></button></div>').some(isKnownUpstream)).toBe(false);
-    expect(findViolations('<div><span><div>x</div></span></div>').some(isKnownUpstream)).toBe(false);
+    const plainButton = findViolations('<div><button><div>x</div></button></div>');
+    expect(plainButton).toHaveLength(1);
+    expect(plainButton.some(isKnownUpstream)).toBe(false);
+
+    const plainSpan = findViolations('<div><span><div>x</div></span></div>');
+    expect(plainSpan).toHaveLength(1);
+    expect(plainSpan.some(isKnownUpstream)).toBe(false);
   });
 });
