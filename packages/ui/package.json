@@ -12,12 +12,15 @@
     },
     "./registry": "./src/registry/index.json",
     "./styles": "./dist/styles.css",
-    "./tokens.css": "./src/tokens.css"
+    "./tokens.css": "./src/tokens.css",
+    "./reduced-motion.css": "./src/reduced-motion.css"
   },
   "files": [
+    "CHANGELOG.md",
     "dist",
     "src/registry",
-    "src/tokens.css"
+    "src/tokens.css",
+    "src/reduced-motion.css"
   ],
   "scripts": {
     "build": "tsup && postcss ./src/styles.css -o ./dist/styles.css",

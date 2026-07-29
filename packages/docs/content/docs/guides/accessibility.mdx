@@ -104,7 +104,8 @@ showToast({
 // Renders with:
 // - role="status"
 // - aria-live="polite"
-// - Auto-dismissal respects prefers-reduced-motion
+// - Auto-dismissal on a plain timer (duration prop, default 5000ms) -- it is
+//   not motion-aware, so give anything a user must read a longer duration
 ```
 
 ### Skeleton
@@ -413,12 +414,12 @@ This applies to Accordion, AlertDialog, Badge, Collapsible, Combobox, Drawer, Dr
 
 Loading indicators are excluded from *this* per-component treatment. `Spinner`, `Skeleton`, `Dot`, `StatusPill`, and `Button`'s loading state keep their `animate-spin` / `animate-pulse` class, because switching a loading indicator off outright removes the only signal that work is in flight. What actually reaches them under reduced motion is decided by the global damper below.
 
-### 2. A global animation damper in the token stylesheet
+### 2. A global animation damper in the kit's stylesheet
 
-`tokens.css` also ships a blanket reset, so any animation the kit does not own -- including one you add in your own app -- is reduced to an imperceptible tick:
+`reduced-motion.css`, which the compiled `@nim-ui/components/styles` bundle imports, ships a blanket reset, so any animation the kit does not own -- including one you add in your own app -- is reduced to an imperceptible tick:
 
 ```css
-/* Applied internally by Nim UI (packages/ui/src/tokens.css) */
+/* Applied internally by Nim UI (packages/ui/src/reduced-motion.css) */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

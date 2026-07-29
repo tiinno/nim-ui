@@ -5,6 +5,14 @@
    component library). These are pure tokens with NO utility classes, so unlike
    the compiled @nim-ui/components/styles they don't clobber fumadocs utilities. */
 @import '@nim-ui/components/tokens.css';
+/* The global reduced-motion damper used to ride along inside tokens.css; it is
+   now its own opt-in entry point, so the docs site asks for it explicitly.
+   It wins because it is unlayered AND `!important` — an unlayered declaration
+   outranks every layered normal declaration whatever its source position — not
+   because of where this import sits. (Among `!important` declarations layer
+   order inverts and unlayered is the weakest tier; nothing here declares a
+   layered `!important` animation or transition.) */
+@import '@nim-ui/components/reduced-motion.css';
 
 /*
  * Do NOT @import '@nim-ui/components/styles' (the compiled dist) — it's a full
