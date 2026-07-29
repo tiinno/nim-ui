@@ -5,14 +5,19 @@
    component library). These are pure tokens with NO utility classes, so unlike
    the compiled @nim-ui/components/styles they don't clobber fumadocs utilities. */
 @import '@nim-ui/components/tokens.css';
-/* The global reduced-motion damper used to ride along inside tokens.css; it is
-   now its own opt-in entry point, so the docs site asks for it explicitly.
-   It wins because it is unlayered AND `!important` — an unlayered declaration
-   outranks every layered normal declaration whatever its source position — not
-   because of where this import sits. (Among `!important` declarations layer
-   order inverts and unlayered is the weakest tier; nothing here declares a
-   layered `!important` animation or transition.) */
-@import '@nim-ui/components/reduced-motion.css';
+/* Deliberately NOT importing '@nim-ui/components/reduced-motion.css'. It is the
+   kit's opt-in application-wide damper, and this site is the kit's showcase: a
+   reviewer evaluating Nim under prefers-reduced-motion has to see the shipped
+   default, not a locally-sweetened version of it. Concretely, the damper clamps
+   animation-iteration-count to 1, which leaves the kit's loading indicators
+   motionless at their un-animated position — so keeping it here would show
+   frozen spinners and skeletons that no consumer of the default bundle gets
+   (NIMUI-42 decided those keep turning). Note also that this file imports
+   tokens.css and @source-scans the component sources rather than importing the
+   compiled bundle, so this import was the ONLY thing damping the docs site;
+   there is no partial version of the decision. The cost is that fumadocs' chrome
+   is no longer damped by us — arguably not ours to decide either, and one
+   @import away if that ever turns out to matter. */
 
 /*
  * Do NOT @import '@nim-ui/components/styles' (the compiled dist) — it's a full
@@ -93,6 +98,52 @@
   --color-fd-muted: oklch(0.225 0.014 263);
   --color-fd-secondary: oklch(0.235 0.014 263);
   --color-fd-muted-foreground: oklch(0.67 0.013 262);
+}
+
+/* ---------- Reduced motion: fumadocs' own chrome ---------- */
+/*
+ * Scoped to fumadocs, and nothing else. The kit covers its own components per
+ * component, and this site deliberately does not opt into the kit's blanket
+ * damper (see the note at the top of this file) — but fumadocs ships no
+ * reduced-motion handling for ITS chrome, and the damper import used to mask
+ * that by accident. Removing the mask is what surfaced it.
+ *
+ * Triage honestly: this is interaction-triggered motion, so it is WCAG 2.3.3,
+ * level AAA — not an A/AA failure against anything the kit or these docs
+ * claim. It is still worth fixing here: fd-sidebar-in/out translate the mobile
+ * drawer by a full --fd-sidebar-drawer-offset, which is precisely the movement
+ * someone sets the preference to avoid.
+ *
+ * Only the transform- and height-bearing animations are switched off.
+ * --animate-fd-fade-in / --animate-fd-fade-out are LEFT ALONE on purpose: they
+ * are opacity-only, a crossfade moves nothing, and killing them makes the
+ * search dialog pop in harshly for no accessibility gain.
+ *
+ * The *-out / exitTo* variables are safe to null despite gating an unmount.
+ * `animation: none` makes the computed animation-name resolve to `none`, so
+ * Radix Presence sees no running animation and unmounts immediately rather
+ * than waiting for an animationend that never fires — the same mechanism the
+ * kit's own per-component counterparts rely on.
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animate-fd-sidebar-in: none;
+    --animate-fd-sidebar-out: none;
+    --animate-fd-dialog-in: none;
+    --animate-fd-dialog-out: none;
+    --animate-fd-nav-menu-in: none;
+    --animate-fd-nav-menu-out: none;
+    --animate-fd-popover-in: none;
+    --animate-fd-popover-out: none;
+    --animate-fd-enterFromLeft: none;
+    --animate-fd-enterFromRight: none;
+    --animate-fd-exitToLeft: none;
+    --animate-fd-exitToRight: none;
+    --animate-fd-collapsible-down: none;
+    --animate-fd-collapsible-up: none;
+    --animate-fd-accordion-down: none;
+    --animate-fd-accordion-up: none;
+  }
 }
 
 /* ---------- Base ---------- */

@@ -93,6 +93,8 @@ Import Nim UI styles in your main CSS file:
 @tailwind utilities;
 ```
 
+This is all you need for reduced motion too -- the kit switches its own animations and moving transitions off per component. It does **not** install an application-wide motion reset on your behalf; if you want one, add `@import '@nim-ui/components/reduced-motion.css';` as well. See [Reduced Motion](/guides/accessibility#reduced-motion) for what that changes, including why loading spinners keep turning either way.
+
 Then import this CSS file in your app entry point:
 
 ```tsx title="src/main.tsx" {2}

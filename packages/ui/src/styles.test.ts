@@ -195,74 +195,123 @@ function collectBlocks(css: string): CssBlock[] {
 }
 
 /**
- * The global reduced-motion damper — the `*, *::before, *::after` reset that
- * `styles.css` pulls in from `./reduced-motion.css`.
+ * The global reduced-motion damper — the `*, *::before, *::after` reset in
+ * `src/reduced-motion.css`.
  *
- * This exists so "the extraction into reduced-motion.css was behaviour-neutral"
- * stops resting on a human diffing byte offsets in the built stylesheet. The
- * rule reaches every element in the consumer's app, and it is currently the
- * ONLY thing damping the kit's own `animate-spin` / `animate-pulse` loaders
- * (`Spinner`, `Skeleton`, `Dot`, `StatusPill`, `Button`) — those are exempt
- * from the per-component `motion-reduce:animate-none` contract that
- * `motion-reduce.test.ts` enforces, so nothing else would notice if it
- * silently stopped being emitted.
+ * **This suite was flipped by NIMUI-33.** It used to assert the damper shipped
+ * inside `dist/styles.css`; it now asserts the opposite, because that reset is
+ * an APPLICATION-level decision. Its selector is `*`, its declarations are
+ * `!important` and it is unlayered, so shipping it in the default bundle
+ * clamped every animation and transition in the consumer's whole application —
+ * including code the kit does not own — with no way to opt out. It is still
+ * published, as `@nim-ui/components/reduced-motion.css`, for applications that
+ * want it.
  *
- * **This is the assertion the opt-in slice flips.** When the damper stops
- * shipping in the default bundle (NIMUI-33), flip it: assert the blanket
- * block is ABSENT from `dist/styles.css` and present in
- * `src/reduced-motion.css`, and update `motion-reduce.test.ts`'s
- * `EXEMPT_ANIMATIONS` note — full-speed loaders under reduced motion are the
- * intended outcome there (NIMUI-42), not a regression.
+ * Two halves, because either alone passes vacuously: the block must be ABSENT
+ * from the built bundle (so a re-added `@import` in `styles.css` fails here),
+ * and PRESENT in the source file (so "absent from dist" cannot be satisfied by
+ * quietly deleting the opt-in entry point that `package.json` still exports).
+ *
+ * What this does NOT break: entrance/exit animations and movement-bearing
+ * transitions each carry their own per-component counterpart, pinned by
+ * `motion-reduce.test.ts`. What it DOES change, deliberately: the kit's
+ * `animate-spin` / `animate-pulse` loaders (`Spinner`, `Skeleton`, `Dot`,
+ * `StatusPill`, `Button`) now run at full speed under reduced motion. That is
+ * NIMUI-42's decision, not a regression — see `EXEMPT_ANIMATIONS` in
+ * `motion-reduce.test.ts`.
  *
  * Note the block is deliberately NOT located by searching for
  * `@media (prefers-reduced-motion: reduce)`: every `motion-reduce:` utility
  * compiles to its own such media block inside `@layer utilities`, so the first
  * textual match is one of those, not this rule.
  */
-describe('dist/styles.css — the global reduced-motion damper', () => {
+describe('the global reduced-motion damper is opt-in, not bundled', () => {
   const BLANKET_SELECTOR = '*, *::before, *::after';
   const REDUCE_MEDIA = '@media (prefers-reduced-motion: reduce)';
+  const sourcePath = resolve(__dirname, 'reduced-motion.css');
 
-  let blanketBlocks: CssBlock[];
+  let distBlanketBlocks: CssBlock[];
+  let sourceBlanketBlocks: CssBlock[];
 
   beforeAll(() => {
-    blanketBlocks = collectBlocks(distCss).filter((b) => b.prelude === BLANKET_SELECTOR);
+    // The ABSENCE half deliberately does NOT match the exact prelude: the same
+    // reset spelled `*, ::before, ::after` would slip past that. It matches any
+    // universal-selector rule that sits inside a reduce media query, which is
+    // what a blanket damper is however it is written.
+    //
+    // Both halves of that conjunction are load-bearing. Dropping the media-query
+    // half catches Tailwind's own preflight (`*, ::after, ::before, ::backdrop,
+    // ::file-selector-button` and `*, ::before, ::after, ::backdrop`), which is
+    // legitimate and always present. Dropping the universal-selector half
+    // catches every `motion-reduce:` utility, each of which compiles its own
+    // reduce media block — but those have CLASS preludes, so requiring both is
+    // precise. The PRESENCE half below stays an exact prelude match, because
+    // there it is our own file and the precise shape is the point.
+    distBlanketBlocks = collectBlocks(distCss).filter(
+      (b) => b.prelude.startsWith('*') && b.ancestors.some((a) => a.startsWith(REDUCE_MEDIA))
+    );
+
+    if (!existsSync(sourcePath)) {
+      throw new Error(
+        `packages/ui/src/reduced-motion.css does not exist at ${sourcePath}.\n` +
+          'It is still exported as `@nim-ui/components/reduced-motion.css` and listed in ' +
+          "the package's `files`, so deleting it breaks that entry point for every consumer " +
+          'who opted back in. Restore it, or remove the export and the CHANGELOG entry too.'
+      );
+    }
+    // Comments are stripped before walking: unlike the compiled bundle this is
+    // hand-written CSS with a long prose header, and `collectBlocks` skips
+    // quoted spans — an odd number of apostrophes in that prose would
+    // desynchronise the walker and silently yield zero blocks.
+    const sourceCss = readFileSync(sourcePath, 'utf-8').replace(/\/\*[\s\S]*?\*\//g, '');
+    sourceBlanketBlocks = collectBlocks(sourceCss).filter((b) => b.prelude === BLANKET_SELECTOR);
   });
 
-  it('is emitted exactly once', () => {
+  it('is NOT emitted into dist/styles.css', () => {
     expect(
-      blanketBlocks.length,
-      `Expected exactly one \`${BLANKET_SELECTOR}\` block in dist/styles.css.\n` +
-        '0 means styles.css stopped importing ./reduced-motion.css, so every animation and ' +
-        'transition now runs at full speed under prefers-reduced-motion — including the ' +
-        'kit\'s own loaders, which have no per-component counterpart. If that removal is ' +
-        'deliberate (NIMUI-33), flip this suite rather than deleting it.\n' +
-        '>1 means the reset is being imported twice.'
+      distBlanketBlocks.length,
+      `Found ${distBlanketBlocks.length} universal-selector block(s) in dist/styles.css ` +
+        `(${distBlanketBlocks.map((b) => b.prelude).join(' | ')}), expected 0.\n` +
+        'Something re-added `@import "./reduced-motion.css";` to src/styles.css, or added ' +
+        'another blanket reset spelled differently. That reset ' +
+        'is unlayered and `!important`, so it reaches every element in the consumer\'s ' +
+        'application — their code as well as ours — and there is no way for them to opt out ' +
+        'of it. Deciding an app-wide motion policy is the app\'s call (NIMUI-33); the file ' +
+        'stays published as `@nim-ui/components/reduced-motion.css` for apps that want it.'
+    ).toBe(0);
+  });
+
+  it('is still present in src/reduced-motion.css, exactly once', () => {
+    expect(
+      sourceBlanketBlocks.length,
+      `Expected exactly one \`${BLANKET_SELECTOR}\` block in src/reduced-motion.css.\n` +
+        '0 means the opt-in entry point is now empty, so every consumer who added ' +
+        '`@import \'@nim-ui/components/reduced-motion.css\';` to keep the old behaviour ' +
+        'silently lost it. It also makes the dist assertion above pass vacuously.\n' +
+        '>1 means the rule was duplicated.'
     ).toBe(1);
   });
 
   it('sits inside the prefers-reduced-motion media query', () => {
     // `?? []` so a missing block fails as "expected [] to include …" rather
     // than as an unreadable "undefined is invalid for this assertion".
-    expect(blanketBlocks[0]?.ancestors ?? []).toContain(REDUCE_MEDIA);
+    expect(sourceBlanketBlocks[0]?.ancestors ?? []).toContain(REDUCE_MEDIA);
   });
 
-  it('is UNLAYERED, which is what lets it outrank every utility', () => {
-    const block = blanketBlocks[0];
-    const layers = (block?.ancestors ?? []).filter((a) => a.startsWith('@layer'));
+  it('is UNLAYERED, which is what lets an opted-in app outrank every utility', () => {
+    const layers = (sourceBlanketBlocks[0]?.ancestors ?? []).filter((a) => a.startsWith('@layer'));
 
     expect(
       layers,
       'The blanket reduced-motion reset is enclosed in a cascade layer ' +
         `(${layers.join(' > ')}). Unlayered NORMAL declarations outrank every layered one ` +
-        'regardless of source position, which is the whole basis of this rule winning; ' +
-        'inside a layer it can be beaten by any later layer. Move the @import back out of ' +
-        'any @layer block in styles.css.'
+        'regardless of source position, which is the whole basis of this rule winning once ' +
+        'an application opts in; inside a layer it can be beaten by any later layer.'
     ).toEqual([]);
   });
 
   it('still clamps animation and transition with !important', () => {
-    const body = blanketBlocks[0]?.body ?? '';
+    const body = sourceBlanketBlocks[0]?.body ?? '';
     expect(body).toMatch(/animation-duration:\s*0\.01ms\s*!important/);
     expect(body).toMatch(/animation-iteration-count:\s*1\s*!important/);
     expect(body).toMatch(/transition-duration:\s*0\.01ms\s*!important/);

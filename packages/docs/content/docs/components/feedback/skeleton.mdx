@@ -238,7 +238,7 @@ Skeletons are a **status message** in the WCAG 2.2 sense — a change of state t
 - **`SkeletonGroup` owns the announcement.** One `role="status"` region per surface, holding `label` ("Loading" by default) while loading and `loadedLabel` — nothing, unless you set it — afterwards.
 - **The live region is a sibling of the `aria-busy` host, never a descendant.** `aria-busy` tells assistive tech to *defer* announcements for its own subtree, which is exactly the window the region needs to speak in. Collapsing both onto one element silences it.
 - **The region must not unmount.** A live region inserted together with its text is announced inconsistently; changing the text of a region that was already there is the reliable path.
-- Skeletons animate with `animate-pulse`, which the kit already gates behind `prefers-reduced-motion`.
+- Skeletons animate with `animate-pulse`, and **keep animating under `prefers-reduced-motion`** — deliberately. For an activity indicator the motion is the information, and WCAG 2.2 SC 2.2.2 exempts it on that basis; a frozen skeleton reads as a hung page. Add `@import '@nim-ui/components/reduced-motion.css';` to your stylesheet if your product would rather have it damped.
 
 Known limitation: on **initial** mount the region already contains its text, so most screen readers will not fire a live announcement for it — the text is still in the accessibility tree and reachable in browse mode. SC 4.1.3's live case is the *transition*, which this shape does handle.
 
