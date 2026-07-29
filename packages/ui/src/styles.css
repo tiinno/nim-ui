@@ -3,6 +3,16 @@
 /* Shared design tokens — single source of truth (also imported by the docs site) */
 @import "./tokens.css";
 
+/* Global reduced-motion damper. Application-level, so it is a separate opt-in
+   entry point (@nim-ui/components/reduced-motion.css) that this bundle still
+   pulls in — see the file's header for what depends on it. The rule wins
+   because it is unlayered AND `!important`: an unlayered declaration outranks
+   every layered normal declaration whatever its source position. Among
+   `!important` declarations layer order inverts and unlayered is the weakest
+   tier, so a layered `!important` animation/transition rule would beat it —
+   there is none today. */
+@import "./reduced-motion.css";
+
 /* Class/attribute-based dark mode — `.dark` for apps, `[data-theme="dark"]` for Starlight docs.
    Without this, Tailwind v4 `dark:` follows the OS (prefers-color-scheme) and ignores theme toggles. */
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));

@@ -188,14 +188,11 @@
   to { height: 0; }
 }
 
-/* Reduced motion: disable animations for users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/* The global reduced-motion damper used to live here. It is an
+   application-level `*` reset, not a token, and this file is imported straight
+   into consumer stylesheets (including the docs site), so it moved to
+   ./reduced-motion.css on its way to becoming opt-in (NIMUI-33). styles.css
+   still imports it, so nothing about the compiled bundle's behaviour changed. */
 
 @layer base {
   :root {

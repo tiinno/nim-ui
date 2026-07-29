@@ -134,6 +134,142 @@ describe('dist/styles.css — custom @theme tokens compile to real utilities', (
 });
 
 /**
+ * Walk every `{ … }` block in a stylesheet and return each one with the chain
+ * of preludes enclosing it, so a rule's cascade context can be asserted
+ * structurally instead of by comparing byte offsets (which is exactly the
+ * brittleness this replaces).
+ *
+ * Quoted strings are skipped so a brace inside a `content:` value or a data
+ * URI cannot desynchronise the walker.
+ */
+interface CssBlock {
+  /** Selector or at-rule prelude, whitespace-collapsed. */
+  prelude: string;
+  /** Preludes of every enclosing block, outermost first. */
+  ancestors: string[];
+  /** The block's body, braces excluded. */
+  body: string;
+}
+
+function collectBlocks(css: string): CssBlock[] {
+  const blocks: CssBlock[] = [];
+  /** Indexes into `blocks` for the currently open blocks, plus each body start. */
+  const open: Array<{ index: number; bodyStart: number }> = [];
+  const stack: string[] = [];
+  let preludeStart = 0;
+
+  for (let i = 0; i < css.length; i++) {
+    const c = css[i];
+
+    if (c === '"' || c === "'") {
+      for (let j = i + 1; j < css.length; j++) {
+        if (css[j] === '\\') j++;
+        else if (css[j] === c) {
+          i = j;
+          break;
+        }
+      }
+      continue;
+    }
+
+    if (c === '{') {
+      const prelude = css.slice(preludeStart, i).replace(/\s+/g, ' ').trim();
+      open.push({ index: blocks.length, bodyStart: i + 1 });
+      blocks.push({ prelude, ancestors: [...stack], body: '' });
+      stack.push(prelude);
+      preludeStart = i + 1;
+    } else if (c === '}') {
+      const opened = open.pop();
+      if (opened) {
+        const block = blocks[opened.index];
+        if (block) block.body = css.slice(opened.bodyStart, i);
+      }
+      stack.pop();
+      preludeStart = i + 1;
+    } else if (c === ';') {
+      preludeStart = i + 1;
+    }
+  }
+
+  return blocks;
+}
+
+/**
+ * The global reduced-motion damper — the `*, *::before, *::after` reset that
+ * `styles.css` pulls in from `./reduced-motion.css`.
+ *
+ * This exists so "the extraction into reduced-motion.css was behaviour-neutral"
+ * stops resting on a human diffing byte offsets in the built stylesheet. The
+ * rule reaches every element in the consumer's app, and it is currently the
+ * ONLY thing damping the kit's own `animate-spin` / `animate-pulse` loaders
+ * (`Spinner`, `Skeleton`, `Dot`, `StatusPill`, `Button`) — those are exempt
+ * from the per-component `motion-reduce:animate-none` contract that
+ * `motion-reduce.test.ts` enforces, so nothing else would notice if it
+ * silently stopped being emitted.
+ *
+ * **This is the assertion the opt-in slice flips.** When the damper stops
+ * shipping in the default bundle (NIMUI-33), flip it: assert the blanket
+ * block is ABSENT from `dist/styles.css` and present in
+ * `src/reduced-motion.css`, and update `motion-reduce.test.ts`'s
+ * `EXEMPT_ANIMATIONS` note — full-speed loaders under reduced motion are the
+ * intended outcome there (NIMUI-42), not a regression.
+ *
+ * Note the block is deliberately NOT located by searching for
+ * `@media (prefers-reduced-motion: reduce)`: every `motion-reduce:` utility
+ * compiles to its own such media block inside `@layer utilities`, so the first
+ * textual match is one of those, not this rule.
+ */
+describe('dist/styles.css — the global reduced-motion damper', () => {
+  const BLANKET_SELECTOR = '*, *::before, *::after';
+  const REDUCE_MEDIA = '@media (prefers-reduced-motion: reduce)';
+
+  let blanketBlocks: CssBlock[];
+
+  beforeAll(() => {
+    blanketBlocks = collectBlocks(distCss).filter((b) => b.prelude === BLANKET_SELECTOR);
+  });
+
+  it('is emitted exactly once', () => {
+    expect(
+      blanketBlocks.length,
+      `Expected exactly one \`${BLANKET_SELECTOR}\` block in dist/styles.css.\n` +
+        '0 means styles.css stopped importing ./reduced-motion.css, so every animation and ' +
+        'transition now runs at full speed under prefers-reduced-motion — including the ' +
+        'kit\'s own loaders, which have no per-component counterpart. If that removal is ' +
+        'deliberate (NIMUI-33), flip this suite rather than deleting it.\n' +
+        '>1 means the reset is being imported twice.'
+    ).toBe(1);
+  });
+
+  it('sits inside the prefers-reduced-motion media query', () => {
+    // `?? []` so a missing block fails as "expected [] to include …" rather
+    // than as an unreadable "undefined is invalid for this assertion".
+    expect(blanketBlocks[0]?.ancestors ?? []).toContain(REDUCE_MEDIA);
+  });
+
+  it('is UNLAYERED, which is what lets it outrank every utility', () => {
+    const block = blanketBlocks[0];
+    const layers = (block?.ancestors ?? []).filter((a) => a.startsWith('@layer'));
+
+    expect(
+      layers,
+      'The blanket reduced-motion reset is enclosed in a cascade layer ' +
+        `(${layers.join(' > ')}). Unlayered NORMAL declarations outrank every layered one ` +
+        'regardless of source position, which is the whole basis of this rule winning; ' +
+        'inside a layer it can be beaten by any later layer. Move the @import back out of ' +
+        'any @layer block in styles.css.'
+    ).toEqual([]);
+  });
+
+  it('still clamps animation and transition with !important', () => {
+    const body = blanketBlocks[0]?.body ?? '';
+    expect(body).toMatch(/animation-duration:\s*0\.01ms\s*!important/);
+    expect(body).toMatch(/animation-iteration-count:\s*1\s*!important/);
+    expect(body).toMatch(/transition-duration:\s*0\.01ms\s*!important/);
+  });
+});
+
+/**
  * The dist-emission checks above only guard REMOVAL of a working utility —
  * they stay green as long as at least one component in the whole library
  * still requests the token-preserving form, even if a brand-new component

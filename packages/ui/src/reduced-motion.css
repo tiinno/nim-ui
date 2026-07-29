@@ -1,0 +1,55 @@
+/*
+ * Nim UI — global reduced-motion damper (APPLICATION-LEVEL reset).
+ *
+ * This is not a component style. The selector is `*`, the declarations are
+ * `!important`, and the rule is unlayered, so it outranks every utility and
+ * reaches every element on the page — the kit's, the host application's, and
+ * any third-party widget rendered alongside them. Under
+ * `prefers-reduced-motion: reduce` every animation runs a single 0.01ms
+ * iteration and every transition collapses to 0.01ms.
+ *
+ * Deciding that for a whole application is the application's call, not a
+ * component library's, so this file is being split out to become **opt-in**
+ * (NIMUI-33). It is extracted here unchanged and still imported by
+ * `styles.css`, so behaviour is identical today; a later slice drops that
+ * import and consumers who want the damper add it themselves:
+ *
+ *   @import '@nim-ui/components/reduced-motion.css';
+ *
+ * ENTRANCE/EXIT animations are unaffected by that removal: overlays, menus,
+ * toasts and the rest each ship a `motion-reduce:animate-none` counterpart in
+ * the component's own class string, guarded by
+ * `packages/ui/src/motion-reduce.test.ts` (which fails the build if a
+ * component ever animates without one).
+ *
+ * LOADING INDICATORS ARE THE DELIBERATE EXCEPTION. `Spinner`, `Skeleton`,
+ * `Dot`, `StatusPill` and `Button`'s loading state carry a bare
+ * `animate-spin` / `animate-pulse` and are exempt from that contract
+ * (`EXEMPT_ANIMATIONS` in motion-reduce.test.ts), so this file is the ONLY
+ * thing damping them today. Removing the import restores full-speed
+ * `animate-spin` / `animate-pulse` under reduced motion — which is the
+ * INTENDED outcome per NIMUI-42: for a loading indicator the motion is the
+ * information, and WCAG 2.2 SC 2.2.2 exempts an activity indicator on exactly
+ * that basis. Note what the clamp below does to them today: it does not slow
+ * these loops, it stops them dead. One 0.01ms iteration and the element sits
+ * motionless at its un-animated position (Chromium reports `transform: none`
+ * on the spinner), which reads as a hung UI rather than as work in flight.
+ *
+ * Why this rule wins, since the import position is easy to misread: an
+ * unlayered declaration outranks every layered NORMAL declaration whatever its
+ * source position, and layer order is fixed by the first layer-name
+ * declaration, not by where a rule sits. The inverse is the one to remember —
+ * among `!important` declarations the layer order INVERTS and unlayered is the
+ * WEAKEST tier, so a layered `!important` animation/transition rule would beat
+ * this one. There is none today. Source order only decides against another
+ * unlayered `!important` declaration on the same properties; there is none of
+ * those either.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
