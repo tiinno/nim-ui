@@ -106,7 +106,16 @@ describe('dist/styles.css — custom @theme tokens compile to real utilities', (
   });
 
   describe('easing tokens', () => {
-    const easingNames = ['ease-out', 'ease-in', 'ease-in-out'];
+    /**
+     * The two easings the kit writes as class names. The third one — the
+     * entering curve — is deliberately absent: no component applies it as a
+     * class (the exit animations in `tokens.css` consume the custom property
+     * directly), and since NIMUI-52 scoped source scanning to non-test files a
+     * utility nothing asks for is no longer compiled. Its rule used to exist
+     * only because this array named it. The token itself is asserted below,
+     * which is the part the animations depend on.
+     */
+    const easingNames = ['ease-out', 'ease-in-out'];
 
     it.each(easingNames)('emits a real .%s rule backed by the custom-property token', (name) => {
       const body = findRuleBody(distCss, name);
@@ -115,6 +124,27 @@ describe('dist/styles.css — custom @theme tokens compile to real utilities', (
         `Expected a compiled .${name} rule in dist/styles.css.`
       ).toBeDefined();
       expect(body).toMatch(new RegExp(`--tw-ease:\\s*var\\(--${name}\\)`));
+    });
+
+    it('ships the entering-easing token even though no utility is compiled for it', () => {
+      // Assembled, never written whole: a test that asserts a class is ABSENT
+      // must not name it as a literal, or it becomes a candidate itself and
+      // passes over its own subject. Same convention as
+      // `compiled-utility-inventory.test.ts`.
+      const name = ['ease', 'in'].join('-');
+
+      expect(
+        distCss,
+        'The exit animations in tokens.css resolve their easing through this custom property, ' +
+          'so it has to reach the consumer whether or not a class name uses it.'
+      ).toMatch(new RegExp(`--${name}:\\s*cubic-bezier\\([^)]+\\)`));
+
+      expect(
+        findRuleBody(distCss, name),
+        `A .${name} rule is back in the bundle. Nothing in the kit applies that class, so it is ` +
+          'dead weight — find what minted it (prose, JSDoc, or a source glob that reaches test ' +
+          'files again) rather than pinning it.'
+      ).toBeUndefined();
     });
   });
 

@@ -12,9 +12,12 @@
  * scanner lives in one place with one set of callers keeping it honest.
  *
  * Test support only — nothing here is exported from the package entry point.
- * Tailwind's automatic source detection scans this file like any other, so do
- * not introduce new utility class names into its comments; see
- * `motion-reduce.test.ts` for what a utility written in prose costs.
+ * Tailwind used to scan this file like any other; since NIMUI-52 `src/styles.css`
+ * excludes the whole `src/test` directory, so prose here can no longer compile a
+ * rule into the published stylesheet. Keep writing plain property names anyway —
+ * the shipped sources this scanner reads are still scanned, and the habit is what
+ * stops the next leak landing there. See `motion-reduce.test.ts` for what a
+ * utility written in prose costs.
  */
 
 /**

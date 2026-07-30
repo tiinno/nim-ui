@@ -86,12 +86,15 @@ import { join, resolve } from 'path';
  *
  * ## Why nothing here is written as a literal class or value name
  *
- * Tailwind's automatic source detection scans this file exactly like a
- * component, and a bare word that reads as a utility compiles a real rule into
- * the published stylesheet — twice already, once from a comment. So every
- * variant value this suite talks about is derived at runtime from the two sides
- * it compares, and the failure messages are assembled from what was found. The
- * pinned inventories below hold group *names*, counts and file names only.
+ * Tailwind used to scan this file exactly like a component, and a bare word that
+ * reads as a utility compiles a real rule into the published stylesheet — twice
+ * already, once from a comment. NIMUI-52 took test files out of the scan, but the
+ * subject of this suite did not go with them: `registry/index.json` is still
+ * read, so a value named here as a literal would still be one edit away from the
+ * scanned side of the comparison. So every variant value this suite talks about
+ * is derived at runtime from the two sides it compares, and the failure messages
+ * are assembled from what was found. The pinned inventories below hold group
+ * *names*, counts and file names only.
  */
 
 const srcDir = resolve(__dirname);
