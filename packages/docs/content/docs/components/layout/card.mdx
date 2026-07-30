@@ -98,6 +98,40 @@ Use all three sub-components for a complete card layout with header, content, an
   </PreviewCode>
 </ComponentPreview>
 
+## Hoverable
+
+Set `hoverable` when the whole card is a target — a row in a list of records, a tile that opens a detail view. It adds a pointer cursor, lifts the card by 2px and deepens its shadow, both interpolated over `--duration-fast`. Hover the card below to see it.
+
+Users who ask for reduced motion keep the shadow crossfade and lose the lift: the counterpart narrows the transition rather than switching it off, because a change of depth is a visual cue and not a vestibular trigger.
+
+Because the lift is the only affordance, pair `hoverable` with a real control — wrap the card in a link, or give it `role="button"` plus a keyboard handler — so the target is reachable without a pointer.
+
+<ComponentPreview title="Hoverable Card">
+  <Card hoverable className="w-full max-w-sm">
+    <CardHeader>
+      <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Acme Corporation</h3>
+      <p className="text-sm text-neutral-500 dark:text-neutral-400">Updated 4 hours ago</p>
+    </CardHeader>
+    <CardContent>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">14 open invoices · 3 overdue</p>
+    </CardContent>
+  </Card>
+
+  <PreviewCode>
+```tsx
+<Card hoverable>
+  <CardHeader>
+    <h3 className="text-lg font-semibold">Acme Corporation</h3>
+    <p className="text-sm text-neutral-500">Updated 4 hours ago</p>
+  </CardHeader>
+  <CardContent>
+    <p>14 open invoices · 3 overdue</p>
+  </CardContent>
+</Card>
+```
+  </PreviewCode>
+</ComponentPreview>
+
 ## Custom Styling
 
 Cards accept a `className` prop for custom styling including width constraints, shadows, and border customization.
@@ -142,6 +176,13 @@ Cards accept a `className` prop for custom styling including width constraints, 
 
 <PropsTable
   props={[
+    {
+      name: 'hoverable',
+      type: 'boolean',
+      default: 'false',
+      description:
+        'Treats the whole card as a target: pointer cursor, a 2px lift and a deeper shadow on hover, both transitioned. Suppresses the lift under prefers-reduced-motion.',
+    },
     {
       name: 'className',
       type: 'string',

@@ -56,7 +56,12 @@ describe('ProductCard', () => {
         />
       );
       const card = screen.getByTestId('card');
-      expect(card).toHaveClass('transition-[box-shadow,transform]');
+      // Shadow only. The root used to name a transform-family property as well,
+      // which no utility on it ever set (NIMUI-48) — see the comment in
+      // product-card.tsx. That also makes the root a non-motion site, so it
+      // deliberately carries no reduced-motion counterpart; src/motion-reduce.test.ts
+      // pins that classification.
+      expect(card).toHaveClass('transition-shadow');
       expect(card).toHaveClass('hover:shadow-panel');
     });
   });

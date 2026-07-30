@@ -2,6 +2,23 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test/test-utils';
 import { Card, CardHeader, CardContent, CardFooter, cardVariants } from './card';
 
+/**
+ * The reduced-motion counterpart on Card's base, assembled from parts rather
+ * than written as one literal.
+ *
+ * Tailwind scans test files exactly like component files, so the literal form
+ * would compile a real rule into `dist/styles.css` and keep it alive after
+ * card.tsx stopped emitting the class — at which point the compiled-CSS half of
+ * `src/motion-reduce.test.ts` would pass over a reverted fix, which is the one
+ * thing it exists to catch. `motion-reduce.test.ts` and
+ * `aria-disabled-hover.test.ts` derive their counterparts the same way, for the
+ * same reason.
+ */
+const MOTION_REDUCE_VARIANT = 'motion-reduce';
+const TRANSITION_UTILITY = 'transition';
+const COUNTERPART_PROPERTIES = '[box-shadow,border-color,background-color]';
+const MOTION_REDUCE_COUNTERPART = `${MOTION_REDUCE_VARIANT}:${TRANSITION_UTILITY}-${COUNTERPART_PROPERTIES}`;
+
 describe('Card', () => {
   describe('Card - Rendering', () => {
     it('renders card element', () => {
@@ -28,6 +45,56 @@ describe('Card', () => {
       const card = screen.getByTestId('card');
       expect(card).toHaveClass('dark:bg-neutral-950');
       expect(card).toHaveClass('dark:border-neutral-800');
+    });
+  });
+
+  // NIMUI-48. These assert the class strings only; that a browser actually
+  // interpolates them is a different question, and one no test in this package
+  // can answer — jsdom computes no styles and evaluates no media queries. The
+  // property list is guarded against naming something nothing sets by
+  // src/transition-property.test.ts, and the counterpart is guarded against
+  // compiling to a dead rule by src/motion-reduce.test.ts. Both read the built
+  // stylesheet, because that is the only place the answer lives.
+  describe('Motion', () => {
+    it('transitions the properties its variants actually change', () => {
+      render(<Card data-testid="card">Content</Card>);
+      const card = screen.getByTestId('card');
+      // `translate`, not a transform: Tailwind v4 compiles the lift below to the
+      // independent longhand, so a list naming the combined property would name
+      // one nothing on this element sets and the lift would snap.
+      expect(card).toHaveClass('transition-[box-shadow,translate,border-color,background-color]');
+      expect(card).toHaveClass('duration-(--duration-fast)');
+      expect(card).toHaveClass('ease-out');
+    });
+
+    it('narrows rather than disables the transition under reduced motion', () => {
+      render(<Card data-testid="card">Content</Card>);
+      const card = screen.getByTestId('card');
+      // Suppresses the lift, keeps the shadow and colour crossfade — the kit
+      // treats those as non-motion everywhere else.
+      expect(card).toHaveClass(MOTION_REDUCE_COUNTERPART);
+      expect(card.className).not.toContain(
+        `${MOTION_REDUCE_VARIANT}:${TRANSITION_UTILITY}-none`
+      );
+    });
+
+    it('lifts and deepens its shadow when hoverable', () => {
+      render(
+        <Card hoverable data-testid="card">
+          Content
+        </Card>
+      );
+      const card = screen.getByTestId('card');
+      expect(card).toHaveClass('hover:-translate-y-0.5');
+      expect(card).toHaveClass('hover:shadow-panel');
+      expect(card).toHaveClass('cursor-pointer');
+    });
+
+    it('does not lift by default', () => {
+      render(<Card data-testid="card">Content</Card>);
+      const card = screen.getByTestId('card');
+      expect(card).not.toHaveClass('hover:-translate-y-0.5');
+      expect(card).not.toHaveClass('cursor-pointer');
     });
   });
 
