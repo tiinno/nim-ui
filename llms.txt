@@ -195,7 +195,8 @@ Note: `cn` is plain clsx (no tailwind-merge) — never rely on later classes ove
 - Keyboard navigation (Enter, Space, Escape, Arrows)
 - Focus management (focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400)
 - The focus indicator is a PAIR, and the pair is mandatory: WCAG 2.2 SC 1.4.11 wants 3:1 and no single step of the steel scale clears it in both themes (primary-400 is 2.84:1 on white; primary-500 is 2.86:1 on neutral-800). Same for the focus border on input/textarea/select. Overriding it in a consumer app means replacing BOTH halves — tailwind-merge keys on the modifier set, so a lone focus-visible:ring-<colour> leaves the dark half in place.
-- Not yet universal: five indicators predate the pair and still ship one colour (pinned in packages/ui/src/focus-ring-contrast.test.ts). Worst is Button secondary/outline/ghost at ring-primary-300 — 1.79:1 on white. Do not describe the kit as fully SC 1.4.11 compliant.
+- Not yet universal: four indicators predate the pair and still ship one colour (pinned in packages/ui/src/focus-ring-contrast.test.ts); three of them fail 3:1. Worst is ring-neutral-400 on bulk-action-bar/filter-summary/view-switcher — 2.58:1 on white, 2.37:1 on neutral-100. Do not describe the kit as fully SC 1.4.11 compliant.
+- Every Button variant except destructive takes that same pair. secondary/outline/ghost used to take a lighter ring (1.79:1 on white) and NIMUI-54 made them uniform: visual weight belongs to the resting button, not to the focus indicator. destructive keeps ring-error-400 as a semantic tint.
 - Screen reader support (aria-live, sr-only announcements)
 - Semantic HTML first (button, fieldset/legend, kbd, a)
 
