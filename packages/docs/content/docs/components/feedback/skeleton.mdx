@@ -140,6 +140,12 @@ function OperatorCard({ operator, isLoading }: Props) {
 
 Layout classes belong **inside** `fallback` and `children`. `SkeletonGroup` ships none of its own, and `className` lands on the root wrapper only — so `space-y-*` on the group would space the live region, not your rows.
 
+### Not inside a table
+
+`SkeletonGroup` renders a `<div>`, and so does `Skeleton` — which is fine *around* a table and impossible *inside* one. Neither `<tbody>` nor `<tr>` accepts a `<div>`, and the parser foster-parents it out of the table rather than tolerating it, so the placeholder renders above the table and server markup fails to hydrate.
+
+A `<td>` does take flow content, so a `Skeleton` inside a cell is valid. Use [`DataTable`](/components/data-display/data-table/#loading)'s own `loading` prop for the announcement — it renders the live region as a sibling of the table, and you render one `Skeleton` per `DataTableCell`.
+
 ### Don't: return early and unmount the region
 
 The obvious shape. It works visually and announces nothing: the live region is created at the same moment its text arrives, which screen readers handle inconsistently, and it disappears again the instant loading ends.
@@ -248,3 +254,4 @@ Do not put focusable content (links, buttons, inputs) inside a `Skeleton`. It is
 
 - [Spinner](/components/feedback/spinner/) — Animated loading indicator
 - [Progress](/components/feedback/progress/) — Determinate progress bar
+- [DataTable](/components/data-display/data-table/#loading) — Loading a table: cells take the placeholders, the table owns the announcement

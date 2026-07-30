@@ -39,6 +39,15 @@ import { fileURLToPath } from 'node:url';
  * markup React emitted, the scanner below walks tags as written. The
  * `<p><div>` positive control at the bottom of this file fails loudly if that
  * property is ever lost.
+ *
+ * That reasoning applies verbatim to the table content-model rule below. Tables
+ * have the *strictest* repair behaviour in the whole parser: a `<div>` as a
+ * direct child of `<tbody>` is **foster-parented** — lifted out of the table
+ * and inserted immediately before it — so the placeholder renders above the
+ * table, and under SSR React's hydration walk finds a node where the server
+ * said something else was. A DOM parser hands us the already-repaired tree and
+ * the violation is gone before any assertion can see it; the raw scanner sees
+ * what React actually serialised.
  */
 
 const outDir = resolve(fileURLToPath(new URL('.', import.meta.url)), '../out');
@@ -128,6 +137,33 @@ const BLOCK = new Set([
   'thead',
   'tr',
   'ul',
+]);
+
+/**
+ * The table content model, as an allow-list of *immediate* children.
+ *
+ * Unlike the phrasing rule above this is not about block vs. inline at all —
+ * `<td>` takes flow content, so `<td><div>…</div></td>` (and therefore
+ * `<DataTableCell><Skeleton /></DataTableCell>`) is perfectly valid. What is
+ * invalid is anything other than a row in a section, or anything other than a
+ * cell in a row, and that is the case the parser repairs by foster-parenting.
+ *
+ * `script` and `template` are the script-supporting elements, permitted
+ * everywhere in this model. `script` matters in practice: Next.js injects
+ * inline scripts into streamed markup, and the scanner reports raw-text
+ * elements as leaves but still *yields their open tag*, so leaving it out of
+ * the allow-list would turn every such injection into a false failure.
+ *
+ * `<table>`'s own children (`caption`, `colgroup`, the sections) are
+ * deliberately not modelled: the parser tolerates far more there, nothing in
+ * this repo renders into that slot, and an over-tight rule that fires on
+ * fumadocs-generated markup would get switched off rather than fixed.
+ */
+const TABLE_CONTENT_MODEL = new Map<string, Set<string>>([
+  ['thead', new Set(['tr', 'script', 'template'])],
+  ['tbody', new Set(['tr', 'script', 'template'])],
+  ['tfoot', new Set(['tr', 'script', 'template'])],
+  ['tr', new Set(['td', 'th', 'script', 'template'])],
 ]);
 
 const VOID = new Set([
@@ -228,6 +264,12 @@ function* scanTags(html: string): Generator<Tag> {
 }
 
 interface Violation {
+  /**
+   * Which content model was broken. The two need different failure advice:
+   * `phrasing` is almost always the MDX own-line-child mistake, while `table`
+   * is a placeholder or wrapper put directly into a section or a row.
+   */
+  rule: 'phrasing' | 'table';
   parent: string;
   child: string;
   parentAttrs: string;
@@ -249,9 +291,31 @@ function findViolations(html: string): Violation[] {
         const ancestor = stack[i];
         if (TRANSPARENT.has(ancestor.name)) continue;
         if (PHRASING_ONLY.has(ancestor.name)) {
-          violations.push({ parent: ancestor.name, child: tag.name, parentAttrs: ancestor.attrs });
+          violations.push({
+            rule: 'phrasing',
+            parent: ancestor.name,
+            child: tag.name,
+            parentAttrs: ancestor.attrs,
+          });
         }
         break;
+      }
+    }
+
+    // The table model is about the IMMEDIATE parent only — no ancestor walk and
+    // no transparent-element skipping. Both would be wrong here: a `<div>` in a
+    // `<td>` in a `<tr>` is valid, so looking past the cell would flag exactly
+    // the pattern the kit prescribes.
+    const parent = stack[stack.length - 1];
+    if (parent) {
+      const allowed = TABLE_CONTENT_MODEL.get(parent.name);
+      if (allowed && !allowed.has(tag.name)) {
+        violations.push({
+          rule: 'table',
+          parent: parent.name,
+          child: tag.name,
+          parentAttrs: parent.attrs,
+        });
       }
     }
 
@@ -306,7 +370,10 @@ beforeAll(() => {
   if (!existsSync(outDir)) throw new Error(MISSING_EXPORT);
 });
 
-describe('static export — no block-level element inside phrasing content', () => {
+const pageNames = pages.map((p) => relative(outDir, p).replace(/\\/g, '/'));
+const DATA_TABLE_PAGE = 'components/data-display/data-table/index.html';
+
+describe('static export — invalid nesting the parser silently repairs', () => {
   // Anti-vacuity: if the scan ever yields (nearly) nothing, every per-file
   // assertion below passes for free. 109 pages ship today.
   it('scans the whole export', () => {
@@ -314,8 +381,29 @@ describe('static export — no block-level element inside phrasing content', () 
   });
 
   it('includes the page the original defect shipped on', () => {
-    const names = pages.map((p) => relative(outDir, p).replace(/\\/g, '/'));
-    expect(names).toContain('components/primitives/button/index.html');
+    expect(pageNames).toContain('components/primitives/button/index.html');
+  });
+
+  // Anti-vacuity for the table content-model rule specifically: it can only
+  // report anything on pages that actually ship table sections. 91 of the 109
+  // pages do today (every PropsTable is a real table).
+  it('scans pages that actually contain table sections', () => {
+    const withSections = pages.filter((p) => /<tbody[\s>]/.test(readFileSync(p, 'utf-8')));
+    expect(withSections.length).toBeGreaterThanOrEqual(50);
+  });
+
+  // ...and specifically on a table rendered in its LOADING state, which is the
+  // surface where a placeholder is most likely to be put straight into a
+  // <tbody> or a <tr>. Without a demo that exports one, the rule above scans no
+  // instance of the pattern it exists to police and passes for the wrong reason.
+  it('includes a table exported in its loading state', () => {
+    expect(pageNames).toContain(DATA_TABLE_PAGE);
+    const html = readFileSync(join(outDir, DATA_TABLE_PAGE), 'utf-8');
+    expect(html).toMatch(/<table[^>]*\baria-busy="true"/);
+    // The placeholders must sit in cells. Matched by Skeleton's `aria-hidden`
+    // rather than by its class, because Tailwind source-scans this file (see
+    // the note above the positive controls).
+    expect(html).toMatch(/<td[^>]*>\s*<div[^>]*aria-hidden="true"/);
   });
 
   it.each(pages.length > 0 ? pages : ['<no static export found>'])('%s', (file) => {
@@ -323,16 +411,33 @@ describe('static export — no block-level element inside phrasing content', () 
     const violations = findViolations(readFileSync(file, 'utf-8')).filter((v) => !isKnownUpstream(v));
 
     const summary = violations
-      .map((v) => `  <${v.parent}${v.parentAttrs.trim() ? ' …' : ''}> contains <${v.child}>`)
+      .map((v) => `  [${v.rule}] <${v.parent}${v.parentAttrs.trim() ? ' …' : ''}> contains <${v.child}>`)
       .join('\n');
+
+    // The two rules need different advice, and the wrong advice is worse than
+    // none: "keep the text on one line" is an actively misleading diagnosis for
+    // a placeholder dropped into a <tbody>.
+    const advice: string[] = [];
+    if (violations.some((v) => v.rule === 'phrasing')) {
+      advice.push(
+        'phrasing: almost always an MDX text child written on its own line — markdown ' +
+          'wraps it in a <p>. Keep the text on the opening tag\'s line:\n' +
+          '  <Button>Click me</Button>   not   <Button>\\n    Click me\\n  </Button>',
+      );
+    }
+    if (violations.some((v) => v.rule === 'table')) {
+      advice.push(
+        'table: only <tr> may be a direct child of a section, and only <td>/<th> of a row. ' +
+          'The parser foster-parents anything else OUT of the table, so it renders above it ' +
+          'and breaks hydration. Put the content in a cell:\n' +
+          '  <DataTableRow><DataTableCell><Skeleton /></DataTableCell></DataTableRow>',
+      );
+    }
 
     expect(
       violations,
-      `${relative(outDir, file).replace(/\\/g, '/')} ships block-level content inside a ` +
-        `phrasing-only element:\n${summary}\n\n` +
-        'This is almost always an MDX text child written on its own line — markdown ' +
-        'wraps it in a <p>. Keep the text on the opening tag\'s line:\n' +
-        '  <Button>Click me</Button>   not   <Button>\\n    Click me\\n  </Button>',
+      `${relative(outDir, file).replace(/\\/g, '/')} ships markup the HTML parser will ` +
+        `silently repair:\n${summary}\n\n${advice.join('\n\n')}`,
     ).toEqual([]);
   });
 });
@@ -355,6 +460,15 @@ describe('the detector actually detects', () => {
     // (parse5 AND htmlparser2) rewrites this to siblings before assertion.
     ['<div><p><div>x</div></p></div>', '<div> inside <p>, which DOM parsers silently reparent'],
     ['<p><a><div>x</div></a></p>', 'transparent <a> inheriting a phrasing context'],
+    // The table content model. Every one of these is repaired by the parser
+    // (foster-parented out of the table), so it is invisible to any tree-based
+    // check and to jsdom, which never runs the parser at all.
+    ['<table><tbody><div>x</div></tbody></table>', 'a placeholder <div> directly inside <tbody>'],
+    ['<table><thead><div>x</div></thead></table>', '<div> directly inside <thead>'],
+    ['<table><tfoot><div>x</div></tfoot></table>', '<div> directly inside <tfoot>'],
+    ['<table><tbody><tr><div>x</div></tr></tbody></table>', '<div> directly inside <tr>'],
+    ['<table><tbody><tr><span>x</span></tr></tbody></table>', 'even phrasing content is invalid in <tr>'],
+    ['<table><tbody><p>x</p></tbody></table>', 'an MDX-wrapped <p> inside <tbody>'],
   ];
 
   it.each(flagged)('flags %s — %s', (html) => {
@@ -369,6 +483,24 @@ describe('the detector actually detects', () => {
     ['<div><button data-x="a>b"><span>x</span></button></div>', 'a quoted attribute containing >'],
     ['<div><script>var a = "<p><div>x</div></p>";</script></div>', 'markup inside a raw-text element'],
     ['<div><!-- <button><p>x</p></button> --></div>', 'markup inside a comment'],
+    // The pattern the whole DataTable loading contract rests on: cells take
+    // flow content, so a Skeleton inside a cell is valid and hydrates cleanly.
+    [
+      '<table><tbody><tr><td><div>x</div></td></tr></tbody></table>',
+      '<td> takes flow content — a placeholder in a cell is the correct shape',
+    ],
+    [
+      '<table><thead><tr><th><div>x</div></th></tr></thead></table>',
+      '<th> takes flow content too',
+    ],
+    [
+      '<table><tbody><template><tr><td>x</td></tr></template></tbody></table>',
+      '<template> is a script-supporting element, allowed in a section',
+    ],
+    [
+      '<table><tbody><script>var a = 1;</script><tr><td>x</td></tr></tbody></table>',
+      'so is <script> — Next.js injects them into streamed markup',
+    ],
   ];
 
   it.each(allowed)('does not flag %s — %s', (html) => {
@@ -398,5 +530,24 @@ describe('the detector actually detects', () => {
     const plainSpan = findViolations('<div><span><div>x</div></span></div>');
     expect(plainSpan).toHaveLength(1);
     expect(plainSpan.some(isKnownUpstream)).toBe(false);
+
+    // Nothing in the table model is ever excused, and it must not be reported
+    // under the phrasing rule — the failure advice branches on `rule`.
+    const fosterParented = findViolations('<table><tbody><div>x</div></tbody></table>');
+    expect(fosterParented).toHaveLength(1);
+    expect(fosterParented[0].rule).toBe('table');
+    expect(fosterParented.some(isKnownUpstream)).toBe(false);
+  });
+
+  it('labels each rule, so the failure message gives the right advice', () => {
+    expect(findViolations('<div><button><p>x</p></button></div>').map((v) => v.rule)).toEqual([
+      'phrasing',
+    ]);
+    expect(findViolations('<table><tbody><tr><span>x</span></tr></tbody></table>').map((v) => v.rule)).toEqual([
+      'table',
+    ]);
+    // A <p> in a <tr> breaks only the table model: <tr> is not phrasing-only,
+    // so the phrasing walk correctly stays silent and there is exactly one hit.
+    expect(findViolations('<table><tbody><tr><p>x</p></tr></tbody></table>')).toHaveLength(1);
   });
 });
