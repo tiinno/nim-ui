@@ -89,8 +89,8 @@ const Dot = React.forwardRef<HTMLSpanElement, DotProps>(
       />
       {/*
         A DIRECT child of the flex wrapper, never inside `.truncate` — same
-        shape as `spinner.tsx`. `.truncate` is `position: static`, so it stays
-        a flex item even when its only content is absolutely positioned, and
+        shape as `spinner.tsx`. `.truncate` never positions its own box, so it
+        stays a flex item even when its only content is absolutely positioned, and
         `gap-1.5` then adds 6px: a "bare" dot measures 12px instead of 6px. An
         `sr-only` span is absolutely positioned, so as a direct child of the
         flex container it is out of flow, is not a flex item, and costs nothing.

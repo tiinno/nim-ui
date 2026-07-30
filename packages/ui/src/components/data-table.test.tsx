@@ -339,7 +339,7 @@ describe('DataTable', () => {
      * defect that motivated this prop — a `<div>` as a direct child of
      * `<tbody>` being *foster-parented* out of the table — is not reproducible
      * here at all. `packages/docs/tests/export-html-nesting.test.ts` scans the
-     * built static export and is the only gate that speaks to it.
+     * prebuilt export and is the only gate that speaks to it.
      */
     it('renders no live region and no aria-busy when loading is omitted', () => {
       const { container } = render(

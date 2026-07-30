@@ -332,7 +332,10 @@ function findCounterpart(tokens: string[], prefix: string): string | null {
  * as the animation is what makes that fail.
  *
  * Tokens are split on whitespace only. Parens are deliberately preserved, so
- * the `animate-(--custom-prop)` form survives tokenisation intact.
+ * the `(--custom-prop)` value form survives tokenisation intact. (Named without
+ * its `animate-` namespace on purpose — writing the whole class here would
+ * compile a dead rule into the published stylesheet, which is what
+ * `compiled-utility-inventory.test.ts` exists to catch.)
  *
  * Known limitation, shared with `styles.test.ts`: the directory read is
  * non-recursive, so a component added under `src/components/<subdir>/` would
@@ -377,10 +380,13 @@ function extractClassGroups(file: string, source: string): ClassGroup[] {
       // follow a variant colon — this skips e.g. `no-animate-foo`.
       //
       // Three animation forms are recognised, so a component cannot slip past
-      // the guard by reaching for Tailwind v4's escape hatches:
-      //   - named token      animate-fade-in
-      //   - arbitrary value  animate-[wiggle_1s_ease-in-out]
-      //   - custom property  animate-(--my-animation)
+      // the guard by reaching for Tailwind v4's escape hatches. The last two are
+      // named WITHOUT the `animate-` namespace, because a whole class written in
+      // a comment compiles a dead rule into the published stylesheet — see
+      // `compiled-utility-inventory.test.ts`:
+      //   - named token      animate-fade-in   (a class the kit really ships)
+      //   - arbitrary value  [wiggle_1s_ease-in-out]
+      //   - custom property  (--my-animation)
       // The latter two never match EXEMPT_ANIMATIONS, so they always require a
       // counterpart — deliberately strict.
       const match = /(?:^|:)animate-(\[[^\]]*\]|\(--[^)]*\)|[a-z][a-z0-9-]*)$/.exec(token);
