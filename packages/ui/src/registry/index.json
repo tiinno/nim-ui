@@ -18,6 +18,7 @@
           "name": "variant",
           "values": [
             "default",
+            "primary",
             "secondary",
             "outline",
             "ghost",
@@ -107,7 +108,10 @@
             "default",
             "secondary",
             "outline",
-            "destructive"
+            "destructive",
+            "success",
+            "warning",
+            "info"
           ]
         },
         {
@@ -255,7 +259,9 @@
           "name": "variant",
           "values": [
             "default",
-            "outline"
+            "outlined",
+            "elevated",
+            "ghost"
           ]
         }
       ],
@@ -263,11 +269,11 @@
       "examples": [
         {
           "title": "Basic Card",
-          "code": "<Card><CardHeader><CardTitle>Title</CardTitle></CardHeader><CardContent>Content here</CardContent></Card>"
+          "code": "<Card><CardHeader><h3>Title</h3></CardHeader><CardContent>Content here</CardContent></Card>"
         },
         {
-          "title": "Card with Footer",
-          "code": "<Card variant=\"outline\"><CardHeader><CardTitle>Title</CardTitle></CardHeader><CardContent>Content</CardContent><CardFooter>Footer</CardFooter></Card>"
+          "title": "Outlined Card with Footer",
+          "code": "<Card variant=\"outlined\"><CardHeader><h3>Title</h3></CardHeader><CardContent>Content</CardContent><CardFooter>Footer</CardFooter></Card>"
         }
       ]
     },
@@ -333,25 +339,16 @@
         "lightbox"
       ],
       "file": "components/modal.tsx",
-      "variants": [
-        {
-          "name": "variant",
-          "values": [
-            "default",
-            "center",
-            "fullscreen"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": true,
       "examples": [
         {
           "title": "Basic Modal",
-          "code": "<Modal><ModalTrigger><Button>Open</Button></ModalTrigger><ModalContent><ModalHeader><ModalTitle>Title</ModalTitle></ModalHeader>Content here</ModalContent></Modal>"
+          "code": "<Modal><ModalTrigger><Button>Open</Button></ModalTrigger><ModalContent><ModalHeader><ModalTitle>Title</ModalTitle></ModalHeader><ModalBody>Content here</ModalBody></ModalContent></Modal>"
         },
         {
-          "title": "Centered Modal",
-          "code": "<Modal><ModalTrigger><Button>Open</Button></ModalTrigger><ModalContent variant=\"center\"><ModalHeader><ModalTitle>Centered</ModalTitle></ModalHeader>Centered content</ModalContent></Modal>"
+          "title": "Modal with Description",
+          "code": "<Modal><ModalTrigger><Button>Open</Button></ModalTrigger><ModalContent><ModalHeader><ModalTitle>Confirm action</ModalTitle><ModalDescription>Are you sure you want to proceed?</ModalDescription></ModalHeader><ModalBody>Additional details here</ModalBody></ModalContent></Modal>"
         }
       ]
     },
@@ -400,15 +397,7 @@
         "panels"
       ],
       "file": "components/tabs.tsx",
-      "variants": [
-        {
-          "name": "variant",
-          "values": [
-            "default",
-            "pills"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": true,
       "examples": [
         {
@@ -416,8 +405,8 @@
           "code": "<Tabs defaultValue=\"tab1\"><TabsList><TabsTrigger value=\"tab1\">Tab 1</TabsTrigger><TabsTrigger value=\"tab2\">Tab 2</TabsTrigger></TabsList><TabsContent value=\"tab1\">Content 1</TabsContent><TabsContent value=\"tab2\">Content 2</TabsContent></Tabs>"
         },
         {
-          "title": "Pills Variant",
-          "code": "<Tabs defaultValue=\"tab1\" variant=\"pills\"><TabsList><TabsTrigger value=\"tab1\">Tab 1</TabsTrigger><TabsTrigger value=\"tab2\">Tab 2</TabsTrigger></TabsList><TabsContent value=\"tab1\">Content 1</TabsContent></Tabs>"
+          "title": "Tabs with Three Panels",
+          "code": "<Tabs defaultValue=\"overview\"><TabsList><TabsTrigger value=\"overview\">Overview</TabsTrigger><TabsTrigger value=\"details\">Details</TabsTrigger><TabsTrigger value=\"settings\">Settings</TabsTrigger></TabsList><TabsContent value=\"overview\">Overview content</TabsContent><TabsContent value=\"details\">Details content</TabsContent><TabsContent value=\"settings\">Settings content</TabsContent></Tabs>"
         }
       ]
     },
@@ -435,22 +424,23 @@
       "file": "components/data-card.tsx",
       "variants": [
         {
-          "name": "variant",
+          "name": "trendDirection",
           "values": [
-            "default",
-            "outline"
+            "up",
+            "down",
+            "neutral"
           ]
         }
       ],
       "hasRadixPrimitive": false,
       "examples": [
         {
-          "title": "Data Card with Label",
-          "code": "<DataCard><DataCardLabel>Total Revenue</DataCardLabel><DataCardValue>$12,345</DataCardValue></DataCard>"
+          "title": "Basic Data Card",
+          "code": "<DataCard value=\"1,234\" label=\"Total Users\" />"
         },
         {
-          "title": "Data Card with Description",
-          "code": "<DataCard variant=\"outline\"><DataCardLabel>Users</DataCardLabel><DataCardValue>1,234</DataCardValue><DataCardDescription>Active this month</DataCardDescription></DataCard>"
+          "title": "Data Card with Trend",
+          "code": "<DataCard value=\"$45,231\" label=\"Revenue\" description=\"Last 30 days\" trend=\"+12.5%\" trendDirection=\"up\" />"
         }
       ]
     },
@@ -496,7 +486,7 @@
     {
       "name": "DataTable",
       "category": "data-display",
-      "description": "A table component for displaying structured data with sorting and styling options",
+      "description": "A composable table for structured data, with an optional loading announcement and aria-busy state",
       "keywords": [
         "table",
         "data",
@@ -505,15 +495,7 @@
         "rows"
       ],
       "file": "components/data-table.tsx",
-      "variants": [
-        {
-          "name": "variant",
-          "values": [
-            "default",
-            "striped"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": false,
       "examples": [
         {
@@ -521,8 +503,8 @@
           "code": "<DataTable><DataTableHeader><DataTableRow><DataTableHead>Name</DataTableHead><DataTableHead>Email</DataTableHead></DataTableRow></DataTableHeader><DataTableBody><DataTableRow><DataTableCell>John</DataTableCell><DataTableCell>john@example.com</DataTableCell></DataTableRow></DataTableBody></DataTable>"
         },
         {
-          "title": "Striped Table",
-          "code": "<DataTable variant=\"striped\"><DataTableHeader><DataTableRow><DataTableHead>Product</DataTableHead><DataTableHead>Price</DataTableHead></DataTableRow></DataTableHeader><DataTableBody><DataTableRow><DataTableCell>Item 1</DataTableCell><DataTableCell>$10</DataTableCell></DataTableRow></DataTableBody></DataTable>"
+          "title": "Loading Table",
+          "code": "<DataTable loading={isLoading} loadingLabel=\"Loading orders\"><DataTableHeader><DataTableRow><DataTableHead>Order</DataTableHead><DataTableHead>Total</DataTableHead></DataTableRow></DataTableHeader><DataTableBody><DataTableRow><DataTableCell><Skeleton className=\"h-4 w-24\" /></DataTableCell><DataTableCell><Skeleton className=\"h-4 w-16\" /></DataTableCell></DataTableRow></DataTableBody></DataTable>"
         }
       ]
     },
@@ -705,7 +687,7 @@
     {
       "name": "Stat",
       "category": "data-display",
-      "description": "A component for displaying statistics with labels, values, and optional trend indicators",
+      "description": "A component for displaying one statistic as a value with its label",
       "keywords": [
         "stat",
         "statistic",
@@ -714,24 +696,16 @@
         "kpi"
       ],
       "file": "components/stat.tsx",
-      "variants": [
-        {
-          "name": "variant",
-          "values": [
-            "default",
-            "card"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": false,
       "examples": [
         {
           "title": "Simple Stat",
-          "code": "<Stat><StatLabel>Total Sales</StatLabel><StatValue>$45,231</StatValue></Stat>"
+          "code": "<Stat value=\"$45,231\" label=\"Total Sales\" />"
         },
         {
-          "title": "Stat with Helper Text",
-          "code": "<Stat variant=\"card\"><StatLabel>Growth</StatLabel><StatValue>23.5%</StatValue><StatHelper>+2.5% from last month</StatHelper></Stat>"
+          "title": "Stat with Custom Styling",
+          "code": "<Stat value=\"98%\" label=\"Success Rate\" className=\"text-success-600\" />"
         }
       ]
     },
@@ -747,24 +721,16 @@
         "item"
       ],
       "file": "components/product-card.tsx",
-      "variants": [
-        {
-          "name": "variant",
-          "values": [
-            "default",
-            "compact"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": false,
       "examples": [
         {
           "title": "Product Card",
-          "code": "<ProductCard><ProductCardImage src=\"/product.jpg\" alt=\"Product\" /><ProductCardTitle>Product Name</ProductCardTitle><ProductCardPrice>$99.99</ProductCardPrice></ProductCard>"
+          "code": "<ProductCard image=\"/product.jpg\" title=\"Premium Headphones\" price=\"$199.99\" />"
         },
         {
-          "title": "Compact Product Card",
-          "code": "<ProductCard variant=\"compact\"><ProductCardImage src=\"/product.jpg\" alt=\"Product\" /><ProductCardTitle>Product</ProductCardTitle><ProductCardPrice>$49.99</ProductCardPrice><ProductCardButton>Add to Cart</ProductCardButton></ProductCard>"
+          "title": "Product Card with Description",
+          "code": "<ProductCard image=\"/shirt.jpg\" title=\"Cotton T-Shirt\" price=\"$29.99\" description=\"Comfortable everyday wear\" imageAlt=\"Cotton T-Shirt\" />"
         }
       ]
     },
@@ -780,24 +746,16 @@
         "product"
       ],
       "file": "components/cart-item.tsx",
-      "variants": [
-        {
-          "name": "variant",
-          "values": [
-            "default",
-            "compact"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": false,
       "examples": [
         {
           "title": "Cart Item",
-          "code": "<CartItem><CartItemImage src=\"/product.jpg\" alt=\"Product\" /><CartItemDetails><CartItemTitle>Product Name</CartItemTitle><CartItemPrice>$99.99</CartItemPrice></CartItemDetails><CartItemQuantity quantity={2} /><CartItemRemove /></CartItem>"
+          "code": "<CartItem image=\"/product.jpg\" title=\"Premium Headphones\" price=\"$199.99\" quantity={1} onRemove={() => {}} />"
         },
         {
-          "title": "Compact Cart Item",
-          "code": "<CartItem variant=\"compact\"><CartItemImage src=\"/product.jpg\" alt=\"Product\" /><CartItemDetails><CartItemTitle>Product</CartItemTitle><CartItemPrice>$49.99</CartItemPrice></CartItemDetails></CartItem>"
+          "title": "Cart Item with Options Label",
+          "code": "<CartItem image=\"/shirt.jpg\" title=\"Cotton T-Shirt\" price=\"$29.99\" quantity={3} variant=\"Size: L, Color: Blue\" onQuantityChange={(quantity) => {}} onRemove={() => {}} />"
         }
       ]
     },
@@ -815,10 +773,11 @@
       "file": "components/price-tag.tsx",
       "variants": [
         {
-          "name": "variant",
+          "name": "size",
           "values": [
-            "default",
-            "large"
+            "sm",
+            "md",
+            "lg"
           ]
         }
       ],
@@ -826,11 +785,11 @@
       "examples": [
         {
           "title": "Simple Price",
-          "code": "<PriceTag price={99.99} />"
+          "code": "<PriceTag price=\"$99.99\" />"
         },
         {
-          "title": "Price with Discount",
-          "code": "<PriceTag price={79.99} originalPrice={99.99} variant=\"large\" />"
+          "title": "Large Price with Discount",
+          "code": "<PriceTag price=\"$799\" originalPrice=\"$999\" discountPercent=\"20%\" size=\"lg\" />"
         }
       ]
     },
@@ -914,24 +873,16 @@
         "section"
       ],
       "file": "components/hero.tsx",
-      "variants": [
-        {
-          "name": "alignment",
-          "values": [
-            "left",
-            "center"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": false,
       "examples": [
         {
-          "title": "Centered Hero",
-          "code": "<Hero alignment=\"center\"><HeroHeadline>Welcome to Our Product</HeroHeadline><HeroDescription>The best solution for your needs</HeroDescription><HeroActions><Button>Get Started</Button></HeroActions></Hero>"
+          "title": "Basic Hero",
+          "code": "<Hero title=\"Welcome to Our Platform\" subtitle=\"Build amazing things with our tools\" />"
         },
         {
-          "title": "Left-Aligned Hero",
-          "code": "<Hero alignment=\"left\"><HeroHeadline>Build Faster</HeroHeadline><HeroDescription>Ship products quickly</HeroDescription><HeroActions><Button>Learn More</Button></HeroActions></Hero>"
+          "title": "Hero with CTA Buttons",
+          "code": "<Hero title=\"Transform Your Business\" subtitle=\"Get started today with our innovative solutions\" primaryCta={{ label: \"Get Started\", href: \"/signup\" }} secondaryCta={{ label: \"Learn More\", href: \"/docs\" }} />"
         }
       ]
     },
@@ -960,12 +911,12 @@
       "hasRadixPrimitive": false,
       "examples": [
         {
-          "title": "Three Column Feature Grid",
-          "code": "<FeatureGrid columns=\"3\"><FeatureGridItem><FeatureGridIcon>⚡</FeatureGridIcon><FeatureGridTitle>Fast</FeatureGridTitle><FeatureGridDescription>Lightning quick performance</FeatureGridDescription></FeatureGridItem></FeatureGrid>"
+          "title": "Feature Grid",
+          "code": "<FeatureGrid><FeatureCard title=\"Fast Performance\" description=\"Lightning fast load times\" /><FeatureCard title=\"Secure\" description=\"Enterprise-grade security\" /></FeatureGrid>"
         },
         {
-          "title": "Two Column Feature Grid",
-          "code": "<FeatureGrid columns=\"2\"><FeatureGridItem><FeatureGridTitle>Secure</FeatureGridTitle><FeatureGridDescription>Enterprise-grade security</FeatureGridDescription></FeatureGridItem></FeatureGrid>"
+          "title": "Feature Grid with Four Columns",
+          "code": "<FeatureGrid columns={4}><FeatureCard title=\"Feature 1\" description=\"Description 1\" /><FeatureCard title=\"Feature 2\" description=\"Description 2\" /><FeatureCard title=\"Feature 3\" description=\"Description 3\" /><FeatureCard title=\"Feature 4\" description=\"Description 4\" /></FeatureGrid>"
         }
       ]
     },
@@ -986,26 +937,20 @@
           "name": "variant",
           "values": [
             "default",
-            "card"
-          ]
-        },
-        {
-          "name": "alignment",
-          "values": [
-            "left",
-            "center"
+            "primary",
+            "gradient"
           ]
         }
       ],
       "hasRadixPrimitive": false,
       "examples": [
         {
-          "title": "Centered CTA",
-          "code": "<CTA alignment=\"center\"><CTAHeadline>Ready to get started?</CTAHeadline><CTADescription>Join thousands of satisfied customers</CTADescription><CTAActions><Button>Sign Up Now</Button></CTAActions></CTA>"
+          "title": "Basic CTA",
+          "code": "<CTA title=\"Ready to get started?\" description=\"Join thousands of satisfied customers\" buttonText=\"Sign Up Now\" onButtonClick={() => {}} />"
         },
         {
-          "title": "Card Style CTA",
-          "code": "<CTA variant=\"card\" alignment=\"left\"><CTAHeadline>Boost Your Productivity</CTAHeadline><CTADescription>Try it free for 14 days</CTADescription><CTAActions><Button>Start Free Trial</Button></CTAActions></CTA>"
+          "title": "CTA with Link Button",
+          "code": "<CTA title=\"Start Your Free Trial\" description=\"No credit card required\" buttonText=\"Try for Free\" buttonHref=\"/signup\" variant=\"primary\" />"
         }
       ]
     },
@@ -1021,24 +966,16 @@
         "social-proof"
       ],
       "file": "components/testimonial.tsx",
-      "variants": [
-        {
-          "name": "variant",
-          "values": [
-            "default",
-            "card"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": false,
       "examples": [
         {
           "title": "Simple Testimonial",
-          "code": "<Testimonial><TestimonialQuote>This product changed our business!</TestimonialQuote><TestimonialAuthor name=\"John Doe\" role=\"CEO\" /></Testimonial>"
+          "code": "<Testimonial quote=\"This product changed our business!\" author=\"John Doe\" role=\"CEO\" />"
         },
         {
-          "title": "Card Testimonial with Avatar",
-          "code": "<Testimonial variant=\"card\"><TestimonialQuote>Amazing experience from start to finish</TestimonialQuote><TestimonialAuthor name=\"Jane Smith\" role=\"Designer\" avatar=\"/avatar.jpg\" /></Testimonial>"
+          "title": "Testimonial with Avatar and Company",
+          "code": "<Testimonial quote=\"Excellent service and support. Highly recommended!\" author=\"Jane Smith\" role=\"Designer\" company=\"Acme Corp\" avatar=\"/avatar.jpg\" />"
         }
       ]
     },
@@ -1130,11 +1067,11 @@
       "examples": [
         {
           "title": "Basic Form",
-          "code": "<Form onSubmit={(data) => console.log(data)}><FormField name=\"email\" label=\"Email\" /><Button type=\"submit\">Submit</Button></Form>"
+          "code": "<Form onSubmit={(e) => e.preventDefault()}><FormField label=\"Email\" name=\"email\"><Input type=\"email\" /></FormField><Button type=\"submit\">Submit</Button></Form>"
         },
         {
           "title": "Form with Multiple Fields",
-          "code": "<Form onSubmit={(data) => console.log(data)}><FormField name=\"name\" label=\"Name\" /><FormField name=\"email\" label=\"Email\" type=\"email\" /><Button type=\"submit\">Register</Button></Form>"
+          "code": "<Form onSubmit={handleSubmit}><FormField label=\"Name\" name=\"name\"><Input type=\"text\" /></FormField><FormField label=\"Email\" name=\"email\" error={errors.email}><Input type=\"email\" /></FormField><Button type=\"submit\">Register</Button></Form>"
         }
       ]
     },
@@ -1150,31 +1087,23 @@
         "error"
       ],
       "file": "components/form-field.tsx",
-      "variants": [
-        {
-          "name": "variant",
-          "values": [
-            "default",
-            "inline"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": false,
       "examples": [
         {
           "title": "Form Field with Label",
-          "code": "<FormField name=\"email\" label=\"Email Address\" placeholder=\"Enter your email\" />"
+          "code": "<FormField label=\"Email Address\" name=\"email\"><Input type=\"email\" placeholder=\"Enter your email\" /></FormField>"
         },
         {
-          "title": "Inline Form Field",
-          "code": "<FormField name=\"search\" label=\"Search\" variant=\"inline\" placeholder=\"Search...\" />"
+          "title": "Form Field with Helper Text",
+          "code": "<FormField label=\"Password\" name=\"password\" required helperText=\"Must be at least 8 characters\"><Input type=\"password\" /></FormField>"
         }
       ]
     },
     {
       "name": "Select",
       "category": "primitives",
-      "description": "A dropdown select component with search and multi-select capabilities, built with Radix UI",
+      "description": "A dropdown select with trigger, grouped items, and themed content, built with Radix UI",
       "keywords": [
         "select",
         "dropdown",
@@ -1183,16 +1112,7 @@
         "options"
       ],
       "file": "components/select.tsx",
-      "variants": [
-        {
-          "name": "size",
-          "values": [
-            "sm",
-            "md",
-            "lg"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": true,
       "examples": [
         {
@@ -1200,8 +1120,8 @@
           "code": "<Select><SelectTrigger><SelectValue placeholder=\"Select option\" /></SelectTrigger><SelectContent><SelectItem value=\"1\">Option 1</SelectItem><SelectItem value=\"2\">Option 2</SelectItem></SelectContent></Select>"
         },
         {
-          "title": "Large Select",
-          "code": "<Select size=\"lg\"><SelectTrigger><SelectValue placeholder=\"Choose\" /></SelectTrigger><SelectContent><SelectItem value=\"a\">Choice A</SelectItem><SelectItem value=\"b\">Choice B</SelectItem></SelectContent></Select>"
+          "title": "Select with Groups",
+          "code": "<Select><SelectTrigger><SelectValue placeholder=\"Choose a queue\" /></SelectTrigger><SelectContent><SelectGroup><SelectLabel>Queues</SelectLabel><SelectItem value=\"new\">New</SelectItem><SelectItem value=\"review\">In review</SelectItem></SelectGroup></SelectContent></Select>"
         }
       ]
     },
@@ -1867,7 +1787,7 @@
             "default",
             "success",
             "warning",
-            "danger",
+            "error",
             "info"
           ]
         },
@@ -2501,7 +2421,7 @@
     {
       "name": "Stepper",
       "category": "forms",
-      "description": "A compact stepper for multi-step forms, setup flows, and review workflows",
+      "description": "A compact stepper for multi-step forms, setup flows, and review workflows; each entry in its steps array carries an optional status of complete, current, pending, or error",
       "keywords": [
         "stepper",
         "steps",
@@ -2510,17 +2430,7 @@
         "form"
       ],
       "file": "components/stepper.tsx",
-      "variants": [
-        {
-          "name": "status",
-          "values": [
-            "complete",
-            "current",
-            "pending",
-            "error"
-          ]
-        }
-      ],
+      "variants": [],
       "hasRadixPrimitive": false,
       "examples": [
         {
@@ -3141,7 +3051,7 @@
       "examples": [
         {
           "title": "List Beside An Inspector",
-          "code": "<Resizable className=\"h-96\" defaultSize={38} minSize={25} maxSize={65} handleLabel=\"Resize order list\"><OrderList /><RecordInspector aria-label=\"Order inspector\" /></Resizable>"
+          "code": "<Resizable className=\"h-96\" defaultSize={38} minSize={25} maxSize={65} handleLabel=\"Resize order list\"><div className=\"h-full overflow-auto p-4\">Order list</div><RecordInspector aria-label=\"Order inspector\" /></Resizable>"
         },
         {
           "title": "Vertical Split",
@@ -3149,7 +3059,7 @@
         },
         {
           "title": "Controlled Size",
-          "code": "<Resizable className=\"h-96\" size={size} onSizeChange={setSize} minSize={20} maxSize={80}><Filters /><Results /></Resizable>"
+          "code": "<Resizable className=\"h-96\" size={size} onSizeChange={setSize} minSize={20} maxSize={80}><div className=\"h-full overflow-auto p-4\">Filters</div><div className=\"h-full overflow-auto p-4\">Results</div></Resizable>"
         }
       ]
     },

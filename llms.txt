@@ -31,7 +31,7 @@ nim-ui/
 ### Primitives (10)
 - Button: A versatile button component with multiple variants and sizes for different use cases
 - Input: A flexible input field component with validation states and multiple sizes
-- Select: A dropdown select component with search and multi-select capabilities, built with Radix UI
+- Select: A dropdown select with trigger, grouped items, and themed content, built with Radix UI
 - Checkbox: A checkbox input component with label and indeterminate state support, built with Radix UI
 - Radio: A radio button component for selecting a single option from a group, built with Radix UI
 - Textarea: A textarea component with validation states and sizes for multi-line text input
@@ -65,14 +65,14 @@ nim-ui/
 - Avatar: A user avatar component with image fallback and initials support, built with Radix UI
 - DataCard: A specialized card for displaying data with labels, values, and optional trends
 - MetricCard: A dashboard KPI card with value, trend, tone, supporting text, visual slot, and footer metadata
-- DataTable: A table component for displaying structured data with sorting and styling options
+- DataTable: A composable table for structured data, with an optional loading announcement and aria-busy state
 - DataToolbar: A table and list toolbar for search, filters, result metadata, and actions
 - BulkActionBar: A sticky selected-row action bar for admin tables and bulk workflows
 - EmptyState: An empty table and list state with title, description, decorative icon, and recovery actions
 - Timeline: A semantic activity history component for audit trails, order events, and status changes
 - DescriptionList: A semantic label-value metadata component for detail panels, drawers, and record pages
 - RecordInspector: A compact record detail panel for backoffice review, metadata, actions, and activity
-- Stat: A component for displaying statistics with labels, values, and optional trend indicators
+- Stat: A component for displaying one statistic as a value with its label
 - Dot: Minimal inline status dot with optional label for dense table cells and list rows
 - Meter: Capacity and usage bar with automatic threshold coloring, distinct from Progress task completion
 - CopyButton: Ghost icon button that copies a value to the clipboard with copied feedback and live-region announcement
