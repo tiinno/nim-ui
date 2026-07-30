@@ -33,8 +33,22 @@ import { cn } from '../lib/utils';
  * />
  */
 
+/*
+ * The root transitions its shadow and NOTHING else, and carries no
+ * reduced-motion counterpart as a consequence (NIMUI-48).
+ *
+ * It used to declare a hand-written list naming `transform` as well. No utility
+ * on this element has ever set a transform-family property — the only thing that
+ * changes on hover here is the shadow — so that entry was inert from the day it
+ * was written, and it made the element read as a moving one to every reader and
+ * to the reduced-motion guard. With it gone the site is honestly non-motion, and
+ * `box-shadow` is a depth cue rather than a vestibular trigger, so it gets the
+ * same treatment as the kit's ~55 colour transitions: no counterpart, because
+ * suppressing a crossfade buys no accessibility. The image's own zoom is the real
+ * movement on this component and keeps its counterpart, below.
+ */
 const productCardVariants = cva(
-  'overflow-hidden rounded-md border border-neutral-200 bg-white shadow-soft transition-[box-shadow,transform] motion-reduce:transition-none duration-(--duration-fast) ease-out hover:shadow-panel dark:border-neutral-800 dark:bg-neutral-950',
+  'overflow-hidden rounded-md border border-neutral-200 bg-white shadow-soft transition-shadow duration-(--duration-fast) ease-out hover:shadow-panel dark:border-neutral-800 dark:bg-neutral-950',
   {
     variants: {},
     defaultVariants: {},
