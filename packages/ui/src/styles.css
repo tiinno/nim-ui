@@ -1,4 +1,34 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+
+/* What this stylesheet is compiled from, stated rather than inferred (NIMUI-52).
+
+   Tailwind v4 carries no content globs of its own, and with automatic detection
+   left on it reads every file under the package as TEXT — JSDoc, `//` notes and
+   `.test.ts` prose included. 32 rules in the published bundle came from nowhere
+   but test files: assertions naming a colour the kit does not use, throwaway
+   sizes in a render call, a bare token that a component only ever writes behind
+   a variant. Test fixtures, shipped to every consumer of the library.
+
+   `source(none)` turns that automatic pass off, so nothing is scanned unless it
+   is named here:
+
+   - `../src` — everything the kit ships from. That deliberately includes
+     `registry/index.json`, whose `code` samples and search keywords are read
+     like any other file; `compiled-utility-inventory.test.ts` pins what that
+     costs, so the price stays on the record.
+   - the negations below — test files at any depth under `src`, plus both
+     directories that hold nothing else: `src/test` and any `__tests__`. Their
+     class names never reach a consumer's DOM.
+
+   `@source not` is applied to explicitly registered sources too, not only to
+   automatically detected ones; both halves were verified against the built
+   output, and `compiled-utility-inventory.test.ts` re-checks the result on
+   every build. */
+@source "../src";
+@source not "./**/*.test.ts";
+@source not "./**/*.test.tsx";
+@source not "./test";
+@source not "./**/__tests__";
 
 /* Shared design tokens — single source of truth (also imported by the docs site) */
 @import "./tokens.css";

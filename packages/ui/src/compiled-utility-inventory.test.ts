@@ -9,19 +9,26 @@ import { extractStringLiterals } from './test/class-scan';
  *
  * ## The failure mode (NIMUI-44)
  *
- * Tailwind v4 has no content globs here — `src/styles.css` declares no
- * `@source` and no `@config`, so automatic source detection scans the whole
- * package. It reads TEXT, not code: JSDoc, `//` notes, `.test.ts` prose and
+ * Tailwind v4 reads its sources as TEXT, not code: JSDoc, `//` notes and
  * identifiers in expression position are all candidate sources. Any bare word
  * that happens to name a utility therefore ships as a real rule in the
  * published stylesheet, applied to nothing.
+ *
+ * `src/styles.css` states its scan explicitly (NIMUI-52) — `source(none)`, one
+ * `@source` for `../src`, and `@source not` for every test file and the
+ * `src/test` helpers. That closed one whole class of this defect: 32 rules that
+ * existed only because a `.test.tsx` assertion or a throwaway size in a render
+ * call named them. What is still scanned, and still leaks this way, is every
+ * shipped source file — comments included — plus `registry/index.json`.
  *
  * Three of these have actually happened:
  *
  * - A rebuild came back 239 bytes heavier because a sentence in a new
  *   `.test.ts` used an English word that Tailwind also knows as an image-filter
  *   utility. The sentence was about reversing an assertion. Rewording it to
- *   "flip" returned the bundle to its previous byte count.
+ *   "flip" returned the bundle to its previous byte count. (That particular
+ *   route is closed now — test files are no longer scanned at all — but the
+ *   identical mistake in a component's own JSDoc still lands.)
  * - 958 bytes of dead property-list utilities compiled out of prose that
  *   *described the syntax* of one.
  * - Two layout keywords that are also ordinary English words — and also public
@@ -36,7 +43,7 @@ import { extractStringLiterals } from './test/class-scan';
  *
  * ## Why this shape and not the alternatives
  *
- * - **Not a full inventory pin of all 809 rules.** 800 of them are traceable to
+ * - **Not a full inventory pin of all 777 rules.** 768 of them are traceable to
  *   a class string the kit actually ships, so they would each need a pin entry
  *   that changes on every restyle — churn proportional to the WORK. Here the pin
  *   holds only the 9 that nothing asks for.
@@ -74,7 +81,12 @@ import { extractStringLiterals } from './test/class-scan';
  * `it('allows … by default')`, or a `getByRole` argument, or a public variant
  * value passed in a render call, is indistinguishable from a class token — so
  * the two English-word keywords in KNOWN_UNUSED would be vouched for even if
- * their pin entries were removed. Restricting users to literals in
+ * their pin entries were removed.
+ *
+ * Since NIMUI-52 the weakening is one-directional and much cheaper: Tailwind no
+ * longer READS those files, so a test literal can vouch for a rule but can no
+ * longer mint one. The remaining hole is a rule some shipped file mints while a
+ * test literal happens to vouch for it. Restricting users to literals in
  * `className` / `cn()` / `cva()` position would close that hole, but it needs a
  * context parser, it would misjudge composed strings, and the utilities it
  * would newly flag are unremovable anyway (they are public variant values and
@@ -90,11 +102,16 @@ import { extractStringLiterals } from './test/class-scan';
  *
  * ## Why the pin is encoded
  *
- * A pin entry written plainly would be a live candidate: this file is scanned
- * like any other, so the pin would MINT the rule it claims to merely tolerate.
- * The bundle could then never get smaller when the real source is cleaned, and
- * the entry would be frozen in forever — and a byte-for-byte rebuild diff cannot
+ * A pin entry written plainly used to be a live candidate: this file was scanned
+ * like any other, so the pin MINTED the rule it claims to merely tolerate. The
+ * bundle could then never get smaller when the real source is cleaned, and the
+ * entry would be frozen in forever — and a byte-for-byte rebuild diff cannot
  * notice, because a name already in the bundle costs zero further bytes.
+ *
+ * NIMUI-52 took test files out of the scan, so the encoding is now the second
+ * lock rather than the first. It stays, and so do the assertions below: they are
+ * what would catch a revert of that scoping quietly re-arming this file, and
+ * they cost one character per entry.
  *
  * So every entry carries a `~`, stripped at load. The marker goes wherever it
  * takes to leave BOTH fragments meaningless to Tailwind: `w~-96` splits into `w`
@@ -105,8 +122,9 @@ import { extractStringLiterals } from './test/class-scan';
  * last entry in the list is placed mid-word for exactly that reason.
  *
  * This file is also excluded from the user set. It vouches for nothing, so if
- * its own prose ever mints a rule, that rule shows up here as an arrival and
- * this guard fails on itself.
+ * its own prose ever mints a rule — which now takes the scoping in
+ * `src/styles.css` being undone first — that rule shows up here as an arrival
+ * and this guard fails on itself.
  */
 
 const distStylesPath = resolve(__dirname, '../dist/styles.css');
@@ -471,8 +489,8 @@ describe('dist/styles.css — no compiled utility without a user', () => {
     expect(
       arrivals.map((name) => `${name}   <- ${provenance(name).join(', ') || 'no textual source found'}`),
       'The published stylesheet gained rules that NO class string in this package asks for.\n' +
-        'Tailwind v4 scans this package as TEXT — JSDoc, `//` notes, `.test.ts` prose, even a ' +
-        'negated identifier — so a bare word that happens to name a utility compiles a real ' +
+        'Tailwind v4 scans the shipped sources as TEXT — JSDoc, `//` notes, `registry/index.json` ' +
+        'data, even a negated identifier — so a bare word that happens to name a utility compiles a real ' +
         'rule into the bundle, applied to nothing. Every consumer downloads it. Nothing else ' +
         'in the repo reports it.\n' +
         'The locations above are where each token appears; by construction it is NOT in any ' +
