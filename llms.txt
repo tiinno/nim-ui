@@ -41,7 +41,7 @@ nim-ui/
 - ButtonGroup: Attached button container that collapses inner radii and borders into a single segmented control
 
 ### Layout (16)
-- Card: A container component for grouping related content with header, body, and footer sections
+- Card: A container component for grouping related content with header, body, and footer sections, plus an optional CardLink that turns the whole card into one navigation target
 - AdminShell: A backoffice application frame with sidebar, topbar, panel, and main content landmarks
 - PageHeader: A backoffice page header with title, description, metadata, and grouped actions
 - Modal: A dialog/modal component for displaying content in an overlay, built with Radix UI

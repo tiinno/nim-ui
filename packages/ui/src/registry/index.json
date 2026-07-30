@@ -245,7 +245,7 @@
     {
       "name": "Card",
       "category": "layout",
-      "description": "A container component for grouping related content with header, body, and footer sections",
+      "description": "A container component for grouping related content with header, body, and footer sections, plus an optional CardLink that turns the whole card into one navigation target",
       "keywords": [
         "card",
         "container",
@@ -263,6 +263,13 @@
             "elevated",
             "ghost"
           ]
+        },
+        {
+          "name": "hoverable",
+          "values": [
+            "true",
+            "false"
+          ]
         }
       ],
       "hasRadixPrimitive": false,
@@ -274,6 +281,10 @@
         {
           "title": "Outlined Card with Footer",
           "code": "<Card variant=\"outlined\"><CardHeader><h3>Title</h3></CardHeader><CardContent>Content</CardContent><CardFooter>Footer</CardFooter></Card>"
+        },
+        {
+          "title": "Card as a navigation target",
+          "code": "<Card hoverable><CardHeader><h3><CardLink href=\"/orders/1042\">Order #1042</CardLink></h3></CardHeader><CardContent>Awaiting fulfilment</CardContent></Card>"
         }
       ]
     },
