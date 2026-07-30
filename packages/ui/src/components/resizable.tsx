@@ -46,7 +46,7 @@ const resizableVariants = cva('flex w-full', {
 });
 
 const resizableHandleVariants = cva(
-  'group relative flex shrink-0 grow-0 touch-none select-none items-center justify-center bg-neutral-200 transition-colors duration-(--duration-fast) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-400 dark:bg-neutral-800',
+  'group relative flex shrink-0 grow-0 touch-none select-none items-center justify-center bg-neutral-200 transition-colors duration-(--duration-fast) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:bg-neutral-800',
   {
     variants: {
       direction: {

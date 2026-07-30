@@ -106,7 +106,7 @@ const TagsInput = React.forwardRef<HTMLInputElement, TagsInputProps>(
       <div className="w-full">
         <div
           className={cn(
-            'flex min-h-9 w-full flex-wrap items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-2 py-1.5 text-sm shadow-control transition-[border-color,box-shadow] focus-within:ring-2 focus-within:ring-primary-400 focus-within:ring-offset-2 dark:border-neutral-700 dark:bg-neutral-900',
+            'flex min-h-9 w-full flex-wrap items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-2 py-1.5 text-sm shadow-control transition-[border-color,box-shadow] focus-within:ring-2 focus-within:ring-primary-500 dark:focus-within:ring-primary-400 focus-within:ring-offset-2 dark:border-neutral-700 dark:bg-neutral-900',
             disabled && 'cursor-not-allowed opacity-50',
             className
           )}
@@ -124,7 +124,7 @@ const TagsInput = React.forwardRef<HTMLInputElement, TagsInputProps>(
               <span className="truncate">{tag}</span>
               <button
                 type="button"
-                className="inline-flex h-4 w-4 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                className="inline-flex h-4 w-4 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
                 aria-label={`Remove ${tag}`}
                 onClick={() => removeTag(index)}
                 disabled={disabled}

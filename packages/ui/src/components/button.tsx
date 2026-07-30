@@ -83,8 +83,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-neutral-950 text-white hover:bg-neutral-800 aria-disabled:hover:bg-neutral-950 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white dark:aria-disabled:hover:bg-neutral-100',
-        default: 'bg-neutral-950 text-white hover:bg-neutral-800 aria-disabled:hover:bg-neutral-950 focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white dark:aria-disabled:hover:bg-neutral-100',
+        primary: 'bg-neutral-950 text-white hover:bg-neutral-800 aria-disabled:hover:bg-neutral-950 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white dark:aria-disabled:hover:bg-neutral-100',
+        default: 'bg-neutral-950 text-white hover:bg-neutral-800 aria-disabled:hover:bg-neutral-950 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white dark:aria-disabled:hover:bg-neutral-100',
         secondary: 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200 aria-disabled:hover:bg-neutral-100 focus-visible:ring-primary-300 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700 dark:aria-disabled:hover:bg-neutral-800',
         outline: 'border border-neutral-200 bg-white/70 text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50 aria-disabled:hover:border-neutral-200 aria-disabled:hover:bg-white/70 focus-visible:ring-primary-300 dark:border-neutral-800 dark:bg-neutral-950/60 dark:text-neutral-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 dark:aria-disabled:hover:border-neutral-800 dark:aria-disabled:hover:bg-neutral-950/60',
         ghost: 'bg-transparent shadow-none text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 aria-disabled:hover:bg-transparent aria-disabled:hover:text-neutral-700 focus-visible:ring-primary-300 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-neutral-50 dark:aria-disabled:hover:bg-transparent dark:aria-disabled:hover:text-neutral-300',

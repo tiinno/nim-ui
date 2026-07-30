@@ -19,7 +19,9 @@ describe('Link', () => {
       expect(link).toHaveClass('transition-colors');
       expect(link).toHaveClass('focus-visible:outline-none');
       expect(link).toHaveClass('focus-visible:ring-2');
-      expect(link).toHaveClass('focus-visible:ring-primary-400');
+      // Both halves of the pair — neither step clears 3:1 in both themes alone.
+      expect(link).toHaveClass('focus-visible:ring-primary-500');
+      expect(link).toHaveClass('dark:focus-visible:ring-primary-400');
       expect(link).toHaveClass('focus-visible:ring-offset-2');
     });
   });

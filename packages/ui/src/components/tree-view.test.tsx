@@ -473,7 +473,9 @@ describe('TreeView', () => {
       render(<TreeView label="Catalog" data={catalog} />);
       const treeitem = item('Apparel');
       expect(treeitem).toHaveClass('[&:focus-visible>div]:ring-2');
-      expect(treeitem).toHaveClass('[&:focus-visible>div]:ring-primary-400');
+      // Both halves of the pair, mirroring the ring-offset override on the same line.
+      expect(treeitem).toHaveClass('[&:focus-visible>div]:ring-primary-500');
+      expect(treeitem).toHaveClass('dark:[&:focus-visible>div]:ring-primary-400');
       expect(treeitem).toHaveClass('[&:focus-visible>div]:ring-offset-2');
       expect(treeitem).toHaveClass('dark:[&:focus-visible>div]:ring-offset-neutral-950');
     });

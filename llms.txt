@@ -193,7 +193,9 @@ Note: `cn` is plain clsx (no tailwind-merge) — never rely on later classes ove
 
 - ARIA attributes (aria-label, aria-describedby, role)
 - Keyboard navigation (Enter, Space, Escape, Arrows)
-- Focus management (focus-visible:ring-2 ring-primary-400)
+- Focus management (focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400)
+- The focus indicator is a PAIR, and the pair is mandatory: WCAG 2.2 SC 1.4.11 wants 3:1 and no single step of the steel scale clears it in both themes (primary-400 is 2.84:1 on white; primary-500 is 2.86:1 on neutral-800). Same for the focus border on input/textarea/select. Overriding it in a consumer app means replacing BOTH halves — tailwind-merge keys on the modifier set, so a lone focus-visible:ring-<colour> leaves the dark half in place.
+- Not yet universal: five indicators predate the pair and still ship one colour (pinned in packages/ui/src/focus-ring-contrast.test.ts). Worst is Button secondary/outline/ghost at ring-primary-300 — 1.79:1 on white. Do not describe the kit as fully SC 1.4.11 compliant.
 - Screen reader support (aria-live, sr-only announcements)
 - Semantic HTML first (button, fieldset/legend, kbd, a)
 

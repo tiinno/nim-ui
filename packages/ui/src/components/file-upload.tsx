@@ -132,7 +132,7 @@ const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
         <label
           htmlFor={inputId}
           className={cn(
-            'flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-neutral-300 bg-white px-4 py-5 text-center shadow-control transition-colors hover:border-neutral-400 hover:bg-neutral-50 focus-within:ring-2 focus-within:ring-primary-400 focus-within:ring-offset-2 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:border-neutral-600 dark:hover:bg-neutral-800',
+            'flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-neutral-300 bg-white px-4 py-5 text-center shadow-control transition-colors hover:border-neutral-400 hover:bg-neutral-50 focus-within:ring-2 focus-within:ring-primary-500 dark:focus-within:ring-primary-400 focus-within:ring-offset-2 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:border-neutral-600 dark:hover:bg-neutral-800',
             disabled && 'cursor-not-allowed opacity-50',
             dropzoneClassName
           )}
@@ -205,7 +205,7 @@ const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                 </span>
                 <button
                   type="button"
-                  className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                  className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
                   aria-label={`Remove ${file.name}`}
                   onClick={() => removeFile(index)}
                   disabled={disabled}
