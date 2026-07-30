@@ -107,7 +107,7 @@ describe('Dot', () => {
       expect(label).toHaveClass('sr-only');
       expect(screen.getByTestId('dot')).toContainElement(label);
       // The invariant, not just the presence: the label must be a DIRECT child
-      // of the flex wrapper. Inside `.truncate` it becomes a static flex item
+      // of the flex wrapper. Inside `.truncate` it becomes an in-flow flex item
       // and `gap-1.5` doubles a bare dot's width from 6px to 12px — measured in
       // Chromium. An absolutely-positioned direct child is not a flex item and
       // costs nothing. Same shape as spinner.tsx.

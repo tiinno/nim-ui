@@ -65,6 +65,7 @@ Type system is named but **not shipped**: tokens declare Hanken Grotesk / JetBra
 - **jsdom**: Radix ScrollArea thumbs never mount (zero sizes); `navigator.clipboard` is getter-only, and `userEvent.setup()` installs its own clipboard stub that clobbers mocks.
 - **Docs demos render in a ~640px column** — never use viewport breakpoints for a demo's internal layout.
 - `.design-sync/convert.mjs` extracts previews by class, so it is **coupled to `packages/docs/components/preview.tsx`'s root element**. A docs restyle silently broke it once (83 cards → 10). It now throws when the majority of pages yield nothing — keep that guard.
+- **Tailwind v4 scans prose, not just class strings.** `packages/ui/src/styles.css` declares no `@source`, so automatic detection reads every `.ts`/`.tsx` under `src/` — **including comments, JSDoc and test files** — and compiles anything that looks like a utility into the shipped stylesheet. A bare "invert" in a test comment once added a live `.invert` rule (+239 bytes); prose describing transition syntax once added four dead `transition-[…]` rules (+958). `src/compiled-utility-inventory.test.ts` now fails the build on any rule no class string asks for, so **write bare CSS property names in comments, never utility syntax**. Note the corollary for guards: a test asserting a class is *absent* must not name it as a literal, or it mints the rule and passes over its own subject — assemble such names at runtime (`aria-disabled-hover.test.ts`) or break them with a marker (`compiled-utility-inventory.test.ts`).
 
 ## Git
 
