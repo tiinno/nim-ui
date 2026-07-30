@@ -146,18 +146,20 @@ const decode = (encoded: string): string => encoded.replace(SENTINEL, '');
  * shipping it.
  */
 const KNOWN_UNPAIRED = [
-  // The WORST one, and the reason this pin is a list rather than a filter.
-  // Three of Button's six variants take a much lighter steel step than the one
-  // the contract mandates: 1.79 on white, 1.71 on the 50 surface, 1.64 on the
-  // 100 surface, 1.42 on the 200 surface. That is a bigger SC 1.4.11 gap than
-  // the one NIMUI-51 repaired, and repairing it changes how three shipped
-  // Button variants LOOK, which is a design decision and not a mechanical
-  // token swap — so it is recorded here, loudly, awaiting its own ticket rather
-  // than being smuggled in. Passes on dark (8.25–11.08).
-  { entry: 'focus-visible:r~ing-primary-300', where: 'button (secondary, outline, ghost)' },
-  // Toolbar/chip affordances on the neutral scale rather than the steel one.
-  // 2.58 on white, 2.48 on the 50 surface, 2.37 on the 100 surface — the same
-  // defect NIMUI-51 fixed, on a different scale. Passes on dark (5.71–7.66).
+  // The WORST one still shipping, and the reason this pin is a list rather than
+  // a filter. Toolbar/chip affordances on the neutral scale rather than the
+  // steel one: 2.58 on white, 2.48 on the 50 surface, 2.37 on the 100 surface —
+  // the same defect NIMUI-51 fixed, on a different scale. Passes on dark
+  // (5.71–7.66).
+  //
+  // The entry this list used to open with was worse still: three of Button's
+  // six variants took a much lighter steel step than the contract mandates
+  // (1.79 on white, 1.42 on the 200 surface). NIMUI-54 repaired it. That was
+  // held back for its own ticket because it changes how three shipped Button
+  // variants LOOK — the quiet variants now take the same indicator as every
+  // other focusable thing in the kit, deliberately — which is the bar for
+  // clearing an entry off this list: repair the component and delete the pin in
+  // the same commit, never loosen the assertion.
   { entry: 'focus-visible:r~ing-neutral-400', where: 'bulk-action-bar, filter-summary, view-switcher' },
   // Destructive Button tints its ring to match. 3.02 on white but 2.90 on the
   // 50 surface and 2.77 on the 100 surface. Passes on dark (4.88–6.55).
