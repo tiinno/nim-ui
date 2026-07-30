@@ -1,6 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '../test/test-utils';
-import { Card, CardHeader, CardContent, CardFooter, cardVariants } from './card';
+import { render, screen, userEvent } from '../test/test-utils';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  CardLink,
+  cardVariants,
+  cardLinkVariants,
+} from './card';
 
 /**
  * The reduced-motion counterpart on Card's base, assembled from parts rather
@@ -38,6 +46,8 @@ describe('Card', () => {
       expect(card).toHaveClass('border');
       expect(card).toHaveClass('bg-white');
       expect(card).toHaveClass('shadow-soft');
+      // NIMUI-50: the positioned ancestor CardLink's overlay resolves against.
+      expect(card).toHaveClass('relative');
     });
 
     it('applies dark mode styles', () => {
@@ -87,14 +97,69 @@ describe('Card', () => {
       const card = screen.getByTestId('card');
       expect(card).toHaveClass('hover:-translate-y-0.5');
       expect(card).toHaveClass('hover:shadow-panel');
-      expect(card).toHaveClass('cursor-pointer');
+    });
+
+    // NIMUI-50. `hoverable` is a hover RESPONSE, not a claim of clickability:
+    // the card is a plain container element, so a pointer cursor promised a
+    // target that no keyboard or screen-reader user could reach. The target is
+    // CardLink; the cursor comes from the anchor, where it is true.
+    it('claims no pointer affordance when hoverable', () => {
+      render(
+        <Card hoverable data-testid="card">
+          Content
+        </Card>
+      );
+      expect(screen.getByTestId('card')).not.toHaveClass('cursor-pointer');
     });
 
     it('does not lift by default', () => {
       render(<Card data-testid="card">Content</Card>);
       const card = screen.getByTestId('card');
       expect(card).not.toHaveClass('hover:-translate-y-0.5');
-      expect(card).not.toHaveClass('cursor-pointer');
+    });
+  });
+
+  // NIMUI-50. Class strings only — that the `:has()` rule COMPILES at all is
+  // asserted against the built stylesheet by src/focus-ring-contrast.test.ts,
+  // which is where an arbitrary variant with a typo (silently emitting nothing)
+  // becomes visible. jsdom evaluates neither.
+  describe('Card - focus treatment for a contained CardLink', () => {
+    const HAS_LINK_FOCUS = 'has-[[data-card-link]:focus-visible]';
+
+    it('draws the indicator around the whole card when the link takes focus', () => {
+      render(<Card data-testid="card">Content</Card>);
+      const card = screen.getByTestId('card');
+      expect(card).toHaveClass(`${HAS_LINK_FOCUS}:outline-2`);
+      expect(card).toHaveClass(`${HAS_LINK_FOCUS}:outline-offset-2`);
+    });
+
+    // Deliberately not the contract's shadow ring: that paints its offset band
+    // opaque white, which at a whole card's perimeter is a halo in dark mode.
+    // An outline's offset gap is transparent. Judged on a rendered comparison in
+    // both themes; the colour pair and its 3:1 measurement are unchanged, and
+    // src/focus-ring-contrast.test.ts measures this one like every other.
+    it('pairs the indicator colour across themes, dark prefix outermost', () => {
+      render(<Card data-testid="card">Content</Card>);
+      const card = screen.getByTestId('card');
+      expect(card).toHaveClass(`${HAS_LINK_FOCUS}:outline-primary-500`);
+      expect(card).toHaveClass(`dark:${HAS_LINK_FOCUS}:outline-primary-400`);
+    });
+
+    it('gives focus the depth cue hover gets, but not the lift', () => {
+      render(<Card data-testid="card">Content</Card>);
+      const card = screen.getByTestId('card');
+      // A card that moved under focus would drag the indicator drawn around it.
+      expect(card).toHaveClass(`${HAS_LINK_FOCUS}:shadow-panel`);
+      expect(card.className).not.toContain(`${HAS_LINK_FOCUS}:-translate-y-0.5`);
+    });
+
+    it('scopes the treatment to the card link, not to any focused anchor', () => {
+      render(<Card data-testid="card">Content</Card>);
+      // `has-[a:focus-visible]` would ring the whole card for an incidental
+      // link in the body. Assembled so this assertion cannot mint the class it
+      // is asserting the absence of.
+      const anyAnchor = ['has-[a', 'focus-visible]'].join(':');
+      expect(screen.getByTestId('card').className).not.toContain(anyAnchor);
     });
   });
 
@@ -241,6 +306,129 @@ describe('Card', () => {
       expect(buttons).toHaveLength(2);
       expect(screen.getByText('Cancel')).toBeInTheDocument();
       expect(screen.getByText('Save')).toBeInTheDocument();
+    });
+  });
+
+  // NIMUI-50. The nested-interactive contract, which is the part of this design
+  // jsdom CAN judge: the overlay is layout, but the roles, the accessible names
+  // and the tab order are not.
+  describe('CardLink', () => {
+    it('renders a real link, reachable and nameable', () => {
+      render(
+        <Card hoverable>
+          <CardHeader>
+            <h3>
+              <CardLink href="/customers/acme">Acme Corporation</CardLink>
+            </h3>
+          </CardHeader>
+        </Card>
+      );
+
+      const link = screen.getByRole('link', { name: 'Acme Corporation' });
+      expect(link).toHaveAttribute('href', '/customers/acme');
+      expect(link.tagName).toBe('A');
+    });
+
+    it('carries the data attribute the card focus treatment keys on', () => {
+      render(<CardLink href="/orders/1042">Order #1042</CardLink>);
+      expect(screen.getByRole('link')).toHaveAttribute('data-card-link');
+    });
+
+    it('stretches a generated box over the whole positioned card', () => {
+      render(<CardLink href="/orders/1042">Order #1042</CardLink>);
+      const link = screen.getByRole('link');
+      expect(link).toHaveClass('after:absolute');
+      expect(link).toHaveClass('after:inset-0');
+      expect(link).toHaveClass('after:rounded-md');
+      expect(link).toHaveClass("after:content-['']");
+    });
+
+    it('suppresses the browser indicator that would frame only its text', () => {
+      render(<CardLink href="/orders/1042">Order #1042</CardLink>);
+      // The card draws the indicator instead; both at once frames the title
+      // inside a ringed card.
+      expect(screen.getByRole('link')).toHaveClass('focus-visible:outline-none');
+      expect(screen.getByRole('link')).toHaveClass('rounded-sm');
+    });
+
+    it('merges a custom className', () => {
+      render(
+        <CardLink href="/orders/1042" className="font-medium">
+          Order #1042
+        </CardLink>
+      );
+      const link = screen.getByRole('link');
+      expect(link).toHaveClass('font-medium');
+      expect(link).toHaveClass('after:absolute');
+    });
+
+    it('forwards ref to the anchor element', () => {
+      const ref = { current: null };
+      render(
+        <CardLink href="/orders/1042" ref={ref}>
+          Order #1042
+        </CardLink>
+      );
+      expect(ref.current).toBeInstanceOf(HTMLAnchorElement);
+    });
+
+    it('exports cardLinkVariants so a router link can compose', () => {
+      expect(typeof cardLinkVariants).toBe('function');
+      expect(cardLinkVariants()).toContain('after:absolute');
+    });
+
+    it('passes anchor attributes through', () => {
+      render(
+        <CardLink href="https://example.com" target="_blank" rel="noopener noreferrer">
+          External
+        </CardLink>
+      );
+      const link = screen.getByRole('link');
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    });
+
+    it('leaves a nested control its own role and name', () => {
+      render(
+        <Card hoverable>
+          <CardHeader>
+            <h3>
+              <CardLink href="/customers/acme">Acme Corporation</CardLink>
+            </h3>
+          </CardHeader>
+          <CardFooter>
+            <button className="relative z-10">Export</button>
+          </CardFooter>
+        </Card>
+      );
+
+      expect(screen.getByRole('link', { name: 'Acme Corporation' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Export' })).toBeInTheDocument();
+    });
+
+    it('keeps tab order in document order: link, then the footer control', async () => {
+      const user = userEvent.setup();
+      render(
+        <Card hoverable data-testid="card">
+          <CardHeader>
+            <h3>
+              <CardLink href="/customers/acme">Acme Corporation</CardLink>
+            </h3>
+          </CardHeader>
+          <CardFooter>
+            <button className="relative z-10">Export</button>
+          </CardFooter>
+        </Card>
+      );
+
+      // The card itself is NOT a tab stop — it is not the control, the link is.
+      expect(screen.getByTestId('card')).not.toHaveAttribute('tabindex');
+
+      await user.tab();
+      expect(screen.getByRole('link', { name: 'Acme Corporation' })).toHaveFocus();
+
+      await user.tab();
+      expect(screen.getByRole('button', { name: 'Export' })).toHaveFocus();
     });
   });
 

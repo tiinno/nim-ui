@@ -26,10 +26,13 @@ import { cn } from '../lib/utils';
  * </Card>
  *
  * @example
- * // Card with custom styling
- * <Card className="max-w-md">
- *   <CardHeader>Featured Content</CardHeader>
- *   <CardContent>This is a featured card</CardContent>
+ * // A card that is a navigation target: the link owns the role and the name,
+ * // and its overlay makes the whole card clickable.
+ * <Card hoverable>
+ *   <CardHeader>
+ *     <h3><CardLink href="/orders/1042">Order #1042</CardLink></h3>
+ *   </CardHeader>
+ *   <CardContent>Awaiting fulfilment</CardContent>
  * </Card>
  */
 
@@ -57,8 +60,46 @@ import { cn } from '../lib/utils';
  *    off here would have contradicted that — it was only ever doing so because
  *    the lift it was written to suppress never ran.
  */
+/*
+ * NIMUI-50 split the pointer AFFORDANCE from the TARGET.
+ *
+ * `hoverable` used to carry a pointer cursor as well as the lift, which told a
+ * mouse user the card was clickable while a keyboard or screen-reader user had
+ * nothing to reach — the card is a plain container element and always was. It
+ * now ships an honest hover RESPONSE (a lift and a deeper shadow) and nothing
+ * that claims a role it does not have. `product-card.tsx` already shipped that
+ * shape.
+ *
+ * The target is `CardLink` below. Two base classes exist for it:
+ *
+ * - `relative`, so the link's overlay resolves against the CARD rather than
+ *   against whatever ancestor happens to be positioned. Any positioned element
+ *   BETWEEN the card and the link shrinks the clickable area to itself.
+ * - a `:has()` focus treatment, so keyboard focus on the link draws the
+ *   indicator around the whole card instead of around the title text. It is
+ *   scoped to the link's own data attribute, not to any focused anchor, or an
+ *   incidental link in the body would ring the entire card.
+ *
+ * The focus treatment deepens the shadow but deliberately does NOT lift: a card
+ * that moved under focus would drag the indicator drawn around it.
+ *
+ * The indicator is the ONE place this component departs from the design
+ * contract's spelling, and it was decided on a rendered comparison rather than
+ * on principle. The contract's indicator is a ring, which is a box-shadow, and
+ * a shadow ring paints its offset band in an opaque colour — white by default.
+ * At a control's scale that is a 2px sliver; traced around a whole card in dark
+ * mode it is a bright white halo that swamps the steel line inside it (the
+ * unfixed defect `focus-ring-contrast.test.ts` records for the kit at large).
+ * The same two classes drawn with outline-width and outline-color instead leave
+ * a TRANSPARENT gap, so the page shows through and the indicator reads as one
+ * steel line in both themes. It also follows the corner radius on its own, and
+ * it is not a box-shadow — so unlike a ring it does not inherit the fade from
+ * the box-shadow entry in the transition list below and appears at once, which
+ * is what a focus indicator should do. Colour is still the mandated pair, and
+ * `src/focus-ring-contrast.test.ts` measures it like every other indicator.
+ */
 const cardVariants = cva(
-  'rounded-md transition-[box-shadow,translate,border-color,background-color] motion-reduce:transition-[box-shadow,border-color,background-color] duration-(--duration-fast) ease-out',
+  'relative rounded-md transition-[box-shadow,translate,border-color,background-color] motion-reduce:transition-[box-shadow,border-color,background-color] duration-(--duration-fast) ease-out has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-2 has-[[data-card-link]:focus-visible]:outline-primary-500 dark:has-[[data-card-link]:focus-visible]:outline-primary-400 has-[[data-card-link]:focus-visible]:shadow-panel',
   {
     variants: {
       variant: {
@@ -68,7 +109,7 @@ const cardVariants = cva(
         ghost: 'border border-transparent bg-transparent',
       },
       hoverable: {
-        true: 'cursor-pointer hover:-translate-y-0.5 hover:shadow-panel',
+        true: 'hover:-translate-y-0.5 hover:shadow-panel',
         false: '',
       },
     },
@@ -126,4 +167,71 @@ const CardFooter = React.forwardRef<
 ));
 CardFooter.displayName = 'CardFooter';
 
-export { Card, CardHeader, CardContent, CardFooter, cardVariants };
+/**
+ * The card's navigation target: a real anchor whose generated box covers the
+ * whole card, so a pointer can click anywhere while the keyboard, the screen
+ * reader and the browser's own link handling see one ordinary link.
+ *
+ * The card is never the control — the link inside it is. So the card is not a
+ * tab stop, tab order stays document order, and a nested button keeps its own
+ * role and name.
+ *
+ * **Every interactive element inside the card needs a stacking context above the
+ * overlay** — position it and give it a positive stack level — or the overlay
+ * swallows its click. That is deliberately per-control: putting it on
+ * `CardHeader` or `CardFooter` would raise the whole box, and clicking empty
+ * space in that box would then stop reaching the link.
+ *
+ * Known limitation: the overlay also swallows drag-selection across the card
+ * body. Reach for `CardLink` when the card is primarily a navigation target; if
+ * copying text out of it matters more, put a plain `Link` on the title instead.
+ *
+ * `Card` must stay the nearest positioned ancestor, which its base class
+ * provides. Anything positioned in between shrinks the clickable area to itself.
+ *
+ * @example
+ * // A whole tile that navigates
+ * <Card hoverable>
+ *   <CardHeader>
+ *     <h3><CardLink href="/customers/acme">Acme Corporation</CardLink></h3>
+ *   </CardHeader>
+ *   <CardContent>14 open invoices</CardContent>
+ * </Card>
+ *
+ * @example
+ * // A control inside the card, kept above the overlay
+ * <Card hoverable>
+ *   <CardHeader>
+ *     <h3><CardLink href="/customers/acme">Acme Corporation</CardLink></h3>
+ *   </CardHeader>
+ *   <CardFooter>
+ *     <Button className="relative z-10" size="sm">Export</Button>
+ *   </CardFooter>
+ * </Card>
+ *
+ * @example
+ * // Compose with a router link, without adding a Slot dependency. Spread the
+ * // data attribute alongside — it is what the card's focus treatment keys on.
+ * <NextLink href="/queues" data-card-link className={cardLinkVariants()}>All queues</NextLink>
+ */
+const cardLinkVariants = cva(
+  "rounded-sm focus-visible:outline-none after:absolute after:inset-0 after:rounded-md after:content-['']"
+);
+
+export interface CardLinkProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    VariantProps<typeof cardLinkVariants> {}
+
+const CardLink = React.forwardRef<HTMLAnchorElement, CardLinkProps>(
+  ({ className, ...props }, ref) => (
+    <a
+      ref={ref}
+      data-card-link
+      className={cn(cardLinkVariants(), className)}
+      {...props}
+    />
+  )
+);
+CardLink.displayName = 'CardLink';
+
+export { Card, CardHeader, CardContent, CardFooter, CardLink, cardVariants, cardLinkVariants };

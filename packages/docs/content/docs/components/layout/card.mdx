@@ -3,15 +3,15 @@ title: Card
 description: Versatile content container with header, content, and footer sub-components
 ---
 
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/nim';
+import { Card, CardHeader, CardContent, CardFooter, CardLink } from '@/components/nim';
 import { Button } from '@/components/nim';
 
-The Card component is a composite layout element that groups related content within a bordered, rounded container. It uses a compound component pattern with `CardHeader`, `CardContent`, and `CardFooter` sub-components for structured content areas.
+The Card component is a composite layout element that groups related content within a bordered, rounded container. It uses a compound component pattern with `CardHeader`, `CardContent`, and `CardFooter` sub-components for structured content areas, plus `CardLink` when the whole card is a navigation target.
 
 ## Import
 
 ```tsx
-import { Card, CardHeader, CardContent, CardFooter } from '@nim-ui/components';
+import { Card, CardHeader, CardContent, CardFooter, CardLink } from '@nim-ui/components';
 ```
 
 ## Basic Usage
@@ -100,20 +100,20 @@ Use all three sub-components for a complete card layout with header, content, an
 
 ## Hoverable
 
-Set `hoverable` when the whole card is a target — a row in a list of records, a tile that opens a detail view. It adds a pointer cursor, lifts the card by 2px and deepens its shadow, both interpolated over `--duration-fast`. Hover the card below to see it.
+Set `hoverable` to make the card respond to the pointer: it lifts by 2px and deepens its shadow, both interpolated over `--duration-fast`. Hover the card below to see it.
 
 Users who ask for reduced motion keep the shadow crossfade and lose the lift: the counterpart narrows the transition rather than switching it off, because a change of depth is a visual cue and not a vestibular trigger.
 
-Because the lift is the only affordance, pair `hoverable` with a real control — wrap the card in a link, or give it `role="button"` plus a keyboard handler — so the target is reachable without a pointer.
+`hoverable` is a hover **response**, not a claim that the card is clickable. It deliberately ships no pointer cursor: the card is a plain `<div>`, so a cursor would promise a target that no keyboard or screen-reader user can reach. Use it on its own to make a live panel feel responsive, and add `CardLink` below when the card really is a target.
 
 <ComponentPreview title="Hoverable Card">
   <Card hoverable className="w-full max-w-sm">
     <CardHeader>
-      <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Acme Corporation</h3>
+      <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Queue throughput</h3>
       <p className="text-sm text-neutral-500 dark:text-neutral-400">Updated 4 hours ago</p>
     </CardHeader>
     <CardContent>
-      <p className="text-sm text-neutral-700 dark:text-neutral-300">14 open invoices · 3 overdue</p>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">1,284 jobs settled · 3 retrying</p>
     </CardContent>
   </Card>
 
@@ -121,16 +121,89 @@ Because the lift is the only affordance, pair `hoverable` with a real control �
 ```tsx
 <Card hoverable>
   <CardHeader>
-    <h3 className="text-lg font-semibold">Acme Corporation</h3>
+    <h3 className="text-lg font-semibold">Queue throughput</h3>
     <p className="text-sm text-neutral-500">Updated 4 hours ago</p>
   </CardHeader>
   <CardContent>
-    <p>14 open invoices · 3 overdue</p>
+    <p>1,284 jobs settled · 3 retrying</p>
   </CardContent>
 </Card>
 ```
   </PreviewCode>
 </ComponentPreview>
+
+## Card as a navigation target
+
+`CardLink` is a real anchor whose generated box covers the whole card. A pointer can click anywhere in the card; the keyboard, the screen reader and the browser's own link handling — middle-click, Cmd/Ctrl-click, the context menu, "copy link address" — all see one ordinary link.
+
+The card is never the control, the link is. So the card is not a tab stop, tab order stays document order, and focusing the link draws the focus indicator around the whole card rather than around the title text alone. Tab into the preview below to see it.
+
+That indicator is an `outline` rather than the kit's usual shadow ring, in the same steel pair (`primary-500` / `primary-400`). A ring paints its offset band in an opaque colour, which at a whole card's perimeter reads as a white halo in dark mode; an outline's offset gap is transparent, it follows the corner radius on its own, and it appears at once instead of fading in with the card's shadow transition. Override it with `outline-*` utilities, not `ring-*`.
+
+<ComponentPreview title="Card as a Navigation Target">
+  <Card hoverable className="w-full max-w-sm">
+    <CardHeader>
+      <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100"><CardLink href="#">Acme Corporation</CardLink></h3>
+      <p className="text-sm text-neutral-500 dark:text-neutral-400">Updated 4 hours ago</p>
+    </CardHeader>
+    <CardContent>
+      <p className="text-sm text-neutral-700 dark:text-neutral-300">14 open invoices · 3 overdue</p>
+    </CardContent>
+    <CardFooter>
+      <Button variant="outline" size="sm" className="relative z-10">Export invoices</Button>
+    </CardFooter>
+  </Card>
+
+  <PreviewCode>
+```tsx
+<Card hoverable>
+  <CardHeader>
+    <h3 className="text-lg font-semibold">
+      <CardLink href="/customers/acme">Acme Corporation</CardLink>
+    </h3>
+    <p className="text-sm text-neutral-500">Updated 4 hours ago</p>
+  </CardHeader>
+  <CardContent>
+    <p>14 open invoices · 3 overdue</p>
+  </CardContent>
+  <CardFooter>
+    <Button variant="outline" size="sm" className="relative z-10">Export invoices</Button>
+  </CardFooter>
+</Card>
+```
+  </PreviewCode>
+</ComponentPreview>
+
+### Every control inside the card needs `relative z-10`
+
+The link's overlay sits above the card's content, so any element that should stay clickable has to be raised above it — on the element itself:
+
+```tsx
+<CardFooter>
+  <Button className="relative z-10">Export invoices</Button>
+</CardFooter>
+```
+
+This is deliberately per-control. Putting `relative z-10` on `CardHeader` or `CardFooter` would lift the whole box above the overlay, and clicking the empty space in that box would then stop reaching the link — on the header that removes most of the card's hit area.
+
+The overlay is positioned against the nearest positioned ancestor, which `Card` provides. Anything positioned between `Card` and `CardLink` shrinks the clickable area to itself.
+
+### Known limitation: text selection
+
+The overlay also swallows drag-selection across the card body, so a reader cannot sweep an order ID out of the card with the mouse. Reach for `CardLink` when the card is primarily a navigation target; when copying text out of it matters more, put a plain `Link` on the title and skip `CardLink` — the rest of the card stays selectable and the link is still keyboard-reachable.
+
+### Composing with a router link
+
+`cardLinkVariants` is exported so a framework link can take the same treatment without a `Slot` dependency. Spread `data-card-link` alongside it — that attribute is what the card's focus treatment keys on, and the card-wide focus indicator does not appear without it.
+
+```tsx
+import { cardLinkVariants } from '@nim-ui/components';
+import NextLink from 'next/link';
+
+<NextLink href="/customers/acme" data-card-link className={cardLinkVariants()}>
+  Acme Corporation
+</NextLink>
+```
 
 ## Custom Styling
 
@@ -177,11 +250,18 @@ Cards accept a `className` prop for custom styling including width constraints, 
 <PropsTable
   props={[
     {
+      name: 'variant',
+      type: "'default' | 'outlined' | 'elevated' | 'ghost'",
+      default: "'default'",
+      description:
+        'Surface treatment: default is bordered with a soft shadow, outlined drops the shadow, elevated deepens it, ghost drops the border and background entirely.',
+    },
+    {
       name: 'hoverable',
       type: 'boolean',
       default: 'false',
       description:
-        'Treats the whole card as a target: pointer cursor, a 2px lift and a deeper shadow on hover, both transitioned. Suppresses the lift under prefers-reduced-motion.',
+        'Hover response for the whole card: a 2px lift and a deeper shadow, both transitioned. Suppresses the lift under prefers-reduced-motion. Ships no pointer cursor — add CardLink when the card is really a target.',
     },
     {
       name: 'className',
@@ -247,6 +327,32 @@ Cards accept a `className` prop for custom styling including width constraints, 
       type: 'ReactNode',
       required: true,
       description: 'Footer content (actions, links, metadata)',
+    },
+  ]}
+/>
+
+### CardLink
+
+Accepts every `<a>` attribute. `href` is required in practice: without one the element has no link role and no keyboard reachability.
+
+<PropsTable
+  props={[
+    {
+      name: 'href',
+      type: 'string',
+      required: true,
+      description: 'Destination. An anchor without href is not a link and is not focusable.',
+    },
+    {
+      name: 'className',
+      type: 'string',
+      description: 'Additional CSS classes, merged with the stretched-overlay base',
+    },
+    {
+      name: 'children',
+      type: 'ReactNode',
+      required: true,
+      description: 'The accessible name of the whole card — keep it specific, not "View details"',
     },
   ]}
 />
@@ -332,22 +438,24 @@ function CardGrid({ items }) {
 
 ## Accessibility
 
-The Card component renders semantic `<div>` elements. For better accessibility:
+`Card` renders a plain `<div>` and claims no role of its own. When the card is a target, the target is a link inside it — not the card.
 
-- Use heading elements (`h2`, `h3`, etc.) in CardHeader for proper document structure
-- When cards are interactive (clickable), add `role="button"` and `tabIndex={0}` with keyboard handlers
-- For card lists, consider wrapping in a `<section>` with a label
+- Use heading elements (`h2`, `h3`, etc.) in `CardHeader` for proper document structure, and put `CardLink` inside the heading so the link text is also the heading text
+- Give the link a specific accessible name. "Acme Corporation" tells a screen-reader user which card they are on; "View details" repeated down a list does not
+- Every interactive element inside the card needs `relative z-10` on itself, or the link's overlay swallows its click. Do not put it on `CardHeader`/`CardFooter` — that lifts the whole box and breaks the card-wide hit area
+- Do not add `role="button"` and `tabIndex={0}` to the card. That invents a control with no accessible name, no Space-key behaviour, and none of the browser's link handling — `CardLink` is the supported way to make the card a target
+- For card lists, wrap them in a `<section>` with a label
 
 ```tsx
-{/* Interactive card */}
-<Card
-  role="button"
-  tabIndex={0}
-  onClick={handleClick}
-  onKeyDown={(e) => e.key === 'Enter' && handleClick()}
-  className="cursor-pointer hover:shadow-md transition-shadow"
->
-  <CardContent>Click to view details</CardContent>
+{/* The card is a target: one link owns the role, the name and the whole hit area */}
+<Card hoverable>
+  <CardHeader>
+    <h3><CardLink href="/customers/acme">Acme Corporation</CardLink></h3>
+  </CardHeader>
+  <CardContent>14 open invoices · 3 overdue</CardContent>
+  <CardFooter>
+    <Button size="sm" className="relative z-10" onClick={handleExport}>Export invoices</Button>
+  </CardFooter>
 </Card>
 
 {/* Card section with heading */}
@@ -359,6 +467,8 @@ The Card component renders semantic `<div>` elements. For better accessibility:
   </Grid>
 </section>
 ```
+
+Keyboard behaviour: Tab reaches the link in document order, Enter follows it, and Tab again reaches the footer control. The focus indicator is drawn around the whole card, so it is obvious which card is focused in a grid of them.
 
 ## Related Components
 

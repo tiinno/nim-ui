@@ -169,8 +169,15 @@ const EXPECTED_SCAN = {
   filesWithCvaGroups: 54,
   /** Distinct `<file>:<group>` cva variant groups across all files. */
   cvaGroups: 95,
-  /** Variant groups the registry advertises, across all entries. */
-  registryGroups: 91,
+  /**
+   * Variant groups the registry advertises, across all entries.
+   *
+   * 92 since NIMUI-50: Card's `hoverable` was implemented but undocumented, so
+   * the MCP server could not offer it. Boolean cva variants are advertised as
+   * their two string values, the way Navbar, Container, Spacer and SidebarNav
+   * already are.
+   */
+  registryGroups: 92,
 };
 
 // ---------------------------------------------------------------------------

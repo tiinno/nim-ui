@@ -112,19 +112,40 @@ const SENTINEL = '~';
  * The variants under which a colour in this kit is a FOCUS INDICATOR rather than
  * decoration. Bare, so none of them names a utility on its own.
  *
- * The last two are not stylistic: a dropzone and a chip field put the indicator
- * on a wrapper whose real focus target is a descendant input, and the tree rows
- * move it onto the row `div` because the focusable node is the row's parent.
- * They are the same contract and fail the same way, so they are scanned the
- * same way.
+ * The middle two are not stylistic: a dropzone and a chip field put the
+ * indicator on a wrapper whose real focus target is a descendant input, and the
+ * tree rows move it onto the row `div` because the focusable node is the row's
+ * parent. They are the same contract and fail the same way, so they are scanned
+ * the same way.
+ *
+ * The last one is Card's (NIMUI-50). Its focus target is the stretched anchor
+ * inside the card, and the indicator is drawn around the card — so the variant
+ * is a relational one, and it is the kit's first. It is listed here for the same
+ * reason as the others, and for one more: an arbitrary variant with a typo in it
+ * compiles to NOTHING, silently, and every class-string assertion stays green.
+ * The compiled-binding half below is what catches that.
  */
-const FOCUS_VARIANTS = ['focus-visible', 'focus-within', '[&:focus-visible>div]'];
+const FOCUS_VARIANTS = [
+  'focus-visible',
+  'focus-within',
+  '[&:focus-visible>div]',
+  'has-[[data-card-link]:focus-visible]',
+];
 
 /** The dark-mode variant, as the design contract spells it. */
 const DARK = 'dark';
 
-/** Colour-bearing namespaces a focus indicator uses, encoded. */
-const ENCODED_PROPERTIES = ['r~ing', 'b~order'];
+/**
+ * Colour-bearing namespaces a focus indicator uses, encoded.
+ *
+ * The third arrived with NIMUI-50. A shadow ring paints its offset band in an
+ * OPAQUE colour, and the kit leaves that colour at its white default — a 2px
+ * sliver at a control's scale, a bright halo when it is traced around a whole
+ * card in dark mode. Card therefore draws its indicator with outline-width and
+ * outline-color, whose offset gap is transparent. The contrast requirement is
+ * identical, so it is measured here identically.
+ */
+const ENCODED_PROPERTIES = ['r~ing', 'b~order', 'o~utline'];
 
 /** The theme colour scales, so a width like the offset utility is not read as a colour. */
 const SCALES = ['primary', 'neutral', 'success', 'error', 'warning', 'info'];
@@ -181,6 +202,7 @@ const KNOWN_UNPAIRED = [
 const BOUND_DECLARATION: Record<string, string> = {
   [decode('r~ing')]: '--tw-ring-color',
   [decode('b~order')]: 'border-color',
+  [decode('o~utline')]: 'outline-color',
 };
 
 /**
