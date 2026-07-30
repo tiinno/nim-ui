@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test/test-utils';
+import { Skeleton } from './skeleton';
 import {
   DataTable,
   DataTableHeader,
@@ -328,6 +329,144 @@ describe('DataTable', () => {
         </DataTable>
       );
       expect(ref.current).toBeInstanceOf(HTMLTableCellElement);
+    });
+  });
+
+  describe('Loading', () => {
+    /**
+     * What these tests do NOT cover: jsdom never runs the HTML parser. RTL
+     * builds the tree through `createElement`/`appendChild`, so the actual
+     * defect that motivated this prop — a `<div>` as a direct child of
+     * `<tbody>` being *foster-parented* out of the table — is not reproducible
+     * here at all. `packages/docs/tests/export-html-nesting.test.ts` scans the
+     * built static export and is the only gate that speaks to it.
+     */
+    it('renders no live region and no aria-busy when loading is omitted', () => {
+      const { container } = render(
+        <DataTable>
+          <DataTableBody>
+            <DataTableRow>
+              <DataTableCell>Data</DataTableCell>
+            </DataTableRow>
+          </DataTableBody>
+        </DataTable>
+      );
+
+      const scroller = container.querySelector('div.relative')!;
+      // Structural, not attribute-based: an accidental always-rendered empty
+      // span would satisfy every aria assertion and still change the DOM.
+      expect(scroller.childElementCount).toBe(1);
+      expect(container.querySelector('[role="status"]')).toBeNull();
+      expect(screen.getByRole('table').hasAttribute('aria-busy')).toBe(false);
+    });
+
+    it('mounts the live region when loading is false, holding no text by default', () => {
+      render(<DataTable loading={false} />);
+
+      const status = screen.getByRole('status');
+      expect(status).toBeInTheDocument();
+      expect(status.textContent).toBe('');
+    });
+
+    it('announces the default label while loading', () => {
+      render(<DataTable loading />);
+      expect(screen.getByRole('status')).toHaveTextContent('Loading');
+    });
+
+    it('uses loadingLabel when given', () => {
+      render(<DataTable loading loadingLabel="Loading orders" />);
+      expect(screen.getByRole('status')).toHaveTextContent('Loading orders');
+    });
+
+    it('holds loadedLabel once loading finishes, when opted into', () => {
+      const { rerender } = render(
+        <DataTable loading loadingLabel="Loading orders" loadedLabel="Orders loaded" />
+      );
+      expect(screen.getByRole('status')).toHaveTextContent('Loading orders');
+
+      rerender(<DataTable loading={false} loadingLabel="Loading orders" loadedLabel="Orders loaded" />);
+      expect(screen.getByRole('status')).toHaveTextContent('Orders loaded');
+    });
+
+    it('keeps the same live region element across the transition', () => {
+      const { rerender } = render(<DataTable loading />);
+      const before = screen.getByRole('status');
+
+      rerender(<DataTable loading={false} />);
+      // Same node, new text — a region remounted with its text announces
+      // inconsistently, which is the whole reason this shape exists.
+      expect(screen.getByRole('status')).toBe(before);
+    });
+
+    it('renders the live region as a sibling of the aria-busy host, never inside it', () => {
+      render(<DataTable loading />);
+
+      const status = screen.getByRole('status');
+      const table = screen.getByRole('table');
+      // aria-busy defers announcements for its own subtree, so the region must
+      // not be a descendant of the table — and <table> could not legally
+      // contain a <span> anyway.
+      expect(table.contains(status)).toBe(false);
+      expect(status.parentElement).toBe(table.parentElement);
+    });
+
+    it('carries the sr-only class on the live region', () => {
+      render(<DataTable loading />);
+      expect(screen.getByRole('status')).toHaveClass('sr-only');
+    });
+
+    it('sets aria-busy on the table while loading', () => {
+      render(<DataTable loading />);
+      expect(screen.getByRole('table')).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it("a consumer's aria-busy={false} cannot beat loading", () => {
+      render(<DataTable loading aria-busy={false} />);
+      // aria-busy is written AFTER the prop spread on purpose: loading is the
+      // semantic contract, so it must not be reportable as idle.
+      expect(screen.getByRole('table')).toHaveAttribute('aria-busy', 'true');
+    });
+
+    it("falls through to the consumer's aria-busy when not loading", () => {
+      render(<DataTable loading={false} aria-busy={false} />);
+      expect(screen.getByRole('table')).toHaveAttribute('aria-busy', 'false');
+    });
+
+    it('leaves a consumer aria-busy intact when loading is not used at all', () => {
+      render(<DataTable aria-busy />);
+      expect(screen.getByRole('table')).toHaveAttribute('aria-busy', 'true');
+      expect(screen.queryByRole('status')).toBeNull();
+    });
+
+    it('keeps caller-rendered skeleton rows inside cells', () => {
+      const { container } = render(
+        <DataTable loading>
+          <DataTableHeader>
+            <DataTableRow>
+              <DataTableHead>Order</DataTableHead>
+              <DataTableHead>Total</DataTableHead>
+            </DataTableRow>
+          </DataTableHeader>
+          <DataTableBody>
+            <DataTableRow>
+              <DataTableCell>
+                <Skeleton className="h-4 w-24" />
+              </DataTableCell>
+              <DataTableCell>
+                <Skeleton className="h-4 w-16" />
+              </DataTableCell>
+            </DataTableRow>
+          </DataTableBody>
+        </DataTable>
+      );
+
+      // The real <thead> survives the loading state — column labels stay
+      // readable and no width is re-derived on the swap.
+      expect(screen.getAllByRole('columnheader')).toHaveLength(2);
+      // Every placeholder is a <td> child; none is a direct child of a section
+      // or a row (which the HTML parser would foster-parent out of the table).
+      expect(container.querySelectorAll('tbody > div, tr > div')).toHaveLength(0);
+      expect(container.querySelectorAll('td > div.animate-pulse')).toHaveLength(2);
     });
   });
 

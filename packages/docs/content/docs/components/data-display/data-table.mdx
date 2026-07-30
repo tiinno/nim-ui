@@ -3,7 +3,7 @@ title: DataTable
 description: Semantic HTML table components for displaying structured tabular data
 ---
 
-import { DataTableBasic, DataTableWithFooter } from '@/components/demos/DataTableDemo';
+import { DataTableBasic, DataTableWithFooter, DataTableLoading } from '@/components/demos/DataTableDemo';
 
 The DataTable component provides a set of composable, semantic HTML table primitives for displaying structured data. Each sub-component maps to a native table element with consistent styling, hover states, and dark mode support.
 
@@ -18,6 +18,8 @@ import {
   DataTableRow,
   DataTableHead,
   DataTableCell,
+  // For the loading pattern below — one Skeleton per DataTableCell.
+  Skeleton,
 } from '@nim-ui/components';
 ```
 
@@ -99,12 +101,120 @@ Use `DataTableFooter` to add summary rows such as totals or aggregates.
   </PreviewCode>
 </ComponentPreview>
 
+## Loading
+
+A loading data table is the most common skeleton surface in a dashboard, and the one place [`Skeleton`](/components/feedback/skeleton/) needs help to go: `Skeleton` renders a `<div>`, and a `<div>` is not valid content for `<tbody>` or `<tr>`. The HTML parser does not merely tolerate that — it *foster-parents* the element out of the table and inserts it just above, so the placeholder renders in the wrong place and server-rendered markup fails to hydrate.
+
+A `<td>` takes flow content, so the fix is simply to keep every placeholder in a cell: `<DataTableCell><Skeleton className="h-4 w-32" /></DataTableCell>`.
+
+`DataTable` splits the work. It owns the parts a consumer cannot get right by hand — one `role="status"` live region and `aria-busy` on the table — and you own the rows, because `DataTable` has no `columns` prop and never introspects its children, so it cannot know how many placeholder cells a row needs. Writing them out is also what buys per-column widths, which is the difference between a placeholder that reads as the table and one that reads as noise.
+
+<ComponentPreview title="Loading DataTable" description="Toggle the state; the header stays put and the live region stays mounted">
+  <DataTableLoading />
+
+  <PreviewCode>
+```tsx
+function ShipmentsTable({ shipments, isLoading }: Props) {
+  return (
+    <DataTable loading={isLoading} loadingLabel="Loading shipments" aria-label="Shipments">
+      <DataTableHeader>
+        <DataTableRow>
+          <DataTableHead>Shipment</DataTableHead>
+          <DataTableHead>Customer</DataTableHead>
+          <DataTableHead className="text-right">Total</DataTableHead>
+        </DataTableRow>
+      </DataTableHeader>
+      <DataTableBody>
+        {isLoading
+          ? [0, 1, 2].map((row) => (
+              <DataTableRow key={row}>
+                <DataTableCell>
+                  <Skeleton className="h-4 w-24" />
+                </DataTableCell>
+                <DataTableCell>
+                  <Skeleton className="h-4 w-36" />
+                </DataTableCell>
+                <DataTableCell>
+                  <Skeleton className="ml-auto h-4 w-20" />
+                </DataTableCell>
+              </DataTableRow>
+            ))
+          : shipments.map((shipment) => (
+              <DataTableRow key={shipment.id}>
+                <DataTableCell>{shipment.id}</DataTableCell>
+                <DataTableCell>{shipment.customer}</DataTableCell>
+                <DataTableCell className="text-right">{shipment.total}</DataTableCell>
+              </DataTableRow>
+            ))}
+      </DataTableBody>
+    </DataTable>
+  );
+}
+```
+  </PreviewCode>
+</ComponentPreview>
+
+Omit `loading` entirely and nothing changes: no live region is rendered and no `aria-busy` is written. Passing `loading={false}` opts *in* — the region mounts empty, which is what makes the later text change an announcement rather than an insertion.
+
+### Don't: swap the table out for a spinner
+
+The obvious shape, and the one that quietly undoes the whole thing. The live region lives inside `DataTable`, so unmounting the table unmounts the region — a region created at the same moment its text arrives is announced inconsistently by screen readers, and it disappears again the instant loading ends. Because the region is invisible in your code, there is no visual cue that it broke.
+
+It also throws away the `<thead>`: the column labels vanish, the layout collapses to whatever the spinner is, and every column width is re-derived from scratch when the real rows arrive.
+
+```tsx
+// ✗ Don't — the live region is mounted and unmounted with the table
+{isLoading ? <Spinner /> : <DataTable>{/* … */}</DataTable>}
+
+// ✗ Don't — same defect, and SkeletonGroup cannot go inside a table anyway
+{isLoading && <SkeletonGroup loading fallback={<Skeleton className="h-40 w-full" />} />}
+```
+
+### Do: mount the table unconditionally and flip `loading`
+
+The only thing that should change between states is the children of `<DataTableBody>`. The header, the table element, the scroller and the live region all stay exactly where they are.
+
+```tsx
+// ✓ Do — one table, one region, mounted the whole time
+<DataTable loading={isLoading}>
+  <DataTableHeader>{/* real column labels, both states */}</DataTableHeader>
+  <DataTableBody>{isLoading ? skeletonRows : dataRows}</DataTableBody>
+</DataTable>
+```
+
+### Accessibility
+
+Loading a table is a **status message** in the WCAG 2.2 sense — a change of state the user has to learn about without moving focus (SC 4.1.3 Status Messages, AA). `DataTable` handles it the same way [`SkeletonGroup`](/components/feedback/skeleton/#skeletongroup) does:
+
+- **One `role="status"` region per table**, holding `loadingLabel` ("Loading" by default) while loading and `loadedLabel` — nothing, unless you set it — afterwards. Each `Skeleton` is `aria-hidden`, so the placeholder rows themselves stay out of the accessibility tree.
+- **The region is a sibling of the `aria-busy` host, never a descendant.** `aria-busy` tells assistive tech to *defer* announcements for its own subtree, which is exactly the window the region needs to speak in. Both sit inside the table's existing scroller, outside the table's content model.
+- **`aria-busy` is applied after the prop spread**, like `Button`'s: `loading` is the semantic contract, so `aria-busy={false}` from a caller cannot report *idle* while placeholder rows are on screen. When you are not loading, your own `aria-busy` still applies.
+- **The region must not unmount** — see the "don't" above.
+
 ## Props
 
 ### DataTable
 
 <PropsTable
   props={[
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: '-',
+      description: 'Whether the table body is still loading. Omit it entirely to opt out — no live region and no aria-busy are rendered. You render the skeleton rows',
+    },
+    {
+      name: 'loadingLabel',
+      type: 'string',
+      default: "'Loading'",
+      description: 'Screen-reader text held in the live region while loading',
+    },
+    {
+      name: 'loadedLabel',
+      type: 'string',
+      default: '-',
+      description: 'Optional text announced when loading finishes; omitted by default so a refetching dashboard stays quiet',
+    },
     {
       name: 'className',
       type: 'string',
@@ -300,4 +410,5 @@ function OrderSummary({ items, total }: { items: OrderItem[]; total: string }) {
 
 - [DataCard](/components/data-display/data-card/) - Metric display card for KPIs
 - [Badge](/components/data-display/badge/) - Status indicators for table cells
+- [Skeleton](/components/feedback/skeleton/) - The placeholders that go in the cells while `loading`
 - [CartItem](/components/commerce/cart-item/) - Shopping cart line items
