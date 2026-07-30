@@ -366,7 +366,7 @@ const TreeView = React.forwardRef<HTMLUListElement, TreeViewProps>(
             onFocus={(event) => {
               if (event.target === event.currentTarget) setFocusedId(node.id);
             }}
-            className="block outline-none [&:focus-visible>div]:ring-2 [&:focus-visible>div]:ring-primary-400 [&:focus-visible>div]:ring-offset-2 dark:[&:focus-visible>div]:ring-offset-neutral-950"
+            className="block outline-none [&:focus-visible>div]:ring-2 [&:focus-visible>div]:ring-primary-500 dark:[&:focus-visible>div]:ring-primary-400 [&:focus-visible>div]:ring-offset-2 dark:[&:focus-visible>div]:ring-offset-neutral-950"
           >
             <div
               data-testid={`tree-view-row-${node.id}`}

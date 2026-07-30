@@ -23,7 +23,7 @@ import { cn } from '../lib/utils';
  */
 
 const switchVariants = cva(
-  'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-(--duration-fast) ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-600 data-[state=unchecked]:bg-neutral-200 dark:data-[state=checked]:bg-primary-700 dark:data-[state=unchecked]:bg-neutral-700',
+  'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-(--duration-fast) ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-600 data-[state=unchecked]:bg-neutral-200 dark:data-[state=checked]:bg-primary-700 dark:data-[state=unchecked]:bg-neutral-700',
   {
     variants: {
       size: {

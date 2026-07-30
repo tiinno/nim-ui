@@ -22,7 +22,7 @@ import { cn } from '../lib/utils';
  */
 
 const linkVariants = cva(
-  'rounded-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2',
+  'rounded-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 focus-visible:ring-offset-2',
   {
     variants: {
       variant: {

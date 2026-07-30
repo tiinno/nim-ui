@@ -354,7 +354,9 @@ describe('Resizable', () => {
       expect(handle).toHaveClass('focus-visible:outline-none');
       expect(handle).toHaveClass('focus-visible:ring-2');
       expect(handle).toHaveClass('focus-visible:ring-offset-2');
-      expect(handle).toHaveClass('focus-visible:ring-primary-400');
+      // Both halves of the pair — neither step clears 3:1 in both themes alone.
+      expect(handle).toHaveClass('focus-visible:ring-primary-500');
+      expect(handle).toHaveClass('dark:focus-visible:ring-primary-400');
       expect(handle).toHaveClass('hover:bg-primary-200');
       expect(handle).toHaveClass('dark:hover:bg-primary-900');
     });
@@ -463,7 +465,8 @@ describe('Resizable', () => {
     it('resizableHandleVariants returns handle classes', () => {
       const enabled = resizableHandleVariants({ direction: 'horizontal', disabled: false });
       expect(enabled).toContain('cursor-col-resize');
-      expect(enabled).toContain('focus-visible:ring-primary-400');
+      expect(enabled).toContain('focus-visible:ring-primary-500');
+      expect(enabled).toContain('dark:focus-visible:ring-primary-400');
       const off = resizableHandleVariants({ direction: 'vertical', disabled: true });
       expect(off).toContain('cursor-row-resize');
       expect(off).toContain('opacity-60');
