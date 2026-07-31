@@ -308,13 +308,26 @@ Proper focus management is critical for keyboard and screen reader users.
 
 All Nim UI components include visible focus indicators for keyboard navigation. These styles only appear when navigating with the keyboard, not when clicking with a mouse.
 
-```css
-/* Applied to all interactive components */
-:focus-visible {
-  outline: 2px solid var(--color-primary-500);
-  outline-offset: 2px;
-}
+The indicator is applied **per component, in the component's own class string** — the kit does not install an application-wide `:focus-visible` rule on your behalf, for the same reason it does not install a motion reset (section 3). So this is what a component ships, not a stylesheet you inherit:
+
+```tsx
+'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400'
 ```
+
+**The light/dark pair is mandatory, not decoration.** WCAG 2.2 SC 1.4.11 wants 3:1 for a focus indicator and no single step of the steel scale clears it in both themes — `primary-400` measures 2.84:1 on white, `primary-500` measures 2.86:1 on the 800 surface. Two colours, one per theme, is the only way both pass.
+
+That has a consequence when you override it. `tailwind-merge` keys on the modifier set, so a lone light-half class replaces only the *light* half and you get your colour in light mode and steel in dark. Replace both — the same override the customization guide shows:
+
+```tsx
+<Button className="focus-visible:outline-purple-500 dark:focus-visible:outline-purple-500" />
+```
+
+Two details worth knowing:
+
+- It is an **outline**, not a ring. A `focus-visible:ring-*` class will not replace the indicator — it paints a second one alongside. The kit moved off rings because a ring's offset band is an opaque `box-shadow` that must be given a colour, and a component library cannot know which surface you placed the control on. An outline's offset is a genuinely transparent gap, so it is correct on any background.
+- Do not add `focus-visible:outline-none` to a component that draws an indicator. It sets `outline-style: none`, which erases the outline while leaving its width and colour computing normally — invisible in the browser and invisible to a class-name assertion.
+
+A handful of components draw the indicator flush, without the offset utility. They are transparent at rest, so the indicator meets the surface behind them on both edges.
 
 ### Focus Trapping
 
