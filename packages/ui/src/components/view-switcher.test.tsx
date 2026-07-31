@@ -94,4 +94,25 @@ describe('ViewSwitcher', () => {
     expect(screen.getByText('Breached SLA')).toBeInTheDocument();
     expect(screen.getByRole('group', { name: 'View actions' })).toBeInTheDocument();
   });
+
+  it('gives every tab the steel focus pair', () => {
+    render(
+      <ViewSwitcher>
+        <ViewSwitcherItem value="open" selected>
+          <ViewSwitcherLabel>Open</ViewSwitcherLabel>
+        </ViewSwitcherItem>
+        <ViewSwitcherItem value="closed">
+          <ViewSwitcherLabel>Closed</ViewSwitcherLabel>
+        </ViewSwitcherItem>
+      </ViewSwitcher>
+    );
+
+    // NIMUI-55. Selected and unselected tabs share the base string, so both get
+    // the contract's pair; the neutral ring they shipped with measured 2.48:1
+    // against this component's own 50 strip.
+    for (const tab of screen.getAllByRole('tab')) {
+      expect(tab).toHaveClass('focus-visible:ring-primary-500');
+      expect(tab).toHaveClass('dark:focus-visible:ring-primary-400');
+    }
+  });
 });

@@ -83,4 +83,25 @@ describe('FilterSummary', () => {
     expect(screen.getByRole('region')).toHaveClass('custom-summary');
     expect(screen.getByRole('region')).toHaveClass('gap-2');
   });
+
+  it('gives both focusable affordances the steel focus pair', () => {
+    render(
+      <FilterSummary aria-label="Active filters">
+        <FilterSummaryList>
+          <FilterSummaryItem label="Channel" value="Wholesale" onRemove={() => undefined} />
+        </FilterSummaryList>
+        <FilterSummaryClear onClear={() => undefined} />
+      </FilterSummary>
+    );
+
+    // NIMUI-55, same swap as bulk-action-bar and view-switcher: the steel scale
+    // is the contract's focus colour, and the neutral ring these shipped with
+    // reached only 2.37:1 on the 100 surface.
+    const remove = screen.getByRole('button', { name: /remove/i });
+    const clear = screen.getByRole('button', { name: 'Clear all filters' });
+    for (const control of [remove, clear]) {
+      expect(control).toHaveClass('focus-visible:ring-primary-500');
+      expect(control).toHaveClass('dark:focus-visible:ring-primary-400');
+    }
+  });
 });

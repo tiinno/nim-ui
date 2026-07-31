@@ -96,4 +96,20 @@ describe('BulkActionBar', () => {
     expect(elevated).not.toHaveClass('border-neutral-200');
     expect(elevated).not.toHaveClass('dark:border-neutral-800');
   });
+
+  it('gives the clear control the steel focus pair, not a neutral ring', () => {
+    render(
+      <BulkActionBar aria-label="Selected orders">
+        <BulkActionBarSelection count={2} />
+        <BulkActionBarClear onClear={() => undefined} />
+      </BulkActionBar>
+    );
+
+    // NIMUI-55. The design contract reserves the steel scale for focus,
+    // selection and links, so the neutral ring this shipped with was off
+    // contract as well as under 3:1 (2.37:1 on the 100 surface, painted).
+    const clear = screen.getByRole('button', { name: 'Clear selection' });
+    expect(clear).toHaveClass('focus-visible:ring-primary-500');
+    expect(clear).toHaveClass('dark:focus-visible:ring-primary-400');
+  });
 });

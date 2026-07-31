@@ -16,6 +16,18 @@ import { cn } from '../lib/utils';
  * @example
  * // Large success input
  * <Input variant="success" size="lg" placeholder="Valid input" />
+ *
+ * Validation state is carried by the BORDER (and the text colour); the focus
+ * indicator stays steel in every variant. The error and success variants used
+ * to tint the ring to match their border, and NIMUI-55 ruled against it: the
+ * error 500 step measures 2.99:1 against the 800 surface in dark mode, under
+ * the 3:1 WCAG 2.2 SC 1.4.11 (AA) asks of a focus indicator, and the tint was
+ * paying that in exchange for nothing — validity is already stated by the
+ * border, by the text colour and, for assistive technology, by `aria-invalid`
+ * and the field's message, none of which a ring colour reaches. Keeping the two
+ * states on two different channels also lets a user read them independently:
+ * the steel ring says WHERE the caret is, the coloured border says WHAT the
+ * field thinks of its value.
  */
 
 const inputVariants = cva(
@@ -24,8 +36,8 @@ const inputVariants = cva(
     variants: {
       variant: {
         default: 'border-neutral-300 focus-visible:border-primary-500 dark:focus-visible:border-primary-400 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:border-neutral-600 dark:text-neutral-100',
-        error: 'border-error-500 focus-visible:ring-error-500 text-error-900 dark:border-error-400 dark:text-error-100',
-        success: 'border-success-500 focus-visible:ring-success-500 text-success-900 dark:border-success-400 dark:text-success-100',
+        error: 'border-error-500 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 text-error-900 dark:border-error-400 dark:text-error-100',
+        success: 'border-success-500 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 text-success-900 dark:border-success-400 dark:text-success-100',
       },
       size: {
         sm: 'h-8 text-sm',
