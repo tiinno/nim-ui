@@ -44,6 +44,19 @@ describe('Input', () => {
       expect(input).toHaveClass('border-success-500');
       expect(input).toHaveClass('text-success-900');
     });
+
+    // NIMUI-55: validation state is the BORDER's job, focus is the ring's, and
+    // the ring is the same steel pair in all three variants. The error tint it
+    // used to carry measured 2.99:1 against the dark 800 surface.
+    it.each(['default', 'error', 'success'])(
+      'keeps the steel focus pair on the %s variant',
+      (variant) => {
+        render(<Input data-testid="input" variant={variant as any} />);
+        const input = screen.getByTestId('input');
+        expect(input).toHaveClass('focus-visible:ring-primary-500');
+        expect(input).toHaveClass('dark:focus-visible:ring-primary-400');
+      }
+    );
   });
 
   describe('Sizes', () => {

@@ -34,6 +34,20 @@ describe('Button', () => {
       render(<Button fullWidth>Full width</Button>);
       expect(screen.getByRole('button')).toHaveClass('w-full');
     });
+
+    // NIMUI-54 made the quiet variants uniform; NIMUI-55 brought `destructive`
+    // in too. Its danger-hue ring measured 2.90:1 on the 50 surface and 2.77:1
+    // on the 100 surface, and the danger it signalled was already carried by
+    // the fill and the label. One focus appearance, every variant.
+    it.each(['default', 'primary', 'secondary', 'outline', 'ghost', 'destructive'])(
+      'gives the %s variant both halves of the steel focus pair',
+      (variant) => {
+        render(<Button variant={variant as any}>{variant}</Button>);
+        const button = screen.getByRole('button');
+        expect(button).toHaveClass('focus-visible:ring-primary-500');
+        expect(button).toHaveClass('dark:focus-visible:ring-primary-400');
+      }
+    );
   });
 
   describe('Sizes', () => {

@@ -44,6 +44,18 @@ describe('Textarea', () => {
       expect(textarea).toHaveClass('border-success-500');
       expect(textarea).toHaveClass('text-success-900');
     });
+
+    // NIMUI-55, the same ruling as Input: the border carries validation, the
+    // ring carries focus, and the ring is one steel pair across the variants.
+    it.each(['default', 'error', 'success'])(
+      'keeps the steel focus pair on the %s variant',
+      (variant) => {
+        render(<Textarea data-testid="textarea" variant={variant as any} />);
+        const textarea = screen.getByTestId('textarea');
+        expect(textarea).toHaveClass('focus-visible:ring-primary-500');
+        expect(textarea).toHaveClass('dark:focus-visible:ring-primary-400');
+      }
+    );
   });
 
   describe('Sizes', () => {

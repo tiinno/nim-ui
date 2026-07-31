@@ -78,20 +78,30 @@ import { cn } from '../lib/utils';
  * press-feedback sites (`cta.tsx`, the toast action button) and fails if a
  * movement-bearing transition is ever added without one.
  *
- * All five non-destructive variants take the SAME focus indicator — the steel
- * 500 step in light mode, the 400 step in dark — and that uniformity is the
- * decision, not an oversight (NIMUI-54). `secondary`, `outline` and `ghost`
- * used to take a much lighter step, on the reasoning that a quieter button
- * deserves a quieter focus indicator. Measured on painted pixels that step
- * reached 1.79:1 against white and 1.42:1 against the hovered `secondary`
- * surface, well under the 3:1 WCAG 2.2 SC 1.4.11 (AA) asks of a focus
- * indicator: a keyboard user could not see where they were. Visual weight is a
- * property of the RESTING button — its fill, its border, its text colour — and
- * those still differ variant by variant. The focus indicator is transient, it
- * appears on exactly one control at a time, and it is the only thing telling a
- * keyboard user where they are, so it is held to one appearance across the kit.
- * `destructive` remains the sole exception, and its tint is semantic (it
- * matches the danger fill) rather than a reduction in weight.
+ * ALL SIX variants take the same focus indicator — the steel 500 step in light
+ * mode, the 400 step in dark — and that uniformity is the decision, not an
+ * oversight (NIMUI-54, NIMUI-55). `secondary`, `outline` and `ghost` used to
+ * take a much lighter step, on the reasoning that a quieter button deserves a
+ * quieter focus indicator. Measured on painted pixels that step reached 1.79:1
+ * against white and 1.42:1 against the hovered `secondary` surface, well under
+ * the 3:1 WCAG 2.2 SC 1.4.11 (AA) asks of a focus indicator: a keyboard user
+ * could not see where they were. Visual weight is a property of the RESTING
+ * button — its fill, its border, its text colour — and those still differ
+ * variant by variant. The focus indicator is transient, it appears on exactly
+ * one control at a time, and it is the only thing telling a keyboard user where
+ * they are, so it is held to one appearance across the kit.
+ *
+ * `destructive` used to be the exception, tinting its indicator to the danger
+ * hue on the reasoning that the tint was semantic rather than a reduction in
+ * weight. NIMUI-55 ruled against it on three grounds. The tint failed the same
+ * contrast bar the quiet variants failed — the error 400 step measures 2.90:1
+ * on the 50 surface and 2.77:1 on the 100 surface, painted. It carried no
+ * information: the danger of the action is already stated by the fill, the
+ * label and whatever confirmation the app puts in front of it, and colour alone
+ * reaches no assistive technology anyway. And a danger-hue ring drawn a couple
+ * of pixels outside a danger-hue fill separates "focused" from "dangerous"
+ * worse than a steel ring does, not better. Focus is one appearance kit-wide;
+ * semantics belong to the control, not to the indicator that finds it.
  */
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium shadow-control transition-all duration-(--duration-fast) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:active:scale-100',
@@ -103,7 +113,7 @@ const buttonVariants = cva(
         secondary: 'bg-neutral-100 text-neutral-900 hover:bg-neutral-200 aria-disabled:hover:bg-neutral-100 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700 dark:aria-disabled:hover:bg-neutral-800',
         outline: 'border border-neutral-200 bg-white/70 text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50 aria-disabled:hover:border-neutral-200 aria-disabled:hover:bg-white/70 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:border-neutral-800 dark:bg-neutral-950/60 dark:text-neutral-100 dark:hover:border-neutral-700 dark:hover:bg-neutral-900 dark:aria-disabled:hover:border-neutral-800 dark:aria-disabled:hover:bg-neutral-950/60',
         ghost: 'bg-transparent shadow-none text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950 aria-disabled:hover:bg-transparent aria-disabled:hover:text-neutral-700 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-neutral-50 dark:aria-disabled:hover:bg-transparent dark:aria-disabled:hover:text-neutral-300',
-        destructive: 'bg-error-700 text-white hover:bg-error-800 aria-disabled:hover:bg-error-700 focus-visible:ring-error-400 dark:bg-error-300 dark:text-error-950 dark:hover:bg-error-200 dark:aria-disabled:hover:bg-error-300',
+        destructive: 'bg-error-700 text-white hover:bg-error-800 aria-disabled:hover:bg-error-700 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:bg-error-300 dark:text-error-950 dark:hover:bg-error-200 dark:aria-disabled:hover:bg-error-300',
       },
       size: {
         sm: 'h-8 px-3 text-sm',

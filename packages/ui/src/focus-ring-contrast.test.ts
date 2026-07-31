@@ -80,9 +80,10 @@ import { extractStringLiterals, toSelector, findSelectorIndex, ruleBodyAt } from
  * light half and leave the dark one alive — light in one theme, steel in the
  * other. Nothing hits this today: no `cva` in the kit declares a focus colour in
  * both its base and a variant (the bases that carry one — checkbox, copy-button,
- * link, radio, resizable, select, sidebar-nav, slider, switch, tabs — carry
- * complete pairs and no variant colour, and button/input/textarea keep theirs in
- * mutually exclusive variants). Re-check that if a component ever splits one.
+ * link, radio, resizable, select, sidebar-nav, slider, switch, tabs,
+ * view-switcher — carry complete pairs and no variant colour, and
+ * button/input/textarea keep theirs in mutually exclusive variants). Re-check
+ * that if a component ever splits one.
  *
  * A second gap: this measures the indicator against its BACKGROUND. It says
  * nothing about the offset band drawn between the two, which defaults to opaque
@@ -154,44 +155,40 @@ const SCALES = ['primary', 'neutral', 'success', 'error', 'warning', 'info'];
 const decode = (encoded: string): string => encoded.replace(SENTINEL, '');
 
 /**
- * Focus indicators that ship ONE colour for both themes today, pinned.
+ * Focus indicators that ship ONE colour for both themes, pinned.
  *
- * These are outside NIMUI-51, which repaired the steel indicator the design
- * contract mandates. They are recorded here rather than quietly filtered out,
- * because a filter would also hide the next one to arrive. Ratios measured the
- * same way this file measures everything else.
+ * EMPTY, and that is the current state of the kit rather than a disabled
+ * mechanism: every focus indicator this suite scans is now a light/dark pair on
+ * the steel scale. NIMUI-55 cleared the last four entries, each by repairing
+ * the component and deleting its pin in the same commit — which is the only way
+ * an entry may leave this list. Never loosen an assertion to empty it.
  *
- * Encoded for the same reason `compiled-utility-inventory.test.ts` encodes its
- * pin: an entry written plainly is a live Tailwind candidate, so the pin would
- * keep compiling the very class it merely tolerates after the component stopped
- * shipping it.
+ * What was here, for the record:
+ *
+ * - The neutral 400 step on `bulk-action-bar`, `filter-summary` and
+ *   `view-switcher` — 2.58 on white, 2.48 on the 50 surface, 2.37 on the 100
+ *   surface. Off-contract twice over: the design contract reserves the steel
+ *   scale for focus, selection and links, so a NEUTRAL focus ring was never the
+ *   kit's indicator to begin with.
+ * - The error 400 step on Button's `destructive` variant — 3.02 on white, but
+ *   2.90 on the 50 surface and 2.77 on the 100 surface.
+ * - The error 500 step on the error variant of `input` and `textarea` — clears
+ *   light (3.91–4.93) and misses dark at 2.99 on the 800 surface.
+ * - The success 500 step on the success variant of the same two, which cleared
+ *   3:1 everywhere (3.13 worst) and was pinned for being unpaired, not for
+ *   failing. It went steel with the others because a focus indicator does not
+ *   carry validation state in this kit: the field's border does.
+ *
+ * Keep the list itself. The two hygiene assertions below (encoded entries, no
+ * stale entries) stay armed through an empty array and will meet the next
+ * arrival; deleting the mechanism would delete the guard along with the pins.
+ *
+ * Entries are encoded for the same reason `compiled-utility-inventory.test.ts`
+ * encodes its pin: an entry written plainly is a live Tailwind candidate, so the
+ * pin would keep compiling the very class it merely tolerates after the
+ * component stopped shipping it.
  */
-const KNOWN_UNPAIRED = [
-  // The WORST one still shipping, and the reason this pin is a list rather than
-  // a filter. Toolbar/chip affordances on the neutral scale rather than the
-  // steel one: 2.58 on white, 2.48 on the 50 surface, 2.37 on the 100 surface —
-  // the same defect NIMUI-51 fixed, on a different scale. Passes on dark
-  // (5.71–7.66).
-  //
-  // The entry this list used to open with was worse still: three of Button's
-  // six variants took a much lighter steel step than the contract mandates
-  // (1.79 on white, 1.42 on the 200 surface). NIMUI-54 repaired it. That was
-  // held back for its own ticket because it changes how three shipped Button
-  // variants LOOK — the quiet variants now take the same indicator as every
-  // other focusable thing in the kit, deliberately — which is the bar for
-  // clearing an entry off this list: repair the component and delete the pin in
-  // the same commit, never loosen the assertion.
-  { entry: 'focus-visible:r~ing-neutral-400', where: 'bulk-action-bar, filter-summary, view-switcher' },
-  // Destructive Button tints its ring to match. 3.02 on white but 2.90 on the
-  // 50 surface and 2.77 on the 100 surface. Passes on dark (4.88–6.55).
-  { entry: 'focus-visible:r~ing-error-400', where: 'button (destructive)' },
-  // The error variant of the two text controls. Clears light (4.52–4.93) and
-  // just misses dark: 2.99 on the 800 surface.
-  { entry: 'focus-visible:r~ing-error-500', where: 'input, textarea (error)' },
-  // The success variant of the same two. Clears 3:1 on every surface in both
-  // lists (3.62 worst), so it is unpaired but not a failure.
-  { entry: 'focus-visible:r~ing-success-500', where: 'input, textarea (success)' },
-];
+const KNOWN_UNPAIRED: { entry: string; where: string }[] = [];
 
 /**
  * The CSS declaration each namespace must be found binding, keyed by namespace.
