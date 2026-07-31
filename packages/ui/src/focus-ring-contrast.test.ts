@@ -4,9 +4,16 @@ import { resolve, join } from 'path';
 import { extractStringLiterals, toSelector, findSelectorIndex, ruleBodyAt } from './test/class-scan';
 
 /**
- * Guards WCAG 2.2 SC 1.4.11 for the kit's focus indicator: the ring (and the
+ * Guards WCAG 2.2 SC 1.4.11 for the kit's focus indicator: the outline (and the
  * focus border on the three text controls) must reach 3:1 against the surface
  * it is painted on, in BOTH themes.
+ *
+ * The indicator was a shadow `ring` until NIMUI-57. The contrast requirement did
+ * not change with the mechanism, and neither did this file's arithmetic — the
+ * `outline` namespace was already scanned here, because Card had been drawing its
+ * indicator that way since NIMUI-50. What changed is that the ring namespace now
+ * matches nothing, which is deliberate: leaving it in the scan is what makes a
+ * component that reintroduces a ring get measured rather than ignored.
  *
  * ## The defect this exists to prevent coming back (NIMUI-51)
  *
@@ -85,11 +92,14 @@ import { extractStringLiterals, toSelector, findSelectorIndex, ruleBodyAt } from
  * button/input/textarea keep theirs in mutually exclusive variants). Re-check
  * that if a component ever splits one.
  *
- * A second gap: this measures the indicator against its BACKGROUND. It says
- * nothing about the offset band drawn between the two, which defaults to opaque
- * white and is wrong in dark mode on most components (NIMUI-52). That is a
- * separate defect with a separate fix; the outer edge of the ring meets the page
- * directly, which is the boundary SC 1.4.11 needs, so it is not this one.
+ * A second gap USED to live here: this measures the indicator against its
+ * BACKGROUND and said nothing about the offset band drawn between the two, which
+ * a shadow ring paints in an opaque colour and the kit left at its white default
+ * — wrong in dark mode almost everywhere. NIMUI-57 removed the gap rather than
+ * measuring it, by moving every indicator to `outline`, whose offset is a real
+ * transparent space and therefore shows the actual surface behind the control on
+ * any background, including a consumer's. There is nothing left for this suite to
+ * check there: the band has no colour to get wrong.
  *
  * ## Why the class names here are assembled rather than written
  *

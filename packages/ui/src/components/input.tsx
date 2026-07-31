@@ -31,13 +31,13 @@ import { cn } from '../lib/utils';
  */
 
 const inputVariants = cva(
-  'flex w-full rounded-md border bg-white px-3 py-2 transition-[border-color,box-shadow] duration-(--duration-fast) ease-in-out file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-neutral-900 dark:placeholder:text-neutral-400',
+  'flex w-full rounded-md border bg-white px-3 py-2 transition-[border-color] duration-(--duration-fast) ease-in-out file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-neutral-900 dark:placeholder:text-neutral-400',
   {
     variants: {
       variant: {
-        default: 'border-neutral-300 focus-visible:border-primary-500 dark:focus-visible:border-primary-400 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:border-neutral-600 dark:text-neutral-100',
-        error: 'border-error-500 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 text-error-900 dark:border-error-400 dark:text-error-100',
-        success: 'border-success-500 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 text-success-900 dark:border-success-400 dark:text-success-100',
+        default:'border-neutral-300 focus-visible:border-primary-500 dark:focus-visible:border-primary-400 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:border-neutral-600 dark:text-neutral-100',
+        error:'border-error-500 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 text-error-900 dark:border-error-400 dark:text-error-100',
+        success:'border-success-500 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 text-success-900 dark:border-success-400 dark:text-success-100',
       },
       size: {
         sm: 'h-8 text-sm',

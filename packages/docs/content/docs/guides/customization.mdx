@@ -54,13 +54,15 @@ import { Card } from '@nim-ui/components';
 ```tsx
 import { Input } from '@nim-ui/components';
 
-// Input with custom focus ring.
-// Two things matter here. The kit styles focus with `focus-visible:`, so a
-// `focus:` class does not conflict with it and both would apply. And the kit's
-// focus indicator is a light/dark PAIR — tailwind-merge keys on the modifier
-// set, so replacing only the light half leaves the dark half in place and the
-// ring stays steel in dark mode. Override both halves.
-<Input className="focus-visible:ring-purple-500 dark:focus-visible:ring-purple-500 focus-visible:border-purple-500 dark:focus-visible:border-purple-500" />
+// Input with a custom focus indicator.
+// Three things matter here. The kit draws focus with an OUTLINE, not a ring —
+// a `focus-visible:ring-*` class will not replace it, it will paint a second
+// indicator alongside. The kit styles focus with `focus-visible:`, so a
+// `focus:` class does not conflict with it and both would apply. And the
+// indicator is a light/dark PAIR — tailwind-merge keys on the modifier set, so
+// replacing only the light half leaves the dark half in place and the outline
+// stays steel in dark mode. Override both halves.
+<Input className="focus-visible:outline-purple-500 dark:focus-visible:outline-purple-500 focus-visible:border-purple-500 dark:focus-visible:border-purple-500" />
 
 // Larger input
 <Input className="h-14 text-lg px-6" />

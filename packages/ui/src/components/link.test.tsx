@@ -17,12 +17,11 @@ describe('Link', () => {
       const link = screen.getByRole('link');
       expect(link).toHaveClass('rounded-sm');
       expect(link).toHaveClass('transition-colors');
-      expect(link).toHaveClass('focus-visible:outline-none');
-      expect(link).toHaveClass('focus-visible:ring-2');
+      expect(link).toHaveClass('focus-visible:outline-2');
       // Both halves of the pair — neither step clears 3:1 in both themes alone.
-      expect(link).toHaveClass('focus-visible:ring-primary-500');
-      expect(link).toHaveClass('dark:focus-visible:ring-primary-400');
-      expect(link).toHaveClass('focus-visible:ring-offset-2');
+      expect(link).toHaveClass('focus-visible:outline-primary-500');
+      expect(link).toHaveClass('dark:focus-visible:outline-primary-400');
+      expect(link).toHaveClass('focus-visible:outline-offset-2');
     });
   });
 

@@ -52,8 +52,8 @@ describe('Textarea', () => {
       (variant) => {
         render(<Textarea data-testid="textarea" variant={variant as any} />);
         const textarea = screen.getByTestId('textarea');
-        expect(textarea).toHaveClass('focus-visible:ring-primary-500');
-        expect(textarea).toHaveClass('dark:focus-visible:ring-primary-400');
+        expect(textarea).toHaveClass('focus-visible:outline-primary-500');
+        expect(textarea).toHaveClass('dark:focus-visible:outline-primary-400');
       }
     );
   });

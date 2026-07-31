@@ -74,11 +74,11 @@ export interface NavbarProps
 // (`hidden md:inline-flex` on desktop, `inline-flex` in the mobile menu).
 // A base `inline-flex` would be emitted before the caller's `hidden` and win.
 const ctaClasses =
-  'h-9 items-center justify-center whitespace-nowrap rounded-md bg-neutral-950 px-4 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white';
+  'h-9 items-center justify-center whitespace-nowrap rounded-md bg-neutral-950 px-4 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white';
 
 function desktopLinkClasses(active?: boolean): string {
   return cn(
-    'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+    'rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400',
     active
       ? 'text-neutral-950 dark:text-neutral-50'
       : 'text-neutral-600 hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-50'
@@ -87,7 +87,7 @@ function desktopLinkClasses(active?: boolean): string {
 
 function mobileLinkClasses(active?: boolean): string {
   return cn(
-    'block rounded-md px-3 py-2 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+    'block rounded-md px-3 py-2 text-base font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400',
     active
       ? 'bg-neutral-100 text-neutral-950 dark:bg-neutral-900 dark:text-neutral-50'
       : 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-50'
@@ -144,7 +144,7 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
           {brand && (
             <a
               href={brandHref}
-              className="flex shrink-0 items-center gap-2 rounded-md text-base font-semibold tracking-tight text-neutral-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-50"
+              className="flex shrink-0 items-center gap-2 rounded-md text-base font-semibold tracking-tight text-neutral-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:text-neutral-50"
             >
               {brand}
             </a>
@@ -173,7 +173,7 @@ const Navbar = React.forwardRef<HTMLElement, NavbarProps>(
                 aria-controls={menuId}
                 aria-label="Toggle navigation menu"
                 onClick={() => setMenuOpen((open) => !open)}
-                className="inline-flex size-9 items-center justify-center rounded-md text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 md:hidden dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-neutral-50"
+                className="inline-flex size-9 items-center justify-center rounded-md text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 md:hidden dark:text-neutral-300 dark:hover:bg-neutral-900 dark:hover:text-neutral-50"
               >
                 {menuOpen ? (
                   <svg

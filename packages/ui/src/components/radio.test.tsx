@@ -538,14 +538,14 @@ describe('Radio', () => {
       expect(radios[1]).toHaveAttribute('aria-checked', 'false');
     });
 
-    it('applies focus-visible ring styles', () => {
+    it('applies focus-visible outline styles', () => {
       render(
         <RadioGroup>
           <RadioGroupItem value="option1" data-testid="radio" />
         </RadioGroup>
       );
 
-      expect(screen.getByTestId('radio')).toHaveClass('focus-visible:ring-2');
+      expect(screen.getByTestId('radio')).toHaveClass('focus-visible:outline-2');
     });
 
     it('associates with label via htmlFor', () => {

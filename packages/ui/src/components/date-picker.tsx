@@ -310,7 +310,7 @@ const DateRangePicker = React.forwardRef<
                     <button
                       key={preset.label}
                       type="button"
-                      className="rounded-sm px-2 py-1.5 text-left text-sm text-neutral-700 transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                      className="rounded-sm px-2 py-1.5 text-left text-sm text-neutral-700 transition-colors hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:text-neutral-200 dark:hover:bg-neutral-800"
                       onClick={() => handlePresetSelect(preset)}
                     >
                       {preset.label}

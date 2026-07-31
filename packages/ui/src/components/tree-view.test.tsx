@@ -469,15 +469,14 @@ describe('TreeView', () => {
   });
 
   describe('Focus ring', () => {
-    it('scopes the steel focus ring to the row in both themes', () => {
+    it('scopes the steel focus outline to the row in both themes', () => {
       render(<TreeView label="Catalog" data={catalog} />);
       const treeitem = item('Apparel');
-      expect(treeitem).toHaveClass('[&:focus-visible>div]:ring-2');
+      expect(treeitem).toHaveClass('[&:focus-visible>div]:outline-2');
       // Both halves of the pair, mirroring the ring-offset override on the same line.
-      expect(treeitem).toHaveClass('[&:focus-visible>div]:ring-primary-500');
-      expect(treeitem).toHaveClass('dark:[&:focus-visible>div]:ring-primary-400');
-      expect(treeitem).toHaveClass('[&:focus-visible>div]:ring-offset-2');
-      expect(treeitem).toHaveClass('dark:[&:focus-visible>div]:ring-offset-neutral-950');
+      expect(treeitem).toHaveClass('[&:focus-visible>div]:outline-primary-500');
+      expect(treeitem).toHaveClass('dark:[&:focus-visible>div]:outline-primary-400');
+      expect(treeitem).toHaveClass('[&:focus-visible>div]:outline-offset-2');
     });
   });
 

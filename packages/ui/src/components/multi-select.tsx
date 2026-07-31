@@ -86,7 +86,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
             role="combobox"
             disabled={disabled}
             className={cn(
-              'flex h-9 w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-left text-sm shadow-control transition-colors duration-(--duration-fast) hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800',
+              'flex h-9 w-full items-center justify-between rounded-md border border-neutral-300 bg-white px-3 py-2 text-left text-sm shadow-control transition-colors duration-(--duration-fast) hover:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800',
               // Text colour lives entirely in this ternary — an unconditional
               // `text-neutral-900` in the base would beat the placeholder tone.
               selectedLabels.length === 0
@@ -191,7 +191,7 @@ const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
                   <span className="truncate">{itemLabel}</span>
                   <button
                     type="button"
-                    className="inline-flex h-4 w-4 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+                    className="inline-flex h-4 w-4 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
                     aria-label={`Remove ${itemLabel}`}
                     onClick={() => removeValue(item)}
                     disabled={disabled}

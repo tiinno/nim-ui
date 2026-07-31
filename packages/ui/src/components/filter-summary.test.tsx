@@ -100,8 +100,8 @@ describe('FilterSummary', () => {
     const remove = screen.getByRole('button', { name: /remove/i });
     const clear = screen.getByRole('button', { name: 'Clear all filters' });
     for (const control of [remove, clear]) {
-      expect(control).toHaveClass('focus-visible:ring-primary-500');
-      expect(control).toHaveClass('dark:focus-visible:ring-primary-400');
+      expect(control).toHaveClass('focus-visible:outline-primary-500');
+      expect(control).toHaveClass('dark:focus-visible:outline-primary-400');
     }
   });
 });

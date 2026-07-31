@@ -158,9 +158,9 @@ describe('Checkbox', () => {
       expect(screen.getByRole('checkbox')).toBeDisabled();
     });
 
-    it('applies focus-visible ring styles', () => {
+    it('applies focus-visible outline styles', () => {
       render(<Checkbox checked={false} data-testid="checkbox" />);
-      expect(screen.getByTestId('checkbox')).toHaveClass('focus-visible:ring-2');
+      expect(screen.getByTestId('checkbox')).toHaveClass('focus-visible:outline-2');
     });
   });
 

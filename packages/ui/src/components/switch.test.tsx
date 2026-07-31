@@ -159,9 +159,9 @@ describe('Switch', () => {
       expect(screen.getByRole('switch')).toBeDisabled();
     });
 
-    it('applies focus-visible ring styles', () => {
+    it('applies focus-visible outline styles', () => {
       render(<Switch checked={false} data-testid="switch" />);
-      expect(screen.getByTestId('switch')).toHaveClass('focus-visible:ring-2');
+      expect(screen.getByTestId('switch')).toHaveClass('focus-visible:outline-2');
     });
   });
 

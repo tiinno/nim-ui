@@ -100,7 +100,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
           <div className="absolute inset-y-0 right-1 flex items-center gap-0.5">
             <button
               type="button"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-sm text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 disabled:cursor-not-allowed disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-sm text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
               aria-label="Decrease value"
               onClick={() => stepValue(-1)}
               disabled={disabled || (min !== undefined && (selected ?? 0) <= min)}
@@ -119,7 +119,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             </button>
             <button
               type="button"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-sm text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 disabled:cursor-not-allowed disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
+              className="inline-flex h-7 w-7 items-center justify-center rounded-sm text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-50 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-50"
               aria-label="Increase value"
               onClick={() => stepValue(1)}
               disabled={disabled || (max !== undefined && (selected ?? 0) >= max)}

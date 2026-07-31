@@ -44,8 +44,8 @@ describe('Button', () => {
       (variant) => {
         render(<Button variant={variant as any}>{variant}</Button>);
         const button = screen.getByRole('button');
-        expect(button).toHaveClass('focus-visible:ring-primary-500');
-        expect(button).toHaveClass('dark:focus-visible:ring-primary-400');
+        expect(button).toHaveClass('focus-visible:outline-primary-500');
+        expect(button).toHaveClass('dark:focus-visible:outline-primary-400');
       }
     );
   });

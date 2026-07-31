@@ -133,7 +133,7 @@ const Stepper = React.forwardRef<HTMLOListElement, StepperProps>(
             {onStepChange ? (
               <button
                 type="button"
-                className="relative z-10 flex min-w-0 items-center gap-3 rounded-md text-left outline-none transition-colors hover:text-neutral-950 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 focus-visible:ring-offset-2 dark:hover:text-neutral-50"
+                className="relative z-10 flex min-w-0 items-center gap-3 rounded-md text-left outline-none transition-colors hover:text-neutral-950 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 focus-visible:outline-offset-2 dark:hover:text-neutral-50"
                 aria-current={status === 'current' ? 'step' : undefined}
                 onClick={() => onStepChange(index)}
               >

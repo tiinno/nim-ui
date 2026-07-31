@@ -34,8 +34,8 @@ describe('CopyButton', () => {
       expect(button).toHaveClass('text-neutral-500');
       expect(button).toHaveClass('hover:bg-neutral-100');
       // Both halves of the pair — neither step clears 3:1 in both themes alone.
-      expect(button).toHaveClass('focus-visible:ring-primary-500');
-      expect(button).toHaveClass('dark:focus-visible:ring-primary-400');
+      expect(button).toHaveClass('focus-visible:outline-primary-500');
+      expect(button).toHaveClass('dark:focus-visible:outline-primary-400');
       expect(button).toHaveClass('dark:text-neutral-400');
       expect(button).toHaveClass('dark:hover:bg-neutral-800');
     });
