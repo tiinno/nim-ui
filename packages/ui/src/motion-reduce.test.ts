@@ -674,11 +674,19 @@ const EXPECTED_MOVEMENT_TRANSITIONS = [
  *
  * `shadow` arrived when `product-card.tsx` stopped naming a transform-family
  * property it never set (NIMUI-48) and became honestly non-motion.
+ *
+ * The bare border-colour entry arrived the same way, for the same reason, when
+ * NIMUI-57 moved the focus indicator off the ring: a ring IS a `box-shadow`, so
+ * `input` and `textarea` naming that property was honest only while they drew
+ * one. An outline sets neither, so the property left the list rather than
+ * lingering as something nothing sets. The two-property form above it survives
+ * on `tags-input`, which paints a real shadow.
  */
 const EXPECTED_NON_MOTION_TRANSITION_VALUES = [
   '[background-color,border-color]',
   '[background-color,box-shadow,color]',
   '[border-color,box-shadow]',
+  '[border-color]',
   '[box-shadow,border-color,background-color]',
   'colors',
   'none',

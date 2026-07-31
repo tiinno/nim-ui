@@ -131,7 +131,7 @@ const BulkActionBarClear = React.forwardRef<
     ref={ref}
     type={type}
     className={cn(
-      'inline-flex h-8 items-center justify-center rounded-md px-3 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
+      'inline-flex h-8 items-center justify-center rounded-md px-3 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
       className
     )}
     onClick={onClear}

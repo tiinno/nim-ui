@@ -204,16 +204,15 @@ describe('Banner', () => {
       expect(screen.queryByText('Keyboard')).not.toBeInTheDocument();
     });
 
-    it('gives the dismiss button the standard focus ring', () => {
+    it('gives the dismiss button the standard focus outline', () => {
       render(<Banner title="Focus ring" dismissible />);
       const button = screen.getByRole('button', { name: 'Dismiss' });
-      expect(button).toHaveClass('focus-visible:outline-none');
-      expect(button).toHaveClass('focus-visible:ring-2');
-      expect(button).toHaveClass('focus-visible:ring-offset-2');
+      expect(button).toHaveClass('focus-visible:outline-2');
+      expect(button).toHaveClass('focus-visible:outline-offset-2');
       // Both halves of the pair — primary-400 alone is 2.84:1 on white (SC 1.4.11
       // wants 3:1), primary-500 alone is 2.86:1 on a dark panel.
-      expect(button).toHaveClass('focus-visible:ring-primary-500');
-      expect(button).toHaveClass('dark:focus-visible:ring-primary-400');
+      expect(button).toHaveClass('focus-visible:outline-primary-500');
+      expect(button).toHaveClass('dark:focus-visible:outline-primary-400');
     });
 
     it('reserves trailing space for the dismiss button', () => {

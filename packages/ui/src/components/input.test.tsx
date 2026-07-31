@@ -53,8 +53,8 @@ describe('Input', () => {
       (variant) => {
         render(<Input data-testid="input" variant={variant as any} />);
         const input = screen.getByTestId('input');
-        expect(input).toHaveClass('focus-visible:ring-primary-500');
-        expect(input).toHaveClass('dark:focus-visible:ring-primary-400');
+        expect(input).toHaveClass('focus-visible:outline-primary-500');
+        expect(input).toHaveClass('dark:focus-visible:outline-primary-400');
       }
     );
   });

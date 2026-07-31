@@ -109,7 +109,7 @@ describe('BulkActionBar', () => {
     // selection and links, so the neutral ring this shipped with was off
     // contract as well as under 3:1 (2.37:1 on the 100 surface, painted).
     const clear = screen.getByRole('button', { name: 'Clear selection' });
-    expect(clear).toHaveClass('focus-visible:ring-primary-500');
-    expect(clear).toHaveClass('dark:focus-visible:ring-primary-400');
+    expect(clear).toHaveClass('focus-visible:outline-primary-500');
+    expect(clear).toHaveClass('dark:focus-visible:outline-primary-400');
   });
 });

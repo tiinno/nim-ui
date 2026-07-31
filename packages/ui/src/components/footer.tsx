@@ -85,7 +85,7 @@ export interface FooterProps
 }
 
 const footerLinkClasses =
-  'text-sm text-neutral-600 transition-colors hover:text-neutral-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 rounded-sm dark:text-neutral-400 dark:hover:text-neutral-50';
+  'text-sm text-neutral-600 transition-colors hover:text-neutral-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 rounded-sm dark:text-neutral-400 dark:hover:text-neutral-50';
 
 const Footer = React.forwardRef<HTMLElement, FooterProps>(
   (
@@ -137,7 +137,7 @@ const Footer = React.forwardRef<HTMLElement, FooterProps>(
                           key={link.href}
                           href={link.href}
                           aria-label={link.label}
-                          className="inline-flex size-9 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-50"
+                          className="inline-flex size-9 items-center justify-center rounded-md text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-50"
                         >
                           {link.icon ? (
                             <span aria-hidden="true" className="[&>svg]:size-5">

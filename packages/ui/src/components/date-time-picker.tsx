@@ -131,7 +131,7 @@ const TimeSelect = ({
         {label}
       </span>
       <select
-        className="h-9 rounded-md border border-neutral-300 bg-white px-3 text-sm text-neutral-900 shadow-control transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
+        className="h-9 rounded-md border border-neutral-300 bg-white px-3 text-sm text-neutral-900 shadow-control transition-colors focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         disabled={disabled}
@@ -400,7 +400,7 @@ const DateTimeRangePicker = React.forwardRef<
                     <button
                       key={preset.label}
                       type="button"
-                      className="rounded-sm px-2 py-1.5 text-left text-sm text-neutral-700 transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:text-neutral-200 dark:hover:bg-neutral-800"
+                      className="rounded-sm px-2 py-1.5 text-left text-sm text-neutral-700 transition-colors hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:text-neutral-200 dark:hover:bg-neutral-800"
                       onClick={() => commit(resolvePreset(preset))}
                     >
                       {preset.label}

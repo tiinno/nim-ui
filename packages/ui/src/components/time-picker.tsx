@@ -143,7 +143,7 @@ const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
                   role="option"
                   aria-selected={selected === option}
                   className={cn(
-                    'flex h-8 w-full items-center rounded-sm px-2 text-left text-sm transition-colors hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 dark:hover:bg-neutral-800',
+                    'flex h-8 w-full items-center rounded-sm px-2 text-left text-sm transition-colors hover:bg-neutral-100 focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 dark:hover:bg-neutral-800',
                     selected === option
                       ? 'bg-neutral-100 font-medium text-neutral-950 dark:bg-neutral-800 dark:text-neutral-50'
                       : 'text-neutral-700 dark:text-neutral-200'

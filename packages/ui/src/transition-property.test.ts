@@ -149,10 +149,10 @@ const EXPECTED_PROPERTY_LISTS = [
   'card.tsx: box-shadow, translate, border-color, background-color',
   'card.tsx (motion-reduce): box-shadow, border-color, background-color',
   'checkbox.tsx: background-color, border-color',
-  'input.tsx: border-color, box-shadow',
+  'input.tsx: border-color',
   'tabs.tsx: background-color, box-shadow, color',
   'tags-input.tsx: border-color, box-shadow',
-  'textarea.tsx: border-color, box-shadow',
+  'textarea.tsx: border-color',
 ];
 
 describe('hand-written transition property lists name properties something actually sets', () => {

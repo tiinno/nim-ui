@@ -219,7 +219,7 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
             type="button"
             onClick={handleDismiss}
             aria-label={dismissLabel}
-            className="absolute right-3 top-1/2 inline-flex size-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-md opacity-70 transition-opacity duration-(--duration-fast) hover:opacity-100 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 sm:right-4"
+            className="absolute right-3 top-1/2 inline-flex size-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-md opacity-70 transition-opacity duration-(--duration-fast) hover:opacity-100 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 sm:right-4"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

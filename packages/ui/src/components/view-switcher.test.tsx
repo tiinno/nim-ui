@@ -111,8 +111,8 @@ describe('ViewSwitcher', () => {
     // the contract's pair; the neutral ring they shipped with measured 2.48:1
     // against this component's own 50 strip.
     for (const tab of screen.getAllByRole('tab')) {
-      expect(tab).toHaveClass('focus-visible:ring-primary-500');
-      expect(tab).toHaveClass('dark:focus-visible:ring-primary-400');
+      expect(tab).toHaveClass('focus-visible:outline-primary-500');
+      expect(tab).toHaveClass('dark:focus-visible:outline-primary-400');
     }
   });
 });

@@ -225,7 +225,6 @@ describe('Tabs', () => {
 
       const content = screen.getByTestId('content');
       expect(content).toHaveClass('mt-2');
-      expect(content).toHaveClass('ring-offset-white');
     });
 
     it('supports complex content', () => {

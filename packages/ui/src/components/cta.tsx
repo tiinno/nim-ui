@@ -84,7 +84,7 @@ const CTA = React.forwardRef<HTMLDivElement, CTAProps>(
     // compile fine and would keep the hover crossfade, so this is a choice made
     // on that affordance argument, not a limit of the mechanism.
     const btnClasses = cn(
-      'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-all duration-(--duration-fast) active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+      'inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-md transition-all duration-(--duration-fast) active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2',
       isColoredVariant
         ? 'bg-white text-primary-600 hover:bg-neutral-100'
         : 'bg-primary-600 text-white hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600'
