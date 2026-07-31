@@ -620,3 +620,71 @@ describe('focus indicator — the shipped colours clear 3:1 in both themes', () 
     }
   );
 });
+
+/**
+ * An `outline-none` on the SAME element erases the indicator, silently.
+ *
+ * NIMUI-57 moved every indicator to `outline`, and Tailwind compiles the width
+ * utility as `outline-style: var(--tw-outline-style); outline-width: 2px`. The
+ * suppressor sets that custom property to `none` — so an element carrying both a
+ * bare suppressor and an indicator computes `outline-style: none` and draws
+ * NOTHING, while `outline-width` and `outline-color` still compute exactly as
+ * expected. Reproduced side by side in a browser before this guard was written:
+ * identical class strings but for the suppressor, both `:focus-visible`, both
+ * reporting `2px` at `offset 2px`, one `solid` and one `none`.
+ *
+ * That is why no other assertion in this repo can catch it. `toHaveClass` sees
+ * both classes present and passes. The pairing scan above sees a complete
+ * light/dark pair and passes. The contrast arithmetic measures the colour the
+ * rule binds, which is correct — it is the STYLE that is off. The migration
+ * shipped two of these (`stepper`, `view-switcher`) and the full suite stayed
+ * green at 3075 passing.
+ *
+ * A descendant-targeting variant is NOT a collision: `--tw-outline-style` is
+ * declared `inherits: false`, so a host's suppressor cannot reach the child it
+ * paints on. `tree-view` relies on exactly that and was verified rendering.
+ *
+ * The suppressor is assembled at runtime for the usual reason — writing it
+ * plainly would make this file a live source for a utility it only forbids.
+ */
+describe('no element suppresses the outline it also draws', () => {
+  const SUPPRESSOR = ['o~utline', 'none'].map((s) => s.replace(SENTINEL, '')).join('-');
+  const WIDTH = ['o~utline', '2'].map((s) => s.replace(SENTINEL, '')).join('-');
+
+  const classStrings = readdirSync(componentsDir)
+    .filter((f) => f.endsWith('.tsx') && !f.endsWith('.test.tsx'))
+    .flatMap((f) =>
+      extractStringLiterals(readFileSync(join(componentsDir, f), 'utf8')).map((value) => ({
+        file: f,
+        value,
+      }))
+    );
+
+  it('found class strings to scan', () => {
+    expect(classStrings.length).toBeGreaterThan(100);
+  });
+
+  it('never carries a bare outline suppressor beside a same-element indicator', () => {
+    const collisions = classStrings
+      .filter(({ value }) => {
+        const tokens = value.split(/\s+/);
+        const bareSuppressor = tokens.includes(SUPPRESSOR);
+        // a variant naming a descendant paints on a different element, and the
+        // custom property does not inherit into it
+        const sameElementIndicator = tokens.some(
+          (t) => t.endsWith(`:${WIDTH}`) && !/>\w+\]:/.test(t)
+        );
+        return bareSuppressor && sameElementIndicator;
+      })
+      .map(({ file, value }) => `${file}: ${value.slice(0, 80)}…`);
+
+    expect(
+      collisions,
+      'This element sets the outline suppressor AND draws a focus outline. The suppressor ' +
+        'sets --tw-outline-style to none, the width utility resolves outline-style from that ' +
+        'custom property, so the indicator computes to none and paints nothing — while its ' +
+        'width and colour still compute correctly and every class-string assertion stays ' +
+        'green. Drop the bare suppressor: the indicator already overrides the UA default.'
+    ).toEqual([]);
+  });
+});

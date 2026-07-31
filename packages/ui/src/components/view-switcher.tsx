@@ -18,7 +18,7 @@ const viewSwitcherVariants = cva(
 );
 
 const viewSwitcherItemVariants = cva(
-  'group inline-flex min-w-max items-center gap-2 rounded-md text-left font-medium outline-none transition-colors duration-(--duration-fast) focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 disabled:pointer-events-none disabled:opacity-50',
+ 'group inline-flex min-w-max items-center gap-2 rounded-md text-left font-medium transition-colors duration-(--duration-fast) focus-visible:outline-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       selected: {
