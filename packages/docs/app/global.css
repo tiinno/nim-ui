@@ -33,6 +33,34 @@
 /* Scan Nim UI component source for Tailwind classes (Radix Portal renders outside tree) */
 @source '../../ui/src/components/*.tsx';
 
+/* ...but not the test files that sit right beside them. The glob above is a
+   plain `*.tsx`, so every `<name>.test.tsx` matched it too and this site
+   compiled rules that only a vitest fixture ever asked for — a throwaway
+   four-digit `order` value in a CommandMenu render, sizes and colours written
+   to be asserted rather than shown. `packages/ui` fixed the same leak in its
+   published bundle (NIMUI-52); the docs bundle is compiled separately from
+   this file and did not inherit it.
+
+   Two things about the spelling, both measured against tailwindcss 4.3.1 (the
+   version THIS package resolves — `packages/ui` is still on 4.1.18):
+
+   - `@source not` applies to explicitly registered sources, not only to
+     automatically detected ones. The official Tailwind documentation says
+     otherwise and is wrong; NIMUI-52 established that on 4.1.18 and it was
+     re-confirmed here on 4.3.1 with a probe class that exists in exactly one
+     test file.
+   - brace expansion DOES work here, so a single `*.test.{ts,tsx}` line is
+     enough on 4.3.1 — but it did NOT work on 4.1.18, so separate lines are
+     what stays correct across both. Kept separate deliberately; do not fold
+     them back together.
+
+   `../tests` is this package's own suite (`export-html-nesting.test.ts`),
+   which automatic detection reaches. It is why that file carries a comment
+   telling its author not to put class names in the HTML fixtures. */
+@source not '../../ui/src/components/*.test.ts';
+@source not '../../ui/src/components/*.test.tsx';
+@source not '../tests';
+
 /* Bind `dark:` utilities to fumadocs' theme toggle (.dark on <html>) */
 @custom-variant dark (&:where(.dark, .dark *));
 
