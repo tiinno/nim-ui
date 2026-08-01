@@ -42,13 +42,13 @@ const REGEX_ALLOWED_AFTER =
  * worst case is that the group splits early and a guard asks for something it
  * can already see.
  *
- * KNOWN LIMITATION (NIMUI-60): a backslash escape is not carried through a
- * literal, so a class string containing an escaped quote is TRUNCATED at that
- * point and every token after it in the same literal is lost. No shipped source
- * trips this today — NIMUI-59 removed the two that did — but the failure is
- * silent by construction, which is the same hazard the paragraph at the top of
- * this file is about. Fixing it moves the user sets of four guards at once, so
- * it needs its own measured change.
+ * An escaped quote or backslash is carried through into the value (NIMUI-60).
+ * It used to be blanked like an interpolation, which SPLIT the token rather
+ * than truncating the literal: `'… after:content-[\'\']'` yielded
+ * `after:content-[` and `]`, so the class the component actually ships went
+ * unvouched while two fragments that name nothing joined the user set. Every
+ * other escape is still blanked, because it stands for a character no class
+ * name contains and inventing one would be worse than splitting.
  */
 export function extractStringLiterals(source: string): string[] {
   const literals: string[] = [];
@@ -88,7 +88,18 @@ export function extractStringLiterals(source: string): string[] {
       let body = '';
       while (j < source.length) {
         const d = source[j];
-        if (d === '\\') { body += ' '; j += 2; continue; }
+        if (d === '\\') {
+          const next = source[j + 1];
+          // A quote or backslash written with a backslash is part of the
+          // string's VALUE, so carrying it through is what keeps the token
+          // whole (NIMUI-60). Every other escape — `\n`, `\t`, a unicode
+          // escape — stands for a character no class name contains, so
+          // blanking it stays both correct and conservative: it splits the
+          // token rather than inventing one.
+          body += next === "'" || next === '"' || next === '`' || next === '\\' ? next : ' ';
+          j += 2;
+          continue;
+        }
         if (d === quote) break;
         // Unterminated single/double-quoted string — bail at the newline
         // rather than swallowing the rest of the file.
