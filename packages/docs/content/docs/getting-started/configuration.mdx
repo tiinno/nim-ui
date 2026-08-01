@@ -7,128 +7,85 @@ import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 
 ## Tailwind Configuration
 
-Nim UI is built on Tailwind CSS v4. You can customize the theme by extending the Tailwind configuration.
+Nim UI is built on Tailwind CSS v4, which is configured **in CSS**. There is no `tailwind.config.js` — v4 does not read one unless you point at it explicitly with `@config`, and a config file left lying around is simply ignored. Everything below goes in your entry stylesheet.
 
 ### Basic Setup
 
-```js title="tailwind.config.js"
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nim-ui/components/dist/**/*.js',
-  ],
-  theme: {
-    extend: {
-      // Your customizations here
-    },
-  },
-  plugins: [],
-};
+```css title="src/index.css"
+@import 'tailwindcss';
+@import '@nim-ui/components/styles';
+```
+
+That is the whole setup. Tailwind scans your source for class names on its own; add `@source` only for a directory it would not find, such as a sibling package:
+
+```css title="src/index.css"
+@source '../../shared-ui/src';
 ```
 
 ## Theme Customization
+
+Every customization below is a `@theme` block. The variable name *is* the utility: define `--color-brand-500` and `bg-brand-500` exists.
 
 ### Colors
 
 Customize the color palette to match your brand:
 
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9', // Base primary color
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
-        },
-        // Add your brand colors
-        brand: {
-          // Your color scale
-        },
-      },
-    },
-  },
-};
+```css title="src/index.css"
+@theme {
+  --color-primary-500: oklch(0.62 0.19 250);
+  --color-primary-600: oklch(0.54 0.19 250);
+
+  /* Or add a scale of your own */
+  --color-brand-50: oklch(0.97 0.02 300);
+  --color-brand-500: oklch(0.58 0.21 300);
+  --color-brand-900: oklch(0.28 0.11 300);
+}
 ```
+
+Redefining `--color-primary-*` re-tints the kit itself, since its components reference those variables rather than fixed colours.
 
 ### Typography
 
-Customize fonts and typography:
+Customize fonts and type scale:
 
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['Fira Code', 'monospace'],
-      },
-      fontSize: {
-        xs: ['0.75rem', { lineHeight: '1rem' }],
-        sm: ['0.875rem', { lineHeight: '1.25rem' }],
-        base: ['1rem', { lineHeight: '1.5rem' }],
-        lg: ['1.125rem', { lineHeight: '1.75rem' }],
-        xl: ['1.25rem', { lineHeight: '1.75rem' }],
-      },
-    },
-  },
-};
+```css title="src/index.css"
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Fira Code', ui-monospace, monospace;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+}
 ```
+
+Line height rides along on the size as a `--line-height` suffix, rather than sitting in a second argument the way it did in v3.
 
 ### Spacing
 
-Adjust spacing scale:
+Tailwind derives its whole spacing scale from one base, so `p-18` already works without being declared. Define a step only when you want a value off that rhythm:
 
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
-      },
-    },
-  },
-};
+```css title="src/index.css"
+@theme {
+  --spacing-18: 4.5rem;
+  --spacing-128: 32rem;
+}
 ```
 
 ### Border Radius
 
-Customize border radius:
-
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      borderRadius: {
-        '4xl': '2rem',
-      },
-    },
-  },
-};
+```css title="src/index.css"
+@theme {
+  --radius-4xl: 2rem;
+}
 ```
 
 ## Dark Mode Configuration
 
-Enable dark mode with class-based strategy:
+**Nothing to configure.** The kit's stylesheet already binds the `dark:` variant to a `.dark` class — and to `[data-theme="dark"]`, so a docs framework's own toggle works too. Importing `@nim-ui/components/styles` is all it takes; a `darkMode` setting in a config file does nothing here.
 
-```js title="tailwind.config.js"
-export default {
-  darkMode: 'class', // or 'media' for system preference
-  // ... rest of config
-};
-```
+The binding is not overridable from your own stylesheet: redefining `@custom-variant dark` has no effect whether you write it before or after the import — measured, the kit's definition wins either way and no `prefers-color-scheme` rule is emitted. To follow the operating system, keep the class and set it from JavaScript with `matchMedia`, as the toggle below does.
 
 ### Dark Mode Toggle
 

@@ -198,6 +198,16 @@ const KNOWN_UNUSED = [
   'd~ark:text-gray-900',
   'd~ark:hover:bg-gray-100',
 
+  // --- getting-started/configuration.mdx + installation.mdx (NIMUI-62) -----
+  // The two utilities the v4 setup warning names. Under the v3 `@tailwind`
+  // directives these are exactly what stops being generated while `p-4` and
+  // `text-primary-600` keep working, which is what makes that failure silent —
+  // so the warning has to name them to be checkable, and the spacing page uses
+  // `p-18` again to show that a multiple needs no declaration. Rewording to "a
+  // large padding step" would save two rules and cost the reader the fact.
+  'p~-18',
+  'r~ounded-4xl',
+
   // --- Cross-package, from a JSDoc @example --------------------------------
   // `resizable.tsx`'s first `@example` gives its demo a height. `global.css`
   // `@source`s the component sources, so this site compiles it; the ui
