@@ -166,8 +166,10 @@ const KNOWN_UNUSED = [
   'm~-12',
   'm~-16',
   'p~-10',
-  'p~-12',
-  'p~-16',
+  // `p-12` and `p-16` left this list in NIMUI-61: the spacing page's preview
+  // used to show a block of `--spacing-*` declarations that do not exist, and
+  // replacing it with the Tailwind classes it actually documents turned both
+  // into real users. Exactly the departure this guard exists to force.
   'g~ap-12',
   'g~ap-16',
   'm~d:p-8',

@@ -143,14 +143,17 @@ class NimMCPServer {
         {
           name: 'ui_get_tokens',
           description:
-            'Get design tokens from the Nim UI design system (colors, spacing, typography).',
+            'Get design tokens from the Nim UI design system (colors, typography, radius, animation). ' +
+            'The kit declares no spacing tokens of its own — spacing comes from Tailwind.',
           inputSchema: {
             type: 'object',
             properties: {
               tokenType: {
                 type: 'string',
                 enum: ['colors', 'spacing', 'typography', 'all'],
-                description: 'Type of tokens to retrieve',
+                description:
+                  'Type of tokens to retrieve. "spacing" is kept for compatibility and reports ' +
+                  'that the kit ships none.',
                 default: 'all',
               },
             },
@@ -351,15 +354,27 @@ class NimMCPServer {
       return result;
     };
 
+    // The kit declares no spacing scale of its own. It used to appear here,
+    // read out of a `spacing` block that had no counterpart in any stylesheet —
+    // so every client asking for Nim UI's spacing tokens was handed values that
+    // shipped nowhere. NIMUI-61 removed the block; this says so rather than
+    // returning nothing, because a silent omission reads as "not loaded".
+    const NO_SPACING_TOKENS =
+      '## Spacing\n\n' +
+      'Nim UI declares no spacing tokens. Spacing comes from Tailwind\'s own scale — `p-4` is ' +
+      '`calc(var(--spacing) * 4)`, 16px at the default 0.25rem base — and the kit uses it ' +
+      'directly rather than naming its own steps.\n\n';
+
     if (tokenType === 'all') {
       output += formatTokens(this.tokensData.colors, 'colors');
-      output += formatTokens(this.tokensData.spacing, 'spacing');
+      output += NO_SPACING_TOKENS;
       output += formatTokens(this.tokensData.borderRadius, 'borderRadius');
       output += formatTokens(this.tokensData.typography, 'typography');
+      output += formatTokens(this.tokensData.animation, 'animation');
     } else if (tokenType === 'colors') {
       output += formatTokens(this.tokensData.colors, 'colors');
     } else if (tokenType === 'spacing') {
-      output += formatTokens(this.tokensData.spacing, 'spacing');
+      output += NO_SPACING_TOKENS;
       output += formatTokens(this.tokensData.borderRadius, 'borderRadius');
     } else if (tokenType === 'typography') {
       output += formatTokens(this.tokensData.typography, 'typography');

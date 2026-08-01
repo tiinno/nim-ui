@@ -4,21 +4,23 @@ description: Consistent spacing scale for padding, margins, and gaps throughout 
 ---
 
 
-Nim UI uses a harmonious spacing scale based on a 4px base unit. This scale provides consistent spacing for padding, margins, gaps, and layout dimensions. All values are available as Tailwind CSS utility classes and CSS custom properties.
+Nim UI uses a harmonious spacing scale based on a 4px base unit. This scale provides consistent spacing for padding, margins, gaps, and layout dimensions.
+
+The kit ships **no spacing tokens of its own**. Spacing comes from Tailwind's own scale, which derives every step from a single `--spacing` base of `0.25rem`: `p-4` compiles to `calc(var(--spacing) * 4)`. The names below are a shared vocabulary for talking about that scale — they are not CSS custom properties, and there is no `var(--spacing-md)` to reach for.
 
 ## Spacing Scale
 
-The spacing system uses a set of named tokens that map to specific pixel values. Each step roughly doubles in size, creating a natural visual rhythm.
+Each step roughly doubles in size, creating a natural visual rhythm.
 
-| Token | Value | Pixels | Tailwind Class |
-|-------|-------|--------|---------------|
-| `--spacing-xs` | 0.25rem | 4px | `p-1` / `m-1` / `gap-1` |
-| `--spacing-sm` | 0.5rem | 8px | `p-2` / `m-2` / `gap-2` |
-| `--spacing-md` | 1rem | 16px | `p-4` / `m-4` / `gap-4` |
-| `--spacing-lg` | 1.5rem | 24px | `p-6` / `m-6` / `gap-6` |
-| `--spacing-xl` | 2rem | 32px | `p-8` / `m-8` / `gap-8` |
-| `--spacing-2xl` | 3rem | 48px | `p-12` / `m-12` / `gap-12` |
-| `--spacing-3xl` | 4rem | 64px | `p-16` / `m-16` / `gap-16` |
+| Name | Pixels | Tailwind Class |
+|------|--------|---------------|
+| xs | 4px | `p-1` / `m-1` / `gap-1` |
+| sm | 8px | `p-2` / `m-2` / `gap-2` |
+| md | 16px | `p-4` / `m-4` / `gap-4` |
+| lg | 24px | `p-6` / `m-6` / `gap-6` |
+| xl | 32px | `p-8` / `m-8` / `gap-8` |
+| 2xl | 48px | `p-12` / `m-12` / `gap-12` |
+| 3xl | 64px | `p-16` / `m-16` / `gap-16` |
 
 ## Visual Reference
 
@@ -55,14 +57,14 @@ The spacing system uses a set of named tokens that map to specific pixel values.
   </div>
 
   <PreviewCode>
-```css
---spacing-xs:  0.25rem; /* 4px  */
---spacing-sm:  0.5rem;  /* 8px  */
---spacing-md:  1rem;    /* 16px */
---spacing-lg:  1.5rem;  /* 24px */
---spacing-xl:  2rem;    /* 32px */
---spacing-2xl: 3rem;    /* 48px */
---spacing-3xl: 4rem;    /* 64px */
+```tsx
+<div className="p-1" />   {/* xs  — 4px  */}
+<div className="p-2" />   {/* sm  — 8px  */}
+<div className="p-4" />   {/* md  — 16px */}
+<div className="p-6" />   {/* lg  — 24px */}
+<div className="p-8" />   {/* xl  — 32px */}
+<div className="p-12" />  {/* 2xl — 48px */}
+<div className="p-16" />  {/* 3xl — 64px */}
 ```
   </PreviewCode>
 </ComponentPreview>

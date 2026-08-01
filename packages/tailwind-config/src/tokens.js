@@ -1,6 +1,18 @@
 /**
- * Design Tokens for Nim UI
- * These tokens define the core design language of the system
+ * Design tokens for Nim UI, in the shape JavaScript can read them.
+ *
+ * The authoritative declarations are the `@theme` blocks in
+ * `packages/ui/src/tokens.css`; this object mirrors them for the things that
+ * cannot read CSS — the MCP server and the animation guards.
+ * `packages/tailwind-config/src/token-parity.test.js` fails the build if the
+ * two disagree, in either direction.
+ *
+ * NIMUI-61 removed the `spacing`, `typography.fontSize` and unused
+ * `borderRadius` keys, along with the Tailwind v3 config object that was their
+ * only consumer. They had no counterpart in any stylesheet or in either
+ * compiled bundle, so anything reading them — the MCP server, a docs table —
+ * was describing tokens that did not exist. Add a key here only when the
+ * corresponding CSS variable is real; the parity guard asserts that.
  */
 export const tokens = {
   colors: {
@@ -83,25 +95,11 @@ export const tokens = {
       950: 'oklch(0.205 0.025 248.0)',
     },
   },
-  spacing: {
-    base: '4px',
-    xs: '8px',
-    sm: '12px',
-    md: '16px',
-    lg: '24px',
-    xl: '32px',
-    '2xl': '48px',
-    '3xl': '64px',
-  },
   borderRadius: {
-    none: '0',
-    sm: '0.25rem',
-    DEFAULT: '0.375rem',
+    // The one radius the stylesheets declare: `--radius-md`, 8px, the component
+    // radius the design contract calls for. Tailwind's own scale supplies the
+    // rest, so the kit does not restate them.
     md: '0.5rem',
-    lg: '0.75rem',
-    xl: '1rem',
-    '2xl': '1.5rem',
-    full: '9999px',
   },
   typography: {
     // Editorial-ink type system, mirroring packages/ui/src/styles.css @theme.
@@ -126,16 +124,6 @@ export const tokens = {
         'monospace',
       ],
       display: ['Fraunces', 'Iowan Old Style', 'Georgia', 'Times New Roman', 'serif'],
-    },
-    fontSize: {
-      xs: ['0.75rem', { lineHeight: '1rem' }],
-      sm: ['0.875rem', { lineHeight: '1.25rem' }],
-      base: ['1rem', { lineHeight: '1.5rem' }],
-      lg: ['1.125rem', { lineHeight: '1.75rem' }],
-      xl: ['1.25rem', { lineHeight: '1.75rem' }],
-      '2xl': ['1.5rem', { lineHeight: '2rem' }],
-      '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-      '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
     },
   },
   animation: {
