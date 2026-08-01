@@ -51,25 +51,7 @@ bun add -D tailwindcss @tailwindcss/postcss
 
 Nim UI uses Tailwind CSS v4 for styling. Set up Tailwind in your project:
 
-### 1. Create Tailwind Config
-
-Create a `tailwind.config.js` file in your project root:
-
-```js
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nim-ui/components/dist/**/*.js',
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
-```
-
-### 2. Add Tailwind to PostCSS
+### 1. Add Tailwind to PostCSS
 
 Create a `postcss.config.js` file:
 
@@ -81,17 +63,20 @@ export default {
 };
 ```
 
-### 3. Import Styles
+### 2. Import Styles
 
-Import Nim UI styles in your main CSS file:
+Tailwind v4 is configured in CSS, not in a JavaScript config file. Your entry stylesheet is the whole setup:
 
 ```css title="src/index.css"
+@import 'tailwindcss';
 @import '@nim-ui/components/styles';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 ```
+
+`@import 'tailwindcss'` brings in the default theme and scans your source for class names. `@import '@nim-ui/components/styles'` adds Nim's tokens, keyframes and the `dark:` variant on top.
+
+<Callout type="warn">
+  Use `@import 'tailwindcss'`, not the `@tailwind base` / `@tailwind components` / `@tailwind utilities` directives. Those are v3 syntax. Under v4 they compile without erroring but leave you with a partial Tailwind: measured against `@tailwindcss/postcss` 4.3.1, `p-4` and `text-primary-600` still work while `rounded-4xl` and `p-18` are never generated at all.
+</Callout>
 
 This is all you need for reduced motion too -- the kit switches its own animations and moving transitions off per component. It does **not** install an application-wide motion reset on your behalf; if you want one, add `@import '@nim-ui/components/reduced-motion.css';` as well. See [Reduced Motion](/guides/accessibility#reduced-motion) for what that changes, including why loading spinners keep turning either way.
 
