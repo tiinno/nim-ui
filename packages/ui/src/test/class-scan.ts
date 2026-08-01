@@ -41,6 +41,14 @@ const REGEX_ALLOWED_AFTER =
  * no component builds a class string that way today, and if one ever does the
  * worst case is that the group splits early and a guard asks for something it
  * can already see.
+ *
+ * KNOWN LIMITATION (NIMUI-60): a backslash escape is not carried through a
+ * literal, so a class string containing an escaped quote is TRUNCATED at that
+ * point and every token after it in the same literal is lost. No shipped source
+ * trips this today — NIMUI-59 removed the two that did — but the failure is
+ * silent by construction, which is the same hazard the paragraph at the top of
+ * this file is about. Fixing it moves the user sets of four guards at once, so
+ * it needs its own measured change.
  */
 export function extractStringLiterals(source: string): string[] {
   const literals: string[] = [];

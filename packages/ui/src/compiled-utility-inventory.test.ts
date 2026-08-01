@@ -41,9 +41,25 @@ import { extractStringLiterals } from './test/class-scan';
  * `dist/styles.css` byte for byte. No test failed, no lint rule fired; the
  * bundle simply grew.
  *
+ * A fourth arrived by a different route and is worth keeping separate, because
+ * it was this guard's own blind spot rather than a prose leak (NIMUI-59). A
+ * class string carrying `after:content-['']` has to be double-quoted in TS;
+ * `checkbox.tsx` and `radio.tsx` wrote it in single quotes and escaped the inner
+ * pair, and Tailwind read the ESCAPED text as its own candidate — compiling a
+ * second rule keyed on that escaped spelling, whose `--tw-content` declaration
+ * held two backslash-quote pairs and was invalid. 118 bytes, matching nothing,
+ * and worse than dead: the
+ * two components' real `after:content-['']` was being served entirely by
+ * `card.tsx` and `stepper.tsx` happening to spell it unescaped, so removing it
+ * THERE would have silently dropped their pointer target. This guard did not
+ * report it because `topLevelPreludes` treated the `\'` inside the SELECTOR as a
+ * string opener and resynchronised at some later quote, skipping 163 of the
+ * layer's rules on the way — see the escape branch there and the test that pins
+ * it.
+ *
  * ## Why this shape and not the alternatives
  *
- * - **Not a full inventory pin of all 777 rules.** 768 of them are traceable to
+ * - **Not a full inventory pin of all 944 rules.** 935 of them are traceable to
  *   a class string the kit actually ships, so they would each need a pin entry
  *   that changes on every restyle — churn proportional to the WORK. Here the pin
  *   holds only the 9 that nothing asks for.
@@ -215,6 +231,11 @@ function topLevelPreludes(body: string): string[] {
 
   while (i < body.length) {
     const c = body[i];
+
+    if (c === '\\') {
+      i += 2;
+      continue;
+    }
 
     if (c === '"' || c === "'") {
       for (let j = i + 1; j < body.length; j++) {
@@ -406,9 +427,29 @@ describe('dist/styles.css — no compiled utility without a user', () => {
   it('reads a plausible number of compiled utilities out of the stylesheet', () => {
     expect(
       compiled.length,
-      'Fewer compiled utilities than this package could possibly ship. The selector walk ' +
-        'regressed, or the stylesheet is truncated — either way the comparison below is blind.'
-    ).toBeGreaterThan(500);
+      'Fewer compiled utilities than this package ships. A DROP is the signal here, not just ' +
+        'emptiness: this floor sat at 500 while the selector walk was silently skipping 163 of ' +
+        'the layer\'s 945 rules (NIMUI-59), which is exactly the kind of partial blindness a ' +
+        'generous floor waves through. Keep it just under the real count.'
+    ).toBeGreaterThan(900);
+  });
+
+  // The walk above skips quoted strings so a `content: "}"` cannot be mistaken
+  // for the end of a rule. A compiled SELECTOR can also contain a quote —
+  // `after:content-['']` escapes to `.after\:content-\[\'\'\]` — and until
+  // NIMUI-59 the walk treated that `\'` as a string opener, resynchronising at
+  // some arbitrary later quote and swallowing every rule in between. It was
+  // invisible: the inventory just came back short, and a short inventory only
+  // ever loses arrivals, so nothing failed.
+  it('reads past a selector that contains an escaped quote', () => {
+    const fragment =
+      ".after\\:content-\\[\\'\\'\\] { &::after { --tw-content: ''; } }\n" +
+      '.probe-after-the-quote { color: red; }';
+
+    expect(topLevelPreludes(fragment)).toEqual([
+      ".after\\:content-\\[\\'\\'\\]",
+      '.probe-after-the-quote',
+    ]);
   });
 
   it('keys every top-level rule in the section on a class', () => {

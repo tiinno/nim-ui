@@ -5,6 +5,57 @@ import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { extractStringLiterals } from '../../test/class-scan';
+
+/**
+ * The quoted literal starting at `index`, with the offset just past its closing
+ * delimiter — or `null` if no literal starts there.
+ *
+ * Delimiter-agnostic on purpose. Every extractor below used to be written
+ * `/…'([^']+)'/`, which silently read NOTHING from a component whose class
+ * string happens to be double-quoted, and an assertion over nothing passes.
+ * `checkbox.tsx` and `radio.tsx` are exactly that case: they carry
+ * `after:content-['']`, so their CVA base has to be double-quoted — writing it
+ * in single quotes means escaping the inner pair, and Tailwind reads the
+ * escaped text as a separate candidate and compiles a second, malformed rule.
+ */
+function readQuotedAt(source: string, index: number): { value: string; end: number } | null {
+  const quote = source[index];
+  if (quote !== "'" && quote !== '"' && quote !== '`') return null;
+
+  let value = '';
+  for (let i = index + 1; i < source.length; i++) {
+    const c = source[i];
+    if (c === '\\') {
+      value += source[i + 1] ?? '';
+      i++;
+      continue;
+    }
+    if (c === quote) return { value, end: i + 1 };
+    value += c;
+  }
+  return null;
+}
+
+/** Every quoted literal that immediately follows a match of `prefix`. */
+function quotedLiteralsAfter(source: string, prefix: RegExp): string[] {
+  const found: string[] = [];
+  for (const m of source.matchAll(prefix)) {
+    const literal = readQuotedAt(source, (m.index ?? 0) + m[0].length);
+    if (literal !== null) found.push(literal.value);
+  }
+  return found;
+}
+
+/**
+ * Class strings carrying a `data-[state=…]` selector, wherever they sit.
+ *
+ * Read through the shared scanner rather than a local regex so comments and
+ * apostrophes in prose cannot open a phantom literal.
+ */
+function stateSelectorStrings(source: string): string[] {
+  return extractStringLiterals(source).filter((s) => s.includes('data-[state='));
+}
 
 // Typed reference to the animation tokens
 const animationTokens = tokens.animation as {
@@ -241,22 +292,14 @@ describe('Property 4: Overlay animation state coverage', () => {
    * and inline className strings that contain data-[state=] selectors.
    */
   function extractClassStrings(source: string): string {
-    // Capture CVA first-argument strings (base classes)
-    const cvaMatches = source.match(/cva\(\s*'([^']+)'/g) ?? [];
-    const cvaStrings = cvaMatches.map((m) => {
-      const inner = m.match(/cva\(\s*'([^']+)'/);
-      return inner?.[1] ?? '';
-    });
+    // CVA first-argument strings (base classes), then every class string
+    // carrying a data-[state=…] selector — variant values and inline
+    // className alike, which is why the two used to be scanned twice with
+    // the same pattern.
+    const cvaStrings = quotedLiteralsAfter(source, /cva\(\s*/g);
+    const stateStrings = stateSelectorStrings(source);
 
-    // Capture CVA variant value strings
-    const variantValueMatches = source.match(/'([^']*data-\[state=[^']+)'/g) ?? [];
-    const variantStrings = variantValueMatches.map((m) => m.slice(1, -1));
-
-    // Capture inline className strings that contain data-[state=
-    const inlineMatches = source.match(/'([^']*data-\[state=[^']+)'/g) ?? [];
-    const inlineStrings = inlineMatches.map((m) => m.slice(1, -1));
-
-    return [...cvaStrings, ...variantStrings, ...inlineStrings].join(' ');
+    return [...cvaStrings, ...stateStrings].join(' ');
   }
 
   it('every overlay component element has both data-[state=open] enter and data-[state=closed] exit animation classes', () => {
@@ -309,10 +352,8 @@ describe('Property 5: Drawer direction matching', () => {
     const source = readFileSync(resolve(__dirname, '..', 'drawer.tsx'), 'utf-8');
 
     // Match the side variant value string inside drawerContentVariants
-    // Pattern: left: '...' or right: '...'
-    const regex = new RegExp(`${side}:\\s*'([^']+)'`);
-    const match = source.match(regex);
-    return match?.[1] ?? '';
+    // Pattern: left: '…' or right: '…', in whichever quote the file uses.
+    return quotedLiteralsAfter(source, new RegExp(`\\b${side}:\\s*`, 'g'))[0] ?? '';
   }
 
   const sides = ['left', 'right'] as const;
@@ -323,6 +364,12 @@ describe('Property 5: Drawer direction matching', () => {
     fc.assert(
       fc.property(sideArb, (side) => {
         const classes = getDrawerSideClasses(side);
+
+        expect(
+          classes,
+          `No \`${side}:\` variant string read out of drawer.tsx — the extractor found nothing, ` +
+            'and the assertions below cannot fail on an empty string in a useful way.'
+        ).not.toBe('');
 
         // Enter: slide-in-from-{side}
         expect(classes).toContain(`animate-slide-in-from-${side}`);
@@ -355,28 +402,14 @@ describe('Property 6: Form control Radix state selectors', () => {
    * Extract all CVA base class strings (first argument to cva()) from source.
    */
   function extractCvaBaseStrings(source: string): string[] {
-    const results: string[] = [];
-    const regex = /cva\(\s*'([^']+)'/g;
-    let m = regex.exec(source);
-    while (m !== null) {
-      results.push(m[1] as string);
-      m = regex.exec(source);
-    }
-    return results;
+    return quotedLiteralsAfter(source, /cva\(\s*/g);
   }
 
   /**
    * Extract CVA variant value strings that contain data-[state= selectors.
    */
   function extractVariantStateStrings(source: string): string[] {
-    const results: string[] = [];
-    const regex = /'([^']*data-\[state=[^']+)'/g;
-    let m = regex.exec(source);
-    while (m !== null) {
-      results.push(m[1] as string);
-      m = regex.exec(source);
-    }
-    return results;
+    return stateSelectorStrings(source);
   }
 
   // Radix-based form control components with their CVA definitions.
@@ -406,6 +439,15 @@ describe('Property 6: Form control Radix state selectors', () => {
         const cvaBaseStrings = extractCvaBaseStrings(source);
         const variantStateStrings = extractVariantStateStrings(source);
         const allClassStrings = [...cvaBaseStrings, ...variantStateStrings].join(' ');
+
+        // Read something first. Every assertion below is satisfied by an empty
+        // extraction, so a component the extractor cannot parse would pass this
+        // property silently rather than fail it.
+        expect(
+          cvaBaseStrings.length,
+          `No cva() base string read out of ${control.file}. The extractor, not the component, ` +
+            'is what to look at first — the assertions below all pass on an empty read.'
+        ).toBeGreaterThan(0);
 
         // Every Radix form control must use data-[state=checked] selector
         expect(allClassStrings).toMatch(/data-\[state=checked\]/);
