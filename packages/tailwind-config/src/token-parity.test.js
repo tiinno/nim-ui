@@ -31,15 +31,14 @@
  *
  * `--radius-md` is the one radius the CSS declares, and it is checked too.
  *
- * Everything else in `tokens.js` — `spacing`, `typography.fontSize`, and seven
- * of the eight `borderRadius` steps — has NO counterpart in any stylesheet, in
- * this repo or in either compiled bundle. Those keys are listed in
- * `NOT_MIRRORED` and asserted to stay absent, so the split is a stated fact
- * rather than something the next reader has to re-derive. **They are a Tailwind
- * v3 remnant, not a deliberate divergence** — `index.js` still exports a v3
- * config object (`theme.extend`) that consumes exactly those keys and that
- * nothing in this repo imports. See NIMUI-61; do not read their presence here
- * as endorsement.
+ * `tokens.js` used to carry more: `spacing`, `typography.fontSize` and seven
+ * further `borderRadius` steps, none of which had a counterpart in any
+ * stylesheet or in either compiled bundle. They were a **Tailwind v3 remnant**,
+ * kept alive by a v3 config object in this package that nothing imported, and
+ * NIMUI-61 deleted all of it. `NOT_MIRRORED` is what is left of that split: it
+ * is derived, and it is **empty today**. It stays so the next key that arrives
+ * without a CSS counterpart trips the assertion below instead of quietly
+ * joining the object.
  *
  * ## Bidirectional, on purpose
  *
@@ -96,19 +95,18 @@ for (const [name, value] of Object.entries(tokens.animation.easing)) {
 expectedFromJs.set('--radius-md', norm(tokens.borderRadius.md));
 
 /**
- * Keys `tokens.js` declares that no stylesheet implements — the v3 remnant.
+ * Keys `tokens.js` declares that no stylesheet implements. **Empty since
+ * NIMUI-61**, and derived rather than written out so it cannot go stale.
  *
- * Asserted ABSENT rather than merely skipped. If one of these ever becomes a
- * real CSS variable, this list is wrong and the parity check above should be
- * covering it instead; that is a change worth failing on, not absorbing.
+ * Asserted ABSENT rather than merely skipped. A key that appears here at all is
+ * a key describing a token that does not exist — which is what the MCP server
+ * was serving to clients and what a docs table was presenting to readers before
+ * that ticket. If one ever becomes a real CSS variable, the parity check above
+ * should be covering it instead; that is a change worth failing on.
  */
-const NOT_MIRRORED = [
-  ...Object.keys(tokens.spacing).map((k) => `--spacing-${k}`),
-  ...Object.keys(tokens.typography.fontSize).map((k) => `--text-${k}`),
-  ...Object.keys(tokens.borderRadius)
-    .filter((k) => k !== 'md' && k !== 'DEFAULT')
-    .map((k) => `--radius-${k}`),
-];
+const NOT_MIRRORED = Object.keys(tokens.borderRadius)
+  .filter((k) => k !== 'md')
+  .map((k) => `--radius-${k}`);
 
 /** Font stacks, which are declared in the stylesheets rather than in tokens.css. */
 const FONT_STACKS = Object.entries(tokens.typography.fontFamily).map(([key, list]) => ({
