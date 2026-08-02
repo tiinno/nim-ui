@@ -4,7 +4,7 @@ description: Placeholder loading component with pulse animation for content that
 ---
 
 import { Skeleton } from '@/components/nim';
-import { SkeletonGroupToggleDemo } from '@/components/demos/SkeletonDemo';
+import { SkeletonGroupToggleDemo, SkeletonGroupLoadedLabelDemo } from '@/components/demos/SkeletonDemo';
 
 The Skeleton component renders a pulsing placeholder that mimics the shape of content being loaded. It has no props of its own — control size and shape entirely through `className`.
 
@@ -134,6 +134,29 @@ function OperatorCard({ operator, isLoading }: Props) {
     </SkeletonGroup>
   );
 }
+```
+  </PreviewCode>
+</ComponentPreview>
+
+### Announcing completion
+
+`loadedLabel` is unset by default, and the demo above shows that default: when loading ends the region's text goes to `''` and nothing is announced. Set it and the region announces completion instead.
+
+Neither behaviour is visible on screen and neither is observable from the DOM — both spellings mount the same live region and keep the same node across the transition. The difference exists only in what a screen reader says, so the two demos sit here to be compared with one running.
+
+<ComponentPreview title="loadedLabel" description="The same toggle, announcing when the load finishes rather than falling silent">
+  <SkeletonGroupLoadedLabelDemo />
+
+  <PreviewCode>
+```tsx
+<SkeletonGroup
+  loading={isLoading}
+  label="Loading operator"
+  loadedLabel="Operator loaded"
+  fallback={<OperatorSkeleton />}
+>
+  <OperatorCard operator={operator} />
+</SkeletonGroup>
 ```
   </PreviewCode>
 </ComponentPreview>
