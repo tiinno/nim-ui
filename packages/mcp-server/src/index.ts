@@ -9,36 +9,19 @@ import { readFile } from 'fs/promises';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { dirname, join } from 'path';
 import { loadTokens, renderTokens, type TokenType } from './tokens-source.js';
+import {
+  renderComponentList,
+  renderComponent,
+  renderSearch,
+  renderExamples,
+  type RegistryData,
+} from './registry-tools.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Type definitions for registry data
-interface ComponentVariant {
-  name: string;
-  values: string[];
-}
-
-interface ComponentExample {
-  title: string;
-  code: string;
-}
-
-interface Component {
-  name: string;
-  category: string;
-  description: string;
-  keywords: string[];
-  file: string;
-  variants: ComponentVariant[];
-  hasRadixPrimitive: boolean;
-  examples: ComponentExample[];
-}
-
-interface RegistryData {
-  version: string;
-  components: Component[];
-}
+// Registry types and the documents built from them live in `registry-tools.ts`,
+// so they can be tested — see the note at the top of that file.
 
 // Zod schemas for validation
 const ListComponentsSchema = z.object({
@@ -80,6 +63,12 @@ class NimMCPServer {
       }
     );
     this.setupHandlers();
+  }
+
+  /** The registry, or the error every tool used to repeat for itself. */
+  private requireRegistry(): RegistryData {
+    if (!this.registryData) throw new Error('Registry data not loaded');
+    return this.registryData;
   }
 
   private async loadData() {
@@ -226,47 +215,13 @@ class NimMCPServer {
 
   private async handleListComponents(args: any) {
     const { category } = ListComponentsSchema.parse(args);
-
-    if (!this.registryData) {
-      throw new Error('Registry data not loaded');
-    }
-
-    const components = category
-      ? this.registryData.components.filter((c) => c.category === category)
-      : this.registryData.components;
-
-    // Group components by category
-    const grouped: Record<string, Component[]> = {};
-    components.forEach((component) => {
-      if (!grouped[component.category]) {
-        grouped[component.category] = [];
-      }
-      grouped[component.category]!.push(component);
-    });
-
-    // Format output
-    let output = `# Nim UI Components${category ? ` (${category})` : ''}\n\n`;
-    output += `Total: ${components.length} component${components.length !== 1 ? 's' : ''}\n\n`;
-
-    for (const [cat, comps] of Object.entries(grouped)) {
-      output += `## ${cat.charAt(0).toUpperCase() + cat.slice(1)}\n\n`;
-      comps.forEach((comp) => {
-        output += `### ${comp.name}\n`;
-        output += `${comp.description}\n`;
-        output += `- **File**: ${comp.file}\n`;
-        output += `- **Radix Primitive**: ${comp.hasRadixPrimitive ? 'Yes' : 'No'}\n`;
-        if (comp.variants.length > 0) {
-          output += `- **Variants**: ${comp.variants.map((v) => `${v.name} (${v.values.join(', ')})`).join('; ')}\n`;
-        }
-        output += `- **Keywords**: ${comp.keywords.join(', ')}\n\n`;
-      });
-    }
+    const registry = this.requireRegistry();
 
     return {
       content: [
         {
           type: 'text',
-          text: output,
+          text: renderComponentList(registry, category),
         },
       ],
     };
@@ -274,61 +229,17 @@ class NimMCPServer {
 
   private async handleGetComponent(args: any) {
     const { name } = GetComponentSchema.parse(args);
+    const registry = this.requireRegistry();
 
-    if (!this.registryData) {
-      throw new Error('Registry data not loaded');
-    }
-
-    const component = this.registryData.components.find(
-      (c) => c.name.toLowerCase() === name.toLowerCase()
+    const text = await renderComponent(registry, name, (file) =>
+      readFile(join(__dirname, '../../ui/src', file), 'utf-8')
     );
-
-    if (!component) {
-      throw new Error(`Component "${name}" not found`);
-    }
-
-    // Read the component source code
-    let sourceCode = '';
-    try {
-      const componentPath = join(__dirname, '../../ui/src', component.file);
-      sourceCode = await readFile(componentPath, 'utf-8');
-    } catch (error) {
-      sourceCode = `Error reading source file: ${error instanceof Error ? error.message : 'Unknown error'}`;
-    }
-
-    // Format output
-    let output = `# ${component.name}\n\n`;
-    output += `${component.description}\n\n`;
-    output += `## Metadata\n\n`;
-    output += `- **Category**: ${component.category}\n`;
-    output += `- **File**: ${component.file}\n`;
-    output += `- **Radix Primitive**: ${component.hasRadixPrimitive ? 'Yes' : 'No'}\n`;
-    output += `- **Keywords**: ${component.keywords.join(', ')}\n\n`;
-
-    if (component.variants.length > 0) {
-      output += `## Variants\n\n`;
-      component.variants.forEach((variant) => {
-        output += `- **${variant.name}**: ${variant.values.join(', ')}\n`;
-      });
-      output += `\n`;
-    }
-
-    if (component.examples.length > 0) {
-      output += `## Examples\n\n`;
-      component.examples.forEach((example, idx) => {
-        output += `### ${example.title}\n\n`;
-        output += `\`\`\`tsx\n${example.code}\n\`\`\`\n\n`;
-      });
-    }
-
-    output += `## Source Code\n\n`;
-    output += `\`\`\`typescript\n${sourceCode}\n\`\`\`\n`;
 
     return {
       content: [
         {
           type: 'text',
-          text: output,
+          text: text,
         },
       ],
     };
@@ -355,48 +266,13 @@ class NimMCPServer {
 
   private async handleSearchComponents(args: any) {
     const { query } = SearchComponentsSchema.parse(args);
-
-    if (!this.registryData) {
-      throw new Error('Registry data not loaded');
-    }
-
-    const searchTerm = query.toLowerCase();
-    const results = this.registryData.components.filter((component) => {
-      return (
-        component.name.toLowerCase().includes(searchTerm) ||
-        component.description.toLowerCase().includes(searchTerm) ||
-        component.category.toLowerCase().includes(searchTerm) ||
-        component.keywords.some((keyword) => keyword.toLowerCase().includes(searchTerm))
-      );
-    });
-
-    if (results.length === 0) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `No components found matching "${query}"`,
-          },
-        ],
-      };
-    }
-
-    let output = `# Search Results for "${query}"\n\n`;
-    output += `Found ${results.length} component${results.length !== 1 ? 's' : ''}\n\n`;
-
-    results.forEach((component) => {
-      output += `## ${component.name}\n`;
-      output += `${component.description}\n`;
-      output += `- **Category**: ${component.category}\n`;
-      output += `- **File**: ${component.file}\n`;
-      output += `- **Keywords**: ${component.keywords.join(', ')}\n\n`;
-    });
+    const registry = this.requireRegistry();
 
     return {
       content: [
         {
           type: 'text',
-          text: output,
+          text: renderSearch(registry, query),
         },
       ],
     };
@@ -404,56 +280,13 @@ class NimMCPServer {
 
   private async handleGetExample(args: any) {
     const { name, exampleIndex } = GetExampleSchema.parse(args);
-
-    if (!this.registryData) {
-      throw new Error('Registry data not loaded');
-    }
-
-    const component = this.registryData.components.find(
-      (c) => c.name.toLowerCase() === name.toLowerCase()
-    );
-
-    if (!component) {
-      throw new Error(`Component "${name}" not found`);
-    }
-
-    if (component.examples.length === 0) {
-      return {
-        content: [
-          {
-            type: 'text',
-            text: `No examples available for component "${component.name}"`,
-          },
-        ],
-      };
-    }
-
-    let output = `# Examples for ${component.name}\n\n`;
-
-    if (exampleIndex !== undefined) {
-      if (exampleIndex >= component.examples.length) {
-        throw new Error(
-          `Example index ${exampleIndex} out of range. Component has ${component.examples.length} example(s).`
-        );
-      }
-
-      const example = component.examples[exampleIndex];
-      if (example) {
-        output += `## ${example.title}\n\n`;
-        output += `\`\`\`tsx\n${example.code}\n\`\`\`\n`;
-      }
-    } else {
-      component.examples.forEach((example, idx) => {
-        output += `## Example ${idx + 1}: ${example.title}\n\n`;
-        output += `\`\`\`tsx\n${example.code}\n\`\`\`\n\n`;
-      });
-    }
+    const registry = this.requireRegistry();
 
     return {
       content: [
         {
           type: 'text',
-          text: output,
+          text: renderExamples(registry, name, exampleIndex),
         },
       ],
     };
