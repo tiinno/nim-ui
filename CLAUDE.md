@@ -17,11 +17,15 @@ React 19 · TypeScript 5.9 · Tailwind v4 · vitest · Node ≥22 · pnpm 9.15.4
 
 ## Verification gate
 
-Run all four from the repo root before claiming anything works. This is what CI runs.
+Run all four from the repo root before claiming anything works.
 
 ```bash
 pnpm lint && pnpm type-check && pnpm test && pnpm build
 ```
+
+CI runs those four **and a fifth step**, `pnpm test:e2e` — a Playwright suite that drives the built static export in a real Chromium (NIMUI-68). It is deliberately outside `pnpm test`: folding it in would make a browser download a precondition for the unit suite on every machine. Run it yourself for anything touching `sr-only` text, `aria-hidden`, a live region, or focus after an interaction — it is the only place those are measured, because jsdom computes no cascade, reports every box as zero, and cannot show that a node survived a React reconciliation. Needs `pnpm --filter @nim-ui/docs exec playwright install chromium` once, and a `pnpm build` first (turbo enforces the dependency).
+
+The suite lives in `packages/docs/e2e/` and that location is load-bearing twice over: `packages/docs/vitest.config.ts` narrows its include to `tests/` + `.test.ts`, which is what keeps vitest from claiming a `.spec.ts`; and `@source not '../e2e'` in `app/global.css` keeps Tailwind from compiling the spec's class-name literals into the shipped bundle. Measured — deleting that one line leaks a probe class and grows the docs bundle by exactly its rule. Both facts are asserted by `packages/docs/tests/compiled-utility-inventory.test.ts`.
 
 **Never run a bare `npx vitest run` from the root** — there is no root vitest config, so tests execute in the node environment without jsdom or the setup file and 92 of 94 files fail with `document is not defined`. Only the per-package configs work, which is what `pnpm test` (turbo `test:run`) uses.
 
@@ -83,7 +87,7 @@ Commit messages: `<type>(<scope>): <description>`, body in bullets. **No `Co-Aut
 This repo runs in PM mode — see the global `pm` skill. Repo-specific facts:
 
 - **Tracker**: Plane, project identifier `NIMUI`. Project/workspace/state UUIDs are deliberately **not** committed (public repo) — they live in the session's auto-memory alongside the design-sync pin convention. Re-derive with `mcp__plane__list_projects` / `list_states` if unavailable.
-- **Verify commands**: the four-command gate above. Run them yourself after every build — a subagent's "it passes" is a claim, not proof.
-- **UI-facing changes need real rendering**, not just a green build. Playwright MCP works against the static export; the embedded browser pane does not. Serve with `npx serve packages/docs/out -l 5173` — and **kill the server afterwards**, or it holds a handle on `packages/docs/out` and the next `pnpm build` fails with `EBUSY`.
+- **Verify commands**: the gate above — the four, plus `pnpm test:e2e` for anything touching `sr-only`, `aria-hidden`, a live region, or focus. Run them yourself after every build — a subagent's "it passes" is a claim, not proof.
+- **UI-facing changes need real rendering**, not just a green build. For a *repeatable* check, add to the suite in `packages/docs/e2e/` and run `pnpm test:e2e`; it serves the export itself through `e2e/serve-out.mjs` — one PID, handle released on teardown, so it does not leave the `EBUSY` behind that a stray `npx serve` does. For a *one-off* look, drive the same server by hand (`node packages/docs/e2e/serve-out.mjs 4319`) with Playwright MCP; the embedded browser pane does not work against the static export. Whatever you start by hand, **kill it afterwards** — anything holding `packages/docs/out` fails the next `pnpm build` with `EBUSY`.
 - **Extra gate**: any change touching component styling must state which class strings changed and confirm the corresponding test assertions were updated.
 - **No `.github/workflows` before 2026-07-26** — anything older than that was never covered by CI, so treat "it was working" claims about that period with suspicion.

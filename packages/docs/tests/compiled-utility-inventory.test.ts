@@ -29,9 +29,12 @@ import { extractStringLiterals } from '../../ui/src/test/class-scan';
  * `app/global.css` does NOT use `source(none)`, so Tailwind's automatic
  * detection walks this whole package — MDX content included, prose included —
  * plus two explicit sources: `fumadocs-ui/dist/**\/*.js` and the Nim component
- * sources. One `@source not` excludes `../tests`, which is why this file can
- * hold utility names at all; that exclusion is asserted below, because if it
- * were ever dropped this guard would start minting the very rules it pins.
+ * sources. Two `@source not` lines carve directories back out: `../tests`,
+ * which is why this file can hold utility names at all, and `../e2e`, the
+ * Playwright accessibility suite (NIMUI-68), which selects on class names.
+ * Both exclusions are asserted below, because if either were dropped the file
+ * behind it would start minting the very rules this guard reports on — and
+ * would simultaneously start counting as a user, which hides the evidence.
  *
  * ## What counts as a user
  *
@@ -674,6 +677,20 @@ describe('the exported docs stylesheet — no compiled utility without a user', 
         'utilities on purpose, so without that line it MINTS the rules it claims to merely ' +
         'tolerate: the pin below could never shrink, and a genuine leak by the same name would ' +
         'be waved through. Restore the `@source not` line, or drop the pin.'
+    ).toBe(true);
+  });
+
+  it('keeps the browser accessibility suite out of the Tailwind scan too', () => {
+    const css = readFileSync(globalCssPath, 'utf-8');
+    const excluded = /@source\s+not\s+['"]\.\.\/e2e['"]/.test(css);
+
+    expect(
+      excluded,
+      '`app/global.css` no longer excludes `../e2e` from the Tailwind scan. That suite selects on ' +
+        'class names and names classes in its failure messages, and this package does not use ' +
+        '`source(none)` — so automatic detection reaches it and every one of those literals ' +
+        'becomes a live rule in the exported stylesheet, applied to nothing. It would also start ' +
+        'counting as a USER here, which would mask genuine departures. Restore the line.'
     ).toBe(true);
   });
 

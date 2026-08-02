@@ -56,10 +56,18 @@
 
    `../tests` is this package's own suite (`export-html-nesting.test.ts`),
    which automatic detection reaches. It is why that file carries a comment
-   telling its author not to put class names in the HTML fixtures. */
+   telling its author not to put class names in the HTML fixtures.
+
+   `../e2e` is the Playwright accessibility suite (NIMUI-68). It is denser in
+   utility-shaped literals than anything else in the package — it selects on
+   `.sr-only` and `.truncate`, and its failure messages name the classes they
+   are about — so without this line it would compile live rules into the
+   shipped bundle for classes nothing on the site renders. Both exclusions are
+   asserted by `tests/compiled-utility-inventory.test.ts`. */
 @source not '../../ui/src/components/*.test.ts';
 @source not '../../ui/src/components/*.test.tsx';
 @source not '../tests';
+@source not '../e2e';
 
 /* Bind `dark:` utilities to fumadocs' theme toggle (.dark on <html>) */
 @custom-variant dark (&:where(.dark, .dark *));
