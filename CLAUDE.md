@@ -8,7 +8,7 @@ pnpm workspace + turbo. Four packages:
 
 | Package | What |
 |---|---|
-| `packages/ui` (`@nim-ui/components`) | The library. 91 components, 2078 tests. |
+| `packages/ui` (`@nim-ui/components`) | The library. 91 components. |
 | `packages/docs` (`@nim-ui/docs`) | Next.js 16 + Fumadocs, static export (`output: 'export'`). |
 | `packages/tailwind-config` | Shared Tailwind v4 config + design tokens. |
 | `packages/mcp-server` | MCP server that reads `packages/ui/src/registry/index.json`. |
@@ -55,7 +55,7 @@ Type system is named but **not shipped**: tokens declare Hanken Grotesk / JetBra
 3. Export from `packages/ui/src/components/index.ts` under the right category comment.
 4. Add a registry entry to `packages/ui/src/registry/index.json` (append; the mcp-server reads this and every field is required).
 5. `packages/docs/content/docs/components/<category>/<name>.mdx` — model on `meter.mdx`; add the slug to that folder's `meta.json`.
-6. Bump counts in `llms.txt` (header, category heading, component line, footer), `README.md`, and `packages/docs/app/(home)/page.tsx`.
+6. Bump counts in `llms.txt` (header, category heading, component line, footer), `README.md`, and `packages/docs/app/(home)/page.tsx`. `src/documented-inventory.test.ts` fails the build if you miss one — including if you bump a heading number but never list the component under it.
 
 **Tests assert literal class strings on purpose.** Any restyle needs a lockstep test update — that is the convention, not an accident.
 
