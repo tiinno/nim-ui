@@ -17,11 +17,15 @@ React 19 · TypeScript 5.9 · Tailwind v4 · vitest · Node ≥22 · pnpm 9.15.4
 
 ## Verification gate
 
-Run all four from the repo root before claiming anything works. This is what CI runs.
+Run all four from the repo root before claiming anything works.
 
 ```bash
 pnpm lint && pnpm type-check && pnpm test && pnpm build
 ```
+
+CI runs those four **and a fifth step**, `pnpm test:e2e` — a Playwright suite that drives the built static export in a real Chromium (NIMUI-68). It is deliberately outside `pnpm test`: folding it in would make a browser download a precondition for the unit suite on every machine. Run it yourself for anything touching `sr-only` text, `aria-hidden`, a live region, or focus after an interaction — it is the only place those are measured, because jsdom computes no cascade, reports every box as zero, and cannot show that a node survived a React reconciliation. Needs `pnpm --filter @nim-ui/docs exec playwright install chromium` once, and a `pnpm build` first (turbo enforces the dependency).
+
+The suite lives in `packages/docs/e2e/` and that location is load-bearing twice over: `packages/docs/vitest.config.ts` narrows its include to `tests/` + `.test.ts`, which is what keeps vitest from claiming a `.spec.ts`; and `@source not '../e2e'` in `app/global.css` keeps Tailwind from compiling the spec's class-name literals into the shipped bundle. Measured — deleting that one line leaks a probe class and grows the docs bundle by exactly its rule. Both facts are asserted by `packages/docs/tests/compiled-utility-inventory.test.ts`.
 
 **Never run a bare `npx vitest run` from the root** — there is no root vitest config, so tests execute in the node environment without jsdom or the setup file and 92 of 94 files fail with `document is not defined`. Only the per-package configs work, which is what `pnpm test` (turbo `test:run`) uses.
 

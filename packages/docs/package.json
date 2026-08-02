@@ -10,7 +10,8 @@
     "start": "next start",
     "type-check": "tsc --noEmit",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "test:e2e": "playwright test --config e2e/playwright.config.ts"
   },
   "dependencies": {
     "@nim-ui/components": "workspace:*",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@nim-ui/tailwind-config": "workspace:*",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4.3.1",
     "@types/mdx": "^2.0.14",
     "@types/node": "^22.10.5",

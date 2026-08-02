@@ -55,3 +55,12 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      # Runs after Build on purpose, in the same job: the accessibility suite
+      # drives the static export in `packages/docs/out`, which Build produces.
+      # A separate job would have to ship that tree as an artifact to see it.
+      - name: Install Chromium for the accessibility suite
+        run: pnpm --filter @nim-ui/docs exec playwright install --with-deps chromium
+
+      - name: Accessibility (browser)
+        run: pnpm test:e2e
