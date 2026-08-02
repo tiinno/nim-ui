@@ -22,6 +22,13 @@
  *
  * ## What is actually mirrored, and what only looks like it
  *
+ * There used to be a fourth copy: a shadcn-shaped `:root`/`.dark` block at the
+ * tail of `tokens.css`, 21 names restating scale steps under second names.
+ * Nothing in the repo referenced it and no page documented it, so NIMUI-66
+ * deleted it rather than promote it to a supported surface — and the check that
+ * pinned its colours to real palette steps went with it. One colour vocabulary
+ * now, not two.
+ *
  * Measured rather than assumed. Three groups genuinely exist in both places and
  * are checked below in BOTH directions:
  *
@@ -223,78 +230,6 @@ describe('tokens.js and the stylesheets that mirror it agree', () => {
         'the site loads its families through next/font and substitutes the generated variable ' +
         'there. The fallbacks behind it are the same decision and must match.'
     ).toEqual([]);
-  });
-
-  // ---- the semantic layer: a fourth copy of the same colours --------------
-  // `tokens.css` also carries a shadcn-shaped `:root` / `.dark` block —
-  // `--background`, `--primary`, `--ring`, `--radius` and friends. It is NOT in
-  // `@theme`, so Tailwind generates no utilities from it, and nothing in this
-  // repo references any of it. It still ships in the published stylesheet and
-  // in the docs bundle, and every colour in it is a scale step written out a
-  // second time (`--ring` is primary-400, `--destructive` is error-500).
-  //
-  // That makes it a fourth hand-maintained copy of values NIMUI-29 exists to
-  // stop drifting, and one the ticket did not list. Rather than pin forty
-  // mappings that would churn, the check is that every semantic colour is STILL
-  // some step of the palette: retune a scale and forget the semantic layer, and
-  // the orphaned value fails here by name.
-
-  const SEMANTIC_BLOCK = /@layer\s+base\s*\{[\s\S]*$/;
-  const semanticDeclarations = (() => {
-    const text = readFileSync(resolve(repoRoot, TOKENS_CSS), 'utf-8');
-    const block = text.match(SEMANTIC_BLOCK)?.[0] ?? '';
-    return [...block.matchAll(/^\s*(--[a-z0-9-]+)\s*:\s*([^;]+);/gim)].map((m) => ({
-      variable: m[1],
-      value: m[2].replace(/\s+/g, ' ').trim(),
-    }));
-  })();
-
-  const paletteValues = new Map();
-  for (const [family, scale] of Object.entries(tokens.colors)) {
-    for (const [step, value] of Object.entries(scale)) {
-      if (!paletteValues.has(norm(value))) paletteValues.set(norm(value), `${family}-${step}`);
-    }
-  }
-
-  it('finds the semantic layer it is about to check', () => {
-    expect(
-      semanticDeclarations.length,
-      `No semantic declarations parsed out of ${TOKENS_CSS}. If that block moved or was removed ` +
-        'the check below is measuring nothing — re-derive it before trusting a green run.'
-    ).toBeGreaterThan(30);
-  });
-
-  // Values that are deliberately off-scale. Pure white is not a neutral step —
-  // the lightest is 0.985 — and the light background is meant to be paper-white,
-  // not the top of the grey ramp. Listed so it is a decision on the record
-  // rather than a hole in the check.
-  const OFF_SCALE_BY_DESIGN = new Map([['oklch(1.000 0.000 0)', 'pure white — the light background is not a neutral step']]);
-
-  it('keeps every semantic colour on a real step of the palette', () => {
-    const orphaned = semanticDeclarations
-      .filter(({ value }) => value.startsWith('oklch('))
-      .filter(({ value }) => !paletteValues.has(value) && !OFF_SCALE_BY_DESIGN.has(value))
-      .map(({ variable, value }) => `${variable}: ${value}   <- matches no step of any scale in tokens.js`);
-
-    expect(
-      orphaned,
-      'A semantic colour no longer equals any palette step. This block is a second spelling of ' +
-        'the scales — retuning a scale without updating it leaves the two describing different ' +
-        'colours under the same name, and nothing else in the repo reads it, so nothing else ' +
-        'would notice.'
-    ).toEqual([]);
-  });
-
-  it('keeps the semantic radius on the kit component radius', () => {
-    const radius = semanticDeclarations.find((d) => d.variable === '--radius');
-
-    expect(radius?.value, `--radius is missing from the semantic block in ${TOKENS_CSS}.`).toBeDefined();
-    expect(
-      radius.value,
-      'The semantic `--radius` and the kit component radius have diverged. Note this is ' +
-        '`borderRadius.md`, NOT `borderRadius.DEFAULT` — that one is still Tailwind v3\'s own ' +
-        '0.375rem default and belongs to the remnant described in NIMUI-61.'
-    ).toBe(norm(tokens.borderRadius.md));
   });
 
   // ---- the stated non-mirror ----------------------------------------------
