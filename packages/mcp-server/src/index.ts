@@ -6,8 +6,9 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { dirname, join } from 'path';
+import { loadTokens, renderTokens, type TokenType } from './tokens-source.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -88,16 +89,10 @@ class NimMCPServer {
       const registryContent = await readFile(registryPath, 'utf-8');
       this.registryData = JSON.parse(registryContent);
 
-      // Load tokens data
+      // Load tokens data. `tokens.js` is an ES module with a named export, so
+      // it is imported as one — see `tokens-source.ts` for what this replaced.
       const tokensPath = join(__dirname, '../../tailwind-config/src/tokens.js');
-      const tokensContent = await readFile(tokensPath, 'utf-8');
-
-      // Parse tokens from JS file (extract the export)
-      const tokensMatch = tokensContent.match(/export\s+const\s+tokens\s+=\s+({[\s\S]*});/);
-      if (tokensMatch) {
-        // Use Function constructor to safely evaluate the object literal
-        this.tokensData = new Function(`return ${tokensMatch[1]}`)();
-      }
+      this.tokensData = await loadTokens(pathToFileURL(tokensPath).href);
 
       console.error('Nim UI data loaded successfully');
     } catch (error) {
@@ -346,39 +341,7 @@ class NimMCPServer {
       throw new Error('Tokens data not loaded');
     }
 
-    let output = `# Nim UI Design Tokens\n\n`;
-
-    const formatTokens = (tokens: any, category: string) => {
-      let result = `## ${category.charAt(0).toUpperCase() + category.slice(1)}\n\n`;
-      result += `\`\`\`json\n${JSON.stringify(tokens, null, 2)}\n\`\`\`\n\n`;
-      return result;
-    };
-
-    // The kit declares no spacing scale of its own. It used to appear here,
-    // read out of a `spacing` block that had no counterpart in any stylesheet —
-    // so every client asking for Nim UI's spacing tokens was handed values that
-    // shipped nowhere. NIMUI-61 removed the block; this says so rather than
-    // returning nothing, because a silent omission reads as "not loaded".
-    const NO_SPACING_TOKENS =
-      '## Spacing\n\n' +
-      'Nim UI declares no spacing tokens. Spacing comes from Tailwind\'s own scale — `p-4` is ' +
-      '`calc(var(--spacing) * 4)`, 16px at the default 0.25rem base — and the kit uses it ' +
-      'directly rather than naming its own steps.\n\n';
-
-    if (tokenType === 'all') {
-      output += formatTokens(this.tokensData.colors, 'colors');
-      output += NO_SPACING_TOKENS;
-      output += formatTokens(this.tokensData.borderRadius, 'borderRadius');
-      output += formatTokens(this.tokensData.typography, 'typography');
-      output += formatTokens(this.tokensData.animation, 'animation');
-    } else if (tokenType === 'colors') {
-      output += formatTokens(this.tokensData.colors, 'colors');
-    } else if (tokenType === 'spacing') {
-      output += NO_SPACING_TOKENS;
-      output += formatTokens(this.tokensData.borderRadius, 'borderRadius');
-    } else if (tokenType === 'typography') {
-      output += formatTokens(this.tokensData.typography, 'typography');
-    }
+    const output = renderTokens(this.tokensData, tokenType as TokenType);
 
     return {
       content: [
