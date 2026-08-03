@@ -123,6 +123,18 @@ export interface SkeletonGroupProps extends React.HTMLAttributes<HTMLDivElement>
  * text is still in the accessibility tree and discoverable in browse mode, and
  * SC 4.1.3's live case is the *transition* — which this shape does handle.
  *
+ * That was a reading of the spec until NIMUI-47 measured it. On **NVDA 2026.1.1
+ * with Firefox, 2026-08-03**: reading backwards from the toggle on a freshly
+ * loaded page, the region's text is the line immediately before it and the
+ * placeholders in between are silent; and toggling `loading` back on speaks
+ * that text *first*, ahead of the focused control's own new name, with focus
+ * never leaving that control. So both halves hold — the browse-mode fallback is
+ * real, and the transition is a genuine announcement.
+ *
+ * One pairing is not a sample, though. Live-region behaviour is exactly where
+ * NVDA, JAWS and VoiceOver diverge most; the other two are still unverified and
+ * NIMUI-47 stays open for them.
+ *
  * Ships no layout classes of its own; put `space-y-*` / `flex` on the markup
  * inside `fallback` and `children`.
  *
