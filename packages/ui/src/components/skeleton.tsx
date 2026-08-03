@@ -131,9 +131,14 @@ export interface SkeletonGroupProps extends React.HTMLAttributes<HTMLDivElement>
  * never leaving that control. So both halves hold — the browse-mode fallback is
  * real, and the transition is a genuine announcement.
  *
- * One pairing is not a sample, though. Live-region behaviour is exactly where
- * NVDA, JAWS and VoiceOver diverge most; the other two are still unverified and
- * NIMUI-47 stays open for them.
+ * Confirmed a second time on **VoiceOver with Safari, macOS 26.5.2,
+ * 2026-08-03**: the same backwards read reaches the region first, and the
+ * transition speaks it while focus stays put. One difference worth knowing —
+ * VoiceOver does not re-announce a focused control whose name changed
+ * underneath it, so the transition is heard as the region's text alone rather
+ * than as two utterances. Nothing documented here depends on the second one.
+ *
+ * JAWS remains unrun; its licence was declined in NIMUI-72.
  *
  * Ships no layout classes of its own; put `space-y-*` / `flex` on the markup
  * inside `fallback` and `children`.
