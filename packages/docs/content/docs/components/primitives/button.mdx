@@ -28,7 +28,7 @@ Edit the code — the preview re-renders as you type.
 
 ## Variants
 
-Buttons come in five different variants to suit various use cases.
+Buttons accept six `variant` values, but `default` and `primary` render identically, so five distinct styles are shown below.
 
 <ComponentPreview title="Button Variants">
   <Button variant="primary">Primary</Button>
@@ -143,8 +143,8 @@ Combine buttons with icons for enhanced visual communication.
   props={[
     {
       name: 'variant',
-      type: "'primary' | 'secondary' | 'outline' | 'ghost' | 'danger'",
-      default: "'primary'",
+      type: "'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive'",
+      default: "'default'",
       description: 'Visual style variant of the button',
     },
     {
@@ -300,7 +300,7 @@ The Button component follows WAI-ARIA best practices:
 ### Do
 
 - Use `primary` variant for main actions
-- Use `danger` variant for destructive actions
+- Use `destructive` variant for destructive actions
 - Add loading states for async operations
 - Include descriptive labels
 - Use icons to enhance clarity

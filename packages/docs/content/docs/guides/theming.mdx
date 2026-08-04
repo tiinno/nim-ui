@@ -1,377 +1,99 @@
 ---
 title: Theming
-description: Design tokens, Tailwind CSS v4 theme configuration, and custom theme creation
+description: How Nim UI's design tokens work, and how to re-tint the palette for your own brand
 ---
 
-Nim UI is built on a design token system that maps to Tailwind CSS utility classes. By modifying these tokens, you can create a fully branded theme that applies consistently across all components.
+Nim UI's design tokens are a single CSS `@theme` block — `packages/ui/src/tokens.css` — not a `tailwind.config.js`. There is no JS theme object standing between your override and the component; every component references a token by variable name (`var(--color-primary-500)`), so redefining that variable re-tints every component that reads it, with no rebuild of the library itself.
 
-## Design Tokens Overview
+This guide covers the token/palette layer only. For per-component style overrides (`className`, CVA variants, the `cn()` utility), see [Customization](/guides/customization/). For the full settings surface — typography scale, spacing, border radius, build tooling — see [Configuration](/getting-started/configuration/); this page does not repeat it.
 
-Design tokens are the foundational values of the design system. They define colors, spacing, typography, borders, and shadows. Nim UI organizes tokens into the following categories:
+## How it works
 
-| Category | Examples | CSS Properties |
-|----------|----------|---------------|
-| **Colors** | Primary, neutral, semantic | `--color-primary-500`, `--color-danger` |
-| **Spacing** | xs through 3xl | `--spacing-md`, `--spacing-lg` |
-| **Typography** | Font families, sizes, weights | `--font-sans`, `--text-lg`, `--font-bold` |
-| **Borders** | Radius values | `--radius-md`, `--radius-lg` |
-| **Shadows** | Elevation levels | `--shadow-sm`, `--shadow-lg` |
+Tailwind CSS v4 is configured in CSS. There is no `tailwind.config.js` to extend and no `content` array to maintain — v4 discovers class names in your source itself, and a leftover config file is simply ignored unless you point at it explicitly with `@config` (covered in [Configuration](/getting-started/configuration/)).
 
-## Tailwind CSS v4 Theme Configuration
+Nim UI's tokens live in one place, `packages/ui/src/tokens.css`, and the file states its own scope in a header comment: pure tokens only — an `@theme` block, keyframes, and nothing else. No `@import "tailwindcss"`, no `@custom-variant`, no `@font-face`. That restraint is deliberate: the same file is imported by two different stylesheets that each need to add those missing pieces differently —
 
-Nim UI uses Tailwind CSS v4, which supports theme configuration through both the `tailwind.config.js` file and CSS custom properties.
+- `packages/ui/src/styles.css`, compiled to the `./styles` export you import as `@import '@nim-ui/components/styles';`
+- this documentation site's own `app/global.css`
 
-### Extending the Theme
+— and a token file can't declare `@custom-variant dark` or load fonts without picking one consumer's answer for both.
 
-Add custom values to the theme without overriding the defaults:
+Every color value in the file is OKLCH, not RGB or hex, and there is no `<alpha-value>` indirection to wire up. A fractional opacity suffix on a color utility doesn't need a special token shape to support it — the compiled bundle resolves it with `color-mix(in oklab, var(--color-primary-500) 10%, transparent)` against the same variable, wherever a component asks for a tinted version of a token (for example `border-color: color-mix(in oklab, var(--color-primary-500) 30%, transparent)` on a focus-adjacent border). A shade itself looks like this:
 
-```js title="tailwind.config.js"
-export default {
-  darkMode: 'class',
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nim-ui/components/dist/**/*.js',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        brand: {
-          50: '#fdf4ff',
-          100: '#fae8ff',
-          200: '#f5d0fe',
-          300: '#f0abfc',
-          400: '#e879f9',
-          500: '#d946ef',
-          600: '#c026d3',
-          700: '#a21caf',
-          800: '#86198f',
-          900: '#701a75',
-        },
-      },
-      fontFamily: {
-        sans: ['Outfit', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-      },
-      borderRadius: {
-        '4xl': '2rem',
-      },
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-      },
-    },
-  },
-};
+```css
+--color-primary-500: oklch(0.534 0.030 248.2);
 ```
 
-### Overriding Default Colors
+That single declaration does two things at once: it makes `bg-primary-500` / `text-primary-500` / `border-primary-500` exist as utility classes, and it puts a real custom property, `--color-primary-500`, in scope wherever the utility is used. Overriding the variable is what the recipe below relies on.
 
-Replace the default primary color scale with your brand colors:
+## Override a token
 
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: '#fff1f2',
-          100: '#ffe4e6',
-          200: '#fecdd3',
-          300: '#fda4af',
-          400: '#fb7185',
-          500: '#f43f5e', // Your brand primary
-          600: '#e11d48',
-          700: '#be123c',
-          800: '#9f1239',
-          900: '#881337',
-        },
-      },
-    },
-  },
-};
+Start from the standard two-import setup ([Configuration](/getting-started/configuration/) covers it in full):
+
+```css title="src/index.css"
+@import 'tailwindcss';
+@import '@nim-ui/components/styles';
 ```
 
-All Nim UI components that reference `primary-*` colors will automatically use your custom palette.
+To re-tint the kit, add your own `@theme` block **after** that second import, in the same file:
 
-## CSS Custom Properties
+```css title="src/index.css"
+@import 'tailwindcss';
+@import '@nim-ui/components/styles';
 
-For runtime theming or more granular control, define design tokens as CSS custom properties.
-
-### Base Tokens
-
-```css title="src/styles/tokens.css"
-:root {
-  /* Colors */
-  --color-primary: 14 165 233;     /* RGB for #0ea5e9 */
-  --color-success: 34 197 94;      /* RGB for #22c55e */
-  --color-warning: 245 158 11;     /* RGB for #f59e0b */
-  --color-danger: 239 68 68;       /* RGB for #ef4444 */
-  --color-info: 59 130 246;        /* RGB for #3b82f6 */
-
-  /* Typography */
-  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-family-mono: 'Fira Code', 'Courier New', monospace;
-
-  /* Spacing */
-  --spacing-unit: 0.25rem;
-
-  /* Borders */
-  --radius-default: 0.375rem;
-
-  /* Shadows */
-  --shadow-color: 0 0% 0%;
-}
-
-.dark {
-  --color-primary: 56 189 248;     /* Lighter for dark mode */
-  --shadow-color: 0 0% 100%;
+@theme {
+  --color-primary-500: oklch(0.58 0.21 300);
+  --color-primary-600: oklch(0.50 0.19 300);
 }
 ```
 
-### Using CSS Variables with Tailwind
+The order matters. `@import '@nim-ui/components/styles'` is a compiled stylesheet — it already declares `--color-primary-500` inside `@layer theme`, and every component reads the color through `var(--color-primary-500)` rather than a baked-in literal. Your `@theme` block compiles into the same `@layer theme`, and CSS resolves the custom property from whichever declaration comes later in the cascade — so the override has to come after the import, not before it. `Configuration` documents the same ordering for its color/typography/radius examples; this is the same mechanism applied to a full rebrand rather than one or two values.
 
-Reference CSS custom properties in Tailwind using arbitrary value syntax:
+Because `primary-*` is reserved in this kit for focus rings, links, and selection — never a decorative fill, per the design system's own contract — retinting it changes every focus indicator, link color, selected row, chart fill, spinner, progress bar, slider range, and radio dot across all components, without touching a single component file. It also means the new value inherits that scale's accessibility obligation: the shipped focus indicator is required to clear 3:1 contrast against `white` / `neutral-50` / `neutral-100` in light mode and `neutral-800` / `neutral-900` / `neutral-950` in dark mode, in both themes. That requirement is enforced against the shipped scale only — if you replace it, re-check contrast yourself against those same surfaces before shipping.
 
-```tsx
-// Use RGB variables with opacity support
-<div className="bg-[rgb(var(--color-primary))]">
-  Primary background
-</div>
+## Token reference
 
-<div className="bg-[rgb(var(--color-primary)/0.1)]">
-  10% primary background
-</div>
+| Category | Variables | Notes |
+|---|---|---|
+| Primary (Steel) | `--color-primary-50` … `--color-primary-950` | Reserved for focus rings, links, selection. Never a fill. |
+| Neutral | `--color-neutral-50` … `--color-neutral-950` | Text, surfaces, borders. |
+| Success | `--color-success-50` … `--color-success-950` | |
+| Warning | `--color-warning-50` … `--color-warning-950` | |
+| Error | `--color-error-50` … `--color-error-950` | The scale is named `error` in the CSS; the docs surface it as "Danger" to match the `destructive` variant name components actually expose. There is no `--color-danger` variable. |
+| Info | `--color-info-50` … `--color-info-950` | |
+| Radius | `--radius-md` (`0.5rem`) | The only radius token the kit's own source declares. `rounded-lg`, `rounded-full`, etc. resolve from whatever Tailwind's own default theme supplies, untouched — nothing in `packages/ui/src` redeclares them. The compiled bundle happens to emit `--radius-lg: 0.5rem`, the same value as the kit's `--radius-md`, so `rounded-md` and `rounded-lg` currently render identically — redefine `--radius-lg` alongside `--radius-md` if you want them to stay in step after customizing. |
+| Shadow | `--shadow-soft`, `--shadow-panel`, `--shadow-control` | Elevation tokens — cards, overlays, and controls respectively. Not Tailwind's stock `shadow-sm` / `shadow-lg` names. |
+| Motion | `--duration-fast` / `-normal` / `-slow`, `--ease-out` / `-in` / `-in-out`, plus a `--animate-*` entry for each fade/scale/slide/accordion keyframe | One `--animate-*` variable per transition the kit ships — fade, scale, slide (all four directions, in and out), and accordion. |
+
+For the exact OKLCH value of every shade in every scale, see [Colors](/design-system/colors/) — that page's swatches are generated from this same `tokens.css` and are kept in sync with it by comment convention.
+
+Two categories are conspicuously absent, on purpose:
+
+- **Spacing.** There are no `--spacing-*` tokens. Spacing comes entirely from Tailwind's own scale (base `--spacing: 0.25rem`); see [Spacing](/design-system/spacing/) for the full mapping.
+- **Typography.** `tokens.css` declares no `--font-*` variables at all. The three font families (`--font-sans`, `--font-mono`, `--font-display`) live one layer up, in whichever stylesheet imports `tokens.css` — `packages/ui/src/styles.css` for the published kit, this site's own `global.css` for these docs — and the kit ships zero font bytes either way. See [Typography](/design-system/typography/).
+
+### `@nim-ui/tailwind-config` is not a preset
+
+The `packages/tailwind-config` package exports a single path, `@nim-ui/tailwind-config/tokens`, which is a plain JavaScript object mirroring the same values as `tokens.css` — for tooling that cannot read CSS, namely the MCP server and the library's own animation test guards. A test (`token-parity.test.js`) fails the build if the two ever disagree. It is not a Tailwind preset, plugin, or config file, and a consumer app has no reason to import it. The `@theme` block in your stylesheet is the entire wiring; there is no JS config step in the loop.
+
+## Dark mode
+
+Dark mode is class-based, not `prefers-color-scheme`-based, and the binding lives in the compiled stylesheet, not in `tokens.css`:
+
+```css
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 ```
 
-### Connecting Variables to Tailwind Config
+This line is declared in `packages/ui/src/styles.css` and compiled into the `./styles` bundle you import. It means `dark:` utilities activate under a `.dark` class anywhere in the ancestor chain (or a `[data-theme="dark"]` attribute — a hook this documentation site's own local `@custom-variant` doesn't use, since its Fumadocs toggle only ever sets `.dark`). Without it, Tailwind v4's `dark:` variant would instead follow the OS `prefers-color-scheme` media query and ignore any in-app toggle.
 
-Map CSS variables to Tailwind theme values for cleaner usage:
+As [Configuration](/getting-started/configuration/#dark-mode-configuration) documents — and this is worth repeating here because it is the opposite of what a Tailwind v3 background would predict — **this binding is not something you configure or override.** `@import '@nim-ui/components/styles'` brings in an already-compiled stylesheet in which `@custom-variant` has already been expanded into concrete `:where(...)` selectors on every rule; redeclaring `@custom-variant dark` in your own entry stylesheet, before or after that import, changes nothing. There is no `darkMode` setting to flip. If you want dark mode to follow the OS instead of a class, keep the `.dark` class and drive it from `matchMedia` in JavaScript — see [Dark Mode](/design-system/dark-mode/) for a worked toggle, and the [`ThemeProvider` pattern](/design-system/dark-mode/#theme-context-provider) there for a larger app.
 
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
-        },
-        success: 'rgb(var(--color-success) / <alpha-value>)',
-        warning: 'rgb(var(--color-warning) / <alpha-value>)',
-        danger: 'rgb(var(--color-danger) / <alpha-value>)',
-        info: 'rgb(var(--color-info) / <alpha-value>)',
-      },
-    },
-  },
-};
-```
-
-Now you can use the standard Tailwind utilities with full opacity support:
-
-```tsx
-<div className="bg-primary text-white">Solid primary</div>
-<div className="bg-primary/10">10% primary</div>
-<div className="border-primary/50">50% primary border</div>
-```
-
-## Creating a Custom Theme
-
-### Step 1: Define Your Color Palette
-
-Generate a full color scale from your brand color. Tools like [Tailwind CSS Color Generator](https://uicolors.app/create) can help.
-
-```js
-// Example: Rose-based brand theme
-const brandColors = {
-  50: '#fff1f2',
-  100: '#ffe4e6',
-  200: '#fecdd3',
-  300: '#fda4af',
-  400: '#fb7185',
-  500: '#f43f5e',
-  600: '#e11d48',
-  700: '#be123c',
-  800: '#9f1239',
-  900: '#881337',
-};
-```
-
-### Step 2: Configure Typography
-
-Choose fonts that match your brand identity:
-
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Outfit', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-        heading: ['Cal Sans', 'sans-serif'],
-      },
-    },
-  },
-};
-```
-
-### Step 3: Adjust Border Radius
-
-Control the roundness of all components:
-
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      borderRadius: {
-        sm: '0.125rem',   // Sharper
-        DEFAULT: '0.25rem',
-        md: '0.375rem',
-        lg: '0.5rem',
-        xl: '1rem',       // Rounder
-      },
-    },
-  },
-};
-```
-
-### Step 4: Define Shadows
-
-Create custom elevation levels:
-
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      boxShadow: {
-        'soft-sm': '0 2px 4px -1px rgba(0, 0, 0, 0.04)',
-        'soft-md': '0 4px 8px -2px rgba(0, 0, 0, 0.06)',
-        'soft-lg': '0 8px 16px -4px rgba(0, 0, 0, 0.08)',
-        'soft-xl': '0 16px 32px -8px rgba(0, 0, 0, 0.1)',
-      },
-    },
-  },
-};
-```
-
-### Step 5: Put It All Together
-
-```js title="tailwind.config.js"
-export default {
-  darkMode: 'class',
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nim-ui/components/dist/**/*.js',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: '#fff1f2',
-          100: '#ffe4e6',
-          200: '#fecdd3',
-          300: '#fda4af',
-          400: '#fb7185',
-          500: '#f43f5e',
-          600: '#e11d48',
-          700: '#be123c',
-          800: '#9f1239',
-          900: '#881337',
-        },
-      },
-      fontFamily: {
-        sans: ['Outfit', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-      },
-      borderRadius: {
-        sm: '0.125rem',
-        DEFAULT: '0.25rem',
-        md: '0.375rem',
-        lg: '0.5rem',
-        xl: '1rem',
-      },
-      boxShadow: {
-        'soft-sm': '0 2px 4px -1px rgba(0, 0, 0, 0.04)',
-        'soft-md': '0 4px 8px -2px rgba(0, 0, 0, 0.06)',
-        'soft-lg': '0 8px 16px -4px rgba(0, 0, 0, 0.08)',
-      },
-    },
-  },
-};
-```
-
-## Multi-theme Support
-
-For applications that support multiple themes (e.g., per-workspace or per-tenant themes), use CSS custom properties with data attributes:
-
-```css title="src/styles/themes.css"
-/* Default theme */
-:root {
-  --primary-500: #0ea5e9;
-  --primary-600: #0284c7;
-  --radius: 0.375rem;
-}
-
-/* Theme: Rose */
-[data-theme='rose'] {
-  --primary-500: #f43f5e;
-  --primary-600: #e11d48;
-  --radius: 0.5rem;
-}
-
-/* Theme: Violet */
-[data-theme='violet'] {
-  --primary-500: #8b5cf6;
-  --primary-600: #7c3aed;
-  --radius: 0.75rem;
-}
-
-/* Dark variants */
-.dark {
-  --primary-500: #38bdf8;
-  --primary-600: #0ea5e9;
-}
-
-.dark[data-theme='rose'] {
-  --primary-500: #fb7185;
-  --primary-600: #f43f5e;
-}
-
-.dark[data-theme='violet'] {
-  --primary-500: #a78bfa;
-  --primary-600: #8b5cf6;
-}
-```
-
-Apply themes by setting the `data-theme` attribute:
-
-```tsx
-function ThemeSwitcher() {
-  const applyTheme = (theme: string) => {
-    document.documentElement.setAttribute('data-theme', theme);
-  };
-
-  return (
-    <div className="flex gap-2">
-      <button onClick={() => applyTheme('default')}>Default</button>
-      <button onClick={() => applyTheme('rose')}>Rose</button>
-      <button onClick={() => applyTheme('violet')}>Violet</button>
-    </div>
-  );
-}
-```
-
-## Theme Validation
-
-When creating custom themes, verify these aspects:
-
-1. **Color contrast** -- All text/background combinations meet WCAG AA (4.5:1 for normal text, 3:1 for large text)
-2. **Dark mode** -- Every custom color has a dark mode counterpart
-3. **Semantic consistency** -- Success is green-toned, danger is red-toned, warning is yellow/orange-toned
-4. **Component rendering** -- Test all component variants with the custom theme
-5. **Interactive states** -- Hover, focus, active, and disabled states are all visually distinct
+The palette itself does not carry separate light/dark values — there is one OKLCH value per shade in `tokens.css`, used identically regardless of theme. Dark-mode contrast comes from components pairing a different shade *number* under the `dark:` variant (`text-primary-600 dark:text-primary-400`, `bg-neutral-50 dark:bg-neutral-900`), not from a shade's own value swapping under `.dark`. So if you redefine `--color-primary-500` as shown above, that new value applies in both themes equally, exactly like the shipped scale — and every color utility you add of your own still needs its `dark:` counterpart pairing a different shade, the same convention every shipped component follows.
 
 ## What's Next?
 
-- [Customization](/guides/customization/) - Override individual component styles
-- [Dark Mode](/design-system/dark-mode/) - Implementing dark mode
-- [Colors](/design-system/colors/) - Default color palette
-- [Typography](/design-system/typography/) - Font configuration
+- [Configuration](/getting-started/configuration/) — the full `@theme` surface: typography, spacing, radius, and the build-tool wiring around it
+- [Customization](/guides/customization/) — override individual component styles with `className`, CVA, and `cn()`
+- [Colors](/design-system/colors/) — every shade of every scale, generated from `tokens.css`
+- [Dark Mode](/design-system/dark-mode/) — toggling, system-preference detection, and the theme provider pattern
+- [Typography](/design-system/typography/) — the three font families and how to load them
