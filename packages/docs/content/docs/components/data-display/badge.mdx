@@ -40,13 +40,16 @@ Edit the code — the preview re-renders as you type.
 
 ## Variants
 
-Four variants are available to communicate different levels of emphasis and meaning.
+Seven variants are available: three neutral weights, plus destructive, success, warning, and info for status.
 
 <ComponentPreview title="Badge Variants">
   <Badge variant="default">Default</Badge>
   <Badge variant="secondary">Secondary</Badge>
   <Badge variant="outline">Outline</Badge>
   <Badge variant="destructive">Destructive</Badge>
+  <Badge variant="success">Success</Badge>
+  <Badge variant="warning">Warning</Badge>
+  <Badge variant="info">Info</Badge>
 
   <PreviewCode>
 ```tsx
@@ -54,6 +57,9 @@ Four variants are available to communicate different levels of emphasis and mean
 <Badge variant="secondary">Secondary</Badge>
 <Badge variant="outline">Outline</Badge>
 <Badge variant="destructive">Destructive</Badge>
+<Badge variant="success">Success</Badge>
+<Badge variant="warning">Warning</Badge>
+<Badge variant="info">Info</Badge>
 ```
   </PreviewCode>
 </ComponentPreview>
@@ -82,7 +88,7 @@ Three size options are available: small, medium (default), and large.
   props={[
     {
       name: 'variant',
-      type: "'default' | 'secondary' | 'outline' | 'destructive'",
+      type: "'default' | 'secondary' | 'outline' | 'destructive' | 'success' | 'warning' | 'info'",
       default: "'default'",
       description: 'Visual style variant of the badge',
     },
@@ -91,6 +97,11 @@ Three size options are available: small, medium (default), and large.
       type: "'sm' | 'md' | 'lg'",
       default: "'md'",
       description: 'Size of the badge',
+    },
+    {
+      name: 'animate',
+      type: 'boolean',
+      description: 'Play the entry animation on mount, suppressed under reduced motion',
     },
     {
       name: 'className',

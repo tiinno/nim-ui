@@ -62,8 +62,11 @@ Type system is named but **not shipped**: tokens declare Hanken Grotesk / JetBra
 4. Add a registry entry to `packages/ui/src/registry/index.json` (append; the mcp-server reads this and every field is required).
 5. `packages/docs/content/docs/components/<category>/<name>.mdx` — model on `meter.mdx`; add the slug to that folder's `meta.json`.
 6. Bump counts in `llms.txt` (header, category heading, component line, footer), `README.md`, and `packages/docs/app/(home)/page.tsx`. `src/documented-inventory.test.ts` fails the build if you miss one — including if you bump a heading number but never list the component under it.
+7. Bump `EXPECTED_SCAN` in `src/props-table-truth.test.ts` (`componentFiles`, `cvaCalls`, `pages`, `tables`, `consumerFacingGroups`, `comparisons`, `enumComparisons`, `defaultComparisons`, `tablesWithoutAPropsDeclaration`). This is the **second** set of hand-maintained numbers, and unlike step 6's it exists to keep the guard's own coverage honest — the counts are what stop it from silently checking less than it claims.
 
 **Tests assert literal class strings on purpose.** Any restyle needs a lockstep test update — that is the convention, not an accident.
+
+**`src/props-table-truth.test.ts` (NIMUI-81) fails the build when a documented `<PropsTable>` enum and its `cva` disagree**, in both directions — a documented value the cva does not declare (the silent one: an unmatched key renders with no variant classes, no error) and a cva key nothing documents. Four such drifts were found by hand in three days before it existed. It resolves page → `<Component>Props` → that declaration's `VariantProps<typeof …>` heritage, which is why it catches `Progress.variant` at all: that group is declared by `progressIndicatorVariants`, not the same-named `progressVariants`, so matching a component to its cva by name would miss the exact bug that motivated it. **It cannot see prose** — the "three sizes" half of the button drift lived in a sentence and stays invisible to it; the guard's own suite records that as a measured limit, not an assumption. Every skip is an exact-set pin with a reason (`UNCOVERED_VARIANT_GROUPS` currently holds 8 variant props documented nowhere, each because the page has no table for that subcomponent).
 
 ## Gotchas that have actually cost time
 
