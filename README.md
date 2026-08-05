@@ -35,10 +35,24 @@ pnpm add @nim-ui/components
 pnpm add -D tailwindcss @tailwindcss/postcss
 ```
 
+```js
+// postcss.config.js
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+  },
+};
+```
+
 ```css
 /* src/index.css */
 @import 'tailwindcss';
 @import '@nim-ui/components/styles';
+```
+
+```tsx
+// src/main.tsx
+import './index.css';
 ```
 
 ```tsx
@@ -53,6 +67,8 @@ export default function App() {
   );
 }
 ```
+
+Full setup — TypeScript config, Vite/Next.js/Remix wiring, troubleshooting: see the [Installation guide](https://nim-ui.tiinno.com/getting-started/installation/).
 
 ## Components
 
