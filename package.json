@@ -2,6 +2,7 @@
   "name": "@nim-ui/root",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "engines": {
     "node": ">=22.0.0",
     "pnpm": ">=9.0.0"

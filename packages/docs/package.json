@@ -1,6 +1,7 @@
 {
   "name": "@nim-ui/docs",
   "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
   "private": true,
   "scripts": {

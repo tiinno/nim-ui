@@ -1,6 +1,7 @@
 {
   "name": "@nim-ui/tailwind-config",
   "version": "0.0.0",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "exports": {
