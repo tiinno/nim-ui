@@ -74,7 +74,7 @@ import { extractStringLiterals } from '../../ui/src/test/class-scan';
  *
  * ## What the pin looks like and why it is stable
  *
- * 43 entries out of 1545 compiled utilities, and the shape of them is the
+ * 42 entries out of 1545 compiled utilities, and the shape of them is the
  * argument for pinning rather than rewording: **the 91 component pages
  * contributed no novel utility at all.** Every hit from them is an ordinary
  * English word that Tailwind also knows, and once such a word is pinned the
@@ -178,18 +178,31 @@ const KNOWN_UNUSED = [
   'm~d:p-8',
   'l~g:p-12',
 
-  // --- guides/customization.mdx + getting-started/configuration.mdx ---------
+  // --- guides/customization.mdx ---------------------------------------------
   // Consumer-override examples in `tsx` fences. They are deliberately OFF the
   // Ink + Muted Steel palette: the page is showing a consumer how to escape the
   // kit's vocabulary, and a brand button rendered in the kit's own neutrals
   // would demonstrate nothing. `hover:bg-neutral-300` is on-palette but pairs
   // with a `bg-neutral-200` fill the kit never ships.
+  //
+  // `f~rom-blue-500` used to be pinned here too (NIMUI-82). Its sole textual
+  // source was a `bg-gradient-to-br` gradient (two colour-stop utilities, one
+  // this one) `@apply`d in getting-started/configuration.mdx's "Custom
+  // Component Styles" section, onto an invented `.custom-card` hook nothing in
+  // the kit renders. That section is gone, so if a fresh build still compiles
+  // `f~rom-blue-500` the vacuity guard below will report it as a departure —
+  // one line to delete, not a redesign.
+  // The gradient's other stop, `t~o-purple-600`, was never pinned and was not
+  // seen in a build at the time of this edit either, but that check was
+  // against a `packages/docs/out` that may already have been stale (not
+  // rebuilt for this change) — so treat it as unverified rather than
+  // confirmed dead, and expect the same guard to report it too if it turns out
+  // to have been live.
   'b~g-gray-900',
   'b~g-green-500',
   'b~g-indigo-600',
   'b~g-red-500',
   'b~g-sky-500',
-  'f~rom-blue-500',
   's~hadow-primary-500/25',
   's~hadow-red-500',
   'h~over:bg-gray-800',

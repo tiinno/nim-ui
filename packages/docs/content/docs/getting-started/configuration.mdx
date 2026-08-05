@@ -133,47 +133,21 @@ export default function DarkModeToggle() {
 
 ### Custom Component Styles
 
-Override component styles using CSS layers:
+Nim UI components render no stable class hook to `@apply` onto — there is no `.nim-button` (or equivalent) selector on any component, so a rule targeting one matches nothing.
 
-```css title="src/styles/custom.css"
-@layer components {
-  /* Override button styles */
-  .nim-button {
-    @apply rounded-full;
-  }
+Override a component's output through the `className` prop instead; every component merges it with its own classes through the kit's `cn()`, which resolves conflicting Tailwind classes correctly:
 
-  /* Custom card styles */
-  .custom-card {
-    @apply bg-gradient-to-br from-blue-500 to-purple-600;
-  }
-}
+```tsx
+<Button className="rounded-full">Rounded button</Button>
 ```
+
+For a style you want to reuse across many instances, extend the component's CVA variants rather than reaching for a custom selector and `@apply`. See [Customization](/guides/customization/) for the full pattern — `className` overrides, extending CVA variants, and composing wrapper components.
 
 ### CSS Variables
 
-Define custom CSS variables for dynamic theming:
+Nim UI's palette is not a set of hex custom properties redefined per scheme under `:root` and `.dark`. It is a single `@theme` block of OKLCH values, one per shade, declared in `packages/ui/src/tokens.css` and used identically in both themes — see [Theme Customization](#theme-customization) above for how to override a shade in your own stylesheet, and [Theming](/guides/theming/) for the full mechanism. Dark-mode contrast comes from a component pairing a *different* shade number under the `dark:` variant (`text-primary-600 dark:text-primary-400`), not from a shade's own value changing under a class selector; the `dark:` binding itself is the `@custom-variant` covered in [Dark Mode Configuration](#dark-mode-configuration) above.
 
-```css title="src/styles/theme.css"
-:root {
-  /* Light mode */
-  --color-primary: #0ea5e9;
-  --color-background: #ffffff;
-  --color-text: #111827;
-}
-
-.dark {
-  /* Dark mode */
-  --color-primary: #38bdf8;
-  --color-background: #111827;
-  --color-text: #f9fafb;
-}
-
-/* Use in components */
-.custom-element {
-  background-color: var(--color-background);
-  color: var(--color-text);
-}
-```
+For your own values that need to change at runtime rather than by theme — a user-configurable accent, say — plain CSS custom properties still apply; see [Customization → CSS Custom Properties](/guides/customization/#css-custom-properties) for that pattern.
 
 ## Build Configuration
 
