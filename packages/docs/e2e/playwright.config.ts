@@ -39,7 +39,22 @@ import { defineConfig, devices } from '@playwright/test';
  *   bundle.
  */
 
-const PORT = 4319;
+// Windows reserves scattered TCP ranges for Hyper-V, and 4319 sits inside one
+// of them on at least one dev machine — the server dies with EACCES before a
+// single test runs. CI's default stays 4319; override locally when that hits.
+//
+// Validated rather than coerced: `Number('')` is 0 and `Number('abc')` is NaN,
+// and either would surface as a baseURL of `http://127.0.0.1:0` failing for a
+// reason that points nowhere near the typo that caused it.
+const PORT = (() => {
+  const raw = process.env.E2E_PORT;
+  if (raw === undefined || raw === '') return 4319;
+  const parsed = Number(raw);
+  if (!Number.isInteger(parsed) || parsed < 1 || parsed > 65535) {
+    throw new Error(`E2E_PORT must be an integer from 1 to 65535, got ${JSON.stringify(raw)}`);
+  }
+  return parsed;
+})();
 
 export default defineConfig({
   testDir: '.',
