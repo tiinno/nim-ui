@@ -4,7 +4,7 @@ description: Color palette and design tokens for Nim UI
 ---
 
 
-Nim UI uses a carefully crafted color system built on semantic color scales. All colors are designed to work in both light and dark modes with proper contrast ratios.
+Nim UI uses a color system built on semantic scales, every one of which ships a dark-mode counterpart. Which *pairings* of those scales clear a given contrast threshold is a separate question, answered under [Contrast Ratios](#contrast-ratios) — the scales are raw material, not a guarantee about every combination you can build from them.
 
 ## Primary Colors
 
@@ -181,23 +181,27 @@ Used for informational messages and neutral notifications.
 
 ### Contrast Ratios
 
-All color combinations meet WCAG 2.1 AA standards:
+WCAG 2.1 AA sets these thresholds (SC 1.4.3, SC 1.4.11):
 
-- **Text on backgrounds**: Minimum 4.5:1 contrast ratio
-- **Large text (18px+)**: Minimum 3:1 contrast ratio
-- **Interactive elements**: Minimum 3:1 contrast ratio
+- **Text on backgrounds**: 4.5:1 minimum contrast ratio
+- **Large text**: 3:1 minimum — the allowance only applies at 24px+ regular weight or 18.66px+ (14pt) bold; anything smaller still needs 4.5:1
+- **Interactive elements / non-text UI components**: 3:1 minimum contrast ratio
+
+These are targets to check a pairing against, not a guarantee that every combination of the scales above already clears them. The steel (`primary-*`) scale is the clearest case: no single step reaches 3:1 against both a light and a dark surface — the `400` step measures 2.84:1 on white, 2.72:1 on the `50` surface, and 2.61:1 on the `100` surface, and the `500` step measures 2.86:1 on the `800` surface (`focus-ring-contrast.test.ts`). That failure is exactly why the kit's own focus indicator ships as a light/dark *pair* instead of one colour, and it's the reason a dedicated guard exists: it reads the compiled stylesheet, runs each shipped indicator colour through WCAG's own contrast arithmetic, and fails the build if a pair drops under 3:1 in either theme. Every indicator the kit ships today clears it, at 4.09:1–5.16:1 on the light surfaces it checks and 5.19:1–6.96:1 on the dark ones — but that guard's surface list (the page, a card, the tab strip, a dark panel) is a hand-maintained judgement about where these components sit, not derived from the stylesheet, so a shade you place on a background outside that list is unverified. Check your own pairing with the tools below before shipping it.
 
 ### Recommended Pairings
 
 ```tsx
 // ✅ Good contrast
-<div className="bg-primary-500 text-white">High contrast</div>
+<div className="bg-neutral-950 text-white">High contrast</div>
 <div className="bg-neutral-100 text-neutral-900">Good readability</div>
 
 // ❌ Poor contrast
 <div className="bg-primary-300 text-white">Low contrast</div>
 <div className="bg-neutral-200 text-neutral-400">Hard to read</div>
 ```
+
+The first pairing is Button's own `primary` variant — ink, not steel. The `primary-*` scale is reserved for focus rings, selection, and links; it is never a background fill, which is also why it isn't a safe stand-in for "high contrast" on its own.
 
 ### Dark Mode
 

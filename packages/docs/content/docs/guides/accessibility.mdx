@@ -11,7 +11,7 @@ Nim UI components are designed to meet the four WCAG principles:
 
 ### Perceivable
 
-- All text meets minimum contrast ratios (4.5:1 for normal text, 3:1 for large text)
+- Text and interactive colours are chosen against WCAG's ratios; the focus indicator is the one measured and build-guarded case (see [Color Contrast Guidelines](#color-contrast-guidelines))
 - Non-text content has text alternatives
 - Content can be presented in different ways without losing meaning
 - Components work without color as the sole indicator of state
@@ -369,14 +369,14 @@ function EditDialog() {
 
 ## Color Contrast Guidelines
 
-All Nim UI color combinations meet WCAG AA contrast requirements.
+One combination is measured and guarded: the focus indicator. `focus-ring-contrast.test.ts` reads the compiled stylesheet, runs each shipped indicator colour through WCAG's contrast arithmetic, and fails the build under 3:1 in either theme — every indicator currently clears it at 4.09:1--5.16:1 light and 5.19:1--6.96:1 dark. Its surface list is hand-maintained, though, so a component on a background outside that list is unverified, and nothing here measures body text against every surface. Treat the thresholds below as what to check your own pairings against, not as a promise already kept for every combination.
 
 ### Minimum Contrast Ratios
 
 | Content Type | Minimum Ratio | Standard |
 |-------------|--------------|----------|
-| Normal text (< 18px) | 4.5:1 | WCAG AA |
-| Large text (>= 18px or 14px bold) | 3:1 | WCAG AA |
+| Normal text | 4.5:1 | WCAG AA |
+| Large text (24px+ regular, or 18.66px+ / 14pt bold) | 3:1 | WCAG AA |
 | Interactive elements (borders, icons) | 3:1 | WCAG AA |
 | Decorative elements | No requirement | - |
 
