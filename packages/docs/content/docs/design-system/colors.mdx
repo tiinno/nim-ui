@@ -212,81 +212,37 @@ Colors automatically adjust for dark mode:
 
 ## Customizing Colors
 
-### Override Default Colors
+### Override a Scale
 
-Customize the color palette in your Tailwind config:
+Tailwind v4 configures color in CSS, not in a `tailwind.config.js` — v4 does not read one unless you point at it explicitly with `@config`, and a config file left lying around is simply ignored ([Configuration](/getting-started/configuration/) covers this in full). Add your own `@theme` block after importing `@nim-ui/components/styles`, and redeclare the variables you want to change:
 
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          // Your custom primary color scale
-          50: '#fff1f2',
-          100: '#ffe4e6',
-          // ... rest of the scale
-          500: '#f43f5e', // Base color
-          // ... rest of the scale
-          900: '#881337',
-        },
-      },
-    },
-  },
-};
-```
+```css title="src/index.css"
+@import 'tailwindcss';
+@import '@nim-ui/components/styles';
 
-### Add Brand Colors
-
-Add your brand colors alongside the defaults:
-
-```js title="tailwind.config.js"
-export default {
-  theme: {
-    extend: {
-      colors: {
-        brand: {
-          purple: '#8b5cf6',
-          pink: '#ec4899',
-          orange: '#f97316',
-        },
-      },
-    },
-  },
-};
-```
-
-Use in components:
-
-```tsx
-<Button className="bg-brand-purple text-white">
-  Brand Button
-</Button>
-```
-
-### CSS Variables
-
-Use CSS variables for dynamic theming:
-
-```css title="src/styles/theme.css"
-:root {
-  --color-primary: 14 165 233; /* RGB values for #0ea5e9 */
-  --color-success: 34 197 94;
-  --color-danger: 239 68 68;
-}
-
-.dark {
-  --color-primary: 56 189 248; /* Lighter for dark mode */
+@theme {
+  --color-primary-500: oklch(0.58 0.21 300);
+  --color-primary-600: oklch(0.50 0.19 300);
 }
 ```
 
-Use with Tailwind:
+Every component reads its color through the variable (`var(--color-primary-500)`), not a fixed value, so this re-tints the kit everywhere that shade is used — focus rings, links, selection, and more — without touching a component file or rebuilding the library. The order matters: your `@theme` block has to come *after* the import, since both compile into the same `@layer theme` and the later declaration wins. See [Theming](/guides/theming/) for the full override mechanism, including the contrast obligation that comes with retinting `primary`.
 
-```tsx
-<div className="bg-[rgb(var(--color-primary))]">
-  Dynamic color
-</div>
+Note the scale this page surfaces as "Danger" is named `--color-error-*` in `tokens.css`, not `--color-danger` — redeclare that name if you customize it.
+
+### Add a Scale of Your Own
+
+Any `--color-<name>-<shade>` variable declared in a `@theme` block becomes a utility. Add a scale alongside the defaults instead of replacing one:
+
+```css title="src/index.css"
+@theme {
+  --color-brand-50: oklch(0.97 0.02 300);
+  --color-brand-500: oklch(0.58 0.21 300);
+  --color-brand-900: oklch(0.28 0.11 300);
+}
 ```
+
+See [Configuration → Theme Customization](/getting-started/configuration/#theme-customization) for the rest of the `@theme` surface — typography, spacing, and radius alongside color.
 
 ## Color Accessibility
 

@@ -324,22 +324,17 @@ function ThemeToggle() {
 }
 ```
 
-## Tailwind Configuration
+## How Dark Mode Is Wired
 
-Ensure your `tailwind.config.js` uses the class-based dark mode strategy:
+Tailwind v4 has no `darkMode` setting and no `content` array — a `tailwind.config.js` isn't read at all unless you point at it explicitly with `@config`, and one sitting unused does nothing ([Configuration](/getting-started/configuration/) covers this in full). The `dark:` variant this page has been toggling is bound by one declaration, already compiled into the stylesheet you import:
 
-```js title="tailwind.config.js"
-export default {
-  darkMode: 'class',
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nim-ui/components/dist/**/*.js',
-  ],
-  theme: {
-    extend: {},
-  },
-};
+```css
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 ```
+
+This line is declared in `packages/ui/src/styles.css` and ships inside `@import '@nim-ui/components/styles'` — importing that one file, as shown throughout this page, is the entire setup. It matches more than the `.dark` class: an element under a `[data-theme="dark"]` attribute activates `dark:` utilities too, a hook for frameworks that set a `data-theme` attribute instead of a class (this documentation site's own Fumadocs toggle only ever sets `.dark`).
+
+The binding also isn't something your own stylesheet can change. `@import '@nim-ui/components/styles'` brings in an already-compiled bundle in which `@custom-variant` has already been expanded into concrete `:where(...)` selectors on every rule, so redeclaring `@custom-variant dark` yourself — before or after that import — has no effect, and there is no `darkMode` setting to flip instead. See [Theming → Dark mode](/guides/theming/#dark-mode) for the full mechanism, including why a single OKLCH value per shade covers both themes.
 
 ## Best Practices
 

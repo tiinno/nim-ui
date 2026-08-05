@@ -190,17 +190,20 @@ export default {
 
 If styles aren't appearing:
 
-1. Verify Tailwind content paths include Nim UI:
-   ```js
-   content: ['./node_modules/@nim-ui/components/dist/**/*.js']
-   ```
+1. Confirm your CSS entry file is actually imported into your app, not just written to disk — `import './index.css';` in `src/main.tsx`, as shown above. A stylesheet nothing imports compiles nothing.
 
-2. Ensure you imported the component styles:
+2. Confirm that stylesheet uses the v4 import, not a v3 content glob:
+   ```css
+   @import 'tailwindcss';
+   ```
+   Tailwind v4 has no `content` option — a `content: [...]` array from a v3 setup does nothing here, whether it lives in a `tailwind.config.js` (ignored unless loaded with `@config`) or anywhere else, so it can't be the fix. If this file still has the v3 `@tailwind base` / `@tailwind components` / `@tailwind utilities` directives instead of `@import 'tailwindcss'`, see the callout above — that's a silent partial build, not a missing one.
+
+3. Ensure you imported the component styles:
    ```css
    @import '@nim-ui/components/styles';
    ```
 
-3. Check that PostCSS is configured correctly
+4. Check that PostCSS is configured correctly
 
 ### TypeScript Errors
 
