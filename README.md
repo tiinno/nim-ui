@@ -37,10 +37,8 @@ pnpm add -D tailwindcss @tailwindcss/postcss
 
 ```css
 /* src/index.css */
+@import 'tailwindcss';
 @import '@nim-ui/components/styles';
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 ```
 
 ```tsx
@@ -61,11 +59,11 @@ export default function App() {
 | Category | Components |
 |----------|-----------|
 | **Primitives** | Button, ButtonGroup, Text, Kbd, Input, Textarea, Checkbox, Radio, Select, Switch |
-| **Layout** | Container, Grid, Stack, Flex, Spacer, Card, AdminShell, PageHeader, Modal, Drawer, Tabs, ScrollArea, Accordion, Collapsible, Separator |
-| **Data Display** | Badge, StatusPill, Dot, Meter, Avatar, DataTable, DataToolbar, FilterSummary, BulkActionBar, EmptyState, Timeline, DescriptionList, RecordInspector, Snippet, CopyButton, DataCard, MetricCard, Stat |
+| **Layout** | Container, Grid, Stack, Flex, Spacer, Card, AdminShell, PageHeader, Modal, Drawer, Tabs, ScrollArea, Resizable, Accordion, Collapsible, Separator |
+| **Data Display** | Badge, StatusPill, Dot, Meter, Avatar, AvatarGroup, DataTable, DataToolbar, FilterSummary, BulkActionBar, EmptyState, Timeline, DescriptionList, RecordInspector, TreeView, Snippet, CopyButton, Sparkline, BarChart, DataCard, MetricCard, Stat |
 | **Commerce** | ProductCard, CartItem, PriceTag, QuantitySelector |
-| **Landing** | Hero, FeatureGrid, Testimonial, CTA |
-| **Feedback** | Toast, Tooltip, Popover, DropdownMenu, AlertDialog, Alert, Progress, Spinner, Skeleton |
+| **Landing** | Navbar, Hero, FeatureGrid, Testimonial, CTA, Footer |
+| **Feedback** | Toast, Tooltip, Popover, DropdownMenu, AlertDialog, Alert, Banner, Progress, Spinner, Skeleton |
 | **Forms** | Form, FormLayout, FormField, Fieldset, Combobox, Calendar, DatePicker, TimePicker, DateTimePicker, DateFilter, MultiSelect, TagsInput, FileUpload, NumberInput, PasswordInput, Stepper, Slider |
 | **Navigation** | Breadcrumb, Link, SidebarNav, CommandMenu, ViewSwitcher, Pagination |
 
@@ -87,7 +85,7 @@ pnpm lint           # Lint code
 nim-ui/
 ├── packages/
 │   ├── ui/               # Component library
-│   ├── docs/             # Documentation (Astro + Starlight)
+│   ├── docs/             # Documentation (Next.js 16 + Fumadocs)
 │   ├── tailwind-config/  # Shared Tailwind config
 │   └── mcp-server/       # MCP server for AI assistants
 ├── turbo.json            # Turborepo config
