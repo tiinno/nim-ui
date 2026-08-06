@@ -8,16 +8,19 @@ This package provides an MCP server that exposes Nim UI components, design token
 
 ## Installation
 
+Nothing to install ahead of time — point your MCP client at it and `npx` fetches it on first run:
+
 ```bash
-# Install dependencies
-pnpm install
-
-# Build the server
-pnpm run build
-
-# Run the server
-pnpm run start
+npx -y @nim-ui/mcp-server
 ```
+
+It speaks JSON-RPC over stdio and is meant to be launched by a client rather than run by hand; the
+command above is mostly useful for checking that it starts.
+
+The package is self-contained. The component registry and the design tokens are compiled into the
+binary, and the component sources ship alongside it, so it needs no other `@nim-ui` package
+installed — and in particular **not** `@nim-ui/components`, which would drag React in as a peer
+dependency of a server that only emits text.
 
 ## Available Tools
 
@@ -103,8 +106,8 @@ To use this MCP server with Claude Desktop or other MCP clients, add it to your 
 {
   "mcpServers": {
     "nim-ui": {
-      "command": "node",
-      "args": ["/path/to/nim-ui/packages/mcp-server/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "@nim-ui/mcp-server"]
     }
   }
 }
@@ -112,6 +115,9 @@ To use this MCP server with Claude Desktop or other MCP clients, add it to your 
 
 For Claude Desktop on macOS, this configuration file is typically located at:
 `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+To run a local checkout instead, point `command` at `node` and `args` at this package's
+`dist/index.js` — after a build, since the sources it serves are copied into `dist` by the build.
 
 ## Development
 
@@ -139,10 +145,19 @@ The server is built using:
 
 ## Data Sources
 
-The server reads from:
-- Component registry: `packages/ui/src/registry/index.json`
-- Design tokens: `packages/tailwind-config/src/tokens.js`
-- Component source code: `packages/ui/src/components/*.tsx`
+All three come from this repository at build time and ship inside the package:
+
+| Data | Source | How it ships |
+|---|---|---|
+| Component registry | `packages/ui/src/registry/index.json` | inlined into `dist/index.js` |
+| Design tokens | `packages/tailwind-config/src/tokens.js` | inlined into `dist/index.js` |
+| Component source | `packages/ui/src/components/*.tsx` | copied to `dist/sources/` by the build |
+
+Nothing is read from a sibling package at runtime. It used to be, through paths relative to the
+binary, and that worked only because of where this package sits in the monorepo — installed from
+npm the same paths pointed at `@nim-ui/ui` (no such package) and at `@nim-ui/tailwind-config`
+(`private: true`), so the server exited 1 on startup for every consumer. `src/packaged-layout.test.ts`
+now runs the packaged files from a simulated `node_modules` install and fails if that regresses.
 
 ## Error Handling
 

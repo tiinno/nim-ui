@@ -1,10 +1,8 @@
 {
   "mcpServers": {
     "nim-ui": {
-      "command": "node",
-      "args": [
-        "/Users/YOUR_USERNAME/Project/HOBBY/utils/nim-ui/packages/mcp-server/dist/index.js"
-      ]
+      "command": "npx",
+      "args": ["-y", "@nim-ui/mcp-server"]
     }
   }
 }

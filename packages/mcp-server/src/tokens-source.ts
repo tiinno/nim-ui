@@ -14,8 +14,14 @@
  * yields nothing. NIMUI-61 rewrote large parts of that file and nothing here
  * would have noticed if the shape had broken.
  *
- * It is an ES module with a named export, so it is now imported as one. No
- * regex, no evaluated substring, and formatting stops mattering.
+ * NIMUI-93 finished that move. There is no loader left at all: `index.ts`
+ * imports `tokens` from `@nim-ui/tailwind-config/tokens` statically and tsup
+ * inlines it. A `loadTokens(specifier)` that dynamically imported a path on
+ * disk is what made the published server unstartable — the path pointed at a
+ * `private: true` package that will never be on the registry — and its one
+ * runtime check, "throw if the module has no `tokens` export", is now a
+ * compile error instead. That is strictly stronger: it fails the build rather
+ * than the binary, and it cannot be reached in production at all.
  */
 
 /** The token object shape this server serves. Loose on purpose — the source owns it. */
@@ -42,29 +48,6 @@ export const NO_SPACING_TOKENS =
   "Nim UI declares no spacing tokens. Spacing comes from Tailwind's own scale — `p-4` is " +
   '`calc(var(--spacing) * 4)`, 16px at the default 0.25rem base — and the kit uses it ' +
   'directly rather than naming its own steps.\n\n';
-
-/**
- * Import the `tokens` object from a `tokens.js` on disk.
- *
- * `specifier` is a file URL rather than a path: Node's ESM loader rejects a
- * bare Windows path, and this server is developed on one.
- *
- * Throws if the module has no `tokens` export, which is the case worth failing
- * loudly on — a server that starts and serves `undefined` fields looks healthy.
- */
-export async function loadTokens(specifier: string): Promise<TokensData> {
-  const module = (await import(/* @vite-ignore */ specifier)) as { tokens?: TokensData };
-
-  if (module.tokens === undefined) {
-    throw new Error(
-      `No \`tokens\` export in ${specifier}. This server mirrors ` +
-        '@nim-ui/tailwind-config/tokens; if that module was renamed or restructured, this is ' +
-        'where it surfaces.'
-    );
-  }
-
-  return module.tokens;
-}
 
 /** One `## Heading` + fenced JSON section. */
 export function formatTokenSection(tokens: unknown, category: string): string {

@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { resolve } from 'path';
-import { pathToFileURL } from 'url';
-import { loadTokens, renderTokens, formatTokenSection, NO_SPACING_TOKENS } from './tokens-source.js';
+import { renderTokens, formatTokenSection, NO_SPACING_TOKENS, type TokensData } from './tokens-source.js';
+import { tokens as realTokens } from '@nim-ui/tailwind-config/tokens';
 
 /**
  * The first tests this package has ever had.
@@ -13,26 +12,32 @@ import { loadTokens, renderTokens, formatTokenSection, NO_SPACING_TOKENS } from 
  * `tsc --noEmit` behind it.
  *
  * What is covered here is the part that can break without anyone noticing: the
- * token load, and the document the tool returns. The server wiring is not —
- * `index.ts` self-starts a stdio server on import, so it cannot be imported by
- * a test, which is why the fragile logic was moved out rather than tested in
- * place.
+ * shape of the tokens object, and the document the tool returns. The server
+ * wiring is not — `index.ts` self-starts a stdio server on import, so it cannot
+ * be imported by a test, which is why the fragile logic was moved out rather
+ * than tested in place. `server.integration.test.ts` covers the wiring by
+ * spawning the built binary.
+ *
+ * NIMUI-93 removed the `loadTokens` these tests used to call. There is no
+ * loader to test any more: the tokens arrive by static import, exactly as
+ * `index.ts` takes them, so this file exercises the same module the shipped
+ * server inlines. The one case that went with it — "throws when the module has
+ * no `tokens` export" — is now a compile error, which is a stronger guard than
+ * the runtime throw it replaced and cannot be asserted from here.
  */
 
-const TOKENS_MODULE = pathToFileURL(resolve(__dirname, '../../tailwind-config/src/tokens.js')).href;
+const tokens = realTokens as TokensData;
 
-describe('loadTokens', () => {
-  it('imports the real tokens module this server ships against', async () => {
-    const tokens = await loadTokens(TOKENS_MODULE);
-
+describe('the tokens module this server ships against', () => {
+  it('has exactly the four groups the renderer knows how to serve', () => {
     expect(Object.keys(tokens).sort()).toEqual(['animation', 'borderRadius', 'colors', 'typography']);
   });
 
-  it('serves no spacing scale, because the kit declares none', async () => {
-    const tokens = (await loadTokens(TOKENS_MODULE)) as unknown as Record<string, unknown>;
+  it('declares no spacing scale, because the kit declares none', () => {
+    const asRecord = tokens as unknown as Record<string, unknown>;
 
     expect(
-      'spacing' in tokens,
+      'spacing' in asRecord,
       'A `spacing` key is back in tokens.js. NIMUI-61 removed it because it had no counterpart ' +
         'in any stylesheet, and this server was handing those values to clients as if they ' +
         'shipped. If spacing tokens are real now, `renderTokens` should serve them instead of ' +
@@ -40,35 +45,25 @@ describe('loadTokens', () => {
     ).toBe(false);
     expect('fontSize' in (tokens.typography as object)).toBe(false);
   });
-
-  it('fails loudly when the module has no tokens export', async () => {
-    const notATokensModule = pathToFileURL(resolve(__dirname, './tokens-source.js')).href;
-
-    await expect(loadTokens(notATokensModule)).rejects.toThrow(/No `tokens` export/);
-  });
 });
 
 describe('renderTokens', () => {
-  it('renders every section for "all", including animation', async () => {
-    const output = renderTokens(await loadTokens(TOKENS_MODULE), 'all');
+  it('renders every section for "all", including animation', () => {
+    const output = renderTokens(tokens, 'all');
 
     for (const heading of ['## Colors', '## Spacing', '## BorderRadius', '## Typography', '## Animation']) {
       expect(output, `"${heading}" is missing from the "all" document.`).toContain(heading);
     }
   });
 
-  it('explains the missing spacing scale rather than omitting it', async () => {
-    const tokens = await loadTokens(TOKENS_MODULE);
-
+  it('explains the missing spacing scale rather than omitting it', () => {
     // Silence would read as "not loaded" to a client, which is the failure this
     // wording exists to prevent.
     expect(renderTokens(tokens, 'all')).toContain(NO_SPACING_TOKENS);
     expect(renderTokens(tokens, 'spacing')).toContain(NO_SPACING_TOKENS);
   });
 
-  it('keeps each tokenType to its own sections', async () => {
-    const tokens = await loadTokens(TOKENS_MODULE);
-
+  it('keeps each tokenType to its own sections', () => {
     const colors = renderTokens(tokens, 'colors');
     expect(colors).toContain('## Colors');
     expect(colors).not.toContain('## Typography');
@@ -82,8 +77,7 @@ describe('renderTokens', () => {
     expect(spacing).not.toContain('## Colors');
   });
 
-  it('serves values a client can read back', async () => {
-    const tokens = await loadTokens(TOKENS_MODULE);
+  it('serves values a client can read back', () => {
     const output = renderTokens(tokens, 'colors');
 
     const fenced = /```json\n([\s\S]*?)\n```/.exec(output);

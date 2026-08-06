@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { spawn, type ChildProcessWithoutNullStreams } from 'child_process';
 import { existsSync } from 'fs';
 import { resolve } from 'path';
+import { StdioClient } from './stdio-client.js';
 
 /**
  * The server wiring, driven over the real protocol.
@@ -23,77 +23,19 @@ import { resolve } from 'path';
  *
  * Correlation is by request id with a real timeout, not by sleeping. Fixed
  * sleeps are what make process tests flaky on a loaded CI machine.
+ *
+ * The client itself lives in `stdio-client.ts` — NIMUI-93 moved it there so
+ * `packaged-layout.test.ts` could drive a different copy of the same binary
+ * with the same code. **This file drives the workspace copy, and that is a
+ * blind spot, not an oversight**: reading data through `../../ui/src` works
+ * from `packages/mcp-server/dist` and fails from a real install, so everything
+ * here passed while the published package was unstartable. Assertions about
+ * what a *consumer* gets belong in the other file.
  */
 
 const DIST = resolve(__dirname, '../dist/index.js');
 
-interface Response {
-  id?: number;
-  result?: { content?: Array<{ type: string; text: string }>; tools?: Array<{ name: string; inputSchema: unknown }>; serverInfo?: { name: string } };
-  error?: { message: string };
-}
-
-class Client {
-  private child: ChildProcessWithoutNullStreams;
-  private buffer = '';
-  private pending = new Map<number, (value: Response) => void>();
-  private nextId = 1;
-  stderr = '';
-
-  constructor() {
-    this.child = spawn(process.execPath, [DIST], { stdio: ['pipe', 'pipe', 'pipe'] });
-    this.child.stderr.on('data', (d) => (this.stderr += String(d)));
-    this.child.stdout.on('data', (d) => {
-      this.buffer += String(d);
-      let newline: number;
-      while ((newline = this.buffer.indexOf('\n')) !== -1) {
-        const line = this.buffer.slice(0, newline).trim();
-        this.buffer = this.buffer.slice(newline + 1);
-        if (!line) continue;
-        try {
-          const message = JSON.parse(line) as Response;
-          if (message.id !== undefined) this.pending.get(message.id)?.(message);
-        } catch {
-          // Not a JSON-RPC frame; the server also writes progress to stderr.
-        }
-      }
-    });
-  }
-
-  request(method: string, params?: unknown, timeoutMs = 10_000): Promise<Response> {
-    const id = this.nextId++;
-    return new Promise((resolveResponse, rejectResponse) => {
-      const timer = setTimeout(
-        () => rejectResponse(new Error(`No response to ${method} in ${timeoutMs}ms. stderr:\n${this.stderr}`)),
-        timeoutMs
-      );
-      this.pending.set(id, (value) => {
-        clearTimeout(timer);
-        resolveResponse(value);
-      });
-      this.child.stdin.write(`${JSON.stringify({ jsonrpc: '2.0', id, method, params })}\n`);
-    });
-  }
-
-  notify(method: string): void {
-    this.child.stdin.write(`${JSON.stringify({ jsonrpc: '2.0', method })}\n`);
-  }
-
-  async call(name: string, args: Record<string, unknown>): Promise<string> {
-    const response = await this.request('tools/call', { name, arguments: args });
-    const text = response.result?.content?.[0]?.text;
-    if (typeof text !== 'string') {
-      throw new Error(`No text content from ${name}: ${JSON.stringify(response).slice(0, 300)}`);
-    }
-    return text;
-  }
-
-  kill(): void {
-    this.child.kill();
-  }
-}
-
-let client: Client;
+let client: StdioClient;
 
 beforeAll(async () => {
   expect(
@@ -102,26 +44,17 @@ beforeAll(async () => {
       'if this fails the pipeline changed and every assertion below would have been skipped.'
   ).toBe(true);
 
-  client = new Client();
-  await client.request('initialize', {
-    protocolVersion: '2024-11-05',
-    capabilities: {},
-    clientInfo: { name: 'nim-integration-test', version: '0' },
-  });
-  client.notify('notifications/initialized');
+  client = new StdioClient(DIST);
+  await client.handshake();
 }, 30_000);
 
 afterAll(() => client?.kill());
 
 describe('the built server over stdio', () => {
   it('completes the initialize handshake as nim-ui-mcp', async () => {
-    const fresh = new Client();
+    const fresh = new StdioClient(DIST);
     try {
-      const response = await fresh.request('initialize', {
-        protocolVersion: '2024-11-05',
-        capabilities: {},
-        clientInfo: { name: 'nim-integration-test', version: '0' },
-      });
+      const response = await fresh.handshake();
       expect(response.result?.serverInfo?.name).toBe('nim-ui-mcp');
     } finally {
       fresh.kill();

@@ -103,6 +103,9 @@ importers:
       '@nim-ui/components':
         specifier: workspace:*
         version: link:../ui
+      '@nim-ui/tailwind-config':
+        specifier: workspace:*
+        version: link:../tailwind-config
       '@types/node':
         specifier: ^22.10.5
         version: 22.19.11

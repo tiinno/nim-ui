@@ -31,7 +31,7 @@
     "claude-desktop-config.example.json"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && node scripts/copy-sources.mjs",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
     "start": "node dist/index.js",
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@nim-ui/components": "workspace:*",
+    "@nim-ui/tailwind-config": "workspace:*",
     "@types/node": "^22.10.5",
     "tsup": "^8.3.5",
     "typescript": "^5.9.3",
