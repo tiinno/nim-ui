@@ -86,7 +86,7 @@ class NimMCPServer {
     this.server = new Server(
       {
         name: 'nim-ui-mcp',
-        version: '0.0.0',
+        version: '0.1.0',
       },
       {
         capabilities: { tools: {} },

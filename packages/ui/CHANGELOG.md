@@ -3,11 +3,19 @@
 All notable changes to `@nim-ui/components` are recorded here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and
-the project intends to follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-Nothing has been published yet — the package sits at `0.0.0` and is consumed
-from the workspace — so everything so far lives under Unreleased.
+the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.0] - 2026-08-06
+
+First tagged version. `0.1.0` rather than `1.0.0` deliberately: the kit is
+complete enough to use, and its API is not frozen — a minor bump may still
+change a prop or a variant name. Wait for `1.0.0` before depending on the
+surface staying put.
+
+Everything below had accumulated under Unreleased while the package sat at
+`0.0.0`; this is the release that ships it.
 
 ### Added
 
@@ -63,8 +71,8 @@ from the workspace — so everything so far lives under Unreleased.
   Colour and opacity transitions (~55 sites) also stop being clamped. A
   crossfade moves nothing, so this is the intent rather than a side effect.
 
-  **Not a semver event.** The package is at `0.0.0`, has zero git tags and no
-  publish workflow, so nothing has ever been released with the old behaviour.
-  If this lands before the first publish there is no version to bump and no
-  migration to run; it is simply what `0.1.0` will ship. If a release somehow
-  precedes it, treat it as breaking — the restore line above is the migration.
+  **Not a semver event.** It landed before the first publish, so nothing was
+  ever released with the old behaviour: there is no version to bump and no
+  migration to run. It is simply what `0.1.0` ships. The restore line above is
+  for anyone who was consuming the package from the workspace and wants the
+  previous behaviour back.

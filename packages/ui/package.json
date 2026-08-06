@@ -1,6 +1,6 @@
 {
   "name": "@nim-ui/components",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Quiet, accessible React UI kit for dashboards, backoffice, and commerce operations. 91 components, Tailwind CSS v4, React 19.",
   "keywords": [
     "react",
