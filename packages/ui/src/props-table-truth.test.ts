@@ -85,12 +85,22 @@ import ts from 'typescript';
  *
  * ## Coverage, stated
  *
- * 90 component pages, 84 of which carry a table; 158 tables; 95 variant groups
- * a consumer can pass to an exported component, of which **95 are compared
+ * 90 component pages, 84 of which carry a table; 157 tables; 93 variant groups
+ * a consumer can pass to an exported component, of which **93 are compared
  * against a documented row and none are left undocumented** (NIMUI-87 closed
  * the 8 that were). 30 tables belong to components that declare no props
  * type, and a separate assertion proves those components reference no cva —
  * so "nothing to check there" is a fact rather than an assumption.
+ *
+ * The inventory FELL by two in NIMUI-89, and that direction is normally the
+ * dangerous one, so read the reason rather than the number: `RecordInspector`
+ * and `RecordInspectorBody` each declared a density group whose every key was
+ * the empty string. Both were cva-backed props that emitted nothing at all. The
+ * root now provides its value to the parts through context instead of declaring
+ * a group of its own, the body's inert prop is gone, and the table documenting
+ * it went with it. Note what this guard could NOT see: both sides agreed
+ * perfectly, and what they agreed on did nothing — a documented enum matching
+ * its cva says the table is true, never that the prop is wired to anything.
  *
  * That statement was false when this file first landed, in the way it was
  * written to prevent. The cva lookup was per-file, so `PasswordInput`'s two
@@ -261,9 +271,9 @@ const EXPECTED_SCAN = {
   /** Documentation pages under `content/docs/components`. */
   pages: 90,
   /** `<PropsTable>` blocks found on them. */
-  tables: 158,
+  tables: 157,
   /** Variant groups an exported component accepts as props. */
-  consumerFacingGroups: 95,
+  consumerFacingGroups: 93,
   /**
    * Tables whose component declares no props type anywhere — subcomponents that
    * take a plain element's attributes. Nothing to compare, and the assertion
@@ -272,11 +282,11 @@ const EXPECTED_SCAN = {
    */
   tablesWithoutAPropsDeclaration: 30,
   /** Table rows compared against a cva group. */
-  comparisons: 95,
+  comparisons: 93,
   /** Of those, compared value-for-value (the rest are boolean groups). */
-  enumComparisons: 82,
+  enumComparisons: 80,
   /** Of those, whose default was compared against `defaultVariants`. */
-  defaultComparisons: 82,
+  defaultComparisons: 80,
 };
 
 // ---------------------------------------------------------------------------

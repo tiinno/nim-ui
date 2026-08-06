@@ -167,7 +167,7 @@ import {
       name: 'density',
       type: "'comfortable' | 'compact'",
       default: "'comfortable'",
-      description: 'Adjusts panel spacing for full-page detail views or tighter side panels.',
+      description: 'Sets the spacing the whole panel runs at. RecordInspectorHeader and RecordInspectorSection inherit this value, and either can pass its own density to override it.',
     },
     {
       name: 'aria-label',
@@ -185,20 +185,7 @@ import {
       name: 'density',
       type: "'comfortable' | 'compact'",
       default: "'comfortable'",
-      description: "Adjusts the header's padding for compact side panels or full-page detail views.",
-    },
-  ]}
-/>
-
-### RecordInspectorBody
-
-<PropsTable
-  props={[
-    {
-      name: 'density',
-      type: "'comfortable' | 'compact'",
-      default: "'comfortable'",
-      description: 'Density for the body wrapper, which supplies the dividing lines between sections rather than padding of its own. Set the same value on RecordInspectorHeader and RecordInspectorSection to change spacing throughout the panel.',
+      description: "Overrides the header's padding. Inherited from RecordInspector when it is not set.",
     },
   ]}
 />
@@ -211,7 +198,7 @@ import {
       name: 'density',
       type: "'comfortable' | 'compact'",
       default: "'comfortable'",
-      description: "Adjusts the section's padding for compact side panels or full-page detail views.",
+      description: "Overrides the section's padding. Inherited from RecordInspector when it is not set.",
     },
   ]}
 />
@@ -247,4 +234,4 @@ import {
 - Use RecordInspector beside a table, inside a Drawer, or as the detail column in a split view.
 - Keep the header focused on identity, state, and immediate actions.
 - Use metadata for stable facts and Timeline for events that changed over time.
-- Prefer compact density when the inspector sits in a side panel next to a data table.
+- Prefer compact density when the inspector sits in a side panel next to a data table. Set it once on RecordInspector; the header and every section follow.

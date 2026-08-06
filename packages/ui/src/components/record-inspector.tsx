@@ -2,19 +2,14 @@ import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
+// The root paints the panel and spends nothing on spacing itself: every gap a
+// reader sees belongs to the header or to a section. It therefore has no
+// density group of its own — it *provides* the value the parts spend, through
+// the context below. It used to declare one whose two keys were both the empty
+// string, which is how a prop on the most obvious component in the family could
+// do nothing at all without erroring, warning, or looking any different.
 const recordInspectorVariants = cva(
-  'flex min-w-0 flex-col overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-950 shadow-soft dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50',
-  {
-    variants: {
-      density: {
-        comfortable: '',
-        compact: '',
-      },
-    },
-    defaultVariants: {
-      density: 'comfortable',
-    },
-  }
+  'flex min-w-0 flex-col overflow-hidden rounded-md border border-neutral-200 bg-white text-neutral-950 shadow-soft dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50'
 );
 
 const recordInspectorHeaderVariants = cva(
@@ -32,19 +27,11 @@ const recordInspectorHeaderVariants = cva(
   }
 );
 
+// Same reasoning as the root: the body draws the dividing lines between
+// sections and no spacing, so there is nothing for a density to change here.
+// The sections it wraps carry the padding, and they read the root's value.
 const recordInspectorBodyVariants = cva(
-  'min-w-0 divide-y divide-neutral-200 dark:divide-neutral-800',
-  {
-    variants: {
-      density: {
-        comfortable: '',
-        compact: '',
-      },
-    },
-    defaultVariants: {
-      density: 'comfortable',
-    },
-  }
+  'min-w-0 divide-y divide-neutral-200 dark:divide-neutral-800'
 );
 
 const recordInspectorSectionVariants = cva('min-w-0', {
@@ -87,17 +74,47 @@ const recordInspectorFooterVariants = cva(
   }
 );
 
-export interface RecordInspectorProps
-  extends React.HTMLAttributes<HTMLElement>,
-    VariantProps<typeof recordInspectorVariants> {}
+/**
+ * The one density the whole panel runs at.
+ *
+ * Derived from the header's class factory rather than written out again, so the
+ * value a consumer may pass stays tied to the keys that are actually spent.
+ */
+type RecordInspectorDensity = NonNullable<
+  VariantProps<typeof recordInspectorHeaderVariants>['density']
+>;
+
+interface RecordInspectorContextValue {
+  density: RecordInspectorDensity;
+}
+
+/**
+ * Defaulted to the same value the class factories declare, so a header or a
+ * section rendered on its own — inside a drawer, or in a test — renders exactly
+ * as it does inside an inspector instead of failing for want of a provider.
+ */
+const RecordInspectorContext = React.createContext<RecordInspectorContextValue>({
+  density: 'comfortable',
+});
+
+export interface RecordInspectorProps extends React.HTMLAttributes<HTMLElement> {
+  /**
+   * Spacing for the whole panel. RecordInspectorHeader and
+   * RecordInspectorSection inherit it, and either can pass its own to opt out
+   * of the inherited value.
+   */
+  density?: RecordInspectorDensity;
+}
 
 const RecordInspector = React.forwardRef<HTMLElement, RecordInspectorProps>(
-  ({ className, density, ...props }, ref) => (
-    <section
-      ref={ref}
-      className={cn(recordInspectorVariants({ density }), className)}
-      {...props}
-    />
+  ({ className, density = 'comfortable', ...props }, ref) => (
+    <RecordInspectorContext.Provider value={{ density }}>
+      <section
+        ref={ref}
+        className={cn(recordInspectorVariants(), className)}
+        {...props}
+      />
+    </RecordInspectorContext.Provider>
   )
 );
 RecordInspector.displayName = 'RecordInspector';
@@ -109,13 +126,20 @@ export interface RecordInspectorHeaderProps
 const RecordInspectorHeader = React.forwardRef<
   HTMLDivElement,
   RecordInspectorHeaderProps
->(({ className, density, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(recordInspectorHeaderVariants({ density }), className)}
-    {...props}
-  />
-));
+>(({ className, density, ...props }, ref) => {
+  const context = React.useContext(RecordInspectorContext);
+
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        recordInspectorHeaderVariants({ density: density ?? context.density }),
+        className
+      )}
+      {...props}
+    />
+  );
+});
 RecordInspectorHeader.displayName = 'RecordInspectorHeader';
 
 const RecordInspectorHeading = React.forwardRef<
@@ -171,15 +195,13 @@ const RecordInspectorActions = React.forwardRef<
 ));
 RecordInspectorActions.displayName = 'RecordInspectorActions';
 
-export interface RecordInspectorBodyProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof recordInspectorBodyVariants> {}
+export type RecordInspectorBodyProps = React.HTMLAttributes<HTMLDivElement>;
 
 const RecordInspectorBody = React.forwardRef<HTMLDivElement, RecordInspectorBodyProps>(
-  ({ className, density, ...props }, ref) => (
+  ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(recordInspectorBodyVariants({ density }), className)}
+      className={cn(recordInspectorBodyVariants(), className)}
       {...props}
     />
   )
@@ -191,13 +213,20 @@ export interface RecordInspectorSectionProps
     VariantProps<typeof recordInspectorSectionVariants> {}
 
 const RecordInspectorSection = React.forwardRef<HTMLElement, RecordInspectorSectionProps>(
-  ({ className, density, ...props }, ref) => (
-    <section
-      ref={ref}
-      className={cn(recordInspectorSectionVariants({ density }), className)}
-      {...props}
-    />
-  )
+  ({ className, density, ...props }, ref) => {
+    const context = React.useContext(RecordInspectorContext);
+
+    return (
+      <section
+        ref={ref}
+        className={cn(
+          recordInspectorSectionVariants({ density: density ?? context.density }),
+          className
+        )}
+        {...props}
+      />
+    );
+  }
 );
 RecordInspectorSection.displayName = 'RecordInspectorSection';
 

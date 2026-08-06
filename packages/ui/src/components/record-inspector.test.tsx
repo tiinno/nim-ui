@@ -105,7 +105,7 @@ describe('RecordInspector', () => {
   it('supports section descriptions, density, custom columns, and custom classes', () => {
     render(
       <RecordInspector density="compact" className="custom-inspector">
-        <RecordInspectorBody density="compact">
+        <RecordInspectorBody>
           <RecordInspectorSection density="compact" aria-labelledby="risk-title">
             <RecordInspectorSectionHeader>
               <RecordInspectorSectionTitle id="risk-title">
@@ -131,5 +131,59 @@ describe('RecordInspector', () => {
     expect(screen.getByText('82')).toBeInTheDocument();
     expect(screen.getByText('82').closest('dl')).toHaveClass('custom-metadata');
     expect(screen.getByText('Risk review').closest('section')).toHaveClass('px-3');
+  });
+
+  // The root is the first place a consumer reaches for density, and until
+  // NIMUI-89 it was the one place that did nothing: the prop resolved to an
+  // empty string on the root's own class factory and reached no child, so
+  // compact spacing had to be repeated on every part.
+  it('passes the root density down to a header and a section that set none', () => {
+    render(
+      <RecordInspector density="compact" aria-label="Compact inspector">
+        <RecordInspectorHeader data-testid="header">
+          <RecordInspectorHeading>
+            <RecordInspectorTitle>ORD-4821</RecordInspectorTitle>
+          </RecordInspectorHeading>
+        </RecordInspectorHeader>
+        <RecordInspectorBody>
+          <RecordInspectorSection data-testid="section" aria-label="Summary">
+            <RecordInspectorSectionTitle>Summary</RecordInspectorSectionTitle>
+          </RecordInspectorSection>
+        </RecordInspectorBody>
+      </RecordInspector>
+    );
+
+    expect(screen.getByTestId('header')).toHaveClass('px-3', 'py-3', 'sm:px-4');
+    expect(screen.getByTestId('section')).toHaveClass('px-3', 'py-3', 'sm:px-4');
+  });
+
+  it('lets a part override the inherited density', () => {
+    render(
+      <RecordInspector density="compact" aria-label="Mixed inspector">
+        <RecordInspectorHeader data-testid="header" density="comfortable">
+          <RecordInspectorHeading>
+            <RecordInspectorTitle>ORD-4821</RecordInspectorTitle>
+          </RecordInspectorHeading>
+        </RecordInspectorHeader>
+        <RecordInspectorBody>
+          <RecordInspectorSection data-testid="section" aria-label="Summary">
+            <RecordInspectorSectionTitle>Summary</RecordInspectorSectionTitle>
+          </RecordInspectorSection>
+        </RecordInspectorBody>
+      </RecordInspector>
+    );
+
+    expect(screen.getByTestId('header')).toHaveClass('px-4', 'py-4', 'sm:px-5');
+    expect(screen.getByTestId('section')).toHaveClass('px-3', 'py-3', 'sm:px-4');
+  });
+
+  it('renders a part outside an inspector at the default density', () => {
+    render(
+      <RecordInspectorSection data-testid="section" aria-label="Standalone summary">
+        <RecordInspectorSectionTitle>Summary</RecordInspectorSectionTitle>
+      </RecordInspectorSection>
+    );
+
+    expect(screen.getByTestId('section')).toHaveClass('px-4', 'py-4', 'sm:px-5');
   });
 });

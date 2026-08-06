@@ -303,7 +303,7 @@ export function BackofficeOperationsTemplateDemo() {
               </section>
 
               <RecordInspector aria-labelledby="selected-order-title" density="compact">
-                <RecordInspectorHeader density="compact">
+                <RecordInspectorHeader>
                   <RecordInspectorHeading>
                     <RecordInspectorTitle id="selected-order-title">ORD-4821</RecordInspectorTitle>
                     <RecordInspectorDescription>Northwind Supply · B2B portal</RecordInspectorDescription>
@@ -313,7 +313,7 @@ export function BackofficeOperationsTemplateDemo() {
                   </RecordInspectorStatus>
                 </RecordInspectorHeader>
                 <RecordInspectorBody>
-                  <RecordInspectorSection density="compact">
+                  <RecordInspectorSection>
                     <RecordInspectorSectionHeader>
                       <RecordInspectorSectionTitle>Fulfillment decision</RecordInspectorSectionTitle>
                       <RecordInspectorSectionDescription>
@@ -339,7 +339,7 @@ export function BackofficeOperationsTemplateDemo() {
                       </RecordInspectorMetadataItem>
                     </RecordInspectorMetadata>
                   </RecordInspectorSection>
-                  <RecordInspectorSection density="compact">
+                  <RecordInspectorSection>
                     <RecordInspectorSectionHeader>
                       <RecordInspectorSectionTitle>Latest activity</RecordInspectorSectionTitle>
                     </RecordInspectorSectionHeader>
