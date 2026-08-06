@@ -186,4 +186,55 @@ describe('RecordInspector', () => {
 
     expect(screen.getByTestId('section')).toHaveClass('px-4', 'py-4', 'sm:px-5');
   });
+
+  // NIMUI-91: the footer was left out of NIMUI-89 — it never declared a density
+  // group at all, so a compact inspector tightened the header and every section
+  // and then ended with a footer at its original spacing.
+  it('passes the root density down to a footer that sets none', () => {
+    render(
+      <RecordInspector density="compact" aria-label="Compact inspector">
+        <RecordInspectorFooter data-testid="footer" aria-label="Decision actions" />
+      </RecordInspector>
+    );
+
+    expect(screen.getByTestId('footer')).toHaveClass('px-3', 'py-2');
+  });
+
+  // Both directions on purpose. Asserting only the comfortable override would
+  // pass against a footer that ignores density entirely — comfortable is what
+  // it emitted unconditionally before NIMUI-91 — so that half cannot fail and
+  // proves nothing on its own. The compact override is the half with teeth.
+  it('lets a footer override the inherited density, in either direction', () => {
+    render(
+      <>
+        <RecordInspector density="compact" aria-label="Compact inspector">
+          <RecordInspectorFooter
+            data-testid="comfortable-footer"
+            aria-label="Decision actions"
+            density="comfortable"
+          />
+        </RecordInspector>
+        <RecordInspector density="comfortable" aria-label="Comfortable inspector">
+          <RecordInspectorFooter
+            data-testid="compact-footer"
+            aria-label="Review actions"
+            density="compact"
+          />
+        </RecordInspector>
+      </>
+    );
+
+    expect(screen.getByTestId('comfortable-footer')).toHaveClass('px-4', 'py-3');
+    expect(screen.getByTestId('compact-footer')).toHaveClass('px-3', 'py-2');
+  });
+
+  it('composes a compact density with a sticky footer without either class fighting the other', () => {
+    render(
+      <RecordInspector density="compact" aria-label="Compact sticky inspector">
+        <RecordInspectorFooter data-testid="footer" aria-label="Decision actions" sticky />
+      </RecordInspector>
+    );
+
+    expect(screen.getByTestId('footer')).toHaveClass('px-3', 'py-2', 'sticky', 'bottom-0');
+  });
 });

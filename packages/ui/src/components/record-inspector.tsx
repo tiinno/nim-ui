@@ -60,15 +60,20 @@ const recordInspectorMetadataVariants = cva('grid min-w-0 gap-x-4 gap-y-3', {
 });
 
 const recordInspectorFooterVariants = cva(
-  'flex flex-col-reverse gap-2 border-t border-neutral-200 bg-neutral-50 px-4 py-3 dark:border-neutral-800 dark:bg-neutral-900/40 sm:flex-row sm:items-center sm:justify-end',
+  'flex flex-col-reverse gap-2 border-t border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900/40 sm:flex-row sm:items-center sm:justify-end',
   {
     variants: {
+      density: {
+        comfortable: 'px-4 py-3',
+        compact: 'px-3 py-2',
+      },
       sticky: {
         true: 'sticky bottom-0',
         false: '',
       },
     },
     defaultVariants: {
+      density: 'comfortable',
       sticky: false,
     },
   }
@@ -99,9 +104,9 @@ const RecordInspectorContext = React.createContext<RecordInspectorContextValue>(
 
 export interface RecordInspectorProps extends React.HTMLAttributes<HTMLElement> {
   /**
-   * Spacing for the whole panel. RecordInspectorHeader and
-   * RecordInspectorSection inherit it, and either can pass its own to opt out
-   * of the inherited value.
+   * Spacing for the whole panel. RecordInspectorHeader, RecordInspectorSection
+   * and RecordInspectorFooter inherit it, and any of the three can pass its
+   * own to opt out of the inherited value.
    */
   density?: RecordInspectorDensity;
 }
@@ -315,14 +320,21 @@ export interface RecordInspectorFooterProps
     VariantProps<typeof recordInspectorFooterVariants> {}
 
 const RecordInspectorFooter = React.forwardRef<HTMLDivElement, RecordInspectorFooterProps>(
-  ({ className, sticky, ...props }, ref) => (
-    <div
-      ref={ref}
-      role="group"
-      className={cn(recordInspectorFooterVariants({ sticky }), className)}
-      {...props}
-    />
-  )
+  ({ className, density, sticky, ...props }, ref) => {
+    const context = React.useContext(RecordInspectorContext);
+
+    return (
+      <div
+        ref={ref}
+        role="group"
+        className={cn(
+          recordInspectorFooterVariants({ density: density ?? context.density, sticky }),
+          className
+        )}
+        {...props}
+      />
+    );
+  }
 );
 RecordInspectorFooter.displayName = 'RecordInspectorFooter';
 

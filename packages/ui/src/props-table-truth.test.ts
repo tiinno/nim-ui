@@ -85,12 +85,15 @@ import ts from 'typescript';
  *
  * ## Coverage, stated
  *
- * 90 component pages, 84 of which carry a table; 157 tables; 93 variant groups
- * a consumer can pass to an exported component, of which **93 are compared
+ * 90 component pages, 84 of which carry a table; 157 tables; 94 variant groups
+ * a consumer can pass to an exported component, of which **94 are compared
  * against a documented row and none are left undocumented** (NIMUI-87 closed
- * the 8 that were). 30 tables belong to components that declare no props
- * type, and a separate assertion proves those components reference no cva —
- * so "nothing to check there" is a fact rather than an assumption.
+ * the 8 that were; NIMUI-91 added `RecordInspectorFooter`'s density group —
+ * the part NIMUI-89 left out — and documented it in the same change, so the
+ * count rose by one without opening a gap). 30 tables belong to components
+ * that declare no props type, and a separate assertion proves those
+ * components reference no cva — so "nothing to check there" is a fact rather
+ * than an assumption.
  *
  * The inventory FELL by two in NIMUI-89, and that direction is normally the
  * dangerous one, so read the reason rather than the number: `RecordInspector`
@@ -273,7 +276,7 @@ const EXPECTED_SCAN = {
   /** `<PropsTable>` blocks found on them. */
   tables: 157,
   /** Variant groups an exported component accepts as props. */
-  consumerFacingGroups: 93,
+  consumerFacingGroups: 94,
   /**
    * Tables whose component declares no props type anywhere — subcomponents that
    * take a plain element's attributes. Nothing to compare, and the assertion
@@ -282,11 +285,11 @@ const EXPECTED_SCAN = {
    */
   tablesWithoutAPropsDeclaration: 30,
   /** Table rows compared against a cva group. */
-  comparisons: 93,
+  comparisons: 94,
   /** Of those, compared value-for-value (the rest are boolean groups). */
-  enumComparisons: 80,
+  enumComparisons: 81,
   /** Of those, whose default was compared against `defaultVariants`. */
-  defaultComparisons: 80,
+  defaultComparisons: 81,
 };
 
 // ---------------------------------------------------------------------------

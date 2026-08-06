@@ -167,7 +167,7 @@ import {
       name: 'density',
       type: "'comfortable' | 'compact'",
       default: "'comfortable'",
-      description: 'Sets the spacing the whole panel runs at. RecordInspectorHeader and RecordInspectorSection inherit this value, and either can pass its own density to override it.',
+      description: 'Sets the spacing the whole panel runs at. RecordInspectorHeader, RecordInspectorSection and RecordInspectorFooter inherit this value, and any of the three can pass its own density to override it.',
     },
     {
       name: 'aria-label',
@@ -221,6 +221,12 @@ import {
 <PropsTable
   props={[
     {
+      name: 'density',
+      type: "'comfortable' | 'compact'",
+      default: "'comfortable'",
+      description: "Overrides the footer's padding. Inherited from RecordInspector when it is not set.",
+    },
+    {
       name: 'sticky',
       type: 'boolean',
       default: 'false',
@@ -234,4 +240,4 @@ import {
 - Use RecordInspector beside a table, inside a Drawer, or as the detail column in a split view.
 - Keep the header focused on identity, state, and immediate actions.
 - Use metadata for stable facts and Timeline for events that changed over time.
-- Prefer compact density when the inspector sits in a side panel next to a data table. Set it once on RecordInspector; the header and every section follow.
+- Prefer compact density when the inspector sits in a side panel next to a data table. Set it once on RecordInspector; the header, every section, and the footer follow.
