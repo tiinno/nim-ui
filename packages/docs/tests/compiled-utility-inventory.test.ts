@@ -80,14 +80,26 @@ import { extractStringLiterals } from '../../ui/src/test/class-scan';
  * English word that Tailwind also knows, and once such a word is pinned the
  * next page to use it costs nothing.
  *
- * The rest: **35 from two guide pages that exist to print class names** — a
- * spacing scale reference and a set of consumer-override examples — and **2
- * from the Nim component sources this site scans**, one a JSDoc `@example`
- * height and one a negated prop that reads as the legacy important prefix.
+ * The rest: **32 from two guide pages that exist to print class names** — 17
+ * from the spacing scale reference and 15 from the consumer-override examples —
+ * **2 from a configuration and an installation page**, and **2 from the Nim
+ * component sources this site scans**, one a JSDoc `@example` height and one a
+ * negated prop that reads as the legacy important prefix. With the 6 English
+ * words above, 42.
  *
- * None of the 35 should be reworded. An off-palette `bg-indigo-600` brand
- * button is the entire point of the example it appears in, and a spacing table
- * that does not name the spacing utilities documents nothing.
+ * That first figure read 35 until this commit, and the drift is worth naming
+ * because it is the shape this file warns about everywhere else: the number was
+ * right when written, then two tickets removed pins without touching the
+ * sentence that counted them — NIMUI-61 turned two spacing entries into real
+ * users, NIMUI-82 deleted the prose that minted a third — and the two
+ * configuration entries were never added to it at all. The assertions stayed
+ * honest throughout; only the prose describing them went stale. A count in a
+ * comment has no guard, which is the argument for stating buckets that a reader
+ * can re-derive rather than a total they must trust.
+ *
+ * None of the 32 should be reworded. An off-palette brand button is the entire
+ * point of the example it appears in, and a spacing table that does not name
+ * the spacing utilities documents nothing.
  *
  * So the flow, not the stock, is what makes this affordable: new component
  * pages add nothing, and new guide pages are rare.
