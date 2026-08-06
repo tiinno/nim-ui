@@ -157,7 +157,8 @@ import {
     {
       name: 'tone',
       type: "'neutral' | 'success' | 'warning' | 'danger' | 'info'",
-      description: 'Overrides the card tone for mixed signals, such as an info metric with a negative delta.',
+      default: "'neutral'",
+      description: 'Overrides the tone inherited from the parent MetricCard. Falls back to neutral only when MetricCardDelta is used outside a MetricCard.',
     },
   ]}
 />

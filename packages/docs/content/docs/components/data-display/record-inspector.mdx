@@ -177,6 +177,45 @@ import {
   ]}
 />
 
+### RecordInspectorHeader
+
+<PropsTable
+  props={[
+    {
+      name: 'density',
+      type: "'comfortable' | 'compact'",
+      default: "'comfortable'",
+      description: "Adjusts the header's padding for compact side panels or full-page detail views.",
+    },
+  ]}
+/>
+
+### RecordInspectorBody
+
+<PropsTable
+  props={[
+    {
+      name: 'density',
+      type: "'comfortable' | 'compact'",
+      default: "'comfortable'",
+      description: 'Density for the body wrapper, which supplies the dividing lines between sections rather than padding of its own. Set the same value on RecordInspectorHeader and RecordInspectorSection to change spacing throughout the panel.',
+    },
+  ]}
+/>
+
+### RecordInspectorSection
+
+<PropsTable
+  props={[
+    {
+      name: 'density',
+      type: "'comfortable' | 'compact'",
+      default: "'comfortable'",
+      description: "Adjusts the section's padding for compact side panels or full-page detail views.",
+    },
+  ]}
+/>
+
 ### RecordInspectorMetadata
 
 <PropsTable
@@ -186,6 +225,19 @@ import {
       type: '1 | 2 | 3',
       default: '2',
       description: 'Responsive metadata column count. It collapses to one column on narrow screens.',
+    },
+  ]}
+/>
+
+### RecordInspectorFooter
+
+<PropsTable
+  props={[
+    {
+      name: 'sticky',
+      type: 'boolean',
+      default: 'false',
+      description: 'Pins the footer to the bottom of the scrolling container so decision actions stay in view while the record scrolls. Off by default.',
     },
   ]}
 />

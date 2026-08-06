@@ -85,12 +85,12 @@ import ts from 'typescript';
  *
  * ## Coverage, stated
  *
- * 90 component pages, 84 of which carry a table; 150 tables; 95 variant groups
- * a consumer can pass to an exported component, of which **87 are compared
- * against a documented row and 8 are documented nowhere at all** (pinned, with
- * the reason). 30 tables belong to components that declare no props type, and
- * a separate assertion proves those components reference no cva — so "nothing
- * to check there" is a fact rather than an assumption.
+ * 90 component pages, 84 of which carry a table; 158 tables; 95 variant groups
+ * a consumer can pass to an exported component, of which **95 are compared
+ * against a documented row and none are left undocumented** (NIMUI-87 closed
+ * the 8 that were). 30 tables belong to components that declare no props
+ * type, and a separate assertion proves those components reference no cva —
+ * so "nothing to check there" is a fact rather than an assumption.
  *
  * That statement was false when this file first landed, in the way it was
  * written to prevent. The cva lookup was per-file, so `PasswordInput`'s two
@@ -179,26 +179,18 @@ const UNRESOLVED_HERITAGE: string[] = [];
  * Variant groups a consumer can pass that no documented table states.
  *
  * Every one of these is a prop the component accepts and the documentation does
- * not mention — a gap, not a false statement, which is why they are pinned
- * rather than failed: closing one means writing documentation, and this change
- * corrects claims rather than authoring pages. Left for a follow-up ticket.
+ * not mention — a gap, not a false statement, which is why they were pinned
+ * rather than failed: closing one means writing documentation, and that is a
+ * correction, not a claim to make quietly.
  *
- * One cause, eight times over — see the comment on the list.
+ * Empty. NIMUI-87 closed the eight that were here — every one was the same
+ * cause: the page documented the family's main component and some of its
+ * parts, and had no table for that one part at all, each fixed with a new
+ * `### <Component>` section. Kept, emptied, on the same convention as
+ * `KNOWN_UNPAIRED` in `focus-ring-contrast.test.ts`, so the next arrival still
+ * trips it rather than joining a growing list nobody reads.
  */
-const UNCOVERED_VARIANT_GROUPS = [
-  // Every one of these is the same cause: the page documents the family's main
-  // component and some of its parts, and has no table for THIS part at all. The
-  // fix is a new `### <Component>` section with a table, which is documentation
-  // to be written rather than a claim to be corrected — a follow-up ticket.
-  'DropdownMenuSubContent.variant (dropdown-menu.tsx)',
-  'FormLayoutActions.sticky (form-layout.tsx)',
-  'FormLayoutSection.divided (form-layout.tsx)',
-  'RecordInspectorBody.density (record-inspector.tsx)',
-  'RecordInspectorFooter.sticky (record-inspector.tsx)',
-  'RecordInspectorHeader.density (record-inspector.tsx)',
-  'RecordInspectorSection.density (record-inspector.tsx)',
-  'ViewSwitcherCount.selected (view-switcher.tsx)',
-];
+const UNCOVERED_VARIANT_GROUPS: string[] = [];
 
 /**
  * Documented defaults that cannot be compared, because only one side states one.
@@ -208,9 +200,14 @@ const UNCOVERED_VARIANT_GROUPS = [
  * "documented only" below sets it. Reading those out would mean matching
  * parameter destructuring to the cva call that consumes it, and a check that
  * appeared to cover them while silently resolving nothing is worse than an
- * honest hole. The one marked "declared only" is the opposite case — a cva
- * default the table does not mention — and is a documentation gap of the same
- * family as UNCOVERED_VARIANT_GROUPS.
+ * honest hole.
+ *
+ * A "declared only" entry is the opposite case — a cva default the table does
+ * not mention — and is a documentation gap of the same family as
+ * UNCOVERED_VARIANT_GROUPS. NIMUI-87 closed the one that lived here:
+ * `MetricCardDelta.tone` now states its default, so both sides compare and the
+ * row moved to `defaultComparisons`. None remain, and the shape stays
+ * documented above so the next one is recognised on sight.
  */
 const DEFAULTS_NOT_COMPARED = [
   // Documented, with no `defaultVariants` entry to check it against: each of
@@ -225,9 +222,6 @@ const DEFAULTS_NOT_COMPARED = [
   // the element the component renders.
   'Text.variant (primitives/text.mdx) <- documented only',
   'Text.weight (primitives/text.mdx) <- documented only',
-  // Declared by the cva and not stated by the table: a documentation gap, in the
-  // one row that overrides a default it never mentions.
-  'MetricCardDelta.tone (data-display/metric-card.mdx) <- declared only',
 ];
 
 /**
@@ -267,7 +261,7 @@ const EXPECTED_SCAN = {
   /** Documentation pages under `content/docs/components`. */
   pages: 90,
   /** `<PropsTable>` blocks found on them. */
-  tables: 150,
+  tables: 158,
   /** Variant groups an exported component accepts as props. */
   consumerFacingGroups: 95,
   /**
@@ -278,11 +272,11 @@ const EXPECTED_SCAN = {
    */
   tablesWithoutAPropsDeclaration: 30,
   /** Table rows compared against a cva group. */
-  comparisons: 87,
+  comparisons: 95,
   /** Of those, compared value-for-value (the rest are boolean groups). */
-  enumComparisons: 78,
+  enumComparisons: 82,
   /** Of those, whose default was compared against `defaultVariants`. */
-  defaultComparisons: 73,
+  defaultComparisons: 82,
 };
 
 // ---------------------------------------------------------------------------

@@ -151,6 +151,19 @@ import {
   ]}
 />
 
+### FormLayoutSection
+
+<PropsTable
+  props={[
+    {
+      name: 'divided',
+      type: 'boolean',
+      default: 'true',
+      description: "Adds a rule between the section's header and its fields. Set to false to remove the separation.",
+    },
+  ]}
+/>
+
 ### FormLayoutGrid
 
 <PropsTable
@@ -160,6 +173,19 @@ import {
       type: '1 | 2 | 3',
       default: '2',
       description: 'Responsive field grid. Narrow screens always render one column.',
+    },
+  ]}
+/>
+
+### FormLayoutActions
+
+<PropsTable
+  props={[
+    {
+      name: 'sticky',
+      type: 'boolean',
+      default: 'true',
+      description: 'Pins the actions bar to the bottom of the scrolling container so save and cancel controls stay in view on long forms. Set to false inside modals or drawers, where the container already limits scrolling.',
     },
   ]}
 />
