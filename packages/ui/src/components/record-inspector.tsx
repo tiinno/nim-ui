@@ -63,6 +63,14 @@ const recordInspectorFooterVariants = cva(
   'flex flex-col-reverse gap-2 border-t border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900/40 sm:flex-row sm:items-center sm:justify-end',
   {
     variants: {
+      // The footer has no wide-viewport padding step, and deliberately gains
+      // none here. Header and Section widen at sm; the footer never has, so it
+      // already sits one step tighter than they do above that breakpoint, in
+      // both densities. Adding one to compact would ALIGN it with them and so
+      // change how a comfortable panel already looks today — the opposite of a
+      // density-only change. Vertically the footer is a button row and is
+      // tighter than a content section on purpose, which is why the pair steps
+      // 4/3 rather than mirroring Section's 4/4.
       density: {
         comfortable: 'px-4 py-3',
         compact: 'px-3 py-2',
