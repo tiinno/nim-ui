@@ -1,7 +1,30 @@
 {
   "name": "@nim-ui/components",
   "version": "0.0.0",
+  "description": "Quiet, accessible React UI kit for dashboards, backoffice, and commerce operations. 91 components, Tailwind CSS v4, React 19.",
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "design-system",
+    "tailwindcss",
+    "typescript",
+    "accessibility",
+    "dashboard",
+    "admin",
+    "backoffice"
+  ],
+  "homepage": "https://nim-ui.tiinno.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiinno/nim-ui.git",
+    "directory": "packages/ui"
+  },
+  "bugs": "https://github.com/tiinno/nim-ui/issues",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

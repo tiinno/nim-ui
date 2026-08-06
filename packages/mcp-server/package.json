@@ -1,11 +1,35 @@
 {
   "name": "@nim-ui/mcp-server",
   "version": "0.0.0",
+  "description": "Model Context Protocol server for Nim UI — exposes the component registry, design tokens, and docs so an AI assistant can discover and use the kit.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "nim-ui",
+    "react",
+    "ui",
+    "design-system",
+    "ai"
+  ],
+  "homepage": "https://nim-ui.tiinno.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiinno/nim-ui.git",
+    "directory": "packages/mcp-server"
+  },
+  "bugs": "https://github.com/tiinno/nim-ui/issues",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "bin": {
     "nim-mcp": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "claude-desktop-config.example.json"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
