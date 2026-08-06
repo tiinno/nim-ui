@@ -32,6 +32,7 @@
   ],
   "scripts": {
     "build": "tsup && node scripts/copy-sources.mjs",
+    "prepublishOnly": "pnpm run build",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
     "start": "node dist/index.js",

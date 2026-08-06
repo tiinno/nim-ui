@@ -48,6 +48,7 @@
   ],
   "scripts": {
     "build": "tsup && postcss ./src/styles.css -o ./dist/styles.css",
+    "prepublishOnly": "pnpm run build",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
     "lint": "eslint src",

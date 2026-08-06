@@ -81,6 +81,14 @@ Type system is named but **not shipped**: tokens declare Hanken Grotesk / JetBra
 
 - **A green suite can be measuring the workspace layout rather than the code.** `@nim-ui/mcp-server` read its registry, tokens and component sources through paths relative to its own `dist` — `../../ui/src/…`, `../../tailwind-config/src/…`. Inside the workspace those land on the sibling packages and everything passes. Installed from npm they land on `@nim-ui/ui` (a package that exists under no name) and on a `private: true` package, so the server threw on startup and exited 1 for **every** consumer. `server.integration.test.ts` spawned the workspace copy, which is exactly the layout that hides it, and stayed green throughout; `npm pack --dry-run` was blind too, because **pack reports which files ship, never whether the shipped code can find its data**. NIMUI-93 made the package self-contained — registry and tokens are static imports tsup inlines, sources are copied to `dist/sources/` by `scripts/copy-sources.mjs` (after tsup, which is `clean: true`) — and added `src/packaged-layout.test.ts`, which rebuilds the installed layout from the real `files` allowlist and runs the binary from it. Its first assertion checks that the fake install *cannot* reach `../../ui/src`, because the day it can, every assertion after it goes green against workspace files. Do not add a runtime dependency on `@nim-ui/components` to fix a path like this: the kit carries 23 runtime deps and declares `react`/`react-dom` as **peers**, so it would make `npx nim-mcp` require React.
 
+## Publishing
+
+**Use `pnpm publish`, never `npm publish`.** npm does not understand pnpm's `workspace:` protocol and ships it verbatim: measured, `npm pack` leaves `"@nim-ui/components": "workspace:*"` and `"@nim-ui/tailwind-config": "workspace:*"` in the published manifest, the second naming a `private: true` package that will never exist on the registry. `pnpm pack` on the same tree rewrites both to real versions (`0.1.0`, `0.0.0`). They are devDependencies, so a consumer's install does not resolve them either way — but the manifest on the registry is wrong, and anything that reads it is wrong with it.
+
+Both publishable packages declare `prepublishOnly: pnpm run build`, so a publish cannot ship a stale `dist`. That mattered more than usual here: `dist` is gitignored and `@nim-ui/mcp-server`'s component sources only exist after its build's copy step, so publishing without a fresh build would have shipped a server with an empty `dist/sources/`.
+
+`pnpm -r publish` covers exactly the two publishable packages — `docs` and `tailwind-config` are `private: true` and are skipped. Both carry `publishConfig.access: public`, which a scoped package needs or the publish errors rather than merely looking wrong.
+
 ## Git
 
 `main` is protected and requires **linear history** — rebase or squash, never a merge commit.
