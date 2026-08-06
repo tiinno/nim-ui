@@ -85,8 +85,8 @@ import ts from 'typescript';
  *
  * ## Coverage, stated
  *
- * 90 component pages, 84 of which carry a table; 157 tables; 94 variant groups
- * a consumer can pass to an exported component, of which **94 are compared
+ * 90 component pages, 84 of which carry a table; 157 tables; 92 variant groups
+ * a consumer can pass to an exported component, of which **92 are compared
  * against a documented row and none are left undocumented** (NIMUI-87 closed
  * the 8 that were; NIMUI-91 added `RecordInspectorFooter`'s density group —
  * the part NIMUI-89 left out — and documented it in the same change, so the
@@ -104,6 +104,28 @@ import ts from 'typescript';
  * it went with it. Note what this guard could NOT see: both sides agreed
  * perfectly, and what they agreed on did nothing — a documented enum matching
  * its cva says the table is true, never that the prop is wired to anything.
+ *
+ * The inventory FELL by two more in NIMUI-90, for the same shape found in two
+ * more places by the kit-wide sweep that fix went looking for: `ViewSwitcher`'s
+ * `density` and `DescriptionList`'s `variant` each backed a root-level cva group
+ * whose every key was the empty string, exactly like `RecordInspector`'s used to
+ * be. Both props are real — `ViewSwitcherItem` and `DescriptionListItem` read
+ * the value from context and spend it on their own, non-empty cva groups — so,
+ * unlike `RecordInspectorBody`'s, neither prop nor its documented row went
+ * anywhere. What went is only the vestigial group, and with it this guard's
+ * means of reaching the prop at all: `ViewSwitcherProps` and
+ * `DescriptionListProps` now type `density`/`variant` directly rather than
+ * through `VariantProps<typeof …>`, because the only cva left that declares
+ * those keys (`viewSwitcherItemVariants`, `descriptionListItemVariants`) is
+ * reachable from no exported props declaration, and a `VariantProps` reference
+ * this reader cannot tie to one is exactly what `strayVariantReferences` exists
+ * to catch. So `ViewSwitcher.density` and `DescriptionList.variant` are gone
+ * from `consumerFacingGroups`, not added to `UNCOVERED_VARIANT_GROUPS`: the
+ * latter is for a prop a table fails to mention, and both rows are still there,
+ * unchanged, still true. They are deliberately uncomparable rather than
+ * undocumented, and `RecordInspector`'s own `density` — real, documented,
+ * typed the same direct way since NIMUI-89 — has been sitting in this same
+ * uncounted state the whole time this file's counts have been 9x.
  *
  * That statement was false when this file first landed, in the way it was
  * written to prevent. The cva lookup was per-file, so `PasswordInput`'s two
@@ -276,7 +298,7 @@ const EXPECTED_SCAN = {
   /** `<PropsTable>` blocks found on them. */
   tables: 157,
   /** Variant groups an exported component accepts as props. */
-  consumerFacingGroups: 94,
+  consumerFacingGroups: 92,
   /**
    * Tables whose component declares no props type anywhere — subcomponents that
    * take a plain element's attributes. Nothing to compare, and the assertion
@@ -285,11 +307,11 @@ const EXPECTED_SCAN = {
    */
   tablesWithoutAPropsDeclaration: 30,
   /** Table rows compared against a cva group. */
-  comparisons: 94,
+  comparisons: 92,
   /** Of those, compared value-for-value (the rest are boolean groups). */
-  enumComparisons: 81,
+  enumComparisons: 79,
   /** Of those, whose default was compared against `defaultVariants`. */
-  defaultComparisons: 81,
+  defaultComparisons: 79,
 };
 
 // ---------------------------------------------------------------------------

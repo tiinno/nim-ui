@@ -95,6 +95,31 @@ describe('ViewSwitcher', () => {
     expect(screen.getByRole('group', { name: 'View actions' })).toBeInTheDocument();
   });
 
+  it('paints the same root classes at every density value (NIMUI-90: no vestigial cva group)', () => {
+    // `density` feeds ViewSwitcherContext (spent by ViewSwitcherItem) but paints
+    // nothing on the root itself. viewSwitcherVariants used to declare a
+    // `density` group whose two keys both resolved to '', which is why removing
+    // that group cannot change this string: it contributed nothing before, and
+    // has nothing left to contribute now.
+    const { container: comfortable } = render(
+      <ViewSwitcher density="comfortable" aria-label="Density check" />
+    );
+    const { container: compact } = render(
+      <ViewSwitcher density="compact" aria-label="Density check" />
+    );
+    const { container: defaulted } = render(<ViewSwitcher aria-label="Density check" />);
+
+    const comfortableClass = comfortable.querySelector('[role="tablist"]')?.className;
+    const compactClass = compact.querySelector('[role="tablist"]')?.className;
+    const defaultClass = defaulted.querySelector('[role="tablist"]')?.className;
+
+    expect(comfortableClass).toBe(
+      'flex min-w-0 gap-1 overflow-x-auto rounded-md border border-neutral-200 bg-neutral-50 p-1 dark:border-neutral-800 dark:bg-neutral-900/60'
+    );
+    expect(compactClass).toBe(comfortableClass);
+    expect(defaultClass).toBe(comfortableClass);
+  });
+
   it('gives every tab the steel focus pair', () => {
     render(
       <ViewSwitcher>

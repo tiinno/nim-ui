@@ -59,6 +59,29 @@ describe('DescriptionList', () => {
     expect(screen.getByRole('button', { name: 'Open profile' })).toBeInTheDocument();
   });
 
+  it('paints the same dl classes at every variant value (NIMUI-90: no vestigial cva group)', () => {
+    // `variant` feeds DescriptionListContext (spent by DescriptionListItem) but
+    // paints nothing on the root itself. descriptionListVariants used to declare
+    // a `variant` group whose two keys both resolved to '', which is why
+    // removing that group cannot change this string: it contributed nothing
+    // before, and has nothing left to contribute now.
+    const { container: defaultVariant } = render(
+      <DescriptionList variant="default" aria-label="Variant check" />
+    );
+    const { container: inline } = render(
+      <DescriptionList variant="inline" aria-label="Variant check" />
+    );
+    const { container: defaulted } = render(<DescriptionList aria-label="Variant check" />);
+
+    const defaultClass = defaultVariant.querySelector('dl')?.className;
+    const inlineClass = inline.querySelector('dl')?.className;
+    const noPropClass = defaulted.querySelector('dl')?.className;
+
+    expect(defaultClass).toBe('divide-y divide-neutral-200 dark:divide-neutral-800');
+    expect(inlineClass).toBe(defaultClass);
+    expect(noPropClass).toBe(defaultClass);
+  });
+
   it('merges custom className with default spacing classes', () => {
     const { container } = render(
       <DescriptionList className="custom-description-list">

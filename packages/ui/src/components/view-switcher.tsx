@@ -3,18 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 const viewSwitcherVariants = cva(
-  'flex min-w-0 gap-1 overflow-x-auto rounded-md border border-neutral-200 bg-neutral-50 p-1 dark:border-neutral-800 dark:bg-neutral-900/60',
-  {
-    variants: {
-      density: {
-        comfortable: '',
-        compact: '',
-      },
-    },
-    defaultVariants: {
-      density: 'comfortable',
-    },
-  }
+  'flex min-w-0 gap-1 overflow-x-auto rounded-md border border-neutral-200 bg-neutral-50 p-1 dark:border-neutral-800 dark:bg-neutral-900/60'
 );
 
 const viewSwitcherItemVariants = cva(
@@ -57,9 +46,14 @@ const viewSwitcherCountVariants = cva(
   }
 );
 
-type ViewSwitcherDensity = NonNullable<
-  VariantProps<typeof viewSwitcherVariants>['density']
->;
+// Mirrors the keys `viewSwitcherItemVariants.density` declares, not
+// `viewSwitcherVariants` (the root's own cva carries no `density` group — it
+// fed the value through context but never painted anything from it). Written
+// out rather than read via `VariantProps<typeof viewSwitcherItemVariants>`
+// because nothing exported references that cva through a props declaration,
+// and `props-table-truth.test.ts` flags a `VariantProps` reference that no
+// `…Props` heritage reaches.
+type ViewSwitcherDensity = 'comfortable' | 'compact';
 
 interface ViewSwitcherContextValue {
   density: ViewSwitcherDensity;
@@ -69,9 +63,10 @@ const ViewSwitcherContext = React.createContext<ViewSwitcherContextValue>({
   density: 'comfortable',
 });
 
-export interface ViewSwitcherProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof viewSwitcherVariants> {}
+export interface ViewSwitcherProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Adjusts tab spacing for primary saved views or tighter toolbar placement. */
+  density?: ViewSwitcherDensity;
+}
 
 const ViewSwitcher = React.forwardRef<HTMLDivElement, ViewSwitcherProps>(
   ({ className, density = 'comfortable', ...props }, ref) => (
@@ -79,7 +74,7 @@ const ViewSwitcher = React.forwardRef<HTMLDivElement, ViewSwitcherProps>(
       <div
         ref={ref}
         role="tablist"
-        className={cn(viewSwitcherVariants({ density }), className)}
+        className={cn(viewSwitcherVariants(), className)}
         {...props}
       />
     </ViewSwitcherContext.Provider>

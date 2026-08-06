@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 /**
@@ -15,18 +15,7 @@ import { cn } from '../lib/utils';
  */
 
 const descriptionListVariants = cva(
-  'divide-y divide-neutral-200 dark:divide-neutral-800',
-  {
-    variants: {
-      variant: {
-        default: '',
-        inline: '',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-    },
-  }
+  'divide-y divide-neutral-200 dark:divide-neutral-800'
 );
 
 const descriptionListItemVariants = cva('py-3', {
@@ -41,22 +30,28 @@ const descriptionListItemVariants = cva('py-3', {
   },
 });
 
-type DescriptionListVariant = NonNullable<
-  VariantProps<typeof descriptionListVariants>['variant']
->;
+// Mirrors the keys `descriptionListItemVariants.variant` declares, not
+// `descriptionListVariants` (the root's own cva carries no `variant` group — it
+// fed the value through context but never painted anything from it). Written
+// out rather than read via `VariantProps<typeof descriptionListItemVariants>`
+// because nothing exported references that cva through a props declaration,
+// and `props-table-truth.test.ts` flags a `VariantProps` reference that no
+// `…Props` heritage reaches.
+type DescriptionListVariant = 'default' | 'inline';
 
 const DescriptionListContext = React.createContext<DescriptionListVariant>('default');
 
-export interface DescriptionListProps
-  extends React.HTMLAttributes<HTMLDListElement>,
-    VariantProps<typeof descriptionListVariants> {}
+export interface DescriptionListProps extends React.HTMLAttributes<HTMLDListElement> {
+  /** Layout style for the metadata rows. */
+  variant?: DescriptionListVariant;
+}
 
 const DescriptionList = React.forwardRef<HTMLDListElement, DescriptionListProps>(
   ({ className, variant = 'default', ...props }, ref) => (
     <DescriptionListContext.Provider value={variant ?? 'default'}>
       <dl
         ref={ref}
-        className={cn(descriptionListVariants({ variant }), className)}
+        className={cn(descriptionListVariants(), className)}
         {...props}
       />
     </DescriptionListContext.Provider>
