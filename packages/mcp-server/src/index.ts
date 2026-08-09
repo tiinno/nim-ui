@@ -52,6 +52,40 @@ const __dirname = dirname(__filename);
 const registryData = registryJson as RegistryData;
 const tokensData = tokens as TokensData;
 
+/**
+ * The version reported in the MCP handshake, injected at build time.
+ *
+ * `tsup.config.ts` reads this package's own `package.json` — it is build
+ * tooling, not part of this `rootDir`-pinned program, so it can — and passes
+ * the version to esbuild's `define`, which replaces every reference to
+ * `process.env.NIM_MCP_VERSION` in the bundle with the literal string. By the
+ * time this runs as `dist/index.js` there is no `package.json` read left: the
+ * value is baked in, same as the registry and tokens imports above.
+ *
+ * NIMUI-96: a hand-kept literal here went stale through two releases before
+ * `packaged-layout.test.ts` caught it (it spawns the packaged binary and
+ * diffs the handshake against `package.json`). `define` is keyed on the exact
+ * `process.env.NIM_MCP_VERSION` text, so a divergence between this reference
+ * and the `define` key (a typo on either side) leaves a live `process.env`
+ * read in the bundle — `undefined` at startup, since nothing sets that var —
+ * and the throw below fails the server loudly instead of reporting a
+ * fabricated version. When the substitution succeeds, as it does today, the
+ * throw is dead code and esbuild folds it away: measured, `dist/index.js`
+ * contains `var MCP_SERVER_VERSION = "0.1.1"` and zero occurrences of
+ * `NIM_MCP_VERSION`, so no `process.env` read ships either way.
+ */
+// Typed (not narrowed from a guard) so the constant is `string` at every use
+// site, including inside the class below: control-flow narrowing of a
+// module-level `const` does not survive a closure boundary, and `tsup`'s
+// `dts: true` step runs the real TypeScript compiler, which caught that.
+const MCP_SERVER_VERSION: string =
+  process.env.NIM_MCP_VERSION ??
+  (() => {
+    throw new Error(
+      'NIM_MCP_VERSION was not injected at build time — see the `define` in tsup.config.ts.'
+    );
+  })();
+
 /** The root the copied component sources sit under. See `copy-sources.mjs`. */
 const SOURCES_ROOT = join(__dirname, 'sources');
 
@@ -86,13 +120,9 @@ class NimMCPServer {
     this.server = new Server(
       {
         name: 'nim-ui-mcp',
-        // Hand-kept in step with package.json. It cannot be imported from
-        // there: tsconfig pins rootDir to ./src, so `../package.json` is
-        // outside the program. Nothing here enforces the match — the check
-        // that does lives in packaged-layout.test.ts, which spawns the real
-        // binary from a fake install and reads the handshake back, and it is
-        // the only reason this string has not gone stale twice.
-        version: '0.1.1',
+        // See MCP_SERVER_VERSION above: injected by tsup's `define` from
+        // package.json, not hand-kept.
+        version: MCP_SERVER_VERSION,
       },
       {
         capabilities: { tools: {} },
