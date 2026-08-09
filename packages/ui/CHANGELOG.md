@@ -11,8 +11,8 @@ the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
-- Centered DatePicker and DateTimePicker trigger content for both single-value
-  and range variants.
+- Centered DatePicker, DateTimePicker, and TimePicker trigger content, covering
+  both the single-value and range variants where a component has them.
 - Improved CartItem responsiveness and replaced its separate quantity buttons
   with the compact QuantitySelector control.
 - Corrected QuantitySelector sizing, glyph alignment, and number-field
