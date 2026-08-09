@@ -52,6 +52,35 @@ const __dirname = dirname(__filename);
 const registryData = registryJson as RegistryData;
 const tokensData = tokens as TokensData;
 
+/**
+ * The version reported in the MCP handshake, substituted at build time.
+ *
+ * `tsup.config.ts` reads this package's own `package.json` — it is build
+ * tooling, not part of this `rootDir`-pinned program, so it may — and hands
+ * the version to esbuild's `define`, which rewrites every occurrence of this
+ * identifier to a string literal. By the time this runs as `dist/index.js`
+ * there is no `package.json` read left; the value is baked in, the same way
+ * the registry and tokens imports above are. Measured on a from-scratch
+ * rebuild: `dist/index.js` holds `MCP_SERVER_VERSION = "0.1.1"` and zero
+ * occurrences of the identifier below.
+ *
+ * NIMUI-96: a hand-kept literal here went stale through two releases —
+ * `0.0.0`, then `0.1.0` during the `v0.1.1` release — and only
+ * `packaged-layout.test.ts` caught it, by spawning the packaged binary and
+ * diffing its handshake against `package.json`. That test is unchanged and
+ * still the backstop; this just removes the human step it was policing.
+ *
+ * `declare` rather than an import because nothing supplies this at type level
+ * and nothing needs to: if the substitution ever fails to happen, the built
+ * bundle references an identifier that was never defined and throws a
+ * ReferenceError at module load, which the integration tests see as a failed
+ * handshake. That is the intended failure — loud, at build-and-test time, and
+ * with no environment value able to stand in for the real version.
+ */
+declare const __NIM_MCP_VERSION__: string;
+
+const MCP_SERVER_VERSION = __NIM_MCP_VERSION__;
+
 /** The root the copied component sources sit under. See `copy-sources.mjs`. */
 const SOURCES_ROOT = join(__dirname, 'sources');
 
@@ -86,13 +115,9 @@ class NimMCPServer {
     this.server = new Server(
       {
         name: 'nim-ui-mcp',
-        // Hand-kept in step with package.json. It cannot be imported from
-        // there: tsconfig pins rootDir to ./src, so `../package.json` is
-        // outside the program. Nothing here enforces the match — the check
-        // that does lives in packaged-layout.test.ts, which spawns the real
-        // binary from a fake install and reads the handshake back, and it is
-        // the only reason this string has not gone stale twice.
-        version: '0.1.1',
+        // See MCP_SERVER_VERSION above: injected by tsup's `define` from
+        // package.json, not hand-kept.
+        version: MCP_SERVER_VERSION,
       },
       {
         capabilities: { tools: {} },
