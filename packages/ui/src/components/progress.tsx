@@ -9,7 +9,7 @@ const progressVariants = cva(
       size: {
         sm: 'h-1.5',
         md: 'h-2.5',
-        lg: 'h-4',
+        lg: 'h-5',
       },
     },
     defaultVariants: {
@@ -37,7 +37,8 @@ const progressIndicatorVariants = cva(
 );
 
 export interface ProgressProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends
+    React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof progressVariants>,
     VariantProps<typeof progressIndicatorVariants> {
   value: number;
@@ -46,7 +47,10 @@ export interface ProgressProps
 }
 
 const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
-  ({ className, value, max = 100, variant, size, showLabel, ...props }, ref) => {
+  (
+    { className, value, max = 100, variant, size, showLabel, ...props },
+    ref
+  ) => {
     const percentage = Math.min(100, Math.max(0, (value / max) * 100));
 
     return (
@@ -64,8 +68,10 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           style={{ width: `${percentage}%` }}
         />
         {showLabel && size === 'lg' && (
-          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-neutral-900 dark:text-neutral-100">
-            {Math.round(percentage)}%
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="rounded-full bg-white/95 px-1.5 py-0.5 text-[10px] font-semibold leading-none tabular-nums text-neutral-900 shadow-control dark:bg-neutral-950/95 dark:text-neutral-100">
+              {Math.round(percentage)}%
+            </span>
           </span>
         )}
       </div>

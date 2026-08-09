@@ -30,7 +30,7 @@ import { Progress } from '@nim-ui/components';
 Five color variants to communicate different states.
 
 <ComponentPreview title="Progress Variants">
-  <div class="space-y-3 w-full">
+  <div className="w-full space-y-3">
     <Progress value={60} variant="default" />
     <Progress value={80} variant="success" />
     <Progress value={45} variant="warning" />
@@ -54,9 +54,12 @@ Five color variants to communicate different states.
 Three sizes: `sm`, `md` (default), and `lg`. The percentage label is only visible at `lg` size.
 
 <ComponentPreview title="Progress Sizes">
-  <div class="space-y-3 w-full">
+  <div className="grid w-full grid-cols-[auto_1fr] items-center gap-x-3 gap-y-3">
+    <span className="text-xs font-medium text-fd-muted-foreground">sm</span>
     <Progress value={50} size="sm" />
+    <span className="text-xs font-medium text-fd-muted-foreground">md</span>
     <Progress value={50} size="md" />
+    <span className="text-xs font-medium text-fd-muted-foreground">lg</span>
     <Progress value={50} size="lg" showLabel />
   </div>
 

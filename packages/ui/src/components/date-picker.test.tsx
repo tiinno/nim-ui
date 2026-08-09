@@ -24,7 +24,9 @@ describe('DatePicker', () => {
       expect(trigger).not.toHaveClass('text-neutral-500');
 
       rerender(<DatePicker value={new Date(2025, 0, 15)} />);
-      expect(screen.getByRole('button')).not.toHaveAttribute('data-placeholder');
+      expect(screen.getByRole('button')).not.toHaveAttribute(
+        'data-placeholder'
+      );
     });
 
     it('renders with initial value', () => {
@@ -32,6 +34,16 @@ describe('DatePicker', () => {
       render(<DatePicker value={date} />);
       // Check label text appears (format 'PPP' -> 'January 15th, 2025')
       expect(screen.getByRole('button')).toHaveTextContent('January');
+    });
+
+    it('centers the icon and label as a group inside the trigger', () => {
+      const { container } = render(
+        <DatePicker value={new Date(2025, 0, 15)} />
+      );
+      const trigger = screen.getByRole('button');
+      expect(trigger).toHaveClass('justify-center', 'text-center');
+      expect(container.querySelector('svg')).toHaveClass('shrink-0');
+      expect(trigger.querySelector('span')).toHaveClass('min-w-0', 'truncate');
     });
 
     it('uses custom format string', () => {
@@ -136,6 +148,18 @@ describe('DateRangePicker', () => {
       const to = new Date(2025, 0, 15);
       render(<DateRangePicker value={{ from, to }} />);
       expect(screen.getByRole('button').textContent).toContain('-');
+    });
+
+    it('centers the icon and range label inside the trigger', () => {
+      const { container } = render(
+        <DateRangePicker
+          value={{ from: new Date(2025, 0, 1), to: new Date(2025, 0, 15) }}
+        />
+      );
+      const trigger = screen.getByRole('button');
+      expect(trigger).toHaveClass('justify-center', 'text-center');
+      expect(container.querySelector('svg')).toHaveClass('shrink-0');
+      expect(trigger.querySelector('span')).toHaveClass('min-w-0', 'truncate');
     });
 
     it('can display Buddhist Era ranges', () => {

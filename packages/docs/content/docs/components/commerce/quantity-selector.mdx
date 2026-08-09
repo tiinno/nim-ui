@@ -57,9 +57,18 @@ Set bounds on the allowed quantity range. Buttons are disabled at the limits.
 Three size options match the sizing conventions of other form components.
 
 <ComponentPreview title="QuantitySelector Sizes">
-  <QuantitySelector value={1} size="sm" onChange={logValue} />
-  <QuantitySelector value={1} size="md" onChange={logValue} />
-  <QuantitySelector value={1} size="lg" onChange={logValue} />
+  <div className="flex flex-col items-center gap-2">
+    <span className="text-xs font-medium text-fd-muted-foreground">Small · `sm`</span>
+    <QuantitySelector value={1} size="sm" onChange={logValue} />
+  </div>
+  <div className="flex flex-col items-center gap-2">
+    <span className="text-xs font-medium text-fd-muted-foreground">Medium · `md`</span>
+    <QuantitySelector value={1} size="md" onChange={logValue} />
+  </div>
+  <div className="flex flex-col items-center gap-2">
+    <span className="text-xs font-medium text-fd-muted-foreground">Large · `lg`</span>
+    <QuantitySelector value={1} size="lg" onChange={logValue} />
+  </div>
 
   <PreviewCode>
 ```tsx
