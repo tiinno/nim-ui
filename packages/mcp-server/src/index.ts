@@ -53,38 +53,33 @@ const registryData = registryJson as RegistryData;
 const tokensData = tokens as TokensData;
 
 /**
- * The version reported in the MCP handshake, injected at build time.
+ * The version reported in the MCP handshake, substituted at build time.
  *
  * `tsup.config.ts` reads this package's own `package.json` — it is build
- * tooling, not part of this `rootDir`-pinned program, so it can — and passes
- * the version to esbuild's `define`, which replaces every reference to
- * `process.env.NIM_MCP_VERSION` in the bundle with the literal string. By the
- * time this runs as `dist/index.js` there is no `package.json` read left: the
- * value is baked in, same as the registry and tokens imports above.
+ * tooling, not part of this `rootDir`-pinned program, so it may — and hands
+ * the version to esbuild's `define`, which rewrites every occurrence of this
+ * identifier to a string literal. By the time this runs as `dist/index.js`
+ * there is no `package.json` read left; the value is baked in, the same way
+ * the registry and tokens imports above are. Measured on a from-scratch
+ * rebuild: `dist/index.js` holds `MCP_SERVER_VERSION = "0.1.1"` and zero
+ * occurrences of the identifier below.
  *
- * NIMUI-96: a hand-kept literal here went stale through two releases before
- * `packaged-layout.test.ts` caught it (it spawns the packaged binary and
- * diffs the handshake against `package.json`). `define` is keyed on the exact
- * `process.env.NIM_MCP_VERSION` text, so a divergence between this reference
- * and the `define` key (a typo on either side) leaves a live `process.env`
- * read in the bundle — `undefined` at startup, since nothing sets that var —
- * and the throw below fails the server loudly instead of reporting a
- * fabricated version. When the substitution succeeds, as it does today, the
- * throw is dead code and esbuild folds it away: measured, `dist/index.js`
- * contains `var MCP_SERVER_VERSION = "0.1.1"` and zero occurrences of
- * `NIM_MCP_VERSION`, so no `process.env` read ships either way.
+ * NIMUI-96: a hand-kept literal here went stale through two releases —
+ * `0.0.0`, then `0.1.0` during the `v0.1.1` release — and only
+ * `packaged-layout.test.ts` caught it, by spawning the packaged binary and
+ * diffing its handshake against `package.json`. That test is unchanged and
+ * still the backstop; this just removes the human step it was policing.
+ *
+ * `declare` rather than an import because nothing supplies this at type level
+ * and nothing needs to: if the substitution ever fails to happen, the built
+ * bundle references an identifier that was never defined and throws a
+ * ReferenceError at module load, which the integration tests see as a failed
+ * handshake. That is the intended failure — loud, at build-and-test time, and
+ * with no environment value able to stand in for the real version.
  */
-// Typed (not narrowed from a guard) so the constant is `string` at every use
-// site, including inside the class below: control-flow narrowing of a
-// module-level `const` does not survive a closure boundary, and `tsup`'s
-// `dts: true` step runs the real TypeScript compiler, which caught that.
-const MCP_SERVER_VERSION: string =
-  process.env.NIM_MCP_VERSION ??
-  (() => {
-    throw new Error(
-      'NIM_MCP_VERSION was not injected at build time — see the `define` in tsup.config.ts.'
-    );
-  })();
+declare const __NIM_MCP_VERSION__: string;
+
+const MCP_SERVER_VERSION = __NIM_MCP_VERSION__;
 
 /** The root the copied component sources sit under. See `copy-sources.mjs`. */
 const SOURCES_ROOT = join(__dirname, 'sources');

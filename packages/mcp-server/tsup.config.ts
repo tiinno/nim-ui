@@ -35,9 +35,17 @@ export default defineConfig({
   // Textually replaces every reference to this identifier in the bundled
   // output with the literal version string, so `dist/index.js` embeds it at
   // build time and never reads `package.json` (or anything else outside
-  // `dist/`) at runtime — see src/index.ts for the runtime-side guard against
-  // the substitution silently not happening.
+  // `dist/`) at runtime.
+  //
+  // A bare identifier rather than `process.env.SOMETHING` on purpose. Both are
+  // substituted the same way, but they fail differently when the substitution
+  // does not happen — a typo on either side, someone bundling this file with
+  // other tooling. An unsubstituted `process.env.X` is a legal runtime read
+  // that yields whatever the environment holds, so a stray variable of that
+  // name would be reported as the server's version. An unsubstituted bare
+  // identifier is a ReferenceError at module load: impossible to spoof from
+  // the environment, and impossible to miss.
   define: {
-    'process.env.NIM_MCP_VERSION': JSON.stringify(pkg.version),
+    __NIM_MCP_VERSION__: JSON.stringify(pkg.version),
   },
 });
