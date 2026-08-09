@@ -1,6 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, userEvent } from '../test/test-utils';
-import { QuantitySelector, quantitySelectorVariants } from './quantity-selector';
+import {
+  QuantitySelector,
+  quantitySelectorVariants,
+} from './quantity-selector';
 
 describe('QuantitySelector', () => {
   describe('Rendering', () => {
@@ -21,11 +24,26 @@ describe('QuantitySelector', () => {
 
     it('renders input field', () => {
       render(<QuantitySelector value={5} onChange={() => {}} />);
-      expect(screen.getByLabelText('Quantity')).toBeInTheDocument();
+      const input = screen.getByLabelText('Quantity');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute('type', 'number');
+      expect(input).toHaveClass('[appearance:textfield]');
+      expect(input).toHaveClass(
+        '[&::-webkit-inner-spin-button]:appearance-none'
+      );
+      expect(input).toHaveClass(
+        '[&::-webkit-outer-spin-button]:appearance-none'
+      );
     });
 
     it('applies base layout styles', () => {
-      render(<QuantitySelector value={1} onChange={() => {}} data-testid="selector" />);
+      render(
+        <QuantitySelector
+          value={1}
+          onChange={() => {}}
+          data-testid="selector"
+        />
+      );
       const selector = screen.getByTestId('selector');
       expect(selector).toHaveClass('inline-flex');
       expect(selector).toHaveClass('items-center');
@@ -36,36 +54,58 @@ describe('QuantitySelector', () => {
 
   describe('Sizes', () => {
     it('applies default (md) size', () => {
-      render(<QuantitySelector value={1} onChange={() => {}} data-testid="selector" />);
-      expect(screen.getByTestId('selector')).toHaveClass('h-10');
-    });
-
-    it.each([
-      ['sm', 'h-8'],
-      ['md', 'h-10'],
-      ['lg', 'h-12'],
-    ])('renders %s size with correct height', (size, expectedClass) => {
       render(
         <QuantitySelector
           value={1}
-          size={size as any}
           onChange={() => {}}
           data-testid="selector"
         />
       );
-      expect(screen.getByTestId('selector')).toHaveClass(expectedClass);
+      expect(screen.getByTestId('selector')).toHaveClass('h-10');
+      expect(screen.getByLabelText('Quantity')).toHaveClass('w-12');
+      expect(screen.getByLabelText('Decrease quantity')).toHaveClass('px-3');
     });
+
+    it.each([
+      ['sm', 'h-8', 'w-10'],
+      ['md', 'h-10', 'w-12'],
+      ['lg', 'h-12', 'w-14'],
+    ])(
+      'renders %s size with correct dimensions',
+      (size, heightClass, inputWidthClass) => {
+        render(
+          <QuantitySelector
+            value={1}
+            size={size as any}
+            onChange={() => {}}
+            data-testid="selector"
+          />
+        );
+        expect(screen.getByTestId('selector')).toHaveClass(heightClass);
+        expect(screen.getByLabelText('Quantity')).toHaveClass(inputWidthClass);
+      }
+    );
 
     it('applies small size', () => {
       render(
-        <QuantitySelector value={1} size="sm" onChange={() => {}} data-testid="selector" />
+        <QuantitySelector
+          value={1}
+          size="sm"
+          onChange={() => {}}
+          data-testid="selector"
+        />
       );
       expect(screen.getByTestId('selector')).toHaveClass('h-8');
     });
 
     it('applies large size', () => {
       render(
-        <QuantitySelector value={1} size="lg" onChange={() => {}} data-testid="selector" />
+        <QuantitySelector
+          value={1}
+          size="lg"
+          onChange={() => {}}
+          data-testid="selector"
+        />
       );
       expect(screen.getByTestId('selector')).toHaveClass('h-12');
     });
@@ -88,7 +128,9 @@ describe('QuantitySelector', () => {
     });
 
     it('updates display when value changes', () => {
-      const { rerender } = render(<QuantitySelector value={1} onChange={() => {}} />);
+      const { rerender } = render(
+        <QuantitySelector value={1} onChange={() => {}} />
+      );
       expect(screen.getByDisplayValue('1')).toBeInTheDocument();
 
       rerender(<QuantitySelector value={5} onChange={() => {}} />);
@@ -220,7 +262,9 @@ describe('QuantitySelector', () => {
     });
 
     it('has min and max attributes', () => {
-      render(<QuantitySelector value={5} min={1} max={99} onChange={() => {}} />);
+      render(
+        <QuantitySelector value={5} min={1} max={99} onChange={() => {}} />
+      );
       const input = screen.getByLabelText('Quantity') as HTMLInputElement;
       expect(input.min).toBe('1');
       expect(input.max).toBe('99');
@@ -255,7 +299,13 @@ describe('QuantitySelector', () => {
 
   describe('Dark Mode', () => {
     it('applies dark mode styles', () => {
-      render(<QuantitySelector value={1} onChange={() => {}} data-testid="selector" />);
+      render(
+        <QuantitySelector
+          value={1}
+          onChange={() => {}}
+          data-testid="selector"
+        />
+      );
       const selector = screen.getByTestId('selector');
       expect(selector).toHaveClass('dark:bg-neutral-900');
       expect(selector).toHaveClass('dark:border-neutral-700');
@@ -318,7 +368,10 @@ describe('QuantitySelector', () => {
           data-product-id="123"
         />
       );
-      expect(screen.getByTestId('selector')).toHaveAttribute('data-product-id', '123');
+      expect(screen.getByTestId('selector')).toHaveAttribute(
+        'data-product-id',
+        '123'
+      );
     });
 
     it('supports aria attributes', () => {
@@ -337,7 +390,9 @@ describe('QuantitySelector', () => {
     });
 
     it('supports id attribute', () => {
-      render(<QuantitySelector value={1} onChange={() => {}} id="qty-selector" />);
+      render(
+        <QuantitySelector value={1} onChange={() => {}} id="qty-selector" />
+      );
       expect(document.getElementById('qty-selector')).toBeInTheDocument();
     });
   });
@@ -362,7 +417,9 @@ describe('QuantitySelector', () => {
     it('handles typical shopping cart scenario', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
-      render(<QuantitySelector value={1} min={1} max={10} onChange={handleChange} />);
+      render(
+        <QuantitySelector value={1} min={1} max={10} onChange={handleChange} />
+      );
 
       await user.click(screen.getByLabelText('Increase quantity'));
       expect(handleChange).toHaveBeenCalledWith(2);
@@ -374,7 +431,9 @@ describe('QuantitySelector', () => {
 
   describe('Edge Cases', () => {
     it('handles min equals max', () => {
-      render(<QuantitySelector value={5} min={5} max={5} onChange={() => {}} />);
+      render(
+        <QuantitySelector value={5} min={5} max={5} onChange={() => {}} />
+      );
       expect(screen.getByLabelText('Decrease quantity')).toBeDisabled();
       expect(screen.getByLabelText('Increase quantity')).toBeDisabled();
     });
@@ -384,9 +443,9 @@ describe('QuantitySelector', () => {
       expect(screen.getByDisplayValue('999')).toBeInTheDocument();
     });
 
-    it('button text is - and +', () => {
+    it('button text uses balanced minus and plus glyphs', () => {
       render(<QuantitySelector value={5} onChange={() => {}} />);
-      expect(screen.getByLabelText('Decrease quantity')).toHaveTextContent('-');
+      expect(screen.getByLabelText('Decrease quantity')).toHaveTextContent('−');
       expect(screen.getByLabelText('Increase quantity')).toHaveTextContent('+');
     });
   });
@@ -407,7 +466,7 @@ describe('QuantitySelector', () => {
       render(<QuantitySelector value={1} min={1} onChange={() => {}} />);
       const decrementBtn = screen.getByLabelText('Decrease quantity');
       expect(decrementBtn).toBeDisabled();
-      expect(decrementBtn).toHaveClass('disabled:opacity-50');
+      expect(decrementBtn).toHaveClass('disabled:text-neutral-500');
       expect(decrementBtn).toHaveClass('disabled:cursor-not-allowed');
     });
   });

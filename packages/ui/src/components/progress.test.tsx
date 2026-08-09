@@ -30,12 +30,15 @@ describe('Progress', () => {
 
   it('applies size classes', () => {
     render(<Progress value={50} size="lg" />);
-    expect(screen.getByRole('progressbar')).toHaveClass('h-4');
+    expect(screen.getByRole('progressbar')).toHaveClass('h-5');
   });
 
   it('shows label when showLabel and size lg', () => {
     render(<Progress value={75} size="lg" showLabel />);
-    expect(screen.getByText('75%')).toBeInTheDocument();
+    expect(screen.getByText('75%')).toHaveClass(
+      'bg-white/95',
+      'text-neutral-900'
+    );
   });
 
   it('forwards ref', () => {

@@ -44,6 +44,8 @@ describe('CartItem', () => {
       );
       const item = screen.getByTestId('cart-item');
       expect(item).toHaveClass('flex');
+      expect(item).toHaveClass('w-full');
+      expect(item).toHaveClass('min-w-0');
       expect(item).toHaveClass('gap-4');
       expect(item).toHaveClass('p-4');
       expect(item).toHaveClass('border-b');
@@ -125,12 +127,7 @@ describe('CartItem', () => {
 
     it('applies title styling', () => {
       render(
-        <CartItem
-          image="/product.jpg"
-          title="Title"
-          price="$10"
-          quantity={1}
-        />
+        <CartItem image="/product.jpg" title="Title" price="$10" quantity={1} />
       );
       const title = screen.getByText('Title');
       expect(title).toHaveClass('font-medium');
@@ -139,12 +136,7 @@ describe('CartItem', () => {
 
     it('title has dark mode styles', () => {
       render(
-        <CartItem
-          image="/product.jpg"
-          title="Title"
-          price="$10"
-          quantity={1}
-        />
+        <CartItem image="/product.jpg" title="Title" price="$10" quantity={1} />
       );
       const title = screen.getByText('Title');
       expect(title).toHaveClass('dark:text-neutral-100');
@@ -298,8 +290,12 @@ describe('CartItem', () => {
           quantity={1}
         />
       );
-      expect(screen.queryByLabelText('Decrease quantity')).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Increase quantity')).not.toBeInTheDocument();
+      expect(
+        screen.queryByLabelText('Decrease quantity')
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByLabelText('Increase quantity')
+      ).not.toBeInTheDocument();
     });
 
     it('renders quantity buttons when onQuantityChange provided', () => {
@@ -314,6 +310,10 @@ describe('CartItem', () => {
       );
       expect(screen.getByLabelText('Decrease quantity')).toBeInTheDocument();
       expect(screen.getByLabelText('Increase quantity')).toBeInTheDocument();
+      expect(screen.getByLabelText('Quantity')).toHaveValue(1);
+      expect(screen.getByLabelText('Quantity').parentElement).toHaveClass(
+        'h-8'
+      );
     });
 
     it('calls onQuantityChange with decreased value', async () => {
@@ -352,7 +352,7 @@ describe('CartItem', () => {
       expect(handleQuantityChange).toHaveBeenCalledWith(6);
     });
 
-    it('does not decrease below 1', async () => {
+    it('disables decrement at the minimum quantity', async () => {
       const user = userEvent.setup();
       const handleQuantityChange = vi.fn();
       render(
@@ -365,9 +365,11 @@ describe('CartItem', () => {
         />
       );
 
-      await user.click(screen.getByLabelText('Decrease quantity'));
+      const decrement = screen.getByLabelText('Decrease quantity');
+      expect(decrement).toBeDisabled();
+      await user.click(decrement);
 
-      expect(handleQuantityChange).toHaveBeenCalledWith(1);
+      expect(handleQuantityChange).not.toHaveBeenCalled();
     });
   });
 
@@ -510,7 +512,10 @@ describe('CartItem', () => {
           data-product-id="123"
         />
       );
-      expect(screen.getByTestId('cart-item')).toHaveAttribute('data-product-id', '123');
+      expect(screen.getByTestId('cart-item')).toHaveAttribute(
+        'data-product-id',
+        '123'
+      );
     });
 
     it('supports aria attributes', () => {
@@ -524,7 +529,10 @@ describe('CartItem', () => {
           data-testid="cart-item"
         />
       );
-      expect(screen.getByTestId('cart-item')).toHaveAttribute('aria-label', 'Cart item');
+      expect(screen.getByTestId('cart-item')).toHaveAttribute(
+        'aria-label',
+        'Cart item'
+      );
     });
 
     it('supports id attribute', () => {
@@ -570,6 +578,7 @@ describe('CartItem', () => {
       const item = screen.getByTestId('cart-item');
       const contentSection = item.children[1] as HTMLElement;
       expect(contentSection).toHaveClass('flex');
+      expect(contentSection).toHaveClass('min-w-0');
       expect(contentSection).toHaveClass('flex-1');
       expect(contentSection).toHaveClass('flex-col');
     });
@@ -592,7 +601,7 @@ describe('CartItem', () => {
 
       expect(screen.getByText('Cotton T-Shirt')).toBeInTheDocument();
       expect(screen.getByText('$29.99')).toBeInTheDocument();
-      expect(screen.getByText('Qty: 3')).toBeInTheDocument();
+      expect(screen.getByLabelText('Quantity')).toHaveValue(3);
       expect(screen.getByText('Size: L, Color: Blue')).toBeInTheDocument();
       expect(screen.getByAltText('Blue cotton t-shirt')).toBeInTheDocument();
       expect(screen.getByText('Remove')).toBeInTheDocument();
@@ -640,7 +649,9 @@ describe('CartItem', () => {
           quantity={1}
         />
       );
-      expect(screen.getByText('This is a very long product title that might wrap')).toBeInTheDocument();
+      expect(
+        screen.getByText('This is a very long product title that might wrap')
+      ).toBeInTheDocument();
     });
 
     it('handles large quantity values', () => {

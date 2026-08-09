@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cn } from '../lib/utils';
+import { QuantitySelector } from './quantity-selector';
 
 /**
  * CartItem component for displaying items in a shopping cart
@@ -37,8 +38,7 @@ import { cn } from '../lib/utils';
  * />
  */
 
-export interface CartItemProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface CartItemProps extends React.HTMLAttributes<HTMLDivElement> {
   image: string;
   title: string;
   price: string | number;
@@ -50,21 +50,27 @@ export interface CartItemProps
 }
 
 const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
-  ({
-    className,
-    image,
-    title,
-    price,
-    quantity,
-    variant,
-    imageAlt,
-    onRemove,
-    onQuantityChange,
-    ...props
-  }, ref) => (
+  (
+    {
+      className,
+      image,
+      title,
+      price,
+      quantity,
+      variant,
+      imageAlt,
+      onRemove,
+      onQuantityChange,
+      ...props
+    },
+    ref
+  ) => (
     <div
       ref={ref}
-      className={cn('flex gap-4 p-4 border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950', className)}
+      className={cn(
+        'flex w-full min-w-0 gap-4 border-b border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-950',
+        className
+      )}
       {...props}
     >
       <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-neutral-100 dark:bg-neutral-800">
@@ -74,9 +80,9 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
           className="h-full w-full object-cover"
         />
       </div>
-      <div className="flex flex-1 flex-col justify-between">
-        <div className="flex justify-between">
-          <div>
+      <div className="flex min-w-0 flex-1 flex-col justify-between">
+        <div className="flex min-w-0 justify-between gap-4">
+          <div className="min-w-0">
             <h4 className="font-medium text-neutral-900 dark:text-neutral-100">
               {title}
             </h4>
@@ -86,38 +92,28 @@ const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
               </p>
             )}
           </div>
-          <p className="font-semibold text-neutral-900 dark:text-neutral-100">
+          <p className="shrink-0 font-semibold tabular-nums text-neutral-900 dark:text-neutral-100">
             {price}
           </p>
         </div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          {onQuantityChange ? (
+            <QuantitySelector
+              value={quantity}
+              min={1}
+              size="sm"
+              onChange={onQuantityChange}
+            />
+          ) : (
             <span className="text-sm text-neutral-600 dark:text-neutral-400">
               Qty: {quantity}
             </span>
-            {onQuantityChange && (
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => onQuantityChange(Math.max(1, quantity - 1))}
-                  className="h-6 w-6 cursor-pointer rounded-md border border-neutral-300 transition-colors hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800"
-                  aria-label="Decrease quantity"
-                >
-                  -
-                </button>
-                <button
-                  onClick={() => onQuantityChange(quantity + 1)}
-                  className="h-6 w-6 cursor-pointer rounded-md border border-neutral-300 transition-colors hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800"
-                  aria-label="Increase quantity"
-                >
-                  +
-                </button>
-              </div>
-            )}
-          </div>
+          )}
           {onRemove && (
             <button
+              type="button"
               onClick={onRemove}
-              className="cursor-pointer text-sm text-error-600 transition-colors hover:text-error-700 dark:text-error-400 dark:hover:text-error-300"
+              className="shrink-0 cursor-pointer text-sm text-error-600 transition-colors hover:text-error-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:text-error-400 dark:hover:text-error-300 dark:focus-visible:outline-primary-400"
             >
               Remove
             </button>
@@ -133,6 +129,7 @@ CartItem.displayName = 'CartItem';
  * @deprecated `cartItemVariants` is kept for backwards compatibility.
  * Prefer using the `CartItem` component directly.
  */
-const cartItemVariants = () => 'flex gap-4 p-4 border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950';
+const cartItemVariants = () =>
+  'flex w-full min-w-0 gap-4 border-b border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-950';
 
 export { CartItem, cartItemVariants };

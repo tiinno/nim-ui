@@ -103,7 +103,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
           disabled={disabled}
           className={cn(
             buttonVariants({ variant: 'outline' }),
-            'w-full justify-start text-left font-normal',
+            'w-full justify-center text-center font-normal',
             'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
             className
           )}
@@ -119,7 +119,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="mr-2 h-4 w-4"
+            className="mr-2 h-4 w-4 shrink-0"
             aria-hidden="true"
           >
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -127,16 +127,16 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             <line x1="8" y1="2" x2="8" y2="6" />
             <line x1="3" y1="10" x2="21" y2="10" />
           </svg>
-          {date ? (
-            formatDateValue(date, {
-              calendar,
-              locale,
-              format: formatStr,
-              formatDate,
-            })
-          ) : (
-            <span>{placeholder}</span>
-          )}
+          <span className="min-w-0 truncate">
+            {date
+              ? formatDateValue(date, {
+                  calendar,
+                  locale,
+                  format: formatStr,
+                  formatDate,
+                })
+              : placeholder}
+          </span>
           {name && (
             <input
               type="hidden"
@@ -276,7 +276,7 @@ const DateRangePicker = React.forwardRef<
             disabled={disabled}
             className={cn(
               buttonVariants({ variant: 'outline' }),
-              'w-full justify-start text-left font-normal',
+              'w-full justify-center text-center font-normal',
               'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
               className
             )}
@@ -292,7 +292,7 @@ const DateRangePicker = React.forwardRef<
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="mr-2 h-4 w-4"
+              className="mr-2 h-4 w-4 shrink-0"
               aria-hidden="true"
             >
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -300,7 +300,7 @@ const DateRangePicker = React.forwardRef<
               <line x1="8" y1="2" x2="8" y2="6" />
               <line x1="3" y1="10" x2="21" y2="10" />
             </svg>
-            <span className="truncate">{displayLabel}</span>
+            <span className="min-w-0 truncate">{displayLabel}</span>
           </PopoverTrigger>
           <PopoverContent padding="none" className="w-auto">
             <div className="flex flex-col sm:flex-row">

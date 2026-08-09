@@ -10,6 +10,16 @@ describe('DateTimePicker', () => {
     expect(screen.getByRole('button')).toHaveTextContent('10:30');
   });
 
+  it('centers the icon and label as a group inside the trigger', () => {
+    const { container } = render(
+      <DateTimePicker value={new Date(2025, 0, 15, 10, 30)} />
+    );
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveClass('justify-center', 'text-center');
+    expect(container.querySelector('svg')).toHaveClass('shrink-0');
+    expect(trigger.querySelector('span')).toHaveClass('min-w-0', 'truncate');
+  });
+
   it('marks the empty trigger as a placeholder', () => {
     const { rerender } = render(<DateTimePicker />);
     const trigger = screen.getByRole('button');
@@ -70,6 +80,21 @@ describe('DateTimePicker', () => {
 });
 
 describe('DateTimeRangePicker', () => {
+  it('centers the icon and range label inside the trigger', () => {
+    const { container } = render(
+      <DateTimeRangePicker
+        value={{
+          from: new Date(2025, 0, 15, 9, 0),
+          to: new Date(2025, 0, 15, 17, 0),
+        }}
+      />
+    );
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveClass('justify-center', 'text-center');
+    expect(container.querySelector('svg')).toHaveClass('shrink-0');
+    expect(trigger.querySelector('span')).toHaveClass('min-w-0', 'truncate');
+  });
+
   it('applies presets and hidden range inputs', async () => {
     const user = userEvent.setup();
     const from = new Date(2025, 0, 13, 9, 0);

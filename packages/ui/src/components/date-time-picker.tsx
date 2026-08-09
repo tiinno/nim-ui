@@ -71,9 +71,7 @@ const timeToParts = (time: string) => {
 
 const dateToTime = (date?: Date, fallback = '09:00') => {
   if (!date) return fallback;
-  return `${String(date.getHours()).padStart(2, '0')}:${String(
-    date.getMinutes()
-  ).padStart(2, '0')}`;
+  return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
 };
 
 const withTime = (date: Date, time: string) => {
@@ -198,7 +196,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
             disabled={disabled}
             className={cn(
               buttonVariants({ variant: 'outline' }),
-              'w-full justify-start text-left font-normal',
+              'w-full justify-center text-center font-normal',
               'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
               className
             )}
@@ -214,7 +212,7 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="mr-2 h-4 w-4"
+              className="mr-2 h-4 w-4 shrink-0"
               aria-hidden="true"
             >
               <path d="M8 2v4" />
@@ -223,14 +221,16 @@ const DateTimePicker = React.forwardRef<HTMLButtonElement, DateTimePickerProps>(
               <path d="M3 10h18" />
               <path d="M12 14v3l2 1" />
             </svg>
-            {selected
-              ? `${formatDateValue(selected, {
-                  calendar,
-                  locale,
-                  format: dateFormat,
-                  formatDate,
-                })} ${formatTimeLabel(dateToTime(selected), hourCycle)}`
-              : placeholder}
+            <span className="min-w-0 truncate">
+              {selected
+                ? `${formatDateValue(selected, {
+                    calendar,
+                    locale,
+                    format: dateFormat,
+                    formatDate,
+                  })} ${formatTimeLabel(dateToTime(selected), hourCycle)}`
+                : placeholder}
+            </span>
           </PopoverTrigger>
           <PopoverContent padding="none" className="w-auto">
             <Calendar
@@ -364,7 +364,7 @@ const DateTimeRangePicker = React.forwardRef<
             disabled={disabled}
             className={cn(
               buttonVariants({ variant: 'outline' }),
-              'w-full justify-start text-left font-normal',
+              'w-full justify-center text-center font-normal',
               'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
               className
             )}
@@ -380,7 +380,7 @@ const DateTimeRangePicker = React.forwardRef<
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="mr-2 h-4 w-4"
+              className="mr-2 h-4 w-4 shrink-0"
               aria-hidden="true"
             >
               <path d="M8 2v4" />
@@ -390,7 +390,7 @@ const DateTimeRangePicker = React.forwardRef<
               <path d="M7 14h4" />
               <path d="M13 18h4" />
             </svg>
-            <span className="truncate">{label}</span>
+            <span className="min-w-0 truncate">{label}</span>
           </PopoverTrigger>
           <PopoverContent padding="none" className="w-auto">
             <div className="flex flex-col sm:flex-row">

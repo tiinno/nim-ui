@@ -7,6 +7,20 @@ the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-08-09
+
+### Fixed
+
+- Centered DatePicker and DateTimePicker trigger content for both single-value
+  and range variants.
+- Improved CartItem responsiveness and replaced its separate quantity buttons
+  with the compact QuantitySelector control.
+- Corrected QuantitySelector sizing, glyph alignment, and number-field
+  centering across `sm`, `md`, and `lg` variants.
+- Increased the large Progress track height and made its percentage label
+  readable over the fill.
+- Clarified the related documentation examples, labels, and product imagery.
+
 ## [0.1.0] - 2026-08-06
 
 First tagged version. `0.1.0` rather than `1.0.0` deliberately: the kit is
