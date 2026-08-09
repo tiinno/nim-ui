@@ -1,0 +1,193 @@
+name: Release
+
+# Publishes @nim-ui/components and @nim-ui/mcp-server to npm from CI.
+#
+# It exists because publishing from a developer machine is impossible here: the
+# npm account is on `auth-and-writes` 2FA with a passkey, so there is no TOTP
+# code to hand to `--otp`, and every route out was tried and failed with EOTP —
+# `pnpm publish` non-interactively, `pnpm publish` in a real terminal (pnpm does
+# not forward npm's auth prompt), and `npm publish <tarball>` in a real terminal
+# (npm's browser auth flow exists for `login`, never for `publish`). Trusted
+# publishing over OIDC has no token, no secret and no OTP, so it is the only
+# door left.
+#
+# THE TAG DOES NOT DECIDE THE VERSION. It decides *when*. Each package publishes
+# whatever its own package.json says, and any version already on the registry is
+# skipped rather than failing the run — so one `v0.1.1` tag can publish
+# @nim-ui/components@0.1.1 and skip @nim-ui/mcp-server@0.1.0 in the same run.
+# Bump the package.json versions first; the tag is a label on that commit.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run everything except the upload (verifies the gate, the pack and the guard)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# Deliberately NOT cancel-in-progress, unlike ci.yml. Cancelling a release
+# half-way can leave one package published and the other not, which is the one
+# state with no clean rollback — npm unpublish is time-boxed and a republished
+# version number is rejected forever.
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  TURBO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  release:
+    name: verify, pack, publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      # Trusted publishing: the npm CLI asks GitHub for an OIDC id token and
+      # trades it at the registry for a short-lived publish token. Without this
+      # line npm skips the exchange *silently* (lib/utils/oidc.js never throws)
+      # and the run dies later with ENEEDAUTH, which reads like a missing
+      # secret rather than a missing permission.
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
+      # No `registry-url:` here on purpose. That option makes setup-node write a
+      # project .npmrc containing `_authToken=${NODE_AUTH_TOKEN}`, and a project
+      # .npmrc outranks the user-level config that the OIDC exchange writes its
+      # token into — with no NODE_AUTH_TOKEN set, it would shadow trusted
+      # publishing with an empty credential.
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      # The npm bundled with Node 22 is 10.x and has no OIDC code at all. The
+      # floor is 11.5.1, which added the token exchange; 11.19.0 also has the
+      # auto-enable that turns provenance on by itself. Pinned exactly, for the
+      # same reason the actions above are pinned by SHA (90d722f), and kept on
+      # 11.x rather than 12.x because npm 12 requires node ^22.22.2 — a floor
+      # tight enough that a slightly older 22.x on the runner would break the
+      # release for a reason that has nothing to do with this repo.
+      - name: Install an npm that can do trusted publishing
+        run: |
+          npm install --global npm@11.19.0
+          npm --version
+
+      - name: Cache turbo
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .turbo/cache
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # The same five gates ci.yml runs, in the same order. A release must not
+      # be able to ship something a pull request could not merge — and
+      # workflow_dispatch can fire on a ref CI never saw.
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm type-check
+
+      - name: Test
+        run: pnpm test
+
+      # Also the build that the pack step ships. `pnpm pack` runs prepack and
+      # prepare but NOT prepublishOnly, so the `prepublishOnly: pnpm run build`
+      # that protects a manual publish does not fire here — this step is the
+      # only thing standing between a stale dist and the registry. It matters
+      # most for @nim-ui/mcp-server, whose build is `tsup && copy-sources.mjs`:
+      # without the second half the package ships an empty dist/sources/ and
+      # throws on startup for every consumer (NIMUI-93).
+      - name: Build
+        run: pnpm build
+
+      # Runs after Build on purpose, in the same job: the accessibility suite
+      # drives the static export in `packages/docs/out`, which Build produces.
+      # A separate job would have to ship that tree as an artifact to see it.
+      - name: Install Chromium for the accessibility suite
+        run: pnpm --filter @nim-ui/docs exec playwright install --with-deps chromium
+
+      - name: Accessibility (browser)
+        run: pnpm test:e2e
+
+      # Pack with pnpm, publish with npm. Neither tool can do both halves:
+      # pnpm 9.15.4 has no OIDC (its `publish` has no --provenance either), and
+      # npm ships pnpm's workspace protocol to the registry verbatim. Measured
+      # on this tree: `npm pack` in packages/ui leaves
+      # "@nim-ui/tailwind-config": "workspace:*" in the manifest, naming a
+      # private package that will never exist on the registry, while `pnpm pack`
+      # rewrites it to 0.0.0. `npm publish <tarball>` reads its manifest out of
+      # the tarball (lib/commands/publish.js takes the non-directory branch into
+      # pacote.manifest, and libnpmpublish puts that object straight into
+      # root.versions[version]), so pnpm's rewrite survives the npm upload.
+      - name: Pack with pnpm
+        run: |
+          set -euo pipefail
+          out="${RUNNER_TEMP}/tarballs"
+          rm -rf "$out"
+          mkdir -p "$out"
+          : > "$out/index.tsv"
+          for dir in packages/ui packages/mcp-server; do
+            # `pnpm pack` rejects --filter ("Unknown option: 'recursive'"), so
+            # it has to run from inside the package. Its last line of stdout is
+            # the absolute path of the tarball it wrote.
+            tarball="$(cd "$dir" && pnpm pack --pack-destination "$out" | tail -n 1)"
+            name="$(node -p "require('./$dir/package.json').name")"
+            version="$(node -p "require('./$dir/package.json').version")"
+            printf '%s\t%s\t%s\n' "$name" "$version" "$tarball" >> "$out/index.tsv"
+          done
+          cat "$out/index.tsv"
+
+      # Fails the release before anything is uploaded. Reads the artifact, not
+      # the workspace — see the script's header for why that distinction is the
+      # whole point.
+      - name: Guard the tarballs
+        run: node scripts/assert-packed-tarball.mjs "${RUNNER_TEMP}"/tarballs/*.tgz
+
+      # Runs from the tarball directory rather than the repo so npm has no
+      # package.json or workspace of its own to resolve — the only thing it
+      # reads is the tarball it is told to upload.
+      #
+      # --provenance is passed explicitly even though trusted publishing enables
+      # it on its own. The auto-enable in lib/utils/oidc.js lives inside a
+      # try/catch that swallows every failure, so a bad day there publishes
+      # without provenance and says nothing; the explicit flag routes through
+      # libnpmpublish's ensureProvenanceGeneration, which throws instead.
+      - name: Publish to npm
+        working-directory: ${{ runner.temp }}/tarballs
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          set -euo pipefail
+          while IFS=$'\t' read -r name version tarball; do
+            # `npm view <pkg>@<missing-version> version` exits 0 and prints
+            # nothing, so the exit code cannot be the test; an unpublished
+            # package 404s, hence the `|| true`.
+            published="$(npm view "$name@$version" version 2>/dev/null || true)"
+            if [ -n "$published" ]; then
+              echo "::notice::$name@$version is already on the registry — skipping"
+              continue
+            fi
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "::notice::dry run — would publish $name@$version"
+              continue
+            fi
+            echo "publishing $name@$version"
+            npm publish "$tarball" --provenance
+          done < index.tsv
