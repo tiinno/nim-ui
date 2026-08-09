@@ -86,7 +86,13 @@ class NimMCPServer {
     this.server = new Server(
       {
         name: 'nim-ui-mcp',
-        version: '0.1.0',
+        // Hand-kept in step with package.json. It cannot be imported from
+        // there: tsconfig pins rootDir to ./src, so `../package.json` is
+        // outside the program. Nothing here enforces the match — the check
+        // that does lives in packaged-layout.test.ts, which spawns the real
+        // binary from a fake install and reads the handshake back, and it is
+        // the only reason this string has not gone stale twice.
+        version: '0.1.1',
       },
       {
         capabilities: { tools: {} },

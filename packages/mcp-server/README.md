@@ -12,7 +12,7 @@ Nothing to install ahead of time — point your MCP client at the documented ver
 fetches it on first run:
 
 ```bash
-npx -y @nim-ui/mcp-server@0.1.0
+npx -y @nim-ui/mcp-server@0.1.1
 ```
 
 It speaks JSON-RPC over stdio and is meant to be launched by a client rather than run by hand; the
@@ -108,7 +108,7 @@ To use this MCP server with Claude Desktop or other MCP clients, add it to your 
   "mcpServers": {
     "nim-ui": {
       "command": "npx",
-      "args": ["-y", "@nim-ui/mcp-server@0.1.0"]
+      "args": ["-y", "@nim-ui/mcp-server@0.1.1"]
     }
   }
 }
