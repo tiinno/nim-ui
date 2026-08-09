@@ -106,7 +106,7 @@ const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
             aria-label="Choose time"
             className={cn(
               buttonVariants({ variant: 'outline' }),
-              'w-full justify-start text-left font-normal',
+              'w-full justify-center text-center font-normal',
               'data-[placeholder]:text-neutral-500 dark:data-[placeholder]:text-neutral-400',
               className
             )}
@@ -122,13 +122,15 @@ const TimePicker = React.forwardRef<HTMLButtonElement, TimePickerProps>(
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="mr-2 h-4 w-4"
+              className="mr-2 h-4 w-4 shrink-0"
               aria-hidden="true"
             >
               <circle cx="12" cy="12" r="9" />
               <path d="M12 7v5l3 2" />
             </svg>
-            {selected ? formatTimeLabel(selected, hourCycle) : placeholder}
+            <span className="min-w-0 truncate">
+              {selected ? formatTimeLabel(selected, hourCycle) : placeholder}
+            </span>
           </PopoverTrigger>
           <PopoverContent padding="sm" className="w-[var(--radix-popover-trigger-width)]">
             <div

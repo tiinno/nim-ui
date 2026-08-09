@@ -3,6 +3,15 @@ import { render, screen, userEvent } from '../test/test-utils';
 import { TimePicker } from './time-picker';
 
 describe('TimePicker', () => {
+  it('centers the icon and label as a group inside the trigger', () => {
+    const { container } = render(<TimePicker value="17:00" />);
+    const trigger = screen.getByRole('button', { name: /choose time/i });
+
+    expect(trigger).toHaveClass('justify-center', 'text-center');
+    expect(container.querySelector('svg')).toHaveClass('shrink-0');
+    expect(trigger.querySelector('span')).toHaveClass('min-w-0', 'truncate');
+  });
+
   it('renders placeholder and opens time options', async () => {
     const user = userEvent.setup();
     render(<TimePicker step={60} />);
