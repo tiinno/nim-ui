@@ -8,10 +8,11 @@ This package provides an MCP server that exposes Nim UI components, design token
 
 ## Installation
 
-Nothing to install ahead of time — point your MCP client at it and `npx` fetches it on first run:
+Nothing to install ahead of time — point your MCP client at the documented version and `npx`
+fetches it on first run:
 
 ```bash
-npx -y @nim-ui/mcp-server
+npx -y @nim-ui/mcp-server@0.1.0
 ```
 
 It speaks JSON-RPC over stdio and is meant to be launched by a client rather than run by hand; the
@@ -107,7 +108,7 @@ To use this MCP server with Claude Desktop or other MCP clients, add it to your 
   "mcpServers": {
     "nim-ui": {
       "command": "npx",
-      "args": ["-y", "@nim-ui/mcp-server"]
+      "args": ["-y", "@nim-ui/mcp-server@0.1.0"]
     }
   }
 }
