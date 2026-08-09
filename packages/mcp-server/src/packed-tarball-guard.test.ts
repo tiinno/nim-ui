@@ -462,12 +462,20 @@ describe('assert-packed-tarball, driven the way release.yml drives it', () => {
 
   it('pins the exact set of files that name the guard', () => {
     // `release.yml` is the guard's only caller, so if it ever stops naming the
-    // script the guard is dead and nothing else would say so. Two honest limits
-    // on that claim: this measures *mentions*, not calls — `CLAUDE.md` is in the
-    // set because it documents the guard — and turbo's `test:run` hashes only
-    // package-local inputs, so an edit to `.github/workflows/` can be met with a
-    // cache-replayed green. `supply-chain-policy.test.ts` reads the workflow
-    // directory under the same limit.
+    // script the guard is dead and nothing else would say so.
+    //
+    // This measures *mentions*, not calls — `CLAUDE.md` is in the set because it
+    // documents the guard — and that limit is real and unfixed.
+    //
+    // The cache limit that used to sit here is not. `packages/mcp-server/turbo.json`
+    // (NIMUI-98) adds `.github/workflows/**`, `scripts/**` and `CLAUDE.md` to this
+    // package's `test:run` inputs, so editing any of them re-runs this suite instead
+    // of replaying a green that measured the previous content. Measured: a one-line
+    // edit to `release.yml` turns `@nim-ui/mcp-server:test:run` into a cache miss
+    // while every other package still replays. What remains is narrower — the `git
+    // grep` below scans the whole repo, so a *new* file elsewhere naming the guard
+    // changes this result without touching an input. Declaring the repo an input
+    // would trade caching away entirely for that one case.
     const callers = execFileSync(
       'git',
       ['grep', '-l', 'assert-packed-tarball', '--', ':!packages/mcp-server/src'],
